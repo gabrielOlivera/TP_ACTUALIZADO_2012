@@ -1,0 +1,35 @@
+C:\Documents and Settings\Administrador\Mis documentos\Visual Studio 2010\Projects\TP-Versionado\Gestores\bin\Debug\Gestores.dll
+C:\Documents and Settings\Administrador\Mis documentos\Visual Studio 2010\Projects\TP-Versionado\Gestores\bin\Debug\Gestores.pdb
+C:\Documents and Settings\Administrador\Mis documentos\Visual Studio 2010\Projects\TP-Versionado\Gestores\bin\Debug\Entidades.dll
+C:\Documents and Settings\Administrador\Mis documentos\Visual Studio 2010\Projects\TP-Versionado\Gestores\bin\Debug\Entidades.pdb
+C:\Documents and Settings\Administrador\Mis documentos\Visual Studio 2010\Projects\TP-Versionado\Gestores\obj\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\Administrador\Mis documentos\Visual Studio 2010\Projects\TP-Versionado\Gestores\obj\Debug\Gestores.dll
+C:\Documents and Settings\Administrador\Mis documentos\Visual Studio 2010\Projects\TP-Versionado\Gestores\obj\Debug\Gestores.pdb
+C:\Users\GRACIANA\Desktop\Gabby\TP-Versionado\Gestores\bin\Debug\Gestores.dll
+C:\Users\GRACIANA\Desktop\Gabby\TP-Versionado\Gestores\bin\Debug\Gestores.pdb
+C:\Users\GRACIANA\Desktop\Gabby\TP-Versionado\Gestores\bin\Debug\Entidades.dll
+C:\Users\GRACIANA\Desktop\Gabby\TP-Versionado\Gestores\bin\Debug\Entidades.pdb
+C:\Users\GRACIANA\Desktop\Gabby\TP-Versionado\Gestores\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\GRACIANA\Desktop\Gabby\TP-Versionado\Gestores\obj\Debug\Gestores.dll
+C:\Users\GRACIANA\Desktop\Gabby\TP-Versionado\Gestores\obj\Debug\Gestores.pdb
+F:\TPDiseño-Interfaces\Gestores\obj\Debug\Gestores.dll
+F:\TPDiseño-Interfaces\Gestores\obj\Debug\Gestores.pdb
+F:\TPDiseño-Interfaces\Gestores\bin\Debug\Gestores.dll
+F:\TPDiseño-Interfaces\Gestores\bin\Debug\Gestores.pdb
+F:\TPDiseño-Interfaces\Gestores\bin\Debug\Entidades.dll
+F:\TPDiseño-Interfaces\Gestores\bin\Debug\Entidades.pdb
+F:\TPDiseño-Interfaces\Gestores\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\usuario\Desktop\TpVersionado\Gestores\bin\Debug\Gestores.dll
+C:\Users\usuario\Desktop\TpVersionado\Gestores\bin\Debug\Gestores.pdb
+C:\Users\usuario\Desktop\TpVersionado\Gestores\bin\Debug\Entidades.dll
+C:\Users\usuario\Desktop\TpVersionado\Gestores\bin\Debug\Entidades.pdb
+C:\Users\usuario\Desktop\TpVersionado\Gestores\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\usuario\Desktop\TpVersionado\Gestores\obj\Debug\Gestores.dll
+C:\Users\usuario\Desktop\TpVersionado\Gestores\obj\Debug\Gestores.pdb
+C:\Users\GRACIANA\Desktop\TpDisenio_2011\Gestores\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\GRACIANA\Desktop\TpDisenio_2011\Gestores\obj\Debug\Gestores.dll
+C:\Users\GRACIANA\Desktop\TpDisenio_2011\Gestores\bin\Debug\Gestores.dll
+C:\Users\GRACIANA\Desktop\TpDisenio_2011\Gestores\bin\Debug\Gestores.pdb
+C:\Users\GRACIANA\Desktop\TpDisenio_2011\Gestores\bin\Debug\Entidades.dll
+C:\Users\GRACIANA\Desktop\TpDisenio_2011\Gestores\bin\Debug\Entidades.pdb
+C:\Users\GRACIANA\Desktop\TpDisenio_2011\Gestores\obj\Debug\Gestores.pdb

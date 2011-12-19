@@ -1,0 +1,9 @@
+F:\VentanaGeneralTpDiseño\VentanaGeneralTpDiseño\bin\Debug\VentanaGeneralTpDiseño.exe
+F:\VentanaGeneralTpDiseño\VentanaGeneralTpDiseño\bin\Debug\VentanaGeneralTpDiseño.pdb
+F:\VentanaGeneralTpDiseño\VentanaGeneralTpDiseño\obj\x86\Debug\ResolveAssemblyReference.cache
+F:\VentanaGeneralTpDiseño\VentanaGeneralTpDiseño\obj\x86\Debug\VentanaGeneralTpDiseño.Form1.resources
+F:\VentanaGeneralTpDiseño\VentanaGeneralTpDiseño\obj\x86\Debug\VentanaGeneralTpDiseño.Properties.Resources.resources
+F:\VentanaGeneralTpDiseño\VentanaGeneralTpDiseño\obj\x86\Debug\GenerateResource.read.1.tlog
+F:\VentanaGeneralTpDiseño\VentanaGeneralTpDiseño\obj\x86\Debug\GenerateResource.write.1.tlog
+F:\VentanaGeneralTpDiseño\VentanaGeneralTpDiseño\obj\x86\Debug\VentanaGeneralTpDiseño.exe
+F:\VentanaGeneralTpDiseño\VentanaGeneralTpDiseño\obj\x86\Debug\VentanaGeneralTpDiseño.pdb

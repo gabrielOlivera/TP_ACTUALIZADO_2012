@@ -1,0 +1,10 @@
+F:\Validacion\Validacion\bin\Debug\Validacion.dll
+F:\Validacion\Validacion\bin\Debug\Validacion.pdb
+F:\Validacion\Validacion\obj\Debug\ResolveAssemblyReference.cache
+F:\Validacion\Validacion\obj\Debug\Validacion.dll
+F:\Validacion\Validacion\obj\Debug\Validacion.pdb
+C:\Users\usuario\Desktop\TpVersionado\Validacion\bin\Debug\Validacion.dll
+C:\Users\usuario\Desktop\TpVersionado\Validacion\bin\Debug\Validacion.pdb
+C:\Users\usuario\Desktop\TpVersionado\Validacion\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\usuario\Desktop\TpVersionado\Validacion\obj\Debug\Validacion.dll
+C:\Users\usuario\Desktop\TpVersionado\Validacion\obj\Debug\Validacion.pdb
