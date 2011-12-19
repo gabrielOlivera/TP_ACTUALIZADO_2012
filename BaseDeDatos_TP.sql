@@ -39,7 +39,7 @@ CREATE TABLE `bloque` (
   UNIQUE KEY `idBloque_UNIQUE` (`idBloque`),
   KEY `fk_idCuestionario` (`Cuestionario_idCuestrionario`),
   CONSTRAINT `fk_idCuestionario` FOREIGN KEY (`Cuestionario_idCuestrionario`) REFERENCES `cuestionario` (`idCuestionario`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -48,7 +48,7 @@ CREATE TABLE `bloque` (
 
 LOCK TABLES `bloque` WRITE;
 /*!40000 ALTER TABLE `bloque` DISABLE KEYS */;
-INSERT INTO `bloque` VALUES (1,1,1,NULL),(2,2,1,NULL),(3,3,1,1),(4,1,2,NULL),(5,2,2,NULL),(6,3,2,1),(7,1,3,NULL),(8,2,3,NULL),(9,3,3,NULL),(10,4,3,NULL),(11,5,3,NULL),(12,6,3,1),(13,1,4,NULL),(14,2,4,NULL),(15,3,4,NULL),(16,4,4,NULL),(17,5,4,NULL),(18,6,4,1),(19,1,5,NULL),(20,2,5,NULL),(21,3,5,NULL),(22,4,5,NULL),(23,5,5,NULL),(24,6,5,1),(25,1,6,NULL),(26,2,6,NULL),(27,3,6,NULL),(28,4,6,NULL),(29,5,6,NULL),(30,6,6,1);
+INSERT INTO `bloque` VALUES (1,1,1,NULL),(2,2,1,NULL),(3,3,1,1),(4,1,2,NULL),(5,2,2,NULL),(6,3,2,1),(7,1,3,NULL),(8,2,3,NULL),(9,3,3,NULL),(10,4,3,NULL),(11,5,3,NULL),(12,6,3,1),(13,1,4,NULL),(14,2,4,NULL),(15,3,4,NULL),(16,4,4,NULL),(17,5,4,NULL),(18,6,4,1),(19,1,5,NULL),(20,2,5,NULL),(21,3,5,NULL),(22,4,5,NULL),(23,5,5,NULL),(24,6,5,1),(25,1,6,NULL),(26,2,6,NULL),(27,3,6,NULL),(28,4,6,NULL),(29,5,6,NULL),(30,6,6,1),(31,4,8,1);
 /*!40000 ALTER TABLE `bloque` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -103,6 +103,7 @@ CREATE TABLE `candidato` (
   `escolaridad` varchar(45) DEFAULT NULL,
   `eliminado` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`idCandidato`),
+  UNIQUE KEY `nro documento_UNIQUE` (`nro documento`),
   UNIQUE KEY `nroEmpleado_UNIQUE` (`nroEmpleado`),
   UNIQUE KEY `nroCandidato_UNIQUE` (`nroCandidato`)
 ) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1 PACK_KEYS=1;
@@ -223,7 +224,7 @@ CREATE TABLE `cuestionario` (
   KEY `fk_Cuestionario_Candidato1` (`Candidato_idCandidato`),
   CONSTRAINT `fk_Cuestionario_Candidato1` FOREIGN KEY (`Candidato_idCandidato`) REFERENCES `candidato` (`idCandidato`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_Cuestionario_Puesto Evaluado1` FOREIGN KEY (`Puesto Evaluado_idPuesto Evaluado`) REFERENCES `puesto evaluado` (`idPuesto Evaluado`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -232,7 +233,7 @@ CREATE TABLE `cuestionario` (
 
 LOCK TABLES `cuestionario` WRITE;
 /*!40000 ALTER TABLE `cuestionario` DISABLE KEYS */;
-INSERT INTO `cuestionario` VALUES (1,'MNF425',0,1,1,NULL),(2,'ACF698',0,1,3,NULL),(3,'ECM684',0,2,8,NULL),(4,'MMF125',0,2,4,NULL),(5,'WDM158',0,2,10,NULL),(6,'MPF126',0,2,13,NULL);
+INSERT INTO `cuestionario` VALUES (1,'MNF425P1',0,1,1,NULL),(2,'ACF698P1',0,1,3,NULL),(3,'ECM684P2',0,2,8,NULL),(4,'MMF125P2',0,2,4,NULL),(5,'WDM158P2',0,2,10,NULL),(6,'MPF126P2',0,2,13,NULL),(8,'MNF425P3',4,3,1,4);
 /*!40000 ALTER TABLE `cuestionario` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -246,8 +247,7 @@ DROP TABLE IF EXISTS `cuestionario_estado`;
 CREATE TABLE `cuestionario_estado` (
   `Cuestionario_idCuestionario` int(11) NOT NULL,
   `Estado_idEstado` int(11) NOT NULL,
-  `hora` time NOT NULL,
-  `fecha` date NOT NULL,
+  `fecha` datetime NOT NULL,
   PRIMARY KEY (`Cuestionario_idCuestionario`,`Estado_idEstado`),
   KEY `fk_Cuestionario_has_Estado_Estado1` (`Estado_idEstado`),
   KEY `fk_Cuestionario_has_Estado_Cuestionario1` (`Cuestionario_idCuestionario`),
@@ -262,7 +262,7 @@ CREATE TABLE `cuestionario_estado` (
 
 LOCK TABLES `cuestionario_estado` WRITE;
 /*!40000 ALTER TABLE `cuestionario_estado` DISABLE KEYS */;
-INSERT INTO `cuestionario_estado` VALUES (1,1,'09:10:12','2011-12-13'),(1,2,'16:32:21','2011-12-14'),(2,1,'09:10:12','2011-12-13'),(2,2,'18:25:30','2011-12-13'),(3,1,'09:05:33','2011-12-12'),(3,2,'10:15:00','2011-12-14'),(4,1,'09:05:33','2011-12-12'),(5,1,'09:05:33','2011-12-12'),(6,1,'09:05:33','2011-12-12');
+INSERT INTO `cuestionario_estado` VALUES (1,1,'2011-12-13 09:10:12'),(1,2,'2011-12-14 16:32:21'),(2,1,'2011-12-13 09:10:12'),(2,2,'2011-12-13 18:25:30'),(3,1,'2011-12-12 09:05:33'),(3,2,'2011-12-14 10:15:00'),(4,1,'2011-12-12 09:05:33'),(5,1,'2011-12-12 09:05:33'),(6,1,'2011-12-12 09:05:33'),(8,1,'2011-08-10 10:05:32'),(8,5,'2011-08-15 16:02:14');
 /*!40000 ALTER TABLE `cuestionario_estado` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -277,7 +277,7 @@ CREATE TABLE `estado` (
   `idEstado` int(11) NOT NULL AUTO_INCREMENT,
   `estado` varchar(14) NOT NULL,
   PRIMARY KEY (`idEstado`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -286,7 +286,7 @@ CREATE TABLE `estado` (
 
 LOCK TABLES `estado` WRITE;
 /*!40000 ALTER TABLE `estado` DISABLE KEYS */;
-INSERT INTO `estado` VALUES (1,'ACTIVO'),(2,'EN PROCESO'),(3,'SIN CONTESTAR'),(4,'INCOMPLETO');
+INSERT INTO `estado` VALUES (1,'ACTIVO'),(2,'EN PROCESO'),(3,'SIN CONTESTAR'),(4,'INCOMPLETO'),(5,'COMPLETO');
 /*!40000 ALTER TABLE `estado` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -369,7 +369,7 @@ CREATE TABLE `instrucciones de sistema` (
   `tiempoEstadoActivo` int(11) NOT NULL,
   `tiempoParaContestarCuestionario` int(11) NOT NULL,
   `maximosAccesos` int(11) NOT NULL,
-  `instruccionesDelcuestionario` varchar(255) NOT NULL,
+  `instruccionesDelcuestionario` varchar(1000) NOT NULL,
   PRIMARY KEY (`idInstrucciones de Sistema`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -380,7 +380,7 @@ CREATE TABLE `instrucciones de sistema` (
 
 LOCK TABLES `instrucciones de sistema` WRITE;
 /*!40000 ALTER TABLE `instrucciones de sistema` DISABLE KEYS */;
-INSERT INTO `instrucciones de sistema` VALUES (1,5,60,60,4,'\"INSTRUCCIONES\"');
+INSERT INTO `instrucciones de sistema` VALUES (1,5,60,60,4,'INSTRUCCIONES: 1) Presione “Aceptar” luego de haber leído estas instrucciones para dar comienzo a su evaluación. Después de esto se les presentara en la pantalla un bloque con preguntas, y se dará inicio a su evaluación. 2) Lea atentamente las preguntas y conteste una solo opción por cada una. Recuerde que solo pude haber una sola opción contestada y no podrá dejar una pregunta sin su correspondiente respuesta.3) Verifique sus respuestas antes de presionar “siguiente”, no podrá volver a ver el bloque de preguntas una vez pasado al siguiente bloque. 4) Recuerde que tiene un límite de accesos a realizar el cuestionario. Máximo de accesos es…');
 /*!40000 ALTER TABLE `instrucciones de sistema` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -729,7 +729,7 @@ CREATE TABLE `puesto evaluado` (
   `empresa` varchar(20) NOT NULL,
   PRIMARY KEY (`idPuesto Evaluado`),
   UNIQUE KEY `idPuesto Evaluado_UNIQUE` (`idPuesto Evaluado`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -738,7 +738,7 @@ CREATE TABLE `puesto evaluado` (
 
 LOCK TABLES `puesto evaluado` WRITE;
 /*!40000 ALTER TABLE `puesto evaluado` DISABLE KEYS */;
-INSERT INTO `puesto evaluado` VALUES (1,'P01','DESARROLLADOR JAVA',NULL,NULL,'MILENIO'),(2,'P02','DISEÑADOR SISTEMAS',NULL,NULL,'SIMS');
+INSERT INTO `puesto evaluado` VALUES (1,'P01','DESARROLLADOR JAVA',NULL,NULL,'MILENIO'),(2,'P02','DISEÑADOR SISTEMAS',NULL,NULL,'SIMS'),(3,'P03','PROGRAMADOR C++',NULL,1,'MILENIO');
 /*!40000 ALTER TABLE `puesto evaluado` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -840,4 +840,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-12-16 14:18:12
+-- Dump completed on 2011-12-19  5:36:06
