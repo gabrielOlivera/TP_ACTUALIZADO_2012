@@ -81,10 +81,12 @@ namespace Entidades
         {
             return estado.Estado_;
         }
+        
         public DateTime obtenerFechaEstado()
         {
             return estado.Fecha_hora;
         }
+
         public Bloque proximoBloque(Bloque bloqAnterior)
         {
             AdministradorBD admBD = new AdministradorBD();  //intanciacion del administrador base de datos

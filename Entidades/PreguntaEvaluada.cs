@@ -8,6 +8,7 @@ namespace Entidades
 {
     public class PreguntaEvaluada
     {
+        private string codigo;
         private string pregunta;
         private string nombre;
         private string descripcion;
@@ -27,6 +28,12 @@ namespace Entidades
             get { return listaOpcionesEv; }
             set { listaOpcionesEv = value; }
 
+        }
+
+        public string Codigo
+        {
+            get { return codigo; }
+            set { codigo = value; }
         }
 
         public string Nombre
@@ -57,7 +64,7 @@ namespace Entidades
 
         }
 
-        public PreguntaEvaluada(string preg, string nom, FactorEvaluado fact, string des, OpciondeRespuestaEvaluada Op_res_Ev)
+        public PreguntaEvaluada(string preg, string nom, FactorEvaluado fact, OpciondeRespuestaEvaluada Op_res_Ev = null, string des = null)
         {
             pregunta = preg;
             factorAsociado = fact;

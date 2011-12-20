@@ -14,6 +14,10 @@ namespace Entidades
         private string descripcion;
         private int nro_orden;
         private List<PreguntaEvaluada> listaPreguntasEv;
+        private string cod;
+        private string nomFactor;
+        private CompetenciaEvaluada competenciaAsociada;
+        private int nrOrden;
 
         public int Codigo
         {
@@ -58,14 +62,14 @@ namespace Entidades
         }
 
         //Competencia -> Factor -> Pregunta
-        public FactorEvaluado(int cod, string nom, CompetenciaEvaluada comp, string des, int nOrden)
+        public FactorEvaluado(string cod, string nomFactor, CompetenciaEvaluada competenciaAsociada, int nOrden, string des = null)
         {
-            codigo = cod;
-            competenciaAsociadaEv = comp;
-            Nombre = nom;
-            Descripcion = des;
-            Nro_orden = nOrden;
-            listaPreguntasEv = new List<PreguntaEvaluada>();
+            this.cod = cod;
+            this.nomFactor = nomFactor;
+            this.competenciaAsociada = competenciaAsociada;
+            this.nrOrden = nOrden; 
+            this.Descripcion = des;
+            this.listaPreguntasEv = new List<PreguntaEvaluada>();
         }
 
         public void addPregunta(PreguntaEvaluada preg) { listaPreguntasEv.Add(preg); }

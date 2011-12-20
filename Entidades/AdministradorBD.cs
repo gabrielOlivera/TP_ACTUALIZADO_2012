@@ -5,7 +5,6 @@ using System.Text;
 using System.Collections;
 using MySql.Data.MySqlClient;
 using System.Data;
-using System.Windows.Forms;
 
 namespace Entidades
 {
@@ -283,7 +282,7 @@ namespace Entidades
             comando = ObjConexion.CreateCommand();
 
             //La siguiente consulta deberia arrojarme los datos de los cuestionarios que posee el candidato
-            string consultaSql = "SELECT DISTINCT `clave`, `Puesto Evaluado_idPuesto Evaluado` ,`nroaccesos`, `ultimoBloque` ";
+            string consultaSql = "SELECT DISTINCT `clave`, `Puesto Evaluado_idPuesto Evaluado` ,`nroaccesos` ";
             consultaSql += "FROM `cuestionario` cuest ";
             consultaSql += "JOIN `candidato` cand on (cand.`nro documento` = '"+ candidato.NroDoc +"' AND cand.idCandidato = cuest.Candidato_idCandidato) ";
             consultaSql += "JOIN `cuestionario_estado` c_est on (cuest.idCuestionario = c_est.Cuestionario_idCuestionario);";
@@ -306,7 +305,6 @@ namespace Entidades
             {
                 string clave = reader["clave"].ToString();
                 int accesos = Int32.Parse(reader["nroAccesos"].ToString());
-                //int ultimoBloq = Int32.Parse(reader["ultimoBloque"].ToString());
                 int idPuestoEv = Int32.Parse(reader["Puesto Evaluado_idPuesto Evaluado"].ToString());
 
                 Cuestionario cuesAsociado = new Cuestionario(candidato, clave, null, accesos);
@@ -532,7 +530,359 @@ namespace Entidades
             
             return listaDeCompetencias;
         }
+
+        public List<Caracteristica> recuperarCaracteristicasPuesto(PuestoEvaluado puestoEvAsociado)
+        {
+            bool conexionExitosa;
+
+            List<Caracteristica> listaCaracteristicas = new List<Caracteristica>();
+            Caracteristica elementoLista = new Caracteristica();
+            //La consulta selecciona las competencias asociadas al puesto pasado como parametro con su correspondiente ponderacion
+            string consultaSql = "SELECT `Competencia Evaluada_idCompetencia Evaluada`, `ponderacion` ";
+            consultaSql += "FROM `puesto evaluado_competencia evaluada` ponderaciones ";
+            consultaSql += "JOIN `tp base de datos`.`puesto evaluado` p on (p.`codigo` = '" + puestoEvAsociado.Codigo + "') ";
+            consultaSql += "WHERE p.`idPuesto Evaluado` = ponderaciones.`Puesto Evaluado_idPuesto Evaluado`;";
+
+            conexionExitosa = iniciarConexion();
+
+            if (!conexionExitosa)
+            {
+                elementoLista.dato1 = "No se realizo la conexion con la base de datos";
+                listaCaracteristicas.Add(elementoLista);
+                terminarConexion();
+                return listaCaracteristicas;
+            }
+
+            MySql.Data.MySqlClient.MySqlCommand comando;
+            comando = ObjConexion.CreateCommand();
+            comando.CommandText = consultaSql;
+
+            MySqlDataReader reader = comando.ExecuteReader();
+
+            if (!reader.HasRows)
+            { //si el reader esta vacio, es qe no encontro a ese candidato
+                elementoLista.dato1 = "El puesto no posee competencias para ser evaluado";
+                listaCaracteristicas.Add(elementoLista);
+                terminarConexion();
+                return listaCaracteristicas;
+            }
+
+            List<Caracteristica> listaRetorno = new List<Caracteristica>();
+            while (reader.Read())
+            {
+                int idCompetenciaEv = Int32.Parse(reader["Competencia Evaluada_idCompetencia Evaluada"].ToString());
+                int ponderacion = Int32.Parse(reader["ponderacion"].ToString());
+
+                elementoLista.dato1 = idCompetenciaEv;
+                elementoLista.dato2 = ponderacion;
+                listaRetorno.Add(elementoLista);
+            }
+            terminarConexion();
+
+            //ArrayList listaCompetenciasAsociadas = new ArrayList();
+            for (int i = 0; i < listaRetorno.Count; i++)
+            {
+                ArrayList competenciaAs = recuperarCompetenciasEvaluadas((int)listaRetorno[i].dato1);
+                if ((competenciaAs[0] is string) == false)
+                {
+                    Ponderacion pondeAs = new Ponderacion((int)listaRetorno[i].dato2);
+                    elementoLista.dato1 = competenciaAs[0];
+                    elementoLista.dato2 = pondeAs;
+                    listaCaracteristicas.Add(elementoLista);
+                }
+            }
+
+            return listaCaracteristicas;
+        }
+
+        public ArrayList recuperarCompetenciasEvaluadas(int idCompetenciaEv)
+        {
+            bool conexionExitosa;
+            ArrayList listaDeCompetencias = new ArrayList();
+
+            string consultaSql = "SELECT * FROM `competencia evaluada` WHERE `competencia evaluada`.`idCompetencia Evaluada` ='" + idCompetenciaEv + "';";
+
+            conexionExitosa = iniciarConexion();
+
+            if (!conexionExitosa)
+            {
+                listaDeCompetencias.Add("No se realizo la conexion con la base de datos");
+                terminarConexion();
+                return listaDeCompetencias;
+            }
+
+
+            MySql.Data.MySqlClient.MySqlCommand comando;
+            comando = ObjConexion.CreateCommand();
+            comando.CommandText = consultaSql;
+
+            MySqlDataReader reader = comando.ExecuteReader();
+
+            if (!reader.HasRows)
+            { //si el reader esta vacio, es qe no encontro a ese candidato
+                listaDeCompetencias.Add("El puesto no posee competencias para ser evaluado");
+                terminarConexion();
+                return listaDeCompetencias;
+            }
+
+            while (reader.Read())
+            {
+                string cod = reader["codigo"].ToString();
+                string nomComp = reader["nombre"].ToString();
+                string descrip = reader["descripcion"].ToString();
+
+                CompetenciaEvaluada competenciaEv = new CompetenciaEvaluada(cod, nomComp, descrip);
+                listaDeCompetencias.Add(competenciaEv);
+            }
+            terminarConexion();
+            
+            //Agregamos la lista de Factores para cada una de las competencias encontradas
+            for (int i = 0; i < listaDeCompetencias.Count ; i++)
+            {
+                ArrayList factoresList = recuperarFactoresEvaluados((CompetenciaEvaluada)listaDeCompetencias[i]);
+
+                for (int j = 0; j < factoresList.Count; j++)
+                {
+                    CompetenciaEvaluada compT = (CompetenciaEvaluada)listaDeCompetencias[j];
+                    compT.addFactor((FactorEvaluado)factoresList[j]);
+                }
+            }
+
+            return listaDeCompetencias;
+        }
+
+        public ArrayList recuperarFactoresEvaluados(CompetenciaEvaluada competenciaAsociada)
+        {
+            bool conexionExitosa;
+            ArrayList listaDeFactores = new ArrayList();
+
+            string consultaSql = "SELECT `factor evaluado`.nombre ,`factor evaluado`.codigo ,nroOrden " +
+            "FROM `factor evaluado` " +
+            "JOIN `competencia evaluada` comEv on (comEv.`codigo` = '"+ competenciaAsociada.Codigo +"') " +
+            "WHERE `factor evaluado`.`Competencia Evaluada_idCompetencia Evaluada` = comEv.`idCompetencia Evaluada`;";
+            conexionExitosa = iniciarConexion();
+
+            if (!conexionExitosa)
+            {
+                listaDeFactores.Add("No se realizo la conexion con la base de datos");
+                terminarConexion();
+                return listaDeFactores;
+            }
+
+
+            MySql.Data.MySqlClient.MySqlCommand comando;
+            comando = ObjConexion.CreateCommand();
+            comando.CommandText = consultaSql;
+
+            MySqlDataReader reader = comando.ExecuteReader();
+
+            if (!reader.HasRows)
+            { //si el reader esta vacio, es qe no encontro a ese candidato
+                listaDeFactores.Add("El puesto no posee competencias para ser evaluado");
+                terminarConexion();
+                return listaDeFactores;
+            }
+
+            while (reader.Read())
+            {
+                string cod = reader["`factor evaluado`.codigo"].ToString();
+                string nomFactor = reader["`factor evaluado`.nombre"].ToString();
+                int nrOrden = Int32.Parse(reader["nroOrden"].ToString());
+
+                FactorEvaluado factorEv = new FactorEvaluado(cod, nomFactor, competenciaAsociada, nrOrden); 
+                listaDeFactores.Add(factorEv);
+            }
+            terminarConexion();
+
+            //Agregamos la lista de Factores para cada una de las competencias encontradas
+            for (int i = 0; i < listaDeFactores.Count; i++)
+            {
+                ArrayList factoresList = recuperarPreguntasEvaluados((FactorEvaluado)listaDeFactores[i]);
+
+                for (int j = 0; j < factoresList.Count; j++)
+                {
+                    FactorEvaluado factoR = (FactorEvaluado)listaDeFactores[j];
+                    factoR.addPregunta((PreguntaEvaluada)factoresList[j]);
+                }
+            }
+            
+            return listaDeFactores;
+        }
+
+        public ArrayList recuperarPreguntasEvaluados(FactorEvaluado factorAsociado)
+        {
+            bool conexionExitosa;
+            ArrayList listaDePreguntas = new ArrayList();
+
+            string consultaSql = "SELECT `pregunta evaluada`.nombre ,`pregunta evaluada`.codigo, `pregunta evaluada`.pregunta, `pregunta evaluada`.`Opcion de Respuesta Evaluada_idOpcion de Respuesta Evaluada` "
+            + "FROM `pregunta evaluada` "
+            + "JOIN `factor evaluado` fac on (fac.`codigo` = '"+ factorAsociado.Codigo +"') "
+            + "WHERE `pregunta evaluada`.`Factor Evaluado_idFactor Evaluado` = fac.`idFactor Evaluado`;";
+
+            conexionExitosa = iniciarConexion();
+
+            if (!conexionExitosa)
+            {
+                listaDePreguntas.Add("No se realizo la conexion con la base de datos");
+                terminarConexion();
+                return listaDePreguntas;
+            }
+
+
+            MySql.Data.MySqlClient.MySqlCommand comando;
+            comando = ObjConexion.CreateCommand();
+            comando.CommandText = consultaSql;
+
+            MySqlDataReader reader = comando.ExecuteReader();
+
+            if (!reader.HasRows)
+            { //si el reader esta vacio, es qe no encontro a ese candidato
+                listaDePreguntas.Add("El puesto no posee competencias para ser evaluado");
+                terminarConexion();
+                return listaDePreguntas;
+            }
+
+            List<int> listaIdOpRespuesta = new List<int>();
+            while (reader.Read())
+            {
+                string cod = reader["`pregunta evaluada`.codigo"].ToString();
+                string nomPreg = reader["`pregunta evaluada`.nombre"].ToString();
+                string preg = reader["`pregunta evaluada`.pregunta"].ToString();
+                int idOpRespuesta = Int32.Parse(reader["`pregunta evaluada`.`Opcion de Respuesta Evaluada_idOpcion de Respuesta Evaluada`"].ToString());
+
+                PreguntaEvaluada preguntaEv = new PreguntaEvaluada(preg, nomPreg, factorAsociado);
+                listaDePreguntas.Add(preguntaEv);
+                listaIdOpRespuesta.Add(idOpRespuesta);
+            }
+            terminarConexion();
+
+            //Agregamos la listas de Opciones de respuesta y las opciones para cada una de las preguntas encontradas
+            for (int i = 0; i < listaDePreguntas.Count; i++)
+            {
+                ArrayList opcionesRespuesta = recuperarOpcionRespuestaEvaluada(listaIdOpRespuesta[i]);
+                List<OpcionesEvaluadas> opciones = recuperarOpcionesEvaluadas((PreguntaEvaluada)listaDePreguntas[i]);
+                for (int j = 0; j < opcionesRespuesta.Count; j++)
+                {
+                    OpciondeRespuestaEvaluada opcRespuestaEv = (OpciondeRespuestaEvaluada)opcionesRespuesta[j];
+                    opcRespuestaEv.ListaOpcionesEv = opciones; //Realizo la asignacion de la lista de opciones evaluadas en las opciones de respuesta
+
+                    //Realizo la asignacion de las opciones de respuestas y las opciones corespondientes para la pregunta
+                    PreguntaEvaluada preguntaEv = (PreguntaEvaluada)listaDePreguntas[j];
+                    preguntaEv.Op_respuestaEv = opcRespuestaEv;
+                    preguntaEv.ListaOpcionesEv = opciones;
+                }
+            }
+
+            return listaDePreguntas;
+        }
+
+        public List<OpcionesEvaluadas> recuperarOpcionesEvaluadas(PreguntaEvaluada pregAsociada) 
+        {
+            bool conexionExitosa;
+            List<OpcionesEvaluadas> listaDeOpciones = new List<OpcionesEvaluadas>();
+
+            string consultaSql = "SELECT DISTINCT opc.nombre, opR_opc.ordenDeVisualizacion, pr_opc.ponderacion" +
+            "FROM `opcion evaluada` opc " +
+            "JOIN `opcion de respuesta evaluada_opcion evaluada` opR_opc on (opR_opc.`Opcion Evaluada_idOpcion` = opc.`idOpcion`) " +
+            "JOIN `pregunta evaluada` pr on (pr.`Opcion de Respuesta Evaluada_idOpcion de Respuesta Evaluada` = opR_opc.`Opcion de Respuesta Evaluada_idOpcion de Respuesta Evaluada`) " +
+            "JOIN `pregunta evaluada_opcion evaluada` pr_opc on (pr_opc.`Pregunta Evaluada_idPregunta Evaluada` = pr.`idPregunta Evaluada`) " +
+            "WHERE pr.codigo = '" + pregAsociada.Codigo + "';";
+
+            conexionExitosa = iniciarConexion();
+
+            if (!conexionExitosa)
+            {
+                listaDeOpciones.Add(null);
+                terminarConexion();
+                return listaDeOpciones;
+            }
+
+            MySql.Data.MySqlClient.MySqlCommand comando;
+            comando = ObjConexion.CreateCommand();
+            comando.CommandText = consultaSql;
+
+            MySqlDataReader reader = comando.ExecuteReader();
+
+            if (!reader.HasRows)
+            { //si el reader esta vacio, es qe no encontro a ese candidato
+                listaDeOpciones.Add(null);
+                terminarConexion();
+                return listaDeOpciones;
+            }
+
+            while (reader.Read())
+            {
+                //opc.nombre, opR_opc.ordenDeVisualizacion, pr.`idPregunta Evaluada`
+                string nomOpcion = reader["opc.nombre"].ToString();
+                int ponderacion = Int32.Parse(reader["pr_opc.ponderacion"].ToString());
+                int idOpcion = Int32.Parse(reader["opR_opc.ordenDeVisualizacion"].ToString());
+
+                OpcionesEvaluadas preguntaEv = new OpcionesEvaluadas(nomOpcion, ponderacion);
+                listaDeOpciones.Add(preguntaEv);
+            }
+            terminarConexion();
+
+            return listaDeOpciones;
+        }
+
+        public ArrayList recuperarOpcionRespuestaEvaluada(int idOpcionDeRespuesta)
+        {
+            bool conexionExitosa;
+            ArrayList listaDeOpRespuesta = new ArrayList();
+
+            string consultaSql = "SELECT * FROM `opcion de respuesta evaluada` opcRes WHERE opcRes.`idOpcion de Respuesta Evaluada` = '" + idOpcionDeRespuesta + "';";
+
+            conexionExitosa = iniciarConexion();
+
+            if (!conexionExitosa)
+            {
+                listaDeOpRespuesta.Add("No se pudo realizar la conexion con la base de datos");
+                terminarConexion();
+                return listaDeOpRespuesta;
+            }
+
+            MySql.Data.MySqlClient.MySqlCommand comando;
+            comando = ObjConexion.CreateCommand();
+            comando.CommandText = consultaSql;
+
+            MySqlDataReader reader = comando.ExecuteReader();
+
+            if (!reader.HasRows)
+            { //si el reader esta vacio, es qe no encontro a esa opcion de respuesta evaluada
+                listaDeOpRespuesta.Add("No se encontro la opcion de respuesta solicitada");
+                terminarConexion();
+                return listaDeOpRespuesta;
+            }
+
+            while (reader.Read())
+            {
+                string nomOpcionResp = reader["nombre"].ToString();
+                string codigo = reader["codigo"].ToString();
                 
+                OpciondeRespuestaEvaluada OpcionResp = new OpciondeRespuestaEvaluada(nomOpcionResp, codigo);
+                listaDeOpRespuesta.Add(OpcionResp);
+            }
+            terminarConexion();
+
+            return listaDeOpRespuesta; 
+        }
+
+        public bool reconstruirRelaciones(Cuestionario cuestionarioAsociado)
+        {
+            bool seRealizoConExito = false;
+            PuestoEvaluado puestoEvAsociado = cuestionarioAsociado.PuestoEvaluado;
+
+            if (puestoEvAsociado.Caracteristicas == null)
+            {
+                List<Caracteristica> caracteristicasPuesto = recuperarCaracteristicasPuesto(puestoEvAsociado);
+                puestoEvAsociado.Caracteristicas = caracteristicasPuesto;
+                seRealizoConExito = true;
+            }
+
+            return seRealizoConExito;
+
+        }
+
         //Metodos de resguardo de clases
         public void guardarPuesto(Puesto puesto) { }
         public void guardarRespuesta(Respuestas respuesta) { }

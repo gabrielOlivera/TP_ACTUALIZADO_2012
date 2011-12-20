@@ -19,20 +19,20 @@ namespace TpDiseñoCSharp
         public LoginConsultor()
         {
             InitializeComponent();
-      
         }
 
         private void Entrar_Click(object sender, EventArgs e)
         {
-            /*if (!validarAlphanum.validarCamposAlfanum(Usuario.Text))
+            if (!validarAlphanum.validarCamposAlfanum(Usuario.Text))
             {
                 if (!validarAlphanum.validarCamposAlfanum(Contraseña.Text))
                 {
                     if (Contraseña.Text.Length > 7)
-                    {*/
+                    {
                         MenuPrincipalConsultor menuConsultor = new MenuPrincipalConsultor(Usuario.Text);
-                        menuConsultor.ShowDialog();
-                   /* }
+                        this.Close();
+                        menuConsultor.Show();
+                    }
                     else
                     {
                         MessageBox.Show("La contraseña debe ser de 8 caracteres como mínimo", "Atención",
@@ -57,27 +57,28 @@ namespace TpDiseñoCSharp
                 limpiarTextBoxFormulario(this);
                 this.ActiveControl = Usuario;
             }
-            */
         }
 
         //Si presiona el boton cancelar, se cierra la pantalla "LoginConsultor" y se vuelve a la "PantallaPrincipal"
-        private void Cancelar_Click(object sender, EventArgs e)
+        /*private void Cancelar_Click(object sender, EventArgs e)
         {
-            GestorCandidatos gestorCand = new GestorCandidatos();
+            //GestorCandidatos gestorCand = new GestorCandidatos();
 
-            MessageBox.Show(gestorCand.validarCandidato("DNI", "32563425", "MNF425P1").ToString());
-
-            /*AdministradorBD adminBD = new AdministradorBD();
-            ArrayList lista = adminBD.recuperarCandidato("DNI", "32563425");
-            MessageBox.Show(lista[0].ToString());
+            //MessageBox.Show(gestorCand.validarCandidato("DNI", "32563425", "MNF425P1").ToString());
+            /*
+            AdministradorBD adminBD = new AdministradorBD();
+            ArrayList opcRespuesta = adminBD.recuperarOpcionRespuestaEvaluada(65);
+            //ArrayList lista = adminBD.recuperarCandidato("DNI", "32563425");
+            MessageBox.Show(opcRespuesta[0].ToString());
             int i = 0;
-            Candidato cnad = null;
-            while (i < lista.Count)
+            OpciondeRespuestaEvaluada cnad = null;
+            while (i < opcRespuesta.Count)
             {
-                cnad = (Candidato)lista[i];
-                MessageBox.Show(cnad.Nombre + " " + cnad.NroDoc);
+                cnad = (OpciondeRespuestaEvaluada)opcRespuesta[i];
+                MessageBox.Show(cnad.Nombre + " " + cnad.Codigo);
                 i++;
             }
+            /*
             GestorCuestionario gestCuest = new GestorCuestionario();
 
             ArrayList retorno = adminBD.recuperarCuestionarioActivo(cnad);
@@ -122,13 +123,11 @@ namespace TpDiseñoCSharp
                 MessageBox.Show(cuest.Clave + " " + cuest.PuestoEvaluado);
                 i++;
             }
-            */
+            
             Close();
-        }
+        }*/
        
-
-
-
+        
        // Declaramos nuestro metodo que hara la limpieza de los textbox
         private void limpiarTextBoxFormulario(Form formulario)
         {
@@ -148,10 +147,10 @@ namespace TpDiseñoCSharp
             }
         }
 
-        /*private void Cancelar_Click(object sender, EventArgs e)
+        private void Cancelar_Click(object sender, EventArgs e)
         {
             Close();
-        }*/
+        }
       
 
     }

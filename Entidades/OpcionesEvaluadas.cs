@@ -24,10 +24,10 @@ namespace Entidades
 
         }
 
-        public OpcionesEvaluadas(string nom, int valor2)
+        public OpcionesEvaluadas(string nom, int ponderacion)
         {
             nombre = nom;
-            valor = valor2;
+            valor = ponderacion;
         }
 
 
