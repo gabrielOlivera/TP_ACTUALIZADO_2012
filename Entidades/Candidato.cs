@@ -7,7 +7,7 @@ namespace Entidades
 {
     public class Candidato
     {
-        private string nroDoc, nombre, apellido, tipoDoc;
+        private string nroDoc, nombre, apellido, tipoDoc, clave;
         private int  nroCandidato, nroEmpleado;
 
         public int NroEmpleado
@@ -22,6 +22,12 @@ namespace Entidades
             get { return nroCandidato; }
             set { nroCandidato = value; }
 
+        }
+
+        public string Clave
+        {
+            get { return clave; }
+            set { clave = value; }
         }
 
         public string NroDoc

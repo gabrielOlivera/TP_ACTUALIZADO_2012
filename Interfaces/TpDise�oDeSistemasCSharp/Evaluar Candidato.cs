@@ -22,6 +22,7 @@ namespace TpDiseñoCSharp
             pantallaPrincipal = pantallaPrincipal_parametro;
             pantallaAnterior.Close();
             listaCandidatos_agregados = new List<Candidato>();
+            this.Fecha.Text = DateTime.Now.ToLongDateString();
             this.Consultor.Text = user;
         }
 
@@ -62,7 +63,7 @@ namespace TpDiseñoCSharp
             }
             else
             {
-                Evaluar_Candidatos___Ventana_2 evCandidatos2 = new Evaluar_Candidatos___Ventana_2(this.Consultor.Text, listaCandidatos_agregados);
+                Evaluar_Candidatos___Ventana_2 evCandidatos2 = new Evaluar_Candidatos___Ventana_2(this.Consultor.Text, listaCandidatos_agregados, this, pantallaPrincipal);
                 evCandidatos2.ShowDialog();
             }
         }

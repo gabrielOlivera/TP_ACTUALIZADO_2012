@@ -75,3 +75,10 @@ C:\Users\Administrador\Desktop\TP_disenio2012\Gestores\bin\Debug\Entidades.pdb
 C:\Users\Administrador\Desktop\TP_disenio2012\Gestores\obj\Debug\ResolveAssemblyReference.cache
 C:\Users\Administrador\Desktop\TP_disenio2012\Gestores\obj\Debug\Gestores.dll
 C:\Users\Administrador\Desktop\TP_disenio2012\Gestores\obj\Debug\Gestores.pdb
+C:\Documents and Settings\Administrador\Escritorio\TP 2012 repositorio\Gestores\bin\Debug\Gestores.dll
+C:\Documents and Settings\Administrador\Escritorio\TP 2012 repositorio\Gestores\bin\Debug\Gestores.pdb
+C:\Documents and Settings\Administrador\Escritorio\TP 2012 repositorio\Gestores\bin\Debug\Entidades.dll
+C:\Documents and Settings\Administrador\Escritorio\TP 2012 repositorio\Gestores\bin\Debug\Entidades.pdb
+C:\Documents and Settings\Administrador\Escritorio\TP 2012 repositorio\Gestores\obj\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\Administrador\Escritorio\TP 2012 repositorio\Gestores\obj\Debug\Gestores.dll
+C:\Documents and Settings\Administrador\Escritorio\TP 2012 repositorio\Gestores\obj\Debug\Gestores.pdb

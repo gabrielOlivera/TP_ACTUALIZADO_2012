@@ -37,13 +37,13 @@
             this.TituloEmpresa = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.candidatos_claves = new System.Windows.Forms.DataGridView();
             this.Atras = new System.Windows.Forms.Button();
             this.Finalizar = new System.Windows.Forms.Button();
             this.PanelInferior.SuspendLayout();
             this.PanelSuperior.SuspendLayout();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.candidatos_claves)).BeginInit();
             this.SuspendLayout();
             // 
             // Consultor
@@ -135,7 +135,7 @@
             // groupBox1
             // 
             this.groupBox1.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.groupBox1.Controls.Add(this.dataGridView1);
+            this.groupBox1.Controls.Add(this.candidatos_claves);
             this.groupBox1.Location = new System.Drawing.Point(100, 105);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(509, 323);
@@ -143,17 +143,17 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Presione finalizar para resguardar los datos de la busqueda";
             // 
-            // dataGridView1
+            // candidatos_claves
             // 
-            this.dataGridView1.AllowUserToAddRows = false;
-            this.dataGridView1.AllowUserToDeleteRows = false;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(6, 30);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(497, 277);
-            this.dataGridView1.TabIndex = 0;
+            this.candidatos_claves.AllowUserToAddRows = false;
+            this.candidatos_claves.AllowUserToDeleteRows = false;
+            this.candidatos_claves.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.candidatos_claves.Location = new System.Drawing.Point(6, 30);
+            this.candidatos_claves.Name = "candidatos_claves";
+            this.candidatos_claves.ReadOnly = true;
+            this.candidatos_claves.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.candidatos_claves.Size = new System.Drawing.Size(497, 277);
+            this.candidatos_claves.TabIndex = 0;
             // 
             // Atras
             // 
@@ -164,6 +164,7 @@
             this.Atras.TabIndex = 18;
             this.Atras.Text = "<< Atrás";
             this.Atras.UseVisualStyleBackColor = true;
+            this.Atras.Click += new System.EventHandler(this.Atras_Click);
             // 
             // Finalizar
             // 
@@ -174,6 +175,7 @@
             this.Finalizar.TabIndex = 19;
             this.Finalizar.Text = "Finalizar";
             this.Finalizar.UseVisualStyleBackColor = true;
+            this.Finalizar.Click += new System.EventHandler(this.Finalizar_Click);
             // 
             // Evaluar_Candidatos___Ventana_3
             // 
@@ -195,7 +197,7 @@
             this.PanelSuperior.ResumeLayout(false);
             this.PanelSuperior.PerformLayout();
             this.groupBox1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.candidatos_claves)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -211,7 +213,7 @@
         private System.Windows.Forms.Label TituloEmpresa;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView candidatos_claves;
         private System.Windows.Forms.Button Atras;
         private System.Windows.Forms.Button Finalizar;
     }

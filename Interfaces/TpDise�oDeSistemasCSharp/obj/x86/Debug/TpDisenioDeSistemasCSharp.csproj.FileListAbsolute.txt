@@ -207,3 +207,33 @@ C:\Users\Administrador\Desktop\TP_disenio2012\Interfaces\TpDiseñoDeSistemasCSha
 C:\Users\Administrador\Desktop\TP_disenio2012\Interfaces\TpDiseñoDeSistemasCSharp\obj\x86\Debug\TpDiseñoCSharp.Seleccion_de_evaluaciones.resources
 C:\Users\Administrador\Desktop\TP_disenio2012\Interfaces\TpDiseñoDeSistemasCSharp\obj\x86\Debug\GenerateResource.read.1.tlog
 C:\Users\Administrador\Desktop\TP_disenio2012\Interfaces\TpDiseñoDeSistemasCSharp\obj\x86\Debug\GenerateResource.write.1.tlog
+C:\Documents and Settings\Administrador\Escritorio\TP 2012 repositorio\Interfaces\TpDiseñoDeSistemasCSharp\obj\x86\Debug\VentanaGeneralTpDiseño.exe
+C:\Documents and Settings\Administrador\Escritorio\TP 2012 repositorio\Interfaces\TpDiseñoDeSistemasCSharp\obj\x86\Debug\VentanaGeneralTpDiseño.pdb
+C:\Documents and Settings\Administrador\Escritorio\TP 2012 repositorio\Interfaces\TpDiseñoDeSistemasCSharp\bin\Debug\VentanaGeneralTpDiseño.exe
+C:\Documents and Settings\Administrador\Escritorio\TP 2012 repositorio\Interfaces\TpDiseñoDeSistemasCSharp\bin\Debug\VentanaGeneralTpDiseño.pdb
+C:\Documents and Settings\Administrador\Escritorio\TP 2012 repositorio\Interfaces\TpDiseñoDeSistemasCSharp\bin\Debug\Entidades.dll
+C:\Documents and Settings\Administrador\Escritorio\TP 2012 repositorio\Interfaces\TpDiseñoDeSistemasCSharp\bin\Debug\Gestores.dll
+C:\Documents and Settings\Administrador\Escritorio\TP 2012 repositorio\Interfaces\TpDiseñoDeSistemasCSharp\bin\Debug\Validacion.dll
+C:\Documents and Settings\Administrador\Escritorio\TP 2012 repositorio\Interfaces\TpDiseñoDeSistemasCSharp\bin\Debug\Entidades.pdb
+C:\Documents and Settings\Administrador\Escritorio\TP 2012 repositorio\Interfaces\TpDiseñoDeSistemasCSharp\bin\Debug\Gestores.pdb
+C:\Documents and Settings\Administrador\Escritorio\TP 2012 repositorio\Interfaces\TpDiseñoDeSistemasCSharp\bin\Debug\Validacion.pdb
+C:\Documents and Settings\Administrador\Escritorio\TP 2012 repositorio\Interfaces\TpDiseñoDeSistemasCSharp\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\Administrador\Escritorio\TP 2012 repositorio\Interfaces\TpDiseñoDeSistemasCSharp\obj\x86\Debug\TpDiseñoCSharp.Alta_De_Puesto.resources
+C:\Documents and Settings\Administrador\Escritorio\TP 2012 repositorio\Interfaces\TpDiseñoDeSistemasCSharp\obj\x86\Debug\TpDiseñoCSharp.Completar_Cuestionario.resources
+C:\Documents and Settings\Administrador\Escritorio\TP 2012 repositorio\Interfaces\TpDiseñoDeSistemasCSharp\obj\x86\Debug\TpDiseñoCSharp.Evaluar_Candidatos___Ventana_3.resources
+C:\Documents and Settings\Administrador\Escritorio\TP 2012 repositorio\Interfaces\TpDiseñoDeSistemasCSharp\obj\x86\Debug\TpDiseñoCSharp.Modificar_Puesto_o_Funcion.resources
+C:\Documents and Settings\Administrador\Escritorio\TP 2012 repositorio\Interfaces\TpDiseñoDeSistemasCSharp\obj\x86\Debug\TpDiseñoCSharp.OrdenDeMerito_VistaImpresion.resources
+C:\Documents and Settings\Administrador\Escritorio\TP 2012 repositorio\Interfaces\TpDiseñoDeSistemasCSharp\obj\x86\Debug\TpDiseñoCSharp.PantallaPrincipal.resources
+C:\Documents and Settings\Administrador\Escritorio\TP 2012 repositorio\Interfaces\TpDiseñoDeSistemasCSharp\obj\x86\Debug\TpDiseñoCSharp.Cuestionario_Instrucciones.resources
+C:\Documents and Settings\Administrador\Escritorio\TP 2012 repositorio\Interfaces\TpDiseñoDeSistemasCSharp\obj\x86\Debug\TpDiseñoCSharp.Emitir_Orden_de_Mérito.resources
+C:\Documents and Settings\Administrador\Escritorio\TP 2012 repositorio\Interfaces\TpDiseñoDeSistemasCSharp\obj\x86\Debug\TpDiseñoCSharp.Evaluar_Candidato.resources
+C:\Documents and Settings\Administrador\Escritorio\TP 2012 repositorio\Interfaces\TpDiseñoDeSistemasCSharp\obj\x86\Debug\TpDiseñoCSharp.Evaluar_Candidatos___Ventana_2.resources
+C:\Documents and Settings\Administrador\Escritorio\TP 2012 repositorio\Interfaces\TpDiseñoDeSistemasCSharp\obj\x86\Debug\TpDiseñoCSharp.Gestionar_Puestos.resources
+C:\Documents and Settings\Administrador\Escritorio\TP 2012 repositorio\Interfaces\TpDiseñoDeSistemasCSharp\obj\x86\Debug\TpDiseñoCSharp.Lista_de_Candidatos.resources
+C:\Documents and Settings\Administrador\Escritorio\TP 2012 repositorio\Interfaces\TpDiseñoDeSistemasCSharp\obj\x86\Debug\TpDiseñoCSharp.LoginCandidato.resources
+C:\Documents and Settings\Administrador\Escritorio\TP 2012 repositorio\Interfaces\TpDiseñoDeSistemasCSharp\obj\x86\Debug\TpDiseñoCSharp.LoginConsultor.resources
+C:\Documents and Settings\Administrador\Escritorio\TP 2012 repositorio\Interfaces\TpDiseñoDeSistemasCSharp\obj\x86\Debug\TpDiseñoCSharp.MenuPrincipalConsultor.resources
+C:\Documents and Settings\Administrador\Escritorio\TP 2012 repositorio\Interfaces\TpDiseñoDeSistemasCSharp\obj\x86\Debug\TpDiseñoCSharp.Properties.Resources.resources
+C:\Documents and Settings\Administrador\Escritorio\TP 2012 repositorio\Interfaces\TpDiseñoDeSistemasCSharp\obj\x86\Debug\TpDiseñoCSharp.Seleccion_de_evaluaciones.resources
+C:\Documents and Settings\Administrador\Escritorio\TP 2012 repositorio\Interfaces\TpDiseñoDeSistemasCSharp\obj\x86\Debug\GenerateResource.read.1.tlog
+C:\Documents and Settings\Administrador\Escritorio\TP 2012 repositorio\Interfaces\TpDiseñoDeSistemasCSharp\obj\x86\Debug\GenerateResource.write.1.tlog

@@ -48,3 +48,8 @@ C:\Documents and Settings\Administrador\Escritorio\TP_disenio2012\Entidades\bin\
 C:\Documents and Settings\Administrador\Escritorio\TP_disenio2012\Entidades\obj\Debug\ResolveAssemblyReference.cache
 C:\Documents and Settings\Administrador\Escritorio\TP_disenio2012\Entidades\obj\Debug\Entidades.dll
 C:\Documents and Settings\Administrador\Escritorio\TP_disenio2012\Entidades\obj\Debug\Entidades.pdb
+C:\Documents and Settings\Administrador\Escritorio\TP 2012 repositorio\Entidades\bin\Debug\Entidades.dll
+C:\Documents and Settings\Administrador\Escritorio\TP 2012 repositorio\Entidades\bin\Debug\Entidades.pdb
+C:\Documents and Settings\Administrador\Escritorio\TP 2012 repositorio\Entidades\obj\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\Administrador\Escritorio\TP 2012 repositorio\Entidades\obj\Debug\Entidades.dll
+C:\Documents and Settings\Administrador\Escritorio\TP 2012 repositorio\Entidades\obj\Debug\Entidades.pdb

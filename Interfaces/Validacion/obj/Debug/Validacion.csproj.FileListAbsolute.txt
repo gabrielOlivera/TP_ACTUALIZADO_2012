@@ -43,3 +43,8 @@ C:\Users\Administrador\Desktop\TP_disenio2012\Interfaces\Validacion\bin\Debug\Va
 C:\Users\Administrador\Desktop\TP_disenio2012\Interfaces\Validacion\obj\Debug\ResolveAssemblyReference.cache
 C:\Users\Administrador\Desktop\TP_disenio2012\Interfaces\Validacion\obj\Debug\Validacion.dll
 C:\Users\Administrador\Desktop\TP_disenio2012\Interfaces\Validacion\obj\Debug\Validacion.pdb
+C:\Documents and Settings\Administrador\Escritorio\TP 2012 repositorio\Interfaces\Validacion\bin\Debug\Validacion.dll
+C:\Documents and Settings\Administrador\Escritorio\TP 2012 repositorio\Interfaces\Validacion\bin\Debug\Validacion.pdb
+C:\Documents and Settings\Administrador\Escritorio\TP 2012 repositorio\Interfaces\Validacion\obj\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\Administrador\Escritorio\TP 2012 repositorio\Interfaces\Validacion\obj\Debug\Validacion.dll
+C:\Documents and Settings\Administrador\Escritorio\TP 2012 repositorio\Interfaces\Validacion\obj\Debug\Validacion.pdb

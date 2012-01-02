@@ -131,25 +131,25 @@ namespace Gestores
             MySql.Data.MySqlClient.MySqlCommand comando;
             comando = ObjConexion.CreateCommand();
             //En el adaptador comando hacemos un asignacion en su atributo CommandText de la consultaSql
-            comando.CommandText = consultaSql; 
+            comando.CommandText = consultaSql;
 
             //Se hace la ejecucion del comando con el metodo ExecuterReader 
             //y se lo asigna a una variable reader que contendra los resultados de la busqueda en la base de datos
             MySqlDataReader reader = comando.ExecuteReader();
 
             if (!reader.HasRows)
-            { 
+            {
                 //si el reader esta vacio, es que no se encontraron datos para la consulta realizada
                 MessageBox.Show("No se encontro ningún puesto");
                 terminarConexion();
                 return null;
             }
-            
+
             //Si el reader contiene datos, se realiza la lectura de todos los ellos.
             while (reader.Read())
             {
                 Puesto objPuesto;
-                
+
                 if (reader["eliminado"].ToString() == "")
                 {
                     string cod = reader["codigo"].ToString();
@@ -161,7 +161,7 @@ namespace Gestores
                     //El retorno del metodo del gestor es introducido en la lista de puestos    
                     listaDePuestos.Add(objPuesto);
                 }
-                    
+
             }
 
             terminarConexion();
@@ -197,17 +197,17 @@ namespace Gestores
             {
                 if ((reader["eliminado"].ToString()) == "")
                 {
-                string cod = reader["codigo"].ToString();
-                string nomPuesto = reader["nombre"].ToString();
-                string emp = reader["empresa"].ToString();
-                string desc = reader["descripcion"].ToString();
+                    string cod = reader["codigo"].ToString();
+                    string nomPuesto = reader["nombre"].ToString();
+                    string emp = reader["empresa"].ToString();
+                    string desc = reader["descripcion"].ToString();
 
-                objPuesto = gestorPuestos.instanciarPuesto(cod, nomPuesto, emp, desc);
+                    objPuesto = gestorPuestos.instanciarPuesto(cod, nomPuesto, emp, desc);
                 }
-                 else
-                     objPuesto = gestorPuestos.instanciarPuesto("ELIMINADO", null, null);
+                else
+                    objPuesto = gestorPuestos.instanciarPuesto("ELIMINADO", null, null);
 
-               
+
             }
             else
                 objPuesto = gestorPuestos.instanciarPuesto(null, null, null);
@@ -223,7 +223,7 @@ namespace Gestores
             bool conexionExitosa;
             GestorCandidatos gestorCandidatos = new GestorCandidatos();
             List<Candidato> listaCandidatos = new List<Candidato>();//para el retorno de datos
-            
+
             string consultaSql = "SELECT * FROM candidato WHERE  `nro documento` = '" + NroDoc + "' AND `tipo documento` = '"
                 + TipoDoc + "';";
 
@@ -344,7 +344,7 @@ namespace Gestores
                     else
                         nroCandidato = Int32.Parse(reader["nroCandidato"].ToString());//Se lo transforma a un numero entero
 
-                    
+
                     int nroEmpleado;
                     if (reader["nroEmpleado"].ToString() == "")//Se contempla la posibilidad de que este número sea nulo
                         nroEmpleado = 0;
@@ -359,7 +359,7 @@ namespace Gestores
 
             }//fin de if(TODO ES NULL), osea si no se pusieron parametros de busqueda
 
-            
+
             //En caso de haber algún parametro diferente de NULL. Se compondra la consulta para la base de datos
             else
             {
@@ -394,7 +394,7 @@ namespace Gestores
                 MySqlDataReader reader = comando.ExecuteReader();
 
                 if (!reader.HasRows)
-                { 
+                {
                     //si el reader esta vacio, es qe no encontro a ese candidato
                     MessageBox.Show("No se encontro un candidato solicitado");
                     terminarConexion();
@@ -447,7 +447,7 @@ namespace Gestores
             //Declaramos una lista auxiliar de enteros para almacenar los ID de PUESTOS EVALUADOS 
             //con el fin de reconstruir las relaciones minimas en la instanciacion del cuestionario
             List<int> listaIdPuestos = new List<int>();
-            
+
             //Otra lista auxiliar para guardar los números de bloque
             List<int> listaNroBloque = new List<int>();
 
@@ -486,12 +486,12 @@ namespace Gestores
              * PERO SI HAY UNA FORMA MAS FACIL DE HACER ESTA CONSULTA BIENVENIDA SEA...
              */
             //__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++
-            
+
             string consultaSql = "SELECT DISTINCT `clave`, `Puesto Evaluado_idPuesto Evaluado` ,`nroaccesos`, `ultimoBloque` ";
             consultaSql += "FROM `cuestionario` cuest "; //de donde sale cuest? no habria que sacarlo afuera de las comillas dobles?
             consultaSql += "JOIN `candidato` cand on (cand.`nro documento` = '" + candidato.NroDoc + "' AND cand.idCandidato = cuest.Candidato_idCandidato) ";
             consultaSql += "JOIN `cuestionario_estado` c_est on (cuest.idCuestionario = c_est.Cuestionario_idCuestionario);";
-            
+
             //En el adaptador comando hacemos un asignacion en su atributo CommandText de la consultaSql
             comando.CommandText = consultaSql;
 
@@ -500,7 +500,7 @@ namespace Gestores
             MySqlDataReader reader = comando.ExecuteReader();
 
             if (!reader.HasRows)
-            { 
+            {
                 //si el reader esta vacio, es qe no encontro a ese candidato
                 terminarConexion();
                 Cuestionario cues = gestorCuestionarios.instanciarCuestionario(candidato, "NO POSEE", null, 0);
@@ -614,7 +614,7 @@ namespace Gestores
             MySqlDataReader reader = comando.ExecuteReader();
 
             if (!reader.HasRows)
-            { 
+            {
                 //Si el reader esta vacio, es que no encontro el cuestionario
                 MessageBox.Show("No se encontro el estado para el cuestionario");
                 terminarConexion();
@@ -643,7 +643,7 @@ namespace Gestores
             //Seteado en esa fecha para hacer las comparaciones desde un punto fijo pero no posible
             DateTime ultimaFecha = DateTime.Parse("1900-01-01");
             int indice = 0; //Se utilizara para ubicar en la lista de las fechas y ID ESTADO al estado correspondiente
-            
+
             for (int i = 0; i < lista_fechaYid_Estado.Count; i++)
             {
                 //Casteamos de la lista el dato1 que contiene la fecha
@@ -687,7 +687,7 @@ namespace Gestores
             MySqlDataReader reader = comando.ExecuteReader();
 
             if (!reader.HasRows)
-            { 
+            {
                 //si el reader esta vacio, es qe no encontro a ese candidato
                 return "No se encontro un candidato solicitado ";
             }
@@ -776,7 +776,7 @@ namespace Gestores
                 "FROM `puesto evaluado` pu_ev " +
                 "JOIN cuestionario cuest on (pu_ev.codigo = '" + codigo + "' AND pu_ev.`idPuesto evaluado` = cuest.`Puesto Evaluado_idPuesto Evaluado`) " +
                 "JOIN `cuestionario_estado` c_est on (cuest.idCuestionario = c_est.Cuestionario_idCuestionario) " +
-                "WHERE Estado_idEstado = 1 "+
+                "WHERE Estado_idEstado = 1 " +
                 "GROUP BY `idPuesto Evaluado`";
 
             //llamamos al metodo "iniciar conexion"
@@ -816,11 +816,11 @@ namespace Gestores
                 string cod = reader["codigo"].ToString();
                 string nomPuesto = reader["nombre"].ToString();
                 string emp = reader["empresa"].ToString();
-                DateTime fecha = (DateTime) reader["fecha"] ;
+                DateTime fecha = (DateTime)reader["fecha"];
 
                 //Llamamos al gestor de puestos para instanciar el puesto que se obtuvo de la base de datos
                 objPuestoEv = gestorPuestos.instanciarPuestoEvaluado(cod, nomPuesto, emp);
-                
+
                 objPuestoEv.Fecha_Comienzo = fecha;
 
                 //El retorno del metodo del gestor es introducido en la lista de puestos    
@@ -887,7 +887,7 @@ namespace Gestores
                 }
                 else//Si fue eliminada se instancia una competencia con el codigo indicando esta situación
                     nuevaCompetencia = gestorCompetencias.instanciarCompetencia("ELIMINADA", null, null, null);
-                
+
                 listaDeCompetencias.Add(nuevaCompetencia);
             }
 
@@ -904,14 +904,14 @@ namespace Gestores
         {
             bool conexionExitosa;
             List<Caracteristica> listaDeCaracteristicas = new List<Caracteristica>();
-            
+
             string consultaSql = "SELECT DISTINCT c.nombre, p_c.ponderacion " +
                                     "FROM puesto " +
                                     "JOIN puesto_competencia AS p_c " +
-                                    "ON '"+codigo+"'=p_c.Puesto_codigo " +
+                                    "ON '" + codigo + "'=p_c.Puesto_codigo " +
                                     "JOIN competencia AS c ON p_c.Competencia_codigo=c.codigo;";
 
-           
+
             //llamamos al metodo "iniciar conexion"
             conexionExitosa = iniciarConexion();
 
@@ -938,8 +938,8 @@ namespace Gestores
                 return null;
             }
 
-            
-            
+
+
             while (reader.Read())
             {
                 Caracteristica caracteristica;
@@ -951,7 +951,7 @@ namespace Gestores
 
 
                 listaDeCaracteristicas.Add(caracteristica);
-                
+
             }
             terminarConexion();
             return listaDeCaracteristicas;
@@ -968,7 +968,7 @@ namespace Gestores
             List<Caracteristica> listaCaracteristicas = new List<Caracteristica>();
             //Lista de caracteristicas auxiliar para realizar la busqueda (almacena los ID de las competencias y ponderaciones)
             List<Caracteristica> listaRetornoBD = new List<Caracteristica>();
-            
+
             Caracteristica elementoLista = new Caracteristica();
 
             //La consulta selecciona las competencias asociadas al puesto pasado como parametro con su correspondiente ponderacion
@@ -1148,7 +1148,7 @@ namespace Gestores
             }
 
             while (reader.Read())
-            {   
+            {
                 string cod = reader["codigo"].ToString();
                 string nomFactor = reader["nombre"].ToString();
                 int nrOrden = Int32.Parse(reader["nroOrden"].ToString());
@@ -1157,7 +1157,7 @@ namespace Gestores
                 listaDeFactores.Add(factorEv);
             }
             terminarConexion();
-    
+
             //Agregamos la lista de Factores para cada una de las competencias encontradas
             for (int i = 0; i < listaDeFactores.Count; i++)
             {
@@ -1239,7 +1239,7 @@ namespace Gestores
                     List<OpcionesEvaluadas> opciones = recuperarOpcionesEvaluadas(listaDePreguntas[i]);
                     //Completamos el objeto Opciones_de_respuestas_evaludas con la lista de opciones
                     opcionesRespuesta[0].ListaOpcionesEv = opciones;
-                    
+
                     //Realizamos la asignacion de la opcion de respuesta y las opciones corespondientes para la pregunta
                     listaDePreguntas[i].Op_respuestaEv = opcionesRespuesta[0];
                     listaDePreguntas[i].ListaOpcionesEv = opciones;
@@ -1248,7 +1248,7 @@ namespace Gestores
 
             return listaDePreguntas;
         }
-        
+
         /*
          * - RecuperarOpcionesEvaludas tiene la misión de recuperar las opciones evaluadas para una pregunta puntual
          *   de a la BASE DE DATOS
@@ -1302,7 +1302,7 @@ namespace Gestores
             }
 
             terminarConexion();
-            
+
             return listaDeOpciones;
         }
 
@@ -1349,7 +1349,7 @@ namespace Gestores
                 listaDeOpRespuesta.Add(OpcionResp);
             }
             terminarConexion();
-            
+
             return listaDeOpRespuesta;
         }
 
@@ -1577,8 +1577,8 @@ namespace Gestores
         {
             //codigo, nombreDePuesto, empresa, descripcion
             string consultaSql1 = "UPDATE `puesto` " +
-                "SET nombre='"+ puesto.Nombre +"', descripcion='"+ puesto.Descripcion +"', empresa='"+ puesto.Empresa +"' "+
-                "WHERE codigo='"+ puesto.Codigo +"';";
+                "SET nombre='" + puesto.Nombre + "', descripcion='" + puesto.Descripcion + "', empresa='" + puesto.Empresa + "' " +
+                "WHERE codigo='" + puesto.Codigo + "';";
 
             string consultaSqlDelete = "DELETE FROM `puesto_competencia` " +
                                        "WHERE Puesto_codigo='" + puesto.Codigo + "';";
@@ -1713,10 +1713,10 @@ namespace Gestores
 
 
             string consultaSql = "UPDATE `puesto` " +
-                                 "SET eliminado='"+ 1 +"' "+
-                                 "WHERE codigo='"+ codigo +"';";
+                                 "SET eliminado='" + 1 + "' " +
+                                 "WHERE codigo='" + codigo + "';";
 
-            MySql.Data.MySqlClient.MySqlCommand comando= new MySqlCommand();
+            MySql.Data.MySqlClient.MySqlCommand comando = new MySqlCommand();
 
             comando.Connection = ObjConexion;
             comando.CommandType = CommandType.Text;
@@ -1724,9 +1724,9 @@ namespace Gestores
             comando.CommandText = consultaSql;
 
             transaccion = ObjConexion.BeginTransaction();
-            
 
-             try
+
+            try
             {
                 if (!conexionExitosa)
                     return false;
@@ -1738,24 +1738,24 @@ namespace Gestores
                 terminarConexion();
                 bandera = true;
             }
-             catch (MySqlException MysqlEx)
-             {
-                 // si algo fallo deshacemos todo
-                 transaccion.Rollback();
-                 // mostramos el mensaje del error
-                 MessageBox.Show("La transaccion no se pudo realizar: " + MysqlEx.Message);
-                 bandera = false;
+            catch (MySqlException MysqlEx)
+            {
+                // si algo fallo deshacemos todo
+                transaccion.Rollback();
+                // mostramos el mensaje del error
+                MessageBox.Show("La transaccion no se pudo realizar: " + MysqlEx.Message);
+                bandera = false;
 
-             }
-             catch (DataException Ex)
-             {
-                 // si algo fallo deshacemos todo
-                 transaccion.Rollback();
-                 // mostramos el mensaje del error
-                 MessageBox.Show("La transaccion no se pudo realizar: " + Ex.Message);
-                 bandera = false;
-             }
-             return bandera;
+            }
+            catch (DataException Ex)
+            {
+                // si algo fallo deshacemos todo
+                transaccion.Rollback();
+                // mostramos el mensaje del error
+                MessageBox.Show("La transaccion no se pudo realizar: " + Ex.Message);
+                bandera = false;
+            }
+            return bandera;
         }
 
         public bool guardarRespuesta(Respuestas respuesta, int nroBloque)
@@ -1837,7 +1837,7 @@ namespace Gestores
             }
         }
 
-        public bool guardarEstado(Estado nuevoEstado_) 
+        public bool guardarEstado(Estado nuevoEstado_)
         {
             MySql.Data.MySqlClient.MySqlTransaction transaccion;
 
@@ -2328,19 +2328,19 @@ namespace Gestores
             List<int> listaAccesos = new List<int>();
             List<Object> listaRetorno = new List<object>();
             GestorCandidatos gestorCandidatos = new GestorCandidatos();
-            
+
             string fecha_formateada = this.formatear_fecha(fecha_ev);
-            
+
             string consultaSql = "SELECT `tipo documento`, `nro documento`,  nombre, apellido, nroCandidato, nroEmpleado, nroAccesos" +
-                " FROM cuestionario_estado cuest_est "+
-                " JOIN cuestionario cuest on (idCuestionario = Cuestionario_idCuestionario) "+
-                " JOIN candidato cand on ( idCandidato = Candidato_idCandidato) "+
+                " FROM cuestionario_estado cuest_est " +
+                " JOIN cuestionario cuest on (idCuestionario = Cuestionario_idCuestionario) " +
+                " JOIN candidato cand on ( idCandidato = Candidato_idCandidato) " +
                 " WHERE Estado_idEstado = " + estado + " AND `Puesto Evaluado_idPuesto Evaluado` = (SELECT DISTINCT `idPuesto Evaluado` " +
                 " FROM candidato cand " +
                 " JOIN cuestionario cuest on (idCandidato = Candidato_idCandidato) " +
                 " JOIN cuestionario_estado cuest_estado on (idCuestionario = Cuestionario_idCuestionario) " +
                 " JOIN `puesto evaluado` puesto_ev on (`idPuesto Evaluado` =`Puesto Evaluado_idPuesto Evaluado`) " +
-                " WHERE puesto_ev.codigo =  '"+ codigo_ev +"' AND fecha = '"+ fecha_formateada +"');";
+                " WHERE puesto_ev.codigo =  '" + codigo_ev + "' AND fecha = '" + fecha_formateada + "');";
 
             //llamamos al metodo "iniciar conexion"
             conexionExitosa = iniciarConexion();
@@ -2402,10 +2402,17 @@ namespace Gestores
             return listaRetorno;
         }
 
-        public string formatear_fecha(DateTime fecha) 
+        public int obtener_puntuacion(string dni_candidato, DateTime fecha_ev, string codigo_ev)
+        {
+
+
+            return 8;
+        }
+
+        public string formatear_fecha(DateTime fecha)
         {
             string fecha_formateada;
-            
+
             string mes = fecha.Month.ToString();
             string dia = fecha.Day.ToString();
             string hora = fecha.Hour.ToString();
@@ -2420,22 +2427,22 @@ namespace Gestores
 
             if (Int32.Parse(fecha.Hour.ToString()) < 10)
                 hora = "0" + hora;
-            
+
             if (Int32.Parse(fecha.Minute.ToString()) < 10)
                 minutos = "0" + minutos;
-            
+
             if (Int32.Parse(fecha.Second.ToString()) < 10)
                 segundos = "0" + segundos;
 
             fecha_formateada = fecha.Year + "-" + mes + "-" + dia + " " + hora + ":" + minutos + ":" + segundos;
-            
+
             return fecha_formateada;
         }
         public List<CompetenciaEvaluada> competencias_segun_puesto(DateTime fecha_ev, string codigo_ev, int estado)
         {
             bool conexionExitosa;
             GestorEvaluacion gestor_de_Evaluacion = new GestorEvaluacion();
-            List<CompetenciaEvaluada> listaCompetenciasEvaluadas= new List<CompetenciaEvaluada>();
+            List<CompetenciaEvaluada> listaCompetenciasEvaluadas = new List<CompetenciaEvaluada>();
             string fecha_formateada = this.formatear_fecha(fecha_ev);
 
             string consultaSql = "SELECT ponderacion , codigo, nombre " +
@@ -2478,10 +2485,10 @@ namespace Gestores
 
             while (reader.Read())
             {
-                
+
                 string codigo = reader["codigo"].ToString();
                 string nombre = reader["nombre"].ToString();
-                
+
                 int ponderacion = Int32.Parse(reader["ponderacion"].ToString());
 
                 CompetenciaEvaluada competencia_ev = gestor_de_Evaluacion.instanciarCompetenciaEvaluda(codigo, nombre);
@@ -2501,14 +2508,14 @@ namespace Gestores
             GestorEvaluacion gestor_de_Evaluacion = new GestorEvaluacion();
             List<CompetenciaEvaluada> listaCompetenciasEvaluadas = new List<CompetenciaEvaluada>();
             string fecha_formateada = this.formatear_fecha(fecha_ev);
-            int cantidad_preguntas = -1; 
+            int cantidad_preguntas = -1;
 
             string consultaSql = "SELECT COUNT(*) " +
                 " FROM `factor evaluado` fa " +
                 " JOIN `pregunta evaluada` pe on( `Factor Evaluado_idFactor Evaluado` = `idFactor Evaluado`) " +
                 " WHERE `Competencia Evaluada_idCompetencia Evaluada` = (SELECT `idCompetencia Evaluada` " +
                 " FROM `puesto evaluado_competencia evaluada` pe_ce " +
-                " JOIN `competencia evaluada` comp_ev on (codigo = '" + codigo_de_competencia + 
+                " JOIN `competencia evaluada` comp_ev on (codigo = '" + codigo_de_competencia +
                 "' AND `Competencia Evaluada_idCompetencia Evaluada` = `idCompetencia Evaluada`) " +
                 " WHERE `Puesto Evaluado_idPuesto Evaluado` = (SELECT `idPuesto Evaluado` " +
                 " FROM candidato cand " +
@@ -2556,19 +2563,108 @@ namespace Gestores
 
         }
 
-
-         /*
-         * - RecuperarCompetenciasEvaludas tiene la misión de recuperar una competencia evaluada según su ID
-         *   que corresponde a la BASE DE DATOS
+        /*
+         * *****************************************************************
+         * Se reconstruyen o se trae a memoria el arbol de clases asociadas 
+         * que corresponden a un puesto puntual
+         ******************************************************************
          */
-        public List<Competencia> recuperarCompetencias(string codigoCompetencia)
+
+        /*
+         * - RecuperarCaracteristicasPuesto tiene la misión de recuperar todas las competencias que estan activas (no eliminadas)
+         *   y ponederaciones asociades a un puesto puntual de la base de datos
+         */
+        public List<Caracteristica> reconstruir_CaracteristicasPuesto(Puesto puestoAsociado)
+        {
+            bool conexionExitosa;
+            //Lista que se retornara con los datos finales de la busqueda
+            List<Caracteristica> listaCaracteristicas = new List<Caracteristica>();
+            //Lista de caracteristicas auxiliar para realizar la busqueda (almacena los ID de las competencias y ponderaciones)
+            List<Caracteristica> listaRetornoBD = new List<Caracteristica>();
+
+            Caracteristica elementoLista = new Caracteristica();
+
+            //La consulta selecciona las competencias asociadas al puesto pasado como parametro con su correspondiente ponderacion
+            string consultaSql = "SELECT `Competencia_codigo`, `ponderacion` "
+            + "FROM `puesto_competencia` ponderaciones "
+            + "JOIN `puesto` p on (p.`codigo` = '" + puestoAsociado.Codigo + "') "
+            + "WHERE p.codigo = ponderaciones.`Puesto_codigo`;";
+
+            conexionExitosa = iniciarConexion();
+
+            if (!conexionExitosa)
+            {
+                elementoLista.dato1 = "No se realizo la conexion con la base de datos";//Se informa el error
+                listaCaracteristicas.Add(elementoLista);
+                terminarConexion();
+                return listaCaracteristicas;
+            }
+
+            //Creamos un adaptador llamado "comando" para realizar la consultaSql que definimos mas arriba
+            MySql.Data.MySqlClient.MySqlCommand comando;
+            comando = ObjConexion.CreateCommand();
+            //En el adaptador comando hacemos un asignacion en su atributo CommandText de la consultaSql
+            comando.CommandText = consultaSql;
+
+            //Se hace la ejecucion del comando con el metodo ExecuterReader 
+            //y se lo asigna a una variable reader que contendra los resultados de la busqueda en la base de datos
+            MySqlDataReader reader = comando.ExecuteReader();
+
+            if (!reader.HasRows)
+            { //si el reader esta vacio, es qe no encontro a ese candidato
+                elementoLista.dato1 = "El puesto no posee competencias para ser evaluado";
+                listaCaracteristicas.Add(elementoLista);
+                terminarConexion();
+                return listaCaracteristicas;
+            }
+
+            while (reader.Read())
+            {
+                //Se recuperan los ID's de las competencias y los números correspondientes a las ponderaciones 
+                string idCompetencia = reader["Competencia_codigo"].ToString();
+                int ponderacion = Int32.Parse(reader["ponderacion"].ToString());
+
+                //Los datos obtenidos se almacena en un elemento de la lista
+                elementoLista.dato1 = idCompetencia;
+                elementoLista.dato2 = ponderacion;
+                listaRetornoBD.Add(elementoLista);//Agregamos el elemento a la lista
+            }
+            //Termanamos la conexion con la base de datos para evitar futuros conflictos con otras consultas
+            terminarConexion();
+
+            for (int i = 0; i < listaRetornoBD.Count; i++)
+            {
+                //Realizamos la busqueda de las competencias evaluadas por su ID (QUE ES UNICO)
+                Competencia competenciaAs = recuperarCompetencias((string)listaRetornoBD[i].dato1);
+                if (competenciaAs != null)
+                {
+                    if (competenciaAs.ListaFactores.Count > 0)
+                    {
+                        //Si hubo algun retorno, instanciamos un objeto del tipo ponderacion
+                        Ponderacion pondeAs = new Ponderacion((int)listaRetornoBD[i].dato2);
+                        //Agregamos la competencia y la poneración a un elemento de la lista
+                        elementoLista.dato1 = competenciaAs;
+                        elementoLista.dato2 = pondeAs;
+                        listaCaracteristicas.Add(elementoLista);//Agregamos el elemento a la lista de caracteristicas del puesto evaluado
+                    }
+                }
+            }
+
+            return listaCaracteristicas;
+        }
+
+        /*
+        * - RecuperarCompetencias tiene la misión de recuperar una competencia según su codigo
+        *   que corresponde a la BASE DE DATOS
+        */
+        public Competencia recuperarCompetencias(string codigoCompetencia)
         {
             bool conexionExitosa;
             GestorCompetencias gestorCompetencias = new GestorCompetencias();
-            List<Competencia> listaDeCompetencias = new List<Competencia>();//Para el retorno de datos
+            Competencia competencia_obtenida = null;//Para el retorno de datos
 
-            string consultaSql = "SELECT * FROM `competencia` AS comp"
-                + "WHERE comp.codigo ='" + codigoCompetencia + "';";
+            string consultaSql = "SELECT * FROM `competencia` AS comp "
+                + "WHERE comp.codigo = '" + codigoCompetencia + "';";
 
             conexionExitosa = iniciarConexion();
 
@@ -2587,52 +2683,51 @@ namespace Gestores
 
             if (!reader.HasRows)
             { //si el reader esta vacio, es qe no encontro a ese candidato
-                MessageBox.Show("El puesto no posee competencias para ser evaluado");
                 terminarConexion();
                 return null;
             }
 
             while (reader.Read())
             {
-                //Verificamos que la competencia no este eliminada
-                Competencia competenciaEv;
+                string nomComp = reader["nombre"].ToString();
 
+                //Verificamos que la competencia no este eliminada
                 if (reader["eliminado"].ToString() == "")
                 {
                     string cod = reader["codigo"].ToString();
-                    string nomComp = reader["nombre"].ToString();
                     string descrip = reader["descripcion"].ToString();
 
                     //Si no fue eliminada, la instaciamos con el gestor de evaluacion con los datos obtenidos
-                    competenciaEv = gestorCompetencias.instanciarCompetencia(cod, nomComp, descrip);
+                    competencia_obtenida = gestorCompetencias.instanciarCompetencia(cod, nomComp, descrip);
                 }
                 else//Si fue eliminada, instanciamos una competencia con el atrubuto 'codigo' inicializado en ELIMINADA
-                    competenciaEv = gestorCompetencias.instanciarCompetencia("ELIMINADA", null, null);
-
-                listaDeCompetencias.Add(competenciaEv);
+                    competencia_obtenida = gestorCompetencias.instanciarCompetencia("ELIMINADA", nomComp, null);
             }
 
             terminarConexion();
 
             //Agregamos la lista de Factores para cada una de las competencias encontradas
-            for (int i = 0; i < listaDeCompetencias.Count; i++)
-            {
-                //Recuperamos los factores asociados a la competencia
-                List<Factor> factoresList = recuperarFactores(listaDeCompetencias[i]);
+            //Recuperamos los factores asociados a la competencia
+            List<Factor> factoresList = recuperarFactores(competencia_obtenida);
 
-                for (int j = 0; j < factoresList.Count; j++)
+            for (int j = 0; j < factoresList.Count; j++)
+            {
+                if (factoresList[j].ListaPreguntas != null)
                 {
-                    //Para la competencia Evaluada que esta resguardada en la posición i 
-                    //le agregamos a su lista de factores, el factor evaluado que se encentre en la posición j
-                    listaDeCompetencias[i].addFactor(factoresList[j]);
+                        //Para la competencia le agregamos a su lista de factores, el factor evaluado que se encentre en la posición j
+                        competencia_obtenida.addFactor(factoresList[j]);
                 }
+
+                else if (factoresList[j].Codigo == "INSUFICIENTES PREG")
+                    competencia_obtenida.addFactor(factoresList[j]);
             }
 
-            return listaDeCompetencias;
+
+            return competencia_obtenida;
         }
 
         /*
-         * - RecuperarFactoresEvaludos tiene la misión de recuperar los factores evaluados para una competencia puntual
+         * - RecuperarFactores tiene la misión de recuperar los factores para una competencia puntual
          *   de a la BASE DE DATOS
          */
         public List<Factor> recuperarFactores(Competencia competenciaAsociada)
@@ -2641,10 +2736,10 @@ namespace Gestores
             GestorFactores gestorFactores = new GestorFactores();
             List<Factor> listaDeFactores = new List<Factor>();//Para el retorno de datos
 
-            string consultaSql = "SELECT `factor evaluado`.nombre ,`factor evaluado`.codigo ,nroOrden " +
-            "FROM `factor evaluado` " +
-            "JOIN `competencia evaluada` comEv on (comEv.`codigo` = '" + competenciaAsociada.Codigo + "') " +
-            "WHERE `factor evaluado`.`Competencia Evaluada_idCompetencia Evaluada` = comEv.`idCompetencia Evaluada`;";
+            string consultaSql = "SELECT f.nombre, f.codigo, nroOrden " +
+            "FROM `factor` AS f " +
+            "JOIN `competencia` AS comp on (comp.codigo = '" + competenciaAsociada.Codigo + "') " +
+            "WHERE f.`Competencia_codigo` = comp.codigo;";
 
             conexionExitosa = iniciarConexion();
 
@@ -2663,35 +2758,34 @@ namespace Gestores
 
             if (!reader.HasRows)
             { //si el reader esta vacio, es qe no encontro a ese candidato
-                MessageBox.Show("El puesto no posee competencias para ser evaluado");
                 terminarConexion();
                 return null;
             }
 
             while (reader.Read())
-            {   
+            {
                 string cod = reader["codigo"].ToString();
                 string nomFactor = reader["nombre"].ToString();
                 int nrOrden = Int32.Parse(reader["nroOrden"].ToString());
+
                 //Ahora vamos a crear una instancia del objeto factor, a través del gestor de factores 
                 Factor factorEv = gestorFactores.instanciarFactor(cod, nomFactor, competenciaAsociada, null, nrOrden);
                 listaDeFactores.Add(factorEv);
             }
             terminarConexion();
-    
+
             //Agregamos la lista de Factores para cada una de las competencias encontradas
             for (int i = 0; i < listaDeFactores.Count; i++)
             {
                 List<Pregunta> preguntasList = recuperarPreguntas(listaDeFactores[i]);
-                if (preguntasList[i] != null)
+
+                if (preguntasList != null)
                 {
-                    for (int j = 0; j < preguntasList.Count; j++)
-                    {
-                        listaDeFactores[i].addPregunta(preguntasList[j]);
-                    }
+                    if (preguntasList.Count >= 5)
+                        listaDeFactores[i].ListaPreguntas = preguntasList;
+                    else
+                        listaDeFactores[i].Codigo = "INSUFICIENTES PREG";
                 }
-                /*else
-                    listaDeFactores.Add(preguntasList[i]);*/
             }
 
             return listaDeFactores;
@@ -2707,10 +2801,10 @@ namespace Gestores
             GestorPreguntas gestorPreguntas = new GestorPreguntas();
             List<Pregunta> listaDePreguntas = new List<Pregunta>();
 
-            string consultaSql = "SELECT `pregunta evaluada`.nombre ,`pregunta evaluada`.codigo, `pregunta evaluada`.pregunta, `pregunta evaluada`.`Opcion de Respuesta Evaluada_idOpcion de Respuesta Evaluada` "
-            + "FROM `pregunta evaluada` "
-            + "JOIN `factor evaluado` fac on (fac.`codigo` = '" + factorAsociado.Codigo + "') "
-            + "WHERE `pregunta evaluada`.`Factor Evaluado_idFactor Evaluado` = fac.`idFactor Evaluado`;";
+            string consultaSql = "SELECT p.nombre, p.codigo, p.pregunta, p.`Opcion_de_respuesta` "
+            + "FROM `pregunta` AS p "
+            + "JOIN `factor` AS fac on (fac.`codigo` = '" + factorAsociado.Codigo + "') "
+            + "WHERE p.Factor_codigo = fac.codigo;";
 
             conexionExitosa = iniciarConexion();
 
@@ -2730,46 +2824,93 @@ namespace Gestores
 
             if (!reader.HasRows)
             { //si el reader esta vacio, es qe no encontro a ese candidato
-                MessageBox.Show("El factor no posee preguntas para ser evaluado");
+                MessageBox.Show("Factor " + factorAsociado.Nombre + " codigo " + factorAsociado.Codigo + "\n\nNo posee preguntas para ser evaluado");
                 terminarConexion();
                 return null;
             }
 
-            List<int> listaIdOpRespuesta = new List<int>();
+            string codigo_OpRespuesta = "";
+
             while (reader.Read())
             {
                 string cod = reader["codigo"].ToString();
                 string nomPreg = reader["nombre"].ToString();
                 string preg = reader["pregunta"].ToString();
-                int idOpRespuesta = Int32.Parse(reader["Opcion de Respuesta Evaluada_idOpcion de Respuesta Evaluada"].ToString());
+                codigo_OpRespuesta = reader["Opcion_de_respuesta"].ToString();
 
                 Pregunta pregunta = gestorPreguntas.instanciarPregunta(preg, nomPreg, factorAsociado);
                 listaDePreguntas.Add(pregunta);
-                listaIdOpRespuesta.Add(idOpRespuesta);
             }
+
             terminarConexion();
 
             //Agregamos la listas de Opciones de respuesta y las opciones para cada una de las preguntas encontradas
             for (int i = 0; i < listaDePreguntas.Count; i++)
             {
                 //Se recuperan la opcion de respuesta de la pregunta
-                List<OpciondeRespuesta> opcionesRespuesta = recuperarOpcionRespuesta(listaIdOpRespuesta[i]);
-                if (opcionesRespuesta[0] != null)
+                OpciondeRespuesta opcionesRespuesta = recuperarOpcionRespuesta(codigo_OpRespuesta);
+                if (opcionesRespuesta != null)
                 {
                     //Recuperamos la opcion que contiene la poneracion para esa pregunta
                     List<Opciones> opciones = recuperarOpciones(listaDePreguntas[i]);
                     //Completamos el objeto Opciones_de_respuestas_evaludas con la lista de opciones
-                    opcionesRespuesta[0].ListaOpciones = opciones;
-                    
+                    opcionesRespuesta.ListaOpciones = opciones;
+
                     //Realizamos la asignacion de la opcion de respuesta y las opciones corespondientes para la pregunta
-                    listaDePreguntas[i].OpcionRespuesta_Asociada = opcionesRespuesta[0];
+                    listaDePreguntas[i].OpcionRespuesta_Asociada = opcionesRespuesta;
                     listaDePreguntas[i].ListaOpciones = opciones;
                 }
             }
 
             return listaDePreguntas;
         }
-        
+
+        /*
+         * - RecuperarOpcionRespuestaEvaluda tiene la misión de recuperar las opciones evaluadas para una pregunta puntual
+         *   de a la BASE DE DATOS
+         */
+        public OpciondeRespuesta recuperarOpcionRespuesta(string codigo_OR)
+        {
+            bool conexionExitosa;
+            GestorOpRespuesta gestorOpcionResp = new GestorOpRespuesta();
+            OpciondeRespuesta retorno_OpRespuesta = null;//Para el retorno de datos
+
+            string consultaSql = "SELECT * FROM `opcion de respuesta` opcRes "
+            + "WHERE opcRes.codigo = '" + codigo_OR + "';";
+
+            conexionExitosa = iniciarConexion();
+
+            if (!conexionExitosa)
+            {
+                terminarConexion();
+                return null;
+            }
+
+            MySql.Data.MySqlClient.MySqlCommand comando;
+            comando = ObjConexion.CreateCommand();
+            comando.CommandText = consultaSql;
+
+            MySqlDataReader reader = comando.ExecuteReader();
+
+            if (!reader.HasRows)
+            { //si el reader esta vacio, es qe no encontro a esa opcion de respuesta evaluada
+                terminarConexion();
+                return null;
+            }
+
+            while (reader.Read())
+            {
+                string nomOpcionResp = reader["nombre"].ToString();
+                string codigo = reader["codigo"].ToString();
+
+                retorno_OpRespuesta = gestorOpcionResp.instanciarOpcionDeRespuesta(nomOpcionResp, codigo);
+            }
+
+            terminarConexion();
+
+            return retorno_OpRespuesta;
+        }
+
         /*
          * - RecuperarOpcionesEvaludas tiene la misión de recuperar las opciones evaluadas para una pregunta puntual
          *   de a la BASE DE DATOS
@@ -2781,10 +2922,10 @@ namespace Gestores
             List<Opciones> listaDeOpciones = new List<Opciones>();//Para el retorno de datos 
 
             string consultaSql = "SELECT op.nombre, pr_op.ponderacion, opr_op.ordenDeVisualizacion "
-            + "FROM `tp base de datos`.`pregunta evaluada_opcion evaluada` pr_op "
-            + "JOIN `tp base de datos`.`pregunta evaluada` pr on (pr_op.`Pregunta Evaluada_idPregunta Evaluada` = pr.`idPregunta Evaluada` AND pr.codigo = '" + pregAsociada.Nombre + "') "
-            + "JOIN `tp base de datos`.`opcion evaluada` op on (pr_op.`Opcion Evaluada_idOpcion` = op.idOpcion) "
-            + "JOIN `tp base de datos`.`opcion de respuesta evaluada_opcion evaluada` opr_op on (pr_op.`Opcion Evaluada_idOpcion` = opr_op.`Opcion Evaluada_idOpcion`) "
+            + "FROM `pregunta_opciones` AS pr_op "
+            + "JOIN `pregunta` AS pr on (pr_op.Pregunta_codigo = pr.codigo AND pr.nombre = '" + pregAsociada.Nombre + "' AND pr.pregunta = '" + pregAsociada.Preg_aRealizar + "') "
+            + "JOIN `opciones` op on (pr_op.Opciones_idopciones = op.idopciones) "
+            + "JOIN `opcion de respuesta_opciones` opr_op on (pr_op.Opciones_idopciones = opr_op.Opciones_idopciones) "
             + "GROUP BY nombre, ponderacion, ordenDeVisualizacion;";
 
             //llamamos al metodo "iniciar conexion"
@@ -2806,7 +2947,6 @@ namespace Gestores
 
             if (!reader.HasRows)
             { //si el reader esta vacio, es qe no encontro a ese candidato
-                MessageBox.Show("No se entraron opciones para la pregunta solicitada");
                 terminarConexion();
                 return null;
             }
@@ -2823,56 +2963,8 @@ namespace Gestores
             }
 
             terminarConexion();
-            
+
             return listaDeOpciones;
         }
-
-        /*
-         * - RecuperarOpcionRespuestaEvaluda tiene la misión de recuperar las opciones evaluadas para una pregunta puntual
-         *   de a la BASE DE DATOS
-         */
-        public List<OpciondeRespuesta> recuperarOpcionRespuesta(int idOpcionDeRespuesta)
-        {
-            bool conexionExitosa;
-            GestorOpRespuesta gestorOpcionResp = new GestorOpRespuesta();
-            List<OpciondeRespuesta> listaDeOpRespuesta = new List<OpciondeRespuesta>();//Para el retorno de datos
-
-            string consultaSql = "SELECT * FROM `opcion de respuesta evaluada` opcRes WHERE opcRes.`idOpcion de Respuesta Evaluada` = '" + idOpcionDeRespuesta + "';";
-
-            conexionExitosa = iniciarConexion();
-
-            if (!conexionExitosa)
-            {
-                MessageBox.Show("No se pudo realizar la conexion con la base de datos");
-                terminarConexion();
-                return null;
-            }
-
-            MySql.Data.MySqlClient.MySqlCommand comando;
-            comando = ObjConexion.CreateCommand();
-            comando.CommandText = consultaSql;
-
-            MySqlDataReader reader = comando.ExecuteReader();
-
-            if (!reader.HasRows)
-            { //si el reader esta vacio, es qe no encontro a esa opcion de respuesta evaluada
-                MessageBox.Show("No se encontro la opcion de respuesta solicitada");
-                terminarConexion();
-                return null;
-            }
-
-            while (reader.Read())
-            {
-                string nomOpcionResp = reader["nombre"].ToString();
-                string codigo = reader["codigo"].ToString();
-
-                OpciondeRespuesta OpcionResp = gestorOpcionResp.instanciarOpcionDeRespuesta(nomOpcionResp, codigo);
-                listaDeOpRespuesta.Add(OpcionResp);
-            }
-            terminarConexion();
-            
-            return listaDeOpRespuesta;
-        }           
-        
-        }
+    }
 }

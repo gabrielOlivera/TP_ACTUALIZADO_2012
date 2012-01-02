@@ -202,8 +202,7 @@
             // 
             // Atras
             // 
-            this.Atras.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.Atras.Location = new System.Drawing.Point(217, 428);
+            this.Atras.Location = new System.Drawing.Point(382, 428);
             this.Atras.Name = "Atras";
             this.Atras.Size = new System.Drawing.Size(75, 23);
             this.Atras.TabIndex = 10;
@@ -213,25 +212,24 @@
             // 
             // Siguiente
             // 
-            this.Siguiente.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.Siguiente.Location = new System.Drawing.Point(382, 428);
+            this.Siguiente.Location = new System.Drawing.Point(483, 428);
             this.Siguiente.Name = "Siguiente";
             this.Siguiente.Size = new System.Drawing.Size(75, 23);
             this.Siguiente.TabIndex = 11;
             this.Siguiente.Text = "Siguiente >>";
             this.Siguiente.UseVisualStyleBackColor = true;
+            this.Siguiente.Visible = false;
             this.Siguiente.Click += new System.EventHandler(this.Siguiente_Click);
             // 
             // CaracteristicasDel_puesto
             // 
             this.CaracteristicasDel_puesto.AutoSize = true;
             this.CaracteristicasDel_puesto.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.CaracteristicasDel_puesto.Location = new System.Drawing.Point(112, 293);
+            this.CaracteristicasDel_puesto.Location = new System.Drawing.Point(112, 279);
             this.CaracteristicasDel_puesto.Name = "CaracteristicasDel_puesto";
-            this.CaracteristicasDel_puesto.Size = new System.Drawing.Size(486, 111);
+            this.CaracteristicasDel_puesto.Size = new System.Drawing.Size(486, 125);
             this.CaracteristicasDel_puesto.TabIndex = 12;
             this.CaracteristicasDel_puesto.TabStop = false;
-            this.CaracteristicasDel_puesto.Text = "Competencias asociadas al puesto: ";
             this.CaracteristicasDel_puesto.Visible = false;
             // 
             // Evaluar_Candidatos___Ventana_2

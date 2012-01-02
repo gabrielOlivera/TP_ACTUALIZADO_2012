@@ -27,7 +27,6 @@ namespace TpDiseñoCSharp
         private void ninguno_Click(object sender, EventArgs e)
         {
             selecciondatagridW.ClearSelection();
-        
         }
 
         private void aceptar_Click(object sender, EventArgs e)
@@ -46,9 +45,8 @@ namespace TpDiseñoCSharp
                 
                 string info_evaluacion = "Orden de merito para la evaluacion del puesto: "+ nombre_puesto + 
                     " tomada para la empresa: " + empresa + " el: " + fecha;
-
 	        
-                //listamos los "sin contestar" estado 3                
+                //listamos los "sin contestar" estado 3
                 List<Object> sinContestar = new List<object>();
                 sinContestar = AdminBD.listarCandidatosPorEvaluacion(fecha, codigo, 3);
                 if (sinContestar != null)

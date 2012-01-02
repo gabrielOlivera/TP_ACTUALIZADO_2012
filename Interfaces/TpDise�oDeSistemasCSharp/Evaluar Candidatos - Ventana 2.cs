@@ -13,32 +13,41 @@ namespace TpDiseñoCSharp
 {
     public partial class Evaluar_Candidatos___Ventana_2 : Form
     {
+        private Form pantallaPrincipal_;
         private List<Candidato> listaCandidatos_A_Evaluar;
+        private Puesto puestoSeleccionado;
 
         private List<Caracteristica> Seleccion_puesto_check;
         private Form mensajePuesto;
-        private Puesto puestoSeleccionado;
 
-        public Evaluar_Candidatos___Ventana_2(string user, List<Candidato> listaCandidatos)
+        public Evaluar_Candidatos___Ventana_2(string user, List<Candidato> listaCandidatos, Form ventanaAnterior, Form pantallaPrincipal_parametro)
         {
             InitializeComponent();
+            ventanaAnterior.Close();
+            pantallaPrincipal_ = pantallaPrincipal_parametro;
             listaCandidatos_A_Evaluar = listaCandidatos;
+            this.Fecha.Text = DateTime.Now.ToLongDateString();
             this.Consultor.Text = user;
         }
 
         private void Siguiente_Click(object sender, EventArgs e)
         {
-            Evaluar_Candidatos___Ventana_3 evCandidatos3 = new Evaluar_Candidatos___Ventana_3(this.Consultor.Text);
+            Evaluar_Candidatos___Ventana_3 evCandidatos3 = new Evaluar_Candidatos___Ventana_3(this.Consultor.Text, puestoSeleccionado, listaCandidatos_A_Evaluar, pantallaPrincipal_, this);
             evCandidatos3.ShowDialog();
         }
 
         private void Atras_Click(object sender, EventArgs e)
         {
-
+            Evaluar_Candidato evaluar_Candidato_1 = new Evaluar_Candidato(this.Consultor.Text, pantallaPrincipal_, this);
+            evaluar_Candidato_1.Show();
         }
 
         private void Buscar_Click(object sender, EventArgs e)
         {
+            CaracteristicasDel_puesto.Visible = false;
+            Siguiente.Visible = false;
+            puestoSeleccionado = null;
+
             GestorPuesto gestorPuesto = new GestorPuesto();
 
             List<Puesto> listaPuesto = gestorPuesto.listarPuestos(null, this.nombrePuesto.Text.ToString(), this.nombreEmpresa.Text.ToString());
@@ -50,7 +59,7 @@ namespace TpDiseñoCSharp
 
                 Button Aceptar = new Button();
                 Aceptar.Text = "Aceptar";
-                Aceptar.Location = new Point(paraSeleccion.Right - 50, paraSeleccion.Height + 90);
+                Aceptar.Location = new Point(paraSeleccion.Right - 40, paraSeleccion.Height + 90);
                 Aceptar.Click += Aceptar_click;
 
                 mensajePuesto.Controls.Add(paraSeleccion);
@@ -61,35 +70,61 @@ namespace TpDiseñoCSharp
                 mensajePuesto.ShowDialog();
             }
 
-            Label caracteristicas = new Label();
-            caracteristicas.Text = "Competencias        Ponderacion";
-            caracteristicas.AutoSize = true;
-            caracteristicas.Location = new Point(50, 30);
-            CaracteristicasDel_puesto.Controls.Add(caracteristicas);
+            if (Equals(puestoSeleccionado.Caracteristicas[0].dato1.GetType(), "stringEJEMPLO".GetType()) == false)
+            {
+                int cadenaMasLarga = 0;
+                for (int i = 0; i < puestoSeleccionado.Caracteristicas.Count; i++)
+                {
+                    Competencia comp_ = (Competencia)puestoSeleccionado.Caracteristicas[i].dato1;
+                    if (cadenaMasLarga < comp_.Nombre.Count())
+                        cadenaMasLarga = comp_.Nombre.Count();
+                }
 
-            for (int i = 0; i < puestoSeleccionado.Caracteristicas.Count; i++)
-			{
-                MessageBox.Show("Entra en algun momento");
-                Competencia comp_ = (Competencia)puestoSeleccionado.Caracteristicas[i].dato1;
-                Ponderacion pond_ = (Ponderacion)puestoSeleccionado.Caracteristicas[i].dato2;
-                caracteristicas.Text = comp_.Nombre + "        " + pond_.Valor;
-                
-                caracteristicas.AutoSize = true;
-                caracteristicas.Location = new Point(50, 30 + (i * 10));
-                CaracteristicasDel_puesto.Controls.Add(caracteristicas);
+                Label label_competencia = new Label();
+                Label label_ponderacion = new Label();
+                label_competencia.Text = "Competencias"; label_competencia.AutoSize = true;
+                label_competencia.Location = new Point(50, 30);
+
+                label_ponderacion.Text = "Ponderación"; label_ponderacion.AutoSize = true;
+                label_ponderacion.Location = new Point(label_competencia.Right + (cadenaMasLarga * 6), 30);
+
+                CaracteristicasDel_puesto.Controls.Add(label_competencia);
+                CaracteristicasDel_puesto.Controls.Add(label_ponderacion);
+
+                for (int i = 0; i < puestoSeleccionado.Caracteristicas.Count; i++)
+                {
+                    Competencia comp_ = (Competencia)puestoSeleccionado.Caracteristicas[i].dato1;
+                    Ponderacion pond_ = (Ponderacion)puestoSeleccionado.Caracteristicas[i].dato2;
+
+                    Label label_comp_ = new Label();
+                    Label label_pond_ = new Label();
+
+                    label_comp_.Text = comp_.Nombre; label_comp_.AutoSize = true;
+                    label_comp_.Location = new Point(50, label_competencia.Bottom + (i * 20));
+
+                    label_pond_.Text = pond_.Valor.ToString(); label_pond_.AutoSize = true;
+                    label_pond_.Location = new Point(label_comp_.Right + (cadenaMasLarga * 6), label_ponderacion.Bottom + (i * 20));
+
+                    CaracteristicasDel_puesto.Controls.Add(label_comp_);
+                    CaracteristicasDel_puesto.Controls.Add(label_pond_);
+                }
+
+                CaracteristicasDel_puesto.Text = "Competencias asociadas al puesto: " + puestoSeleccionado.Nombre;
+                CaracteristicasDel_puesto.Visible = true;
+                Siguiente.Visible = true;
             }
-
-            CaracteristicasDel_puesto.Text += puestoSeleccionado.Nombre;
-            CaracteristicasDel_puesto.Visible = true;
+            else
+                MessageBox.Show(puestoSeleccionado.Caracteristicas[0].dato1.ToString());
         }
 
         public void Aceptar_click(object sender, EventArgs e)
         {
+            AdministradorBD admBD = new AdministradorBD();
             int contador = 0;
 
             for (int i = 0; i < Seleccion_puesto_check.Count; i++)
             {
-                CheckBox check_ = (CheckBox)Seleccion_puesto_check[i].dato2;
+                RadioButton check_ = (RadioButton)Seleccion_puesto_check[i].dato2;
 
                 if (check_.Checked == true)
                 {
@@ -99,9 +134,13 @@ namespace TpDiseñoCSharp
             }
 
             if (contador == 1)
+            {
+                List<Caracteristica> caracteristicas_del_puesto = admBD.reconstruir_CaracteristicasPuesto(puestoSeleccionado);
+                puestoSeleccionado.Caracteristicas = caracteristicas_del_puesto;
                 mensajePuesto.Close();
+            }
             else
-                MessageBox.Show("Solo puede seleccionar un solo puesto para evaluar los candidatos");
+                MessageBox.Show("Debe seleccionar un puesto para evaluar los candidatos");
         }
 
         /*
@@ -127,7 +166,7 @@ namespace TpDiseñoCSharp
             for (int i = 0; i < listPuestos.Count; i++)
             {
                 nombrePuesto = listPuestos[i].Codigo + "             " + listPuestos[i].Nombre;
-                CheckBox chequinPuesto = ubicarOpcion(espacioDe_Puestos, nombrePuesto, i);
+                RadioButton chequinPuesto = ubicarOpcion(espacioDe_Puestos, nombrePuesto, i);
 
                 Caracteristica elemento = new Caracteristica();
                 elemento.dato1 = listPuestos[i];
@@ -143,9 +182,9 @@ namespace TpDiseñoCSharp
          * que agruparan las opciones de respuestas posibles para una pregunta, añadiendoles un checkBox para señalar la respuesta
          * seleccionada por el usuario o candidato
          */
-        private CheckBox ubicarOpcion(GroupBox espacioPuestos, string opcion, int distanciaMaxima)
+        private RadioButton ubicarOpcion(GroupBox espacioPuestos, string opcion, int distanciaMaxima)
         {
-            CheckBox checkPregunta = new CheckBox();
+            RadioButton checkPregunta = new RadioButton();
 
             if (opcion != "")
             {
