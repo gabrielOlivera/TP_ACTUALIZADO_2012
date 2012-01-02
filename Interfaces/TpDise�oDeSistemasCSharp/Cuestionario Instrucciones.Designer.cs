@@ -62,9 +62,9 @@
             this.PanelInferior.BackColor = System.Drawing.Color.Gainsboro;
             this.PanelInferior.Controls.Add(this.Fecha);
             this.PanelInferior.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.PanelInferior.Location = new System.Drawing.Point(0, 401);
+            this.PanelInferior.Location = new System.Drawing.Point(0, 443);
             this.PanelInferior.Name = "PanelInferior";
-            this.PanelInferior.Size = new System.Drawing.Size(647, 58);
+            this.PanelInferior.Size = new System.Drawing.Size(740, 58);
             this.PanelInferior.TabIndex = 4;
             // 
             // Fecha
@@ -75,7 +75,7 @@
             this.Fecha.DisabledLinkColor = System.Drawing.Color.Black;
             this.Fecha.Enabled = false;
             this.Fecha.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.Fecha.Location = new System.Drawing.Point(485, 24);
+            this.Fecha.Location = new System.Drawing.Point(578, 24);
             this.Fecha.Name = "Fecha";
             this.Fecha.Size = new System.Drawing.Size(151, 13);
             this.Fecha.TabIndex = 0;
@@ -89,7 +89,7 @@
             this.TituloEmpresa.AutoSize = true;
             this.TituloEmpresa.Font = new System.Drawing.Font("Viner Hand ITC", 15.75F, System.Drawing.FontStyle.Bold);
             this.TituloEmpresa.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.TituloEmpresa.Location = new System.Drawing.Point(232, 18);
+            this.TituloEmpresa.Location = new System.Drawing.Point(279, 18);
             this.TituloEmpresa.Name = "TituloEmpresa";
             this.TituloEmpresa.Size = new System.Drawing.Size(157, 34);
             this.TituloEmpresa.TabIndex = 0;
@@ -105,7 +105,7 @@
             this.PanelSuperior.Enabled = false;
             this.PanelSuperior.Location = new System.Drawing.Point(0, 0);
             this.PanelSuperior.Name = "PanelSuperior";
-            this.PanelSuperior.Size = new System.Drawing.Size(647, 62);
+            this.PanelSuperior.Size = new System.Drawing.Size(740, 62);
             this.PanelSuperior.TabIndex = 5;
             // 
             // Candidato
@@ -121,7 +121,7 @@
             // 
             this.CerrarSesion.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.CerrarSesion.AutoSize = true;
-            this.CerrarSesion.Location = new System.Drawing.Point(574, 39);
+            this.CerrarSesion.Location = new System.Drawing.Point(667, 39);
             this.CerrarSesion.Name = "CerrarSesion";
             this.CerrarSesion.Size = new System.Drawing.Size(70, 13);
             this.CerrarSesion.TabIndex = 3;
@@ -161,7 +161,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(647, 459);
+            this.ClientSize = new System.Drawing.Size(740, 501);
             this.Controls.Add(this.Cancelar);
             this.Controls.Add(this.Aceptar);
             this.Controls.Add(this.InstruccionesCuestionario);
@@ -171,6 +171,7 @@
             this.Controls.Add(this.PanelSuperior);
             this.Name = "Cuestionario_Instrucciones";
             this.Text = "Cuestionario - Instrucciones";
+            this.Load += new System.EventHandler(this.Cuestionario_Instrucciones_Load);
             this.PanelInferior.ResumeLayout(false);
             this.PanelInferior.PerformLayout();
             this.PanelSuperior.ResumeLayout(false);

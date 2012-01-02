@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Collections;
 using Validacion;
 using Gestores;
 using Entidades;
@@ -38,9 +39,21 @@ namespace TpDiseñoCSharp
                             if (esValido == true)
                             {
                                 Candidato cand_ = gestorCandidatos.retornarCandidato(Tipo.Text.ToString(), NroDoc.Text.ToString());
-                                //gestorCuestionario.crearCuestionario(cand_);
-                                Cuestionario_Instrucciones cuestInstruc = new Cuestionario_Instrucciones();
-                                cuestInstruc.ShowDialog();
+                                ArrayList evento_ = gestorCuestionario.crearCuestionario(cand_);
+                                if((evento_[0] is Bloque) == true)
+                                {
+                                    Completar_Cuestionario cuest_bloques = new Completar_Cuestionario();
+                                    cuest_bloques.Bloque_a_mostrar = (Bloque)evento_[0];
+                                    Close();
+                                    cuest_bloques.Show();
+                                }
+                                else if(Equals(evento_[0], "instrucciones") == true)
+                                {
+                                        Cuestionario_Instrucciones cuestInstruc = new Cuestionario_Instrucciones();
+                                        cuestInstruc.ShowDialog();
+                                }
+                                else if(((evento_[0] is Bloque) == false) && (Equals(evento_[0], "instrucciones") == true))
+                                    MessageBox.Show(evento_[0].ToString());
                             }
                             MessageBox.Show(esValido.ToString());
                         }
@@ -72,10 +85,29 @@ namespace TpDiseñoCSharp
                             if (esValido == true)
                             {
                                 Candidato cand_ = gestorCandidatos.retornarCandidato(Tipo.Text.ToString(), NroDoc.Text.ToString());
-                                //gestorCuestionario.crearCuestionario(cand_);
-                                Cuestionario_Instrucciones cuestInstruc = new Cuestionario_Instrucciones();
-                                cuestInstruc.ShowDialog();
+                                ArrayList evento_ = gestorCuestionario.crearCuestionario(cand_);
+                                if (evento_.Count != 0)
+                                {
+                                    if ((evento_[0] is Bloque) == true)
+                                    {
+                                        Completar_Cuestionario cuest_bloques = new Completar_Cuestionario();
+                                        cuest_bloques.Bloque_a_mostrar = (Bloque)evento_[0];
+                                        cuest_bloques.Show();
+                                    }
+                                    else if (Equals(evento_[0], "instrucciones") == true)
+                                    {
+                                        Cuestionario_Instrucciones cuestInstruc = new Cuestionario_Instrucciones();
+                                        cuestInstruc.ShowDialog();
+                                    }
+                                    else if (((evento_[0] is Bloque) == false) && (Equals(evento_[0], "instrucciones") == false))
+                                        MessageBox.Show(evento_[0].ToString());
+                                    /*Cuestionario_Instrucciones cuestInstruc = new Cuestionario_Instrucciones();
+                                    cuestInstruc.ShowDialog();*/
+                                }
+                                else
+                                    MessageBox.Show("esto no funciona");
                             }
+                            //MessageBox.Show(esValido.ToString());
                         }
                         else
                         {

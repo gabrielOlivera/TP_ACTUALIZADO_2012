@@ -61,11 +61,18 @@ namespace Gestores
             return retorno;
         }
 
-        public void crearCuestionario(Candidato candidatoAsociado)
+        public ArrayList crearCuestionario(Candidato candidatoAsociado)
         {
+            ArrayList procesoFinalizado = new ArrayList();
             ArrayList retornoBD = admBD.recuperarCuestionarioActivo(candidatoAsociado);
             Cuestionario nCuestionario = (Cuestionario)retornoBD[0];
+            bool re_construido = admBD.reconstruirRelaciones(nCuestionario);
 
+            if (!re_construido)
+            {
+                procesoFinalizado.Add("No se pudo recuperar Todos los datos requeridos");
+                return procesoFinalizado;
+            }
             int accesos = nCuestionario.NroAccesos;
             int maxAccesos = nCuestionario.MaxAccesos;
             string estadoCuestionario = nCuestionario.obtenerEstado();
@@ -89,6 +96,7 @@ namespace Gestores
                             DateTime fechaCuestionario = nCuestionario.obtenerFechaEstado();
                             //tiempo activo es el tiempo que transcurrio desde que se comenzo a realizar el cuestionario
                             int tiempoActivo = DateTime.Now.DayOfYear - fechaCuestionario.DayOfYear;
+                            MessageBox.Show("tiempo activo: " + tiempoActivo.ToString() + " tiempo max: " + tiempoMax.ToString()+" fecha cuestionario:"+ fechaCuestionario.ToString());
 
                             switch (tiempoActivo <= tiempoMax)
                             {
@@ -96,33 +104,35 @@ namespace Gestores
                                     switch (estadoCuestionario)
                                     {
                                         case "En proceso":
-                                            levantarCuestionario(nCuestionario);
+                                            Bloque bloq_retorno = levantarCuestionario(nCuestionario);
+                                            procesoFinalizado.Add(bloq_retorno);
                                             break;
                                         case "Activo":
-                                            //mostrarInstrucciones(); va al objeto interfaz
+                                            procesoFinalizado.Add("instrucciones"); //va al objeto interfaz
                                             break;
                                     }
                                     break;
                                 case false:
                                     cerrarCuestionario(nCuestionario, estadoCuestionario);
-                                    //mensajeError("Se supero el tiempo para estar Activo establecido para completar el cuestionario");
+                                    procesoFinalizado.Add("Se supero el tiempo para estar Activo establecido para completar el cuestionario");
                                     break;
                             }
                             break;
                         case false:
                             cerrarCuestionario(nCuestionario, estadoCuestionario);
-                            //mensajeError("Supero el tiempo maximo permitido para completar el cuestionario");
+                            procesoFinalizado.Add("Supero el tiempo maximo permitido para completar el cuestionario");
                             break;
                     }
                     break;
                 case false:
                     cerrarCuestionario(nCuestionario, estadoCuestionario);
-                    //mensajeError("Supero la cantidad maxima de accesos permitida para completar el cuestionario");
+                    procesoFinalizado.Add("Supero la cantidad maxima de accesos permitida para completar el cuestionario");
                     break;
             }
+            return procesoFinalizado;
         }
 
-        public void inicializarCuestionario(Cuestionario cuestionario)
+        public Bloque inicializarCuestionario(Cuestionario cuestionario)
         {
             PuestoEvaluado pEv = cuestionario.PuestoEvaluado;
             List<PreguntaEvaluada> listaPreguntas = gestorEvaluacion.listarPreguntas(pEv);
@@ -130,14 +140,17 @@ namespace Gestores
             int pregXbloque = admBD.preguntasPorBloque();
             cuestionario.crearBloque(listaPreguntas, pregXbloque);
             cuestionario.cambiarEstado("En proceso");
-            //interfaceUsuario.mostrarBloque(cuestionario.getBloque());
-
+            cuestionario.aumentarAcceso();
+            Bloque bloq_ = cuestionario.UltimoBloque;
+            return bloq_;
         }
 
-        public void levantarCuestionario(Cuestionario cuestionario) 
+        public Bloque levantarCuestionario(Cuestionario cuestionario) 
         {
             cuestionario.aumentarAcceso();
-            //interfaceUsuario.mostrarBloque(cuestionario.getBloque());
+            //HAY QUE MIRAR SI ESTA INSTANCIADO EL BLOQUE Q VAMOS A TRAER !!!
+            Bloque bloq_ = cuestionario.UltimoBloque;
+            return bloq_;
         }
 
         public void cerrarCuestionario(Cuestionario cuestionario, string estado)
@@ -163,20 +176,11 @@ namespace Gestores
             admBD.guardarRespuesta(Respuesta);
         }
         
-        public void proximoBloque(Bloque bloque)
+        public Bloque proximoBloque(Bloque bloque)
         {
             Cuestionario cuestAsociado = bloque.CuestAsociado;
             Bloque nuevoBloque = cuestAsociado.proximoBloque(bloque);
-            bool esUltimobloque = nuevoBloque.esUltimoBloque();
-            switch (esUltimobloque)
-            {
-                case true:
-                    //interfasUsuario.mostrarBloqueFinal(nuevoBloque);
-                    break;
-                case false:
-                    //interfasUsuario.mostrarBloque(nuevoBloque);
-                    break;
-            }
+            return nuevoBloque;
         }
 
         internal void ordenarListaAleatorio(List<PreguntaEvaluada> listaPreguntas) 

@@ -8,18 +8,14 @@ namespace Entidades
 {
     public class FactorEvaluado
     {
-        private int codigo;
+        private string codigo;
         private string nombre;
         private CompetenciaEvaluada competenciaAsociadaEv;
         private string descripcion;
         private int nro_orden;
         private List<PreguntaEvaluada> listaPreguntasEv;
-        private string cod;
-        private string nomFactor;
-        private CompetenciaEvaluada competenciaAsociada;
-        private int nrOrden;
 
-        public int Codigo
+        public string Codigo
         {
             get { return codigo; }
             set { codigo = value; }
@@ -64,10 +60,10 @@ namespace Entidades
         //Competencia -> Factor -> Pregunta
         public FactorEvaluado(string cod, string nomFactor, CompetenciaEvaluada competenciaAsociada, int nOrden, string des = null)
         {
-            this.cod = cod;
-            this.nomFactor = nomFactor;
-            this.competenciaAsociada = competenciaAsociada;
-            this.nrOrden = nOrden; 
+            this.Codigo = cod;
+            this.Nombre = nomFactor;
+            this.CompetenciaAsociadaEv = competenciaAsociada;
+            this.Nro_orden = nOrden; 
             this.Descripcion = des;
             this.listaPreguntasEv = new List<PreguntaEvaluada>();
         }

@@ -60,73 +60,40 @@ namespace TpDiseñoCSharp
         }
 
         //Si presiona el boton cancelar, se cierra la pantalla "LoginConsultor" y se vuelve a la "PantallaPrincipal"
-        /*private void Cancelar_Click(object sender, EventArgs e)
+        private void Cancelar_Click(object sender, EventArgs e)
         {
-            //GestorCandidatos gestorCand = new GestorCandidatos();
+            /*AdministradorBD admBD = new AdministradorBD();
+            CompetenciaEvaluada comp_ = new CompetenciaEvaluada("C02", "MONO");
+            FactorEvaluado fac_ = new FactorEvaluado("F00", "algo", null, 1);
+            PreguntaEvaluada preg_Ad = new PreguntaEvaluada("PR11", "pred", "pre", fac_);
 
-            //MessageBox.Show(gestorCand.validarCandidato("DNI", "32563425", "MNF425P1").ToString());
-            /*
-            AdministradorBD adminBD = new AdministradorBD();
-            ArrayList opcRespuesta = adminBD.recuperarOpcionRespuestaEvaluada(65);
-            //ArrayList lista = adminBD.recuperarCandidato("DNI", "32563425");
-            MessageBox.Show(opcRespuesta[0].ToString());
-            int i = 0;
-            OpciondeRespuestaEvaluada cnad = null;
-            while (i < opcRespuesta.Count)
+
+            MessageBox.Show(fac_.Codigo.ToString());
+
+            ArrayList fact_ret = admBD.reconstruirRelaciones(;
+
+            for (int i = 0; i < fact_ret.Count; i++)
             {
-                cnad = (OpciondeRespuestaEvaluada)opcRespuesta[i];
-                MessageBox.Show(cnad.Nombre + " " + cnad.Codigo);
-                i++;
+                CompetenciaEvaluada fact_ = (CompetenciaEvaluada)fact_ret[i];
+                MessageBox.Show(fact_.Codigo + " " + fact_.ListaFactores + " " + fact_.Nombre);
             }
-            /*
-            GestorCuestionario gestCuest = new GestorCuestionario();
 
-            ArrayList retorno = adminBD.recuperarCuestionarioActivo(cnad);
-            i = 0;
-            Cuestionario cuets = null;
-            while (i < retorno.Count)
+            /*for (int i = 0; i < preg_ret.Count; i++)
             {
-                if ((retorno[i] is string) == false)
+                if ((preg_ret[i] is string) == false)
                 {
-                    cuets = (Cuestionario)retorno[i];
-                    MessageBox.Show(cuets.Clave + " " + cuets.Estado.Estado_ + " " + cuets.NroAccesos);
-                    bool si_o_no = gestCuest.validarAcceso(cuets, "MNF425P1");
-                    MessageBox.Show(si_o_no.ToString());
+                    PreguntaEvaluada preg_ = (PreguntaEvaluada)preg_ret[i];
+                    List<OpcionesEvaluadas> listaopc_ = preg_.ListaOpcionesEv;
+                    //if (listaopc_[0] != null)
+                        MessageBox.Show(preg_.Codigo + " " + preg_.Nombre + " " + preg_.FactorAsociado.Nombre + " " + listaopc_[i].Nombre);
+                    //else
+                        //MessageBox.Show("No funciona la lista de opciones");
                 }
                 else
-                    MessageBox.Show(retorno[i].ToString());
-                i++;
-            }
-
-
-
-            /*GestorCuestionario gestCuest = new GestorCuestionario();
-            Cuestionario cuest = gestCuest.cuestionarioAsociado(cnad);
-            MessageBox.Show(cuest.Clave + " " + cuest.PuestoEvaluado);
-
-            ArrayList lista3 = adminBD.recuperarUltimoEstado(cuest);
-            i = 0;
-            Estado est = null;
-            while (i < lista.Count)
-            {
-                est = (Estado)lista3[i];
-                MessageBox.Show(est.Estado_ + " " + est.Fecha_hora);
-                i++;
-            }
-
-            //ArrayList lista2 = adminBD.recuperarCuestionario(cnad);
-            /*MessageBox.Show(lista2[0].ToString());
-            i = 0;
-            while (i < lista2.Count)
-            {
-                Cuestionario cuest = (Cuestionario)lista2[i];
-                MessageBox.Show(cuest.Clave + " " + cuest.PuestoEvaluado);
-                i++;
-            }
-            
+                    MessageBox.Show(preg_ret[i].ToString());
+            }*/
             Close();
-        }*/
-       
+        }
         
        // Declaramos nuestro metodo que hara la limpieza de los textbox
         private void limpiarTextBoxFormulario(Form formulario)
@@ -146,12 +113,5 @@ namespace TpDiseñoCSharp
                 }
             }
         }
-
-        private void Cancelar_Click(object sender, EventArgs e)
-        {
-            Close();
-        }
-      
-
     }
 }

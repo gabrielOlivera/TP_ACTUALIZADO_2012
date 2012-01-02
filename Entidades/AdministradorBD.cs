@@ -321,12 +321,15 @@ namespace Entidades
                 if ((listaPuestosEv[0] is string) == false)
                 {
                     PuestoEvaluado puestoEv = (PuestoEvaluado)listaPuestosEv[0];
-
+                    
                     ArrayList listEstado = this.recuperarUltimoEstado(preSeleccionCuestionarios[i]);
                     Estado estadoCuest = (Estado)listEstado[0];
 
                     if (estadoCuest.Estado_ == "ACTIVO" || estadoCuest.Estado_ == "EN PROCESO")
                     {
+                        //Agrego el puesto evaluado al cuestionario
+                        preSeleccionCuestionarios[i].PuestoEvaluado = puestoEv;
+                        //Agrego el estado al cuestionario
                         preSeleccionCuestionarios[i].Estado = estadoCuest;
                         listaCuestionariosAsociados.Add(preSeleccionCuestionarios[i]);
                     }
@@ -531,6 +534,22 @@ namespace Entidades
             return listaDeCompetencias;
         }
 
+        public bool reconstruirRelaciones(Cuestionario cuestionarioAsociado)
+        {
+            bool seRealizoConExito = false;
+            PuestoEvaluado puestoEvAsociado = cuestionarioAsociado.PuestoEvaluado;
+
+            if (Equals(puestoEvAsociado.Caracteristicas,null) == true)
+            {
+                List<Caracteristica> caracteristicasPuesto = recuperarCaracteristicasPuesto(puestoEvAsociado);
+                puestoEvAsociado.Caracteristicas = caracteristicasPuesto;
+                seRealizoConExito = true;
+            }
+
+            return seRealizoConExito;
+
+        }
+
         public List<Caracteristica> recuperarCaracteristicasPuesto(PuestoEvaluado puestoEvAsociado)
         {
             bool conexionExitosa;
@@ -685,8 +704,8 @@ namespace Entidades
 
             while (reader.Read())
             {
-                string cod = reader["`factor evaluado`.codigo"].ToString();
-                string nomFactor = reader["`factor evaluado`.nombre"].ToString();
+                string cod = reader["codigo"].ToString();
+                string nomFactor = reader["nombre"].ToString();
                 int nrOrden = Int32.Parse(reader["nroOrden"].ToString());
 
                 FactorEvaluado factorEv = new FactorEvaluado(cod, nomFactor, competenciaAsociada, nrOrden); 
@@ -697,19 +716,23 @@ namespace Entidades
             //Agregamos la lista de Factores para cada una de las competencias encontradas
             for (int i = 0; i < listaDeFactores.Count; i++)
             {
-                ArrayList factoresList = recuperarPreguntasEvaluados((FactorEvaluado)listaDeFactores[i]);
-
-                for (int j = 0; j < factoresList.Count; j++)
+                ArrayList preguntasList = recuperarPreguntasEvaluadas((FactorEvaluado)listaDeFactores[i]);
+                if((preguntasList[i] is string) == false)
                 {
-                    FactorEvaluado factoR = (FactorEvaluado)listaDeFactores[j];
-                    factoR.addPregunta((PreguntaEvaluada)factoresList[j]);
+                    FactorEvaluado factoR = (FactorEvaluado)listaDeFactores[i];
+                    for (int j = 0; j < preguntasList.Count; j++)
+                    {
+                        factoR.addPregunta((PreguntaEvaluada)preguntasList[j]);
+                    }
                 }
+                else
+                    listaDeFactores.Add(preguntasList[i]);
             }
             
             return listaDeFactores;
         }
 
-        public ArrayList recuperarPreguntasEvaluados(FactorEvaluado factorAsociado)
+        public ArrayList recuperarPreguntasEvaluadas(FactorEvaluado factorAsociado)
         {
             bool conexionExitosa;
             ArrayList listaDePreguntas = new ArrayList();
@@ -737,7 +760,7 @@ namespace Entidades
 
             if (!reader.HasRows)
             { //si el reader esta vacio, es qe no encontro a ese candidato
-                listaDePreguntas.Add("El puesto no posee competencias para ser evaluado");
+                listaDePreguntas.Add("El factor no posee preguntas para ser evaluado");
                 terminarConexion();
                 return listaDePreguntas;
             }
@@ -745,12 +768,12 @@ namespace Entidades
             List<int> listaIdOpRespuesta = new List<int>();
             while (reader.Read())
             {
-                string cod = reader["`pregunta evaluada`.codigo"].ToString();
-                string nomPreg = reader["`pregunta evaluada`.nombre"].ToString();
-                string preg = reader["`pregunta evaluada`.pregunta"].ToString();
-                int idOpRespuesta = Int32.Parse(reader["`pregunta evaluada`.`Opcion de Respuesta Evaluada_idOpcion de Respuesta Evaluada`"].ToString());
+                string cod = reader["codigo"].ToString();
+                string nomPreg = reader["nombre"].ToString();
+                string preg = reader["pregunta"].ToString();
+                int idOpRespuesta = Int32.Parse(reader["Opcion de Respuesta Evaluada_idOpcion de Respuesta Evaluada"].ToString());
 
-                PreguntaEvaluada preguntaEv = new PreguntaEvaluada(preg, nomPreg, factorAsociado);
+                PreguntaEvaluada preguntaEv = new PreguntaEvaluada(cod, preg, nomPreg, factorAsociado);
                 listaDePreguntas.Add(preguntaEv);
                 listaIdOpRespuesta.Add(idOpRespuesta);
             }
@@ -760,16 +783,20 @@ namespace Entidades
             for (int i = 0; i < listaDePreguntas.Count; i++)
             {
                 ArrayList opcionesRespuesta = recuperarOpcionRespuestaEvaluada(listaIdOpRespuesta[i]);
-                List<OpcionesEvaluadas> opciones = recuperarOpcionesEvaluadas((PreguntaEvaluada)listaDePreguntas[i]);
-                for (int j = 0; j < opcionesRespuesta.Count; j++)
+                if ((opcionesRespuesta[0] is string) == false)
                 {
-                    OpciondeRespuestaEvaluada opcRespuestaEv = (OpciondeRespuestaEvaluada)opcionesRespuesta[j];
-                    opcRespuestaEv.ListaOpcionesEv = opciones; //Realizo la asignacion de la lista de opciones evaluadas en las opciones de respuesta
+                    PreguntaEvaluada preg_ev_ = (PreguntaEvaluada)listaDePreguntas[i];
+                    List<OpcionesEvaluadas> opciones = recuperarOpcionesEvaluadas(preg_ev_);
+                    for (int j = 0; j < opcionesRespuesta.Count; j++)
+                    {
+                        OpciondeRespuestaEvaluada opcRespuestaEv = (OpciondeRespuestaEvaluada)opcionesRespuesta[j];
+                        opcRespuestaEv.ListaOpcionesEv = opciones; //Realizo la asignacion de la lista de opciones evaluadas en las opciones de respuesta
 
-                    //Realizo la asignacion de las opciones de respuestas y las opciones corespondientes para la pregunta
-                    PreguntaEvaluada preguntaEv = (PreguntaEvaluada)listaDePreguntas[j];
-                    preguntaEv.Op_respuestaEv = opcRespuestaEv;
-                    preguntaEv.ListaOpcionesEv = opciones;
+                        //Realizo la asignacion de las opciones de respuestas y las opciones corespondientes para la pregunta
+                        PreguntaEvaluada preguntaEv = (PreguntaEvaluada)listaDePreguntas[j];
+                        preguntaEv.Op_respuestaEv = opcRespuestaEv;
+                        preguntaEv.ListaOpcionesEv = opciones;
+                    }
                 }
             }
 
@@ -781,7 +808,7 @@ namespace Entidades
             bool conexionExitosa;
             List<OpcionesEvaluadas> listaDeOpciones = new List<OpcionesEvaluadas>();
 
-            string consultaSql = "SELECT DISTINCT opc.nombre, opR_opc.ordenDeVisualizacion, pr_opc.ponderacion" +
+            string consultaSql = "SELECT DISTINCT opc.nombre, opR_opc.ordenDeVisualizacion, pr_opc.ponderacion " +
             "FROM `opcion evaluada` opc " +
             "JOIN `opcion de respuesta evaluada_opcion evaluada` opR_opc on (opR_opc.`Opcion Evaluada_idOpcion` = opc.`idOpcion`) " +
             "JOIN `pregunta evaluada` pr on (pr.`Opcion de Respuesta Evaluada_idOpcion de Respuesta Evaluada` = opR_opc.`Opcion de Respuesta Evaluada_idOpcion de Respuesta Evaluada`) " +
@@ -813,9 +840,9 @@ namespace Entidades
             while (reader.Read())
             {
                 //opc.nombre, opR_opc.ordenDeVisualizacion, pr.`idPregunta Evaluada`
-                string nomOpcion = reader["opc.nombre"].ToString();
-                int ponderacion = Int32.Parse(reader["pr_opc.ponderacion"].ToString());
-                int idOpcion = Int32.Parse(reader["opR_opc.ordenDeVisualizacion"].ToString());
+                string nomOpcion = reader["nombre"].ToString();
+                int ponderacion = Int32.Parse(reader["ponderacion"].ToString());
+                int idOpcion = Int32.Parse(reader["ordenDeVisualizacion"].ToString());
 
                 OpcionesEvaluadas preguntaEv = new OpcionesEvaluadas(nomOpcion, ponderacion);
                 listaDeOpciones.Add(preguntaEv);
@@ -865,22 +892,6 @@ namespace Entidades
             terminarConexion();
 
             return listaDeOpRespuesta; 
-        }
-
-        public bool reconstruirRelaciones(Cuestionario cuestionarioAsociado)
-        {
-            bool seRealizoConExito = false;
-            PuestoEvaluado puestoEvAsociado = cuestionarioAsociado.PuestoEvaluado;
-
-            if (puestoEvAsociado.Caracteristicas == null)
-            {
-                List<Caracteristica> caracteristicasPuesto = recuperarCaracteristicasPuesto(puestoEvAsociado);
-                puestoEvAsociado.Caracteristicas = caracteristicasPuesto;
-                seRealizoConExito = true;
-            }
-
-            return seRealizoConExito;
-
         }
 
         //Metodos de resguardo de clases
@@ -949,7 +960,34 @@ namespace Entidades
          se tomara este valor de la tabla 'Instrucciones de Sistema' de la BD*/
         public int darTiempoEvaluacion()
         {
-            int tiempoEvaluacion = 15; //ejemplo hasta hacer la implementacion real
+            int tiempoEvaluacion = -2;
+            bool conexionExitosa;
+
+            string consultaSql = "SELECT tiempoParaContestarCuestionario FROM `instrucciones de sistema`;";
+
+            conexionExitosa = iniciarConexion();
+
+            if (!conexionExitosa)
+                return -1; //Error de conexion
+
+            MySql.Data.MySqlClient.MySqlCommand comando;
+
+            comando = ObjConexion.CreateCommand();
+
+            comando.CommandText = consultaSql;
+
+            MySqlDataReader reader = comando.ExecuteReader();
+
+            if (!reader.HasRows)//si el reader esta vacio, no se encontro el parametro buscado
+                return -2;
+
+            while (reader.Read())
+            {
+                tiempoEvaluacion = Int32.Parse(reader["tiempoParaContestarCuestionario"].ToString());
+            }
+
+            terminarConexion();
+
             return tiempoEvaluacion;
         }
 
@@ -1022,6 +1060,42 @@ namespace Entidades
             return tiempoActivo;
         }
 
+        public DateTime recuperarFechadeComienzoEvaluacion(string cod)
+        {
+            bool conexionExitosa;
+            DateTime fechaComienzo = new DateTime();
+
+            string consultaSql = "SELECT DISTINCT `fecha` FROM `cuestionario_estado` cu_est "+
+                "JOIN `puesto evaluado` p on (p.codigo = '"+ cod +"') "+
+                "JOIN `cuestionario` cuest on (cuest.`Puesto Evaluado_idPuesto Evaluado` = p.`idPuesto Evaluado`) "+
+                "WHERE cu_est.Cuestionario_idCuestionario = cuest.idCuestionario AND Estado_idEstado = 1;";
+
+            conexionExitosa = iniciarConexion();
+
+            if (!conexionExitosa)
+                return fechaComienzo.AddDays(0); //Error de conexion
+
+            MySql.Data.MySqlClient.MySqlCommand comando;
+
+            comando = ObjConexion.CreateCommand();
+
+            comando.CommandText = consultaSql;
+
+            MySqlDataReader reader = comando.ExecuteReader();
+
+            if (!reader.HasRows)//si el reader esta vacio, no se encontro el parametro buscado
+                return fechaComienzo.AddDays(0);
+
+            while (reader.Read())
+            {
+                fechaComienzo =  DateTime.Parse(reader["fecha"].ToString());
+            }
+
+            terminarConexion();
+
+            return fechaComienzo;
+        }
+
         public string retornarInstruccionesDelcuestionario()
         {
             bool conexionExitosa;
@@ -1051,7 +1125,7 @@ namespace Entidades
             }
 
             terminarConexion();
-
+            
             return instrucciones;
 
         }

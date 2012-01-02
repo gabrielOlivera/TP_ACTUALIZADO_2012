@@ -41,12 +41,12 @@ namespace Entidades
 
         }
 
-        public CompetenciaEvaluada(string cod, string nom, string des)
+        public CompetenciaEvaluada(string cod, string nom, string des = null)
         {
-            codigo = cod; // solo se inicializa aqui este codigo.
-            nombre =  nom;
-            Descripcion = des;
-            listaFactores = new List<FactorEvaluado>();
+            this.Codigo = cod; // solo se inicializa aqui este codigo.
+            this.Nombre =  nom;
+            this.Descripcion = des;
+            this.ListaFactores = new List<FactorEvaluado>();
         }
 
         public void addFactor(FactorEvaluado fact) { listaFactores.Add(fact); }

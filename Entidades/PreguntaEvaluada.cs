@@ -64,14 +64,15 @@ namespace Entidades
 
         }
 
-        public PreguntaEvaluada(string preg, string nom, FactorEvaluado fact, OpciondeRespuestaEvaluada Op_res_Ev = null, string des = null)
+        public PreguntaEvaluada(string cod_, string preg_, string nom_, FactorEvaluado fact_, OpciondeRespuestaEvaluada Op_res_Ev = null, string des = null)
         {
-            pregunta = preg;
-            factorAsociado = fact;
-            nombre = nom;
-            descripcion = des;
-            op_respuestaEv = Op_res_Ev;
-            listaOpcionesEv = new List<OpcionesEvaluadas>();
+            this.Codigo = cod_;
+            this.Pregunta = preg_;
+            this.FactorAsociado = fact_;
+            this.Nombre = nom_;
+            this.Descripcion = des;
+            this.Op_respuestaEv = Op_res_Ev;
+            this.ListaOpcionesEv = new List<OpcionesEvaluadas>();
         }
 
 

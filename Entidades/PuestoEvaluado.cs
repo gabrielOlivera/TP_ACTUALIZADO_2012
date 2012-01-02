@@ -61,11 +61,13 @@ namespace Entidades
         /* Metodo Constructor */
         public PuestoEvaluado(string cod, string nomb, string emp, string desc = null, List<Caracteristica> caract = null)
         {
-            codigo = cod; //el codigo es seteado unicamente al iniciar el Puesto.
-            setNombre(nomb);
-            setEmpresa(emp);
-            setDescripcion(desc);
-            caracteristicas = caract;
+            AdministradorBD admBD = new AdministradorBD();
+            codigo = cod;
+            this.Fecha_Comienzo = admBD.recuperarFechadeComienzoEvaluacion(cod);
+            this.Nombre = nomb;
+            this.Empresa = emp;
+            this.Descripcion = desc;
+            this.Caracteristicas = caract;
         }
 
         //Metodos de inicializacion y modificación 
