@@ -8,6 +8,47 @@ namespace Gestores
 {
     class GestorEvaluacion
     {
+        /*
+         * La mision que justifica la existencia de los gestores es hacer de "interfaz" entre las ENTIDADES y el resto del sistema
+         * Por esto el gestor debe tener la responsabilidad de instanciar la/s que le corresponde gestionar
+         */
+        public PuestoEvaluado instanciarPuestoEvaluado(string codigo, string nombre, string empresa, string descripcion = null, List<Caracteristica> caracteristicas = null)
+        {
+            PuestoEvaluado nuevoPuestoEv = new PuestoEvaluado(codigo, nombre, empresa, descripcion, caracteristicas);
+            return nuevoPuestoEv;
+        }
+
+        public CompetenciaEvaluada instanciarCompetenciaEvaluda(string codigo, string nombre, string descripcion = null)
+        {
+            CompetenciaEvaluada nuevaCompetenciaEv = new CompetenciaEvaluada(codigo, nombre, descripcion);
+            return nuevaCompetenciaEv;
+        }
+
+        public FactorEvaluado instanciarFactorEvaluado(string codigo, string nombre, CompetenciaEvaluada competenciaAsociada, int nrOrden, string descripcion = null)
+        {
+            FactorEvaluado nuevoFactorEv = new FactorEvaluado(codigo, nombre, competenciaAsociada, nrOrden, descripcion);
+            return nuevoFactorEv;
+        }
+
+        public PreguntaEvaluada instanciarPreguntaEvaluda(string codigo, string pregunta_, string nombre, FactorEvaluado factorAsocido, OpciondeRespuestaEvaluada OpcRespuesta = null, string descripcion = null)
+        {
+            PreguntaEvaluada nuevaPreguntaEv = new PreguntaEvaluada(codigo, pregunta_, nombre, factorAsocido, OpcRespuesta, descripcion);
+            return nuevaPreguntaEv;
+        }
+
+        public OpciondeRespuestaEvaluada instanciarOpRespuestaEv(string nombre, string codigo, string descripcion = null)
+        {
+            OpciondeRespuestaEvaluada nuevaOpRespuestEv = new OpciondeRespuestaEvaluada(nombre, codigo, descripcion);
+            return nuevaOpRespuestEv;
+        }
+
+        public OpcionesEvaluadas instanciarOpcionEv(string nombre, int ponderacion)
+        {
+            OpcionesEvaluadas nuevoOpcionEv = new OpcionesEvaluadas(nombre, ponderacion);
+            return nuevoOpcionEv;
+        }
+
+
         //mira nuevamente esta funcionalidad
         public List<PreguntaEvaluada> listarPreguntas(PuestoEvaluado puesto)
         {

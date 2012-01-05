@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Collections;
+using Gestores;
 using Entidades;
 
 namespace Gestores
@@ -10,19 +11,21 @@ namespace Gestores
     public class GestorPuesto
     {
         //Declaracion de una instancia del administrador para poder hacerle consultas
-        AdministradorBD admBD = new AdministradorBD(); 
+        AdministradorBD admBD = new AdministradorBD();
+
+        /*
+         * - La mision que justifica la existencia de los gestores es hacer de "interfaz" entre las ENTIDADES y el resto del sistema
+         * - Por esto el gestor debe tener la responsabilidad de instanciar la/s que le corresponde gestionar
+        */
+        public Puesto instanciarPuesto(string codigo, string nombre, string empresa, string descripcion = null)
+        {
+            Puesto nuevoPuesto = new Puesto(codigo, nombre, empresa, descripcion);
+            return nuevoPuesto;
+        }
 
         public List<Puesto> listarPuestos(string codigo = null, string nombreDePuesto = null, string empresa = null)
         {
-            ArrayList retornoBD = admBD.recuperarPuestos(codigo, nombreDePuesto, empresa);
-            List<Puesto> listaPuestos = new List<Puesto>();
-
-            for (int i = 0; i <= retornoBD.Count ; i++)
-            {
-                Puesto nuevoPuesto = (Puesto)retornoBD[i];
-                listaPuestos.Add(nuevoPuesto);
-            }
-
+            List<Puesto> listaPuestos = admBD.recuperarPuestos(codigo, nombreDePuesto, empresa);
             return listaPuestos;
         }
 

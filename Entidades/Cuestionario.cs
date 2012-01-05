@@ -66,12 +66,11 @@ namespace Entidades
         }
 
         //Constructor
-        public Cuestionario(Candidato cand, string claveCuest = null, PuestoEvaluado pEv = null, int accesos = 0, Bloque bloq = null)
+        public Cuestionario(Candidato cand, string claveCuest = null, PuestoEvaluado pEv = null, int maxAccess = 0, int accesos = 0, Bloque bloq = null)
         {
-            AdministradorBD admBD = new AdministradorBD();
             clave = claveCuest;
             nroAccesos = accesos;
-            maxAccesos = admBD.darAccesosMaximos();
+            maxAccesos = maxAccess;
             candidatoAsociado = cand;
             puestoEvaluado = pEv;
             ultimoBloque = bloq;
@@ -87,62 +86,9 @@ namespace Entidades
             return estado.Fecha_hora;
         }
 
-        public Bloque proximoBloque(Bloque bloqAnterior)
-        {
-            AdministradorBD admBD = new AdministradorBD();  //intanciacion del administrador base de datos
-
-            int nroProxBloque = bloqAnterior.NroBloque;
-            nroProxBloque += 1;
-            ArrayList retornoBD = admBD.retornarProximoBloque(this, nroProxBloque);
-            Bloque proxBloque = (Bloque)retornoBD[0];
-            this.ultimoBloque = proxBloque; //seteo el ultimo bloque
-            return proxBloque;
-        }
-
         public void aumentarAcceso()
         {
             this.nroAccesos += 1;
-        }
-
-        public void crearBloque(List<PreguntaEvaluada> listaPreguntas, int pregXbloque)
-        {
-            int numBloq = 0, j, contadorDeBloqueCreados = 0;
-            int cantidadBloques = (listaPreguntas.Count / pregXbloque);
-
-            for (int i = 0; i <= listaPreguntas.Count; i++)
-            {
-                AdministradorBD admBD = new AdministradorBD();  //intanciacion del administrador base de datos
-
-                Bloque nuevoBloque = new Bloque(numBloq++, this);
-                PreguntaEvaluada preg;
-                for (j = 0; j <= pregXbloque; j++)
-                {
-                    preg = listaPreguntas[j];
-                    nuevoBloque.addPreguntaEv(preg);
-                }
-                contadorDeBloqueCreados += 1;
-                i += j;
-                switch (contadorDeBloqueCreados == cantidadBloques)
-                {
-                    case true:
-                        {
-                            nuevoBloque.marcarUltimobloque();
-                            admBD.guardarBloque(nuevoBloque); // mensaje se envia al Adm de BD
-                        }
-                        break;
-                    default:
-                        admBD.guardarBloque(nuevoBloque); // mensaje se envia al Adm de BD
-                        break;
-                }
-            }
-        }
-        public void cambiarEstado(string alEstado)
-        {
-            AdministradorBD admBD = new AdministradorBD();  //intanciacion del administrador base de datos
-
-            Estado nuevoEstado = new Estado(this, alEstado);
-            estado = nuevoEstado;
-            admBD.guardarEstado(estado); //se lo envia al Adm BD
         }
     }
 }

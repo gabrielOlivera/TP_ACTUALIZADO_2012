@@ -61,9 +61,9 @@ namespace Entidades
         /* Metodo Constructor */
         public PuestoEvaluado(string cod, string nomb, string emp, string desc = null, List<Caracteristica> caract = null)
         {
-            AdministradorBD admBD = new AdministradorBD();
+            //AdministradorBD admBD = new AdministradorBD();
             codigo = cod;
-            this.Fecha_Comienzo = admBD.recuperarFechadeComienzoEvaluacion(cod);
+            //this.Fecha_Comienzo = admBD.recuperarFechadeComienzoEvaluacion(cod);
             this.Nombre = nomb;
             this.Empresa = emp;
             this.Descripcion = desc;

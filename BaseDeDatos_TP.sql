@@ -53,35 +53,6 @@ INSERT INTO `bloque` VALUES (1,1,1,NULL),(2,2,1,NULL),(3,3,1,1),(4,1,2,NULL),(5,
 UNLOCK TABLES;
 
 --
--- Table structure for table `bloque_preguntaev`
---
-
-DROP TABLE IF EXISTS `bloque_preguntaev`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `bloque_preguntaev` (
-  `idbloque_preguntaev` int(11) NOT NULL AUTO_INCREMENT,
-  `Bloque_idBloque` int(11) NOT NULL,
-  `PreguntaEvaluada_idPreguntaEv` int(11) NOT NULL,
-  PRIMARY KEY (`idbloque_preguntaev`),
-  KEY `fk_preguntaevaluada` (`PreguntaEvaluada_idPreguntaEv`),
-  KEY `fk_bloque` (`Bloque_idBloque`),
-  CONSTRAINT `fk_bloque` FOREIGN KEY (`Bloque_idBloque`) REFERENCES `bloque` (`idBloque`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_preguntaevaluada` FOREIGN KEY (`PreguntaEvaluada_idPreguntaEv`) REFERENCES `pregunta evaluada` (`idPregunta Evaluada`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=61 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `bloque_preguntaev`
---
-
-LOCK TABLES `bloque_preguntaev` WRITE;
-/*!40000 ALTER TABLE `bloque_preguntaev` DISABLE KEYS */;
-INSERT INTO `bloque_preguntaev` VALUES (1,1,22),(2,1,28),(3,1,33),(4,1,23),(5,1,29),(6,2,34),(7,2,25),(8,2,30),(9,2,35),(10,2,26),(11,3,31),(12,3,36),(13,3,27),(14,3,32),(15,3,37),(16,4,27),(17,4,32),(18,4,37),(19,4,26),(20,4,31),(21,5,36),(22,5,25),(23,5,30),(24,5,35),(25,5,22),(26,6,28),(27,6,34),(28,6,23),(29,6,29),(30,6,33),(31,7,1),(32,7,12),(33,7,17),(34,7,18),(35,7,6),(36,8,28),(37,8,22),(38,8,2),(39,8,3),(40,8,13),(41,9,8),(42,9,29),(43,9,24),(44,9,4),(45,9,14),(46,10,19),(47,10,9),(48,10,30),(49,10,25),(50,10,5),(51,11,15),(52,11,20),(53,11,11),(54,11,31),(55,11,26),(56,12,16),(57,12,21),(58,12,7),(59,12,32),(60,12,27);
-/*!40000 ALTER TABLE `bloque_preguntaev` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `candidato`
 --
 
@@ -115,7 +86,7 @@ CREATE TABLE `candidato` (
 
 LOCK TABLES `candidato` WRITE;
 /*!40000 ALTER TABLE `candidato` DISABLE KEYS */;
-INSERT INTO `candidato` VALUES (1,NULL,1,'DNI','32563425','MARIA','NINI','1989-05-23','ARGENTINA','F',NULL,'TERCIARIO',NULL),(2,NULL,5,'DNI','29652456','NICO','MOT','1980-02-12','ARGENTINO','M',NULL,'TERCIARIO',NULL),(3,NULL,25,'DNI','32558698','ANA','CONDA','1982-03-26','ARGENTINA','F',NULL,'UNIVERSITARIO',NULL),(4,NULL,10,'DNI','33856125','MARIA CLARA','MONTOYA','1988-05-12','ARGENTINA','F',NULL,'SECUNDARIO',NULL),(5,12,NULL,'DNI','33125456','MARCOS','ALVAREZ','1987-06-30','ARGENTINO','M',NULL,'TERCIARIO',NULL),(6,NULL,99,'DNI','31256896','PENELOPE','GUINESS','1986-02-15','ARGENTINA','F',NULL,'TERCIARIO',NULL),(7,5,NULL,'PP','P321526352','NICK','WAHLBERG','1985-07-22','EE.UU','M',NULL,'TERCIARIO',NULL),(8,NULL,65,'PP','L352625684','ED','CHASE','1986-05-15','EE.UU','M',NULL,'TERCIARIO',NULL),(9,NULL,15,'DNI','34896587','JENNIFER','DAVIS','1990-11-23','ARGENTINA','F',NULL,'SECUNDARIO',NULL),(10,NULL,2,'PP','U223562158','WALTER','DIAZ','1987-10-11','URUGUAYO','M',NULL,'TERCIARIO',NULL),(11,NULL,16,'DNI','33263561','CARLOS','FRANCO','1988-12-23','ARGENTINO','M',NULL,'TERCIARIO',NULL),(12,23,NULL,'DNI','31962352','PAMELA','MONTOYA','1985-09-24','ARGENTINA','F',NULL,'TERCIARIO',NULL),(13,NULL,3,'DNI','32635126','MARIELA','PIÑA','1983-02-02','ARGENTINA','F',NULL,'UNIVERSITARIO',NULL),(14,2,NULL,'DNI','34562415','PABLO','SERRA','1988-12-31','ARGENTINO','M',NULL,'TERCIARIO',NULL),(15,NULL,41,'PP','U263526235','JUAN','PEREZ','1985-06-25','URUGUAYO','M',NULL,'TERCIARIO',NULL);
+INSERT INTO `candidato` VALUES (1,NULL,1,'DNI','32376056','JOSE','PICCICIONI','1989-05-23','ARGENTINA','M',NULL,'TERCIARIO',NULL),(2,NULL,5,'DNI','34823666','NICOLAS','BIELER','1980-02-12','ARGENTINO','M',NULL,'TERCIARIO',NULL),(3,NULL,25,'DNI','32558698','ANA','CONDA','1982-03-26','ARGENTINA','F',NULL,'UNIVERSITARIO',NULL),(4,NULL,10,'DNI','33856125','MARIA CLARA','MONTOYA','1988-05-12','ARGENTINA','F',NULL,'SECUNDARIO',NULL),(5,12,NULL,'DNI','33125456','MARCOS','ALVAREZ','1987-06-30','ARGENTINO','M',NULL,'TERCIARIO',NULL),(6,NULL,99,'DNI','31256896','PENELOPE','GUINESS','1986-02-15','ARGENTINA','F',NULL,'TERCIARIO',NULL),(7,5,NULL,'PP','P321526352','NICK','WAHLBERG','1985-07-22','EE.UU','M',NULL,'TERCIARIO',NULL),(8,NULL,65,'PP','L352625684','ED','CHASE','1986-05-15','EE.UU','M',NULL,'TERCIARIO',NULL),(9,NULL,15,'DNI','34896587','JENNIFER','DAVIS','1990-11-23','ARGENTINA','F',NULL,'SECUNDARIO',NULL),(10,NULL,2,'PP','U223562158','WALTER','DIAZ','1987-10-11','URUGUAYO','M',NULL,'TERCIARIO',NULL),(11,NULL,16,'DNI','33263561','CARLOS','FRANCO','1988-12-23','ARGENTINO','M',NULL,'TERCIARIO',NULL),(12,23,NULL,'DNI','31962352','PAMELA','MONTOYA','1985-09-24','ARGENTINA','F',NULL,'TERCIARIO',NULL),(13,NULL,3,'DNI','32635126','MARIELA','PIÑA','1983-02-02','ARGENTINA','F',NULL,'UNIVERSITARIO',NULL),(14,2,NULL,'DNI','34562415','PABLO','SERRA','1988-12-31','ARGENTINO','M',NULL,'TERCIARIO',NULL),(15,NULL,41,'PP','U263526235','JUAN','PEREZ','1985-06-25','URUGUAYO','M',NULL,'TERCIARIO',NULL);
 /*!40000 ALTER TABLE `candidato` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -233,7 +204,7 @@ CREATE TABLE `cuestionario` (
 
 LOCK TABLES `cuestionario` WRITE;
 /*!40000 ALTER TABLE `cuestionario` DISABLE KEYS */;
-INSERT INTO `cuestionario` VALUES (1,'MNF425P1',0,1,1,NULL),(2,'ACF698P1',0,1,3,NULL),(3,'ECM684P2',0,2,8,NULL),(4,'MMF125P2',0,2,4,NULL),(5,'WDM158P2',0,2,10,NULL),(6,'MPF126P2',0,2,13,NULL),(8,'MNF425P3',4,3,1,4);
+INSERT INTO `cuestionario` VALUES (1,'JPM056P1',0,1,1,NULL),(2,'ACF698P1',0,1,3,NULL),(3,'ECM684P2',0,2,8,NULL),(4,'MMF125P2',0,2,4,NULL),(5,'WDM158P2',0,2,10,NULL),(6,'MPF126P2',0,2,13,NULL),(8,'MNF425P3',4,3,1,4);
 /*!40000 ALTER TABLE `cuestionario` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -380,8 +351,38 @@ CREATE TABLE `instrucciones de sistema` (
 
 LOCK TABLES `instrucciones de sistema` WRITE;
 /*!40000 ALTER TABLE `instrucciones de sistema` DISABLE KEYS */;
-INSERT INTO `instrucciones de sistema` VALUES (1,5,60,60,4,'INSTRUCCIONES: 1) Presione “Aceptar” luego de haber leído estas instrucciones para dar comienzo a su evaluación. Después de esto se les presentara en la pantalla un bloque con preguntas, y se dará inicio a su evaluación. 2) Lea atentamente las preguntas y conteste una solo opción por cada una. Recuerde que solo pude haber una sola opción contestada y no podrá dejar una pregunta sin su correspondiente respuesta.3) Verifique sus respuestas antes de presionar “siguiente”, no podrá volver a ver el bloque de preguntas una vez pasado al siguiente bloque. 4) Recuerde que tiene un límite de accesos a realizar el cuestionario. Máximo de accesos es…');
+INSERT INTO `instrucciones de sistema` VALUES (1,5,60,60,4,'INSTRUCCIONES: @@1) Presione “Aceptar” luego de haber leído estas instrucciones para dar comienzo a su evaluación. @Después de esto se les presentara en la pantalla un bloque con preguntas, y se dará inicio a su evaluación. @@2) Lea atentamente las preguntas y conteste una solo opción por cada una. @Recuerde que solo pude haber una sola opción contestada y no podrá dejar una pregunta sin su correspondiente respuesta. @@3) Verifique sus respuestas antes de presionar “siguiente”. @No podrá volver a ver el bloque de preguntas una vez pasado al siguiente bloque. @@4) Recuerde que tiene un límite de accesos a realizar el cuestionario. Máximo de accesos es…');
 /*!40000 ALTER TABLE `instrucciones de sistema` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `item_bloque`
+--
+
+DROP TABLE IF EXISTS `item_bloque`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `item_bloque` (
+  `idbloque_preguntaev` int(11) NOT NULL AUTO_INCREMENT,
+  `Bloque_idBloque` int(11) NOT NULL,
+  `PreguntaEvaluada_idPreguntaEv` int(11) NOT NULL,
+  `Opcion Evaluada_idOpcion_seleccionada` int(11) DEFAULT NULL,
+  PRIMARY KEY (`idbloque_preguntaev`),
+  KEY `fk_preguntaevaluada` (`PreguntaEvaluada_idPreguntaEv`),
+  KEY `fk_bloque` (`Bloque_idBloque`),
+  KEY `fk_opcionevaluada` (`Opcion Evaluada_idOpcion_seleccionada`),
+  CONSTRAINT `fk_opcionevaluada` FOREIGN KEY (`Opcion Evaluada_idOpcion_seleccionada`) REFERENCES `opcion evaluada` (`idOpcion`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=61 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `item_bloque`
+--
+
+LOCK TABLES `item_bloque` WRITE;
+/*!40000 ALTER TABLE `item_bloque` DISABLE KEYS */;
+INSERT INTO `item_bloque` VALUES (1,1,22,NULL),(2,1,28,NULL),(3,1,33,NULL),(4,1,23,NULL),(5,1,29,NULL),(6,2,34,NULL),(7,2,25,NULL),(8,2,30,NULL),(9,2,35,NULL),(10,2,26,NULL),(11,3,31,NULL),(12,3,36,NULL),(13,3,27,NULL),(14,3,32,NULL),(15,3,37,NULL),(16,4,27,NULL),(17,4,32,NULL),(18,4,37,NULL),(19,4,26,NULL),(20,4,31,NULL),(21,5,36,NULL),(22,5,25,NULL),(23,5,30,NULL),(24,5,35,NULL),(25,5,22,NULL),(26,6,28,NULL),(27,6,34,NULL),(28,6,23,NULL),(29,6,29,NULL),(30,6,33,NULL),(31,7,1,NULL),(32,7,12,NULL),(33,7,17,NULL),(34,7,18,NULL),(35,7,6,NULL),(36,8,28,NULL),(37,8,22,NULL),(38,8,2,NULL),(39,8,3,NULL),(40,8,13,NULL),(41,9,8,NULL),(42,9,29,NULL),(43,9,24,NULL),(44,9,4,NULL),(45,9,14,NULL),(46,10,19,NULL),(47,10,9,NULL),(48,10,30,NULL),(49,10,25,NULL),(50,10,5,NULL),(51,11,15,NULL),(52,11,20,NULL),(53,11,11,NULL),(54,11,31,NULL),(55,11,26,NULL),(56,12,16,NULL),(57,12,21,NULL),(58,12,7,NULL),(59,12,32,NULL),(60,12,27,NULL);
+/*!40000 ALTER TABLE `item_bloque` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -799,37 +800,6 @@ LOCK TABLES `puesto_competencia` WRITE;
 INSERT INTO `puesto_competencia` VALUES ('P01','C03',5),('P01','C04',2),('P01','C05',3),('P02','C00',1),('P02','C02',5),('P02','C03',3),('P02','C04',1);
 /*!40000 ALTER TABLE `puesto_competencia` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `respuestas evaluacion`
---
-
-DROP TABLE IF EXISTS `respuestas evaluacion`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `respuestas evaluacion` (
-  `idRespuestas Evaluacion` int(11) NOT NULL AUTO_INCREMENT,
-  `Cuestionario_idCuestionario` int(11) NOT NULL,
-  `Pregunta Evaluada_idPregunta Evaluada` int(11) NOT NULL,
-  `Opcion Evaluada_idOpcion` int(11) NOT NULL,
-  PRIMARY KEY (`idRespuestas Evaluacion`),
-  KEY `fk_Respuestas Evaluacion_Cuestionario1` (`Cuestionario_idCuestionario`),
-  KEY `fk_Respuestas Evaluacion_Pregunta Evaluada1` (`Pregunta Evaluada_idPregunta Evaluada`),
-  KEY `fk_Respuestas Evaluacion_Opcion Evaluada1` (`Opcion Evaluada_idOpcion`),
-  CONSTRAINT `fk_Respuestas Evaluacion_Cuestionario1` FOREIGN KEY (`Cuestionario_idCuestionario`) REFERENCES `cuestionario` (`idCuestionario`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Respuestas Evaluacion_Opcion Evaluada1` FOREIGN KEY (`Opcion Evaluada_idOpcion`) REFERENCES `opcion evaluada` (`idOpcion`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Respuestas Evaluacion_Pregunta Evaluada1` FOREIGN KEY (`Pregunta Evaluada_idPregunta Evaluada`) REFERENCES `pregunta evaluada` (`idPregunta Evaluada`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `respuestas evaluacion`
---
-
-LOCK TABLES `respuestas evaluacion` WRITE;
-/*!40000 ALTER TABLE `respuestas evaluacion` DISABLE KEYS */;
-/*!40000 ALTER TABLE `respuestas evaluacion` ENABLE KEYS */;
-UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -840,4 +810,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-12-19  5:36:06
+-- Dump completed on 2012-01-05 15:27:38

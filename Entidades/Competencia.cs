@@ -41,26 +41,17 @@ namespace Entidades
 
         }
 
-
-
-        public Competencia(string cod, string nom, string des)
+        public Competencia(string cod, string nom, string des = null, List<Factor> factores = null)
         {
             codigo = cod; // solo se inicializa aqui este codigo.
             Nombre = nom;
             Descripcion = des;
-            listaFactores = new List<Factor>();
-        }
-
-        public Competencia(string cod, string nom, string des, List<Factor> factores)
-        {
-            codigo = cod; // solo se inicializa aqui este codigo.
-            Nombre = nom;
-            Descripcion = des;
-            listaFactores = factores;
+            if (factores == null)
+                listaFactores = new List<Factor>();
+            else
+                listaFactores = factores;
         }
 
         public void addFactor(Factor fact) { listaFactores.Add(fact); }
-
-
     }
 }

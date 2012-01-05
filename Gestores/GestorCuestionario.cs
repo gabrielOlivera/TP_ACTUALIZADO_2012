@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Collections;
 using Entidades;
+using Gestores;
 using System.Windows.Forms;
 
 namespace Gestores
@@ -13,11 +14,48 @@ namespace Gestores
         AdministradorBD admBD = new AdministradorBD();
         GestorEvaluacion gestorEvaluacion = new GestorEvaluacion();
 
+        /*
+         * La mision que justifica la existencia de los gestores es hacer de "interfaz" entre las ENTIDADES y el resto del sistema
+         * Por esto el gestor debe tener la responsabilidad de instanciar la/s que le corresponde gestionar
+         */
+        public Cuestionario instanciarCuestionario(Candidato canditoAsociado, string claveCuestionario, PuestoEvaluado puestoEvAsociado, int maxAccesos = 0, int accesos = 0, Bloque bloqueAsociado = null)
+        {
+            Cuestionario nuevoCuestionario = new Cuestionario(canditoAsociado, claveCuestionario, puestoEvAsociado, maxAccesos, accesos, bloqueAsociado);
+            return nuevoCuestionario;
+        }
+
+        public Estado instanciarEstado(Cuestionario cuestAsociado, string _estado, DateTime fecha)
+        {
+            Estado nuevoEstado = new Estado(cuestAsociado, _estado, fecha);
+            return nuevoEstado;
+        }
+
         //recupera el cuestionario activo, si lo tuviere, para el candidato pasado como parametro
         public Cuestionario cuestionarioAsociado(Candidato candidatoAsociado)
         {
-            ArrayList retornoBD = admBD.recuperarCuestionarioActivo(candidatoAsociado);//solicita a la base de datos el retorno del cuest
-            Cuestionario nuevoCuest = (Cuestionario)retornoBD[0];//Transforma el retorno de la base de datos en un objeto del tipo cuestionario
+            //Se solicita a la base de datos el retorno del cuestionario activo para el candidato que se pasa como parametro
+            List<Cuestionario> retornoBD_cuestionario = admBD.recuperarCuestionarioActivo(candidatoAsociado);
+            Cuestionario nuevoCuest = null;
+
+            if (retornoBD_cuestionario != null)
+            {
+                if (retornoBD_cuestionario[0].Clave != "NO POSEE")
+                {
+                    if (retornoBD_cuestionario[0].PuestoEvaluado.Codigo != "ELIMINADO")
+                    {
+                        if (retornoBD_cuestionario[0].Estado.Estado_ == "ACTIVO" || retornoBD_cuestionario[0].Estado.Estado_ == "EN PROCESO")
+                        {//Transforma el retorno de la base de datos en un objeto del tipo cuestionario
+                            nuevoCuest = retornoBD_cuestionario[0];
+                        }
+                        else
+                            return this.instanciarCuestionario(candidatoAsociado, "TIEMPOS VENCIDOS", null);
+                    }
+                    else
+                        return this.instanciarCuestionario(candidatoAsociado, "PUESTO ELIMINADO", null);
+                }
+                else
+                    return this.instanciarCuestionario(candidatoAsociado, "NO POSEE", null);
+            }
 
             return nuevoCuest;
         }
@@ -64,8 +102,12 @@ namespace Gestores
         public ArrayList crearCuestionario(Candidato candidatoAsociado)
         {
             ArrayList procesoFinalizado = new ArrayList();
-            ArrayList retornoBD = admBD.recuperarCuestionarioActivo(candidatoAsociado);
-            Cuestionario nCuestionario = (Cuestionario)retornoBD[0];
+            //Vamos a buscar primero el cuestionario Activo asociado al candidato si lo tubiere
+            List<Cuestionario> retornoBD_cuestionario = admBD.recuperarCuestionarioActivo(candidatoAsociado);
+            Cuestionario nCuestionario = retornoBD_cuestionario[0];//Asignamos el retorno para usar la variable
+            
+
+            //Re-armamos las relaciones del cuestionario para tener todos los objetos en memoria
             bool re_construido = admBD.reconstruirRelaciones(nCuestionario);
 
             if (!re_construido)
@@ -138,8 +180,8 @@ namespace Gestores
             List<PreguntaEvaluada> listaPreguntas = gestorEvaluacion.listarPreguntas(pEv);
             ordenarListaAleatorio(listaPreguntas);
             int pregXbloque = admBD.preguntasPorBloque();
-            cuestionario.crearBloque(listaPreguntas, pregXbloque);
-            cuestionario.cambiarEstado("En proceso");
+            this.crearBloque(listaPreguntas, pregXbloque, cuestionario);
+            this.cambiarEstado("En proceso", cuestionario);
             cuestionario.aumentarAcceso();
             Bloque bloq_ = cuestionario.UltimoBloque;
             return bloq_;
@@ -158,10 +200,10 @@ namespace Gestores
             switch (estado)
             {
                 case "Activo":
-                    cuestionario.cambiarEstado("Sin contestar");
+                    this.cambiarEstado("Sin contestar", cuestionario);
                     break;
                 case "En proceso":
-                    cuestionario.cambiarEstado("Imcompleto");
+                    this.cambiarEstado("Imcompleto", cuestionario);
                     break;
             }
         }
@@ -176,11 +218,59 @@ namespace Gestores
             admBD.guardarRespuesta(Respuesta);
         }
         
-        public Bloque proximoBloque(Bloque bloque)
+        public Bloque proximoBloque(Bloque bloqAnterior)
         {
-            Cuestionario cuestAsociado = bloque.CuestAsociado;
-            Bloque nuevoBloque = cuestAsociado.proximoBloque(bloque);
-            return nuevoBloque;
+            AdministradorBD admBD = new AdministradorBD();  //intanciacion del administrador base de datos
+            Cuestionario cuestAsociado = bloqAnterior.CuestAsociado;
+
+            int nroProxBloque = bloqAnterior.NroBloque;
+            nroProxBloque += 1;
+            List<Bloque> retornoBD_Bloque = admBD.retornarProximoBloque(cuestAsociado, nroProxBloque);
+            Bloque proxBloque = retornoBD_Bloque[0];
+            cuestAsociado.UltimoBloque = proxBloque; //seteo el ultimo bloque
+            return proxBloque;
+        }
+
+        public void crearBloque(List<PreguntaEvaluada> listaPreguntas, int pregXbloque, Cuestionario cuest)
+        {
+            int numBloq = 0, j, contadorDeBloqueCreados = 0;
+            int cantidadBloques = (listaPreguntas.Count / pregXbloque);
+
+            for (int i = 0; i <= listaPreguntas.Count; i++)
+            {
+                AdministradorBD admBD = new AdministradorBD();  //intanciacion del administrador base de datos
+
+                Bloque nuevoBloque = new Bloque(numBloq++, cuest);
+                PreguntaEvaluada preg;
+                for (j = 0; j <= pregXbloque; j++)
+                {
+                    preg = listaPreguntas[j];
+                    nuevoBloque.addPreguntaEv(preg);
+                }
+                contadorDeBloqueCreados += 1;
+                i += j;
+                switch (contadorDeBloqueCreados == cantidadBloques)
+                {
+                    case true:
+                        {
+                            nuevoBloque.marcarUltimobloque();
+                            admBD.guardarBloque(nuevoBloque); // mensaje se envia al Adm de BD
+                        }
+                        break;
+                    default:
+                        admBD.guardarBloque(nuevoBloque); // mensaje se envia al Adm de BD
+                        break;
+                }
+            }
+        }
+
+        public void cambiarEstado(string alEstado, Cuestionario cuest)
+        {
+            AdministradorBD admBD = new AdministradorBD();  //intanciacion del administrador base de datos
+
+            Estado nuevoEstado = new Estado(cuest, alEstado);
+            cuest.Estado = nuevoEstado;
+            admBD.guardarEstado(cuest.Estado); //se lo envia al Adm BD
         }
 
         internal void ordenarListaAleatorio(List<PreguntaEvaluada> listaPreguntas) 

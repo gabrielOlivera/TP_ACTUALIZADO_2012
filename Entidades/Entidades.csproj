@@ -41,7 +41,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AdministradorBD.cs" />
     <Compile Include="Bloque.cs" />
     <Compile Include="Candidato.cs" />
     <Compile Include="Competencia.cs" />
