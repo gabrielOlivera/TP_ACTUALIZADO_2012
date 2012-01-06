@@ -17,7 +17,7 @@ namespace Gestores
          * - El ADMINISTRADOR DE BASE DE DATOS para nosotros en una interfaz entre los que es el Sistema y la Base de Datos.
          * - La mayoria de los metodos van a retornar un lista de objetos (List<ClaseOjetoRetorno>);
          *      pero si bien, desde aqui, vamos a tener conocimiento de las clases ENTIDAD, 
-         *      quiene van a estar acargo instanciar dichas clases 
+         *      quienes van a estar acargo instanciar dichas clases 
          *      son los GESTORES con el metodo correspondiente para ello.
          */
 
@@ -91,7 +91,7 @@ namespace Gestores
          * METODOS DE RECUPERACION DE ENTIDADES
          * ====================================
          *      - Tiene la finalidad de recuperar los datos de la BASE DE DATOS segun algún criterio de busqueda
-         *      - Retornaran una lista de objetos que se obtuvieron de dicha busqueda (si los ubieré)
+         *      - Retornaran una lista de objetos que se obtuvieron de dicha busqueda (si los hubiere   )
          *      - De no encontrar un datos o de no poderse realizar la conexion se expondra error y se retornara 'NULL'
          */
 
@@ -335,6 +335,7 @@ namespace Gestores
                     else
                         nroCandidato = Int32.Parse(reader["nroCandidato"].ToString());//Se lo transforma a un numero entero
 
+                    
                     int nroEmpleado;
                     if (reader["nroEmpleado"].ToString() == "")//Se contempla la posibilidad de que este número sea nulo
                         nroEmpleado = 0;
@@ -347,7 +348,7 @@ namespace Gestores
                     listaCandidatos.Add(objCandidato);
                 }
 
-            }//fin de if(TODO ES NULL)
+            }//fin de if(TODO ES NULL), osea si no se pusieron parametros de busqueda
 
             
             //En caso de haber algún parametro diferente de NULL. Se compondra la consulta para la base de datos
@@ -377,7 +378,7 @@ namespace Gestores
                 //Se concluye la declaracion de la consulta
                 consultaSql += listaConsultas[(listaConsultas.Count - 1)] + ";";
 
-                comando.CommandText = consultaSql;//En el adaptador comando le hacemos un asignacion en su atributo CommandText de la consultaSql
+                comando.CommandText = consultaSql;  //asignamos la consulta recien creada a el atributo CommandText (donde se guarda la consulta de un obj de tipo comando)
 
                 //Se hace la ejecucion del comando con el metodo ExecuterReader 
                 //y se lo asigna a una variable reader que contendra los resultados de la busqueda en la base de datos
@@ -429,13 +430,13 @@ namespace Gestores
         {
             bool conexionExitosa;
             GestorCuestionario gestorCuestionarios = new GestorCuestionario();
-            List<Cuestionario> listaCuestionariosAsociados = new List<Cuestionario>();//para el retorno de datos
+            List<Cuestionario> listaCuestionariosAsociados = new List<Cuestionario>(); //Esta es la lista que devuelve el metodo como resultado
 
             //Declaramos una lista de cuestionarios auxiliar para obtener el historial de cuestionarios del candidato
             List<Cuestionario> preSeleccionCuestionarios = new List<Cuestionario>();
 
             //Declaramos una lista auxiliar de enteros para almacenar los ID de PUESTOS EVALUADOS 
-            //con el fin de recontruir las relaciones minimas en la instanciacion del cuestionario
+            //con el fin de reconstruir las relaciones minimas en la instanciacion del cuestionario
             List<int> listaIdPuestos = new List<int>();
 
             //llamamos al metodo "iniciar conexion"
@@ -453,9 +454,12 @@ namespace Gestores
             MySql.Data.MySqlClient.MySqlCommand comando;
             comando = ObjConexion.CreateCommand();
 
-            //La siguiente consulta deberia arrojarme los datos de los cuestionarios que posee el candidato
+            //La siguiente consulta arroja los datos de los cuestionarios que posee el candidato
+            //__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++
+            //ME PARECE QUE ESTO NO ANDA __--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++
+            //__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++
             string consultaSql = "SELECT DISTINCT `clave`, `Puesto Evaluado_idPuesto Evaluado` ,`nroaccesos` ";
-            consultaSql += "FROM `cuestionario` cuest ";
+            consultaSql += "FROM `cuestionario` cuest "; //de donde sale cuest? no habria que sacarlo afuera de las comillas dobles?
             consultaSql += "JOIN `candidato` cand on (cand.`nro documento` = '" + candidato.NroDoc + "' AND cand.idCandidato = cuest.Candidato_idCandidato) ";
             consultaSql += "JOIN `cuestionario_estado` c_est on (cuest.idCuestionario = c_est.Cuestionario_idCuestionario);";
             

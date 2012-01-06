@@ -13,3 +13,8 @@ C:\Users\GRACIANA\Desktop\TpDisenio_2011\Interfaces\Validacion\bin\Debug\Validac
 C:\Users\GRACIANA\Desktop\TpDisenio_2011\Interfaces\Validacion\obj\Debug\ResolveAssemblyReference.cache
 C:\Users\GRACIANA\Desktop\TpDisenio_2011\Interfaces\Validacion\obj\Debug\Validacion.dll
 C:\Users\GRACIANA\Desktop\TpDisenio_2011\Interfaces\Validacion\obj\Debug\Validacion.pdb
+D:\jose\TP 2012 repositorio\Interfaces\Validacion\bin\Debug\Validacion.dll
+D:\jose\TP 2012 repositorio\Interfaces\Validacion\bin\Debug\Validacion.pdb
+D:\jose\TP 2012 repositorio\Interfaces\Validacion\obj\Debug\ResolveAssemblyReference.cache
+D:\jose\TP 2012 repositorio\Interfaces\Validacion\obj\Debug\Validacion.dll
+D:\jose\TP 2012 repositorio\Interfaces\Validacion\obj\Debug\Validacion.pdb
