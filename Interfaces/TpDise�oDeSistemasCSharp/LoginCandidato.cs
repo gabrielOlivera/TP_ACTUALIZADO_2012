@@ -136,7 +136,6 @@ namespace TpDiseñoCSharp
    
         }
 
-
         //Si presiona el boton cancelar, se cierra la ventana "LoginCandidato" y vuelve a la "PantallaPrincipal"
         private void Cancelar_Click(object sender, EventArgs e)
         {

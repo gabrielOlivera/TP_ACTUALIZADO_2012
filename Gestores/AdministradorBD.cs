@@ -188,8 +188,6 @@ namespace Gestores
 
             MySqlDataReader reader = comando.ExecuteReader();
 
-            ArrayList listaDePuestos = new ArrayList();
-
             string cod = reader["codigo"].ToString();
             string nomPuesto = reader["nombre"].ToString();
             string emp = reader["empresa"].ToString();
@@ -499,22 +497,20 @@ namespace Gestores
             */
             terminarConexion();
 
-            List<PuestoEvaluado> lista_PuestosEv = new List<PuestoEvaluado>();
+            PuestoEvaluado PuestoEv;
             for (int i = 0; i < listaIdPuestos.Count; i++)
             {
-                lista_PuestosEv = this.recuperarPuestoEvaluado(listaIdPuestos[i]);
+                PuestoEv = this.recuperarPuestoEvaluado(listaIdPuestos[i]);
 
-                if (Equals(lista_PuestosEv[0].Codigo, "ELIMINADO") == false)
+                if (Equals(PuestoEv.Codigo, "ELIMINADO") == false)
                 {
-                    PuestoEvaluado puestoEv = lista_PuestosEv[0];
-
                     List<Estado> listEstado = this.recuperarUltimoEstado(preSeleccionCuestionarios[i]);
                     Estado estadoCuest = listEstado[0];
 
                     if (estadoCuest.Estado_ == "ACTIVO" || estadoCuest.Estado_ == "EN PROCESO")
                     {
                         //Agrego el puesto evaluado al cuestionario
-                        preSeleccionCuestionarios[i].PuestoEvaluado = puestoEv;
+                        preSeleccionCuestionarios[i].PuestoEvaluado = PuestoEv;
                         //Agrego el estado al cuestionario
                         preSeleccionCuestionarios[i].Estado = estadoCuest;
                         //Luego de agregar el Estado y el Puesto Evaluado, agregamos el cuestionario a la lista de retorno
@@ -524,7 +520,7 @@ namespace Gestores
                         listaCuestionariosAsociados[i].Estado = estadoCuest;//Agregamos el error para controlarlo
                 }
                 else
-                    listaCuestionariosAsociados[i].PuestoEvaluado = lista_PuestosEv[0];//Agregamos el error para controlarlo
+                    listaCuestionariosAsociados[i].PuestoEvaluado = PuestoEv;//Agregamos el error para controlarlo
             }
 
             return listaCuestionariosAsociados;
@@ -655,11 +651,11 @@ namespace Gestores
          * - RecuperarPuestoEvaluado tiene la misión de recuperar un puesto evaluado puntual 
          *   según su id de la tabla de la base de datos
          */
-        public List<PuestoEvaluado> recuperarPuestoEvaluado(int idPuestoEv)
+        public PuestoEvaluado recuperarPuestoEvaluado(int idPuestoEv)
         {
             bool conexionExitosa;
             GestorEvaluacion gestorEvaluados = new GestorEvaluacion();
-            List<PuestoEvaluado> listaPuestos = new List<PuestoEvaluado>();
+            PuestoEvaluado objPuesto = null;
 
             string consultaSql = "SELECT * FROM `puesto evaluado` WHERE `idPuesto Evaluado` = " + idPuestoEv + " ;";
 
@@ -682,37 +678,33 @@ namespace Gestores
             MySqlDataReader reader = comando.ExecuteReader();
 
             if (!reader.HasRows)
-            { 
+            {
                 //Si el reader esta vacio, es qe no encontro a ese candidato
                 MessageBox.Show("No se encontro un candidato solicitado ");
                 terminarConexion();
                 return null;
             }
-
-            while (reader.Read())
+            else
             {
-                if (reader["eliminado"].ToString() == "")
+                while (reader.Read())
                 {
-                    string codigo = reader["codigo"].ToString();
-                    string nombrePuestoEv = reader["nombre"].ToString();
-                    string empresa = reader["empresa"].ToString();
-                    //Usamos el gestor de evaluacion para instanciar el puesto evaludado con los datos encontrados en la base de datos
-                    PuestoEvaluado objPuesto = gestorEvaluados.instanciarPuestoEvaluado(codigo, nombrePuestoEv, empresa);
-                    listaPuestos.Add(objPuesto);
-                }
-                else
-                {
-                    //Si el puesto evaludado fue eliminado se instanciara un puesto cuyo codigo sera "ELIMINADO"
-                    PuestoEvaluado objPuesto = gestorEvaluados.instanciarPuestoEvaluado("ELIMINADO", null, null);
-                    listaPuestos.Add(objPuesto);
-                    //De esta forma nos aseguramos de informar el motivo por el cual no se devuelven todos los datos del puesto
-                    terminarConexion();
-                    return null;
+                    if (reader["eliminado"].ToString() == "")
+                    {
+                        string codigo = reader["codigo"].ToString();
+                        string nombrePuestoEv = reader["nombre"].ToString();
+                        string empresa = reader["empresa"].ToString();
+                        //Usamos el gestor de evaluacion para instanciar el puesto evaludado con los datos encontrados en la base de datos
+                        objPuesto = gestorEvaluados.instanciarPuestoEvaluado(codigo, nombrePuestoEv, empresa);
+                    }
+                    else
+                    {
+                        //Si el puesto evaludado fue eliminado se instanciara un puesto cuyo codigo sera "ELIMINADO"
+                        objPuesto = gestorEvaluados.instanciarPuestoEvaluado("ELIMINADO", " ", " ");
+                    }
                 }
             }
-
             terminarConexion();
-            return listaPuestos;
+            return objPuesto;
         }
 
         /*
