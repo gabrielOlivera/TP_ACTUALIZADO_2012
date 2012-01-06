@@ -33,53 +33,53 @@ namespace Gestores
         public List<Candidato> listarCandidatos(string apellido = null, string nombre = null, int nroEmpleado = 0, int nroCandidato = 0)
         {
             //Se pide al administrador Base de datos que retorne los candidatos y se asignan a un ArrayList
-            //ArrayList retornoBD = admBD.recuperarCandidatos(null, null, nombre, apellido, nroEmpleado, nroCandidato);
-            List<Candidato> listaCandidatos = new List<Candidato>();
+            List<Candidato> listaCandidatos = admBD.recuperarCandidatos(null, null, nombre, apellido, nroEmpleado, nroCandidato);
+            
+            //VALIDAR RETORNO
 
-            /*for (int i = 0; i < retornoBD.Count; i++)
-            {
-                Candidato cand = (Candidato)retornoBD[i];
-                listaCandidatos.Add(cand);
-            }
-            */
             return listaCandidatos;
         }
         
         public Candidato retornarCandidato(string TipoDoc, string NroDoc)
         {
-            ArrayList retornoBD = null;//admBD.recuperarCandidato(TipoDoc, NroDoc);
-            Candidato cand = (Candidato)retornoBD[0];
+            List<Candidato> listaCadidatos = admBD.recuperarCandidato(TipoDoc, NroDoc);
+            
+            //VALIDAR RETORNO
 
+            Candidato cand = listaCadidatos[0];
             return cand;
         }
 
         public bool validarCandidato(string TipoDoc, string NroDoc, string clave)
         {
             bool esValido = false;
-            ArrayList retornoBD = null;//admBD.recuperarCandidato(TipoDoc, NroDoc);
+            List<Candidato> retornoBD_candidato = admBD.recuperarCandidato(TipoDoc, NroDoc);
 
-            if (retornoBD[0] is string)
+            if (retornoBD_candidato[0] == null)
             {
-                MessageBox.Show(retornoBD[0].ToString());
                 return esValido; //que aca es falso
             }
-
-            Candidato nuevoCandidato = (Candidato)retornoBD[0];
-
-            Cuestionario cuestAsociado = gestorCuestionario.cuestionarioAsociado(nuevoCandidato);
-            if (cuestAsociado is Cuestionario)
+            else
             {
-                bool accesoValido = gestorCuestionario.validarAcceso(cuestAsociado, clave);
-                if (accesoValido != false)
+                Candidato nuevoCandidato = retornoBD_candidato[0];
+
+                Cuestionario cuestAsociado = gestorCuestionario.cuestionarioAsociado(nuevoCandidato);
+
+                if (cuestAsociado.CandidatoAsociado != null)
                 {
-                    esValido = true;
+                    bool accesoValido = gestorCuestionario.validarAcceso(cuestAsociado, clave);
+                    
+                    if (accesoValido != false)
+                    {
+                        esValido = true;
+                    }
+
+                    else
+                        MessageBox.Show("La clave ingresada no es valida para este candidato. \nIntente nuevamente");
                 }
                 else
-                    MessageBox.Show("La clave ingresada no es valida para este candidato. \nIntente nuevamente");
+                    MessageBox.Show(cuestAsociado.Clave);//Muestra la naturaleza del error
             }
-            else
-                MessageBox.Show("El candidato no Poseé un cuestionario para ser evaluado");
-
             return esValido;
         }
     }

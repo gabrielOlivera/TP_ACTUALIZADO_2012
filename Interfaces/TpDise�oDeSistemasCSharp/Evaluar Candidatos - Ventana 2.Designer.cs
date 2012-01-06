@@ -39,9 +39,9 @@
             this.PanelInferior = new System.Windows.Forms.Panel();
             this.Fecha = new System.Windows.Forms.LinkLabel();
             this.PanelSuperior = new System.Windows.Forms.Panel();
-            this.panel1 = new System.Windows.Forms.Panel();
             this.Consultor = new System.Windows.Forms.Label();
             this.CerrarSesion = new System.Windows.Forms.LinkLabel();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.Atras = new System.Windows.Forms.Button();
             this.Siguiente = new System.Windows.Forms.Button();
             this.SeleccionDeAcceso.SuspendLayout();
@@ -68,6 +68,7 @@
             // 
             // button1
             // 
+            this.button1.ForeColor = System.Drawing.SystemColors.ControlText;
             this.button1.Location = new System.Drawing.Point(206, 130);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
@@ -77,6 +78,7 @@
             // 
             // textBox2
             // 
+            this.textBox2.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.textBox2.Location = new System.Drawing.Point(138, 92);
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(100, 20);
@@ -84,6 +86,7 @@
             // 
             // textBox1
             // 
+            this.textBox1.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.textBox1.Location = new System.Drawing.Point(138, 41);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(100, 20);
@@ -92,6 +95,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
+            this.label2.ForeColor = System.Drawing.SystemColors.ControlText;
             this.label2.Location = new System.Drawing.Point(25, 92);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(88, 13);
@@ -101,6 +105,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
+            this.label1.ForeColor = System.Drawing.SystemColors.ControlText;
             this.label1.Location = new System.Drawing.Point(73, 41);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(40, 13);
@@ -165,13 +170,6 @@
             this.PanelSuperior.Size = new System.Drawing.Size(679, 62);
             this.PanelSuperior.TabIndex = 6;
             // 
-            // panel1
-            // 
-            this.panel1.Location = new System.Drawing.Point(0, 62);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(621, 22);
-            this.panel1.TabIndex = 7;
-            // 
             // Consultor
             // 
             this.Consultor.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -193,8 +191,16 @@
             this.CerrarSesion.TabStop = true;
             this.CerrarSesion.Text = "Cerrar Sesión";
             // 
+            // panel1
+            // 
+            this.panel1.Location = new System.Drawing.Point(0, 62);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(621, 22);
+            this.panel1.TabIndex = 7;
+            // 
             // Atras
             // 
+            this.Atras.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.Atras.Location = new System.Drawing.Point(218, 404);
             this.Atras.Name = "Atras";
             this.Atras.Size = new System.Drawing.Size(75, 23);
@@ -204,6 +210,7 @@
             // 
             // Siguiente
             // 
+            this.Siguiente.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.Siguiente.Location = new System.Drawing.Point(382, 404);
             this.Siguiente.Name = "Siguiente";
             this.Siguiente.Size = new System.Drawing.Size(75, 23);

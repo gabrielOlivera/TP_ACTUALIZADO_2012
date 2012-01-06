@@ -8,3 +8,8 @@ C:\Users\usuario\Desktop\TpVersionado\Validacion\bin\Debug\Validacion.pdb
 C:\Users\usuario\Desktop\TpVersionado\Validacion\obj\Debug\ResolveAssemblyReference.cache
 C:\Users\usuario\Desktop\TpVersionado\Validacion\obj\Debug\Validacion.dll
 C:\Users\usuario\Desktop\TpVersionado\Validacion\obj\Debug\Validacion.pdb
+C:\Users\GRACIANA\Desktop\TpDisenio_2011\Interfaces\Validacion\bin\Debug\Validacion.dll
+C:\Users\GRACIANA\Desktop\TpDisenio_2011\Interfaces\Validacion\bin\Debug\Validacion.pdb
+C:\Users\GRACIANA\Desktop\TpDisenio_2011\Interfaces\Validacion\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\GRACIANA\Desktop\TpDisenio_2011\Interfaces\Validacion\obj\Debug\Validacion.dll
+C:\Users\GRACIANA\Desktop\TpDisenio_2011\Interfaces\Validacion\obj\Debug\Validacion.pdb

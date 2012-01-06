@@ -134,6 +134,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.groupBox1.Controls.Add(this.dataGridView1);
             this.groupBox1.Location = new System.Drawing.Point(100, 105);
             this.groupBox1.Name = "groupBox1";
@@ -144,14 +145,19 @@
             // 
             // dataGridView1
             // 
+            this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.AllowUserToDeleteRows = false;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(43, 43);
+            this.dataGridView1.Location = new System.Drawing.Point(6, 30);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(412, 249);
+            this.dataGridView1.ReadOnly = true;
+            this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dataGridView1.Size = new System.Drawing.Size(497, 277);
             this.dataGridView1.TabIndex = 0;
             // 
             // Atras
             // 
+            this.Atras.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.Atras.Location = new System.Drawing.Point(236, 458);
             this.Atras.Name = "Atras";
             this.Atras.Size = new System.Drawing.Size(75, 23);
@@ -161,6 +167,7 @@
             // 
             // Finalizar
             // 
+            this.Finalizar.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.Finalizar.Location = new System.Drawing.Point(385, 458);
             this.Finalizar.Name = "Finalizar";
             this.Finalizar.Size = new System.Drawing.Size(75, 23);

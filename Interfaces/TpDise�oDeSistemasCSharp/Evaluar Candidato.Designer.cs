@@ -126,6 +126,7 @@
             // 
             // Buscar
             // 
+            this.Buscar.ForeColor = System.Drawing.SystemColors.ControlText;
             this.Buscar.Location = new System.Drawing.Point(215, 142);
             this.Buscar.Name = "Buscar";
             this.Buscar.Size = new System.Drawing.Size(75, 23);
@@ -136,6 +137,7 @@
             // 
             // textBox4
             // 
+            this.textBox4.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.textBox4.Location = new System.Drawing.Point(359, 97);
             this.textBox4.Name = "textBox4";
             this.textBox4.Size = new System.Drawing.Size(100, 20);
@@ -143,6 +145,7 @@
             // 
             // textBox3
             // 
+            this.textBox3.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.textBox3.Location = new System.Drawing.Point(118, 90);
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(100, 20);
@@ -150,6 +153,7 @@
             // 
             // textBox2
             // 
+            this.textBox2.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.textBox2.Location = new System.Drawing.Point(359, 44);
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(100, 20);
@@ -157,6 +161,7 @@
             // 
             // textBox1
             // 
+            this.textBox1.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.textBox1.Location = new System.Drawing.Point(118, 44);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(100, 20);
@@ -165,6 +170,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
+            this.label4.ForeColor = System.Drawing.SystemColors.ControlText;
             this.label4.Location = new System.Drawing.Point(241, 97);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(84, 13);
@@ -174,6 +180,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
+            this.label3.ForeColor = System.Drawing.SystemColors.ControlText;
             this.label3.Location = new System.Drawing.Point(281, 44);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(44, 13);
@@ -183,6 +190,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
+            this.label2.ForeColor = System.Drawing.SystemColors.ControlText;
             this.label2.Location = new System.Drawing.Point(11, 90);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(83, 13);
@@ -192,6 +200,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
+            this.label1.ForeColor = System.Drawing.SystemColors.ControlText;
             this.label1.Location = new System.Drawing.Point(50, 44);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(44, 13);
@@ -265,6 +274,7 @@
             // 
             // VerAgregados
             // 
+            this.VerAgregados.ForeColor = System.Drawing.SystemColors.ControlText;
             this.VerAgregados.Location = new System.Drawing.Point(473, 167);
             this.VerAgregados.Name = "VerAgregados";
             this.VerAgregados.Size = new System.Drawing.Size(87, 23);
@@ -275,6 +285,7 @@
             // 
             // Agregar
             // 
+            this.Agregar.ForeColor = System.Drawing.SystemColors.ControlText;
             this.Agregar.Location = new System.Drawing.Point(473, 89);
             this.Agregar.Name = "Agregar";
             this.Agregar.Size = new System.Drawing.Size(75, 23);
@@ -284,10 +295,14 @@
             // 
             // resultadosDeBusqueda
             // 
+            this.resultadosDeBusqueda.AllowUserToAddRows = false;
+            this.resultadosDeBusqueda.AllowUserToDeleteRows = false;
             this.resultadosDeBusqueda.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.resultadosDeBusqueda.Location = new System.Drawing.Point(118, 23);
+            this.resultadosDeBusqueda.Location = new System.Drawing.Point(70, 23);
             this.resultadosDeBusqueda.Name = "resultadosDeBusqueda";
-            this.resultadosDeBusqueda.Size = new System.Drawing.Size(309, 256);
+            this.resultadosDeBusqueda.ReadOnly = true;
+            this.resultadosDeBusqueda.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.resultadosDeBusqueda.Size = new System.Drawing.Size(357, 256);
             this.resultadosDeBusqueda.TabIndex = 0;
             this.resultadosDeBusqueda.Visible = false;
             // 

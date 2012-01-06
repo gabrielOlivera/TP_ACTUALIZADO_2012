@@ -104,8 +104,11 @@ namespace Gestores
             GestorPuesto gestorPuestos = new GestorPuesto();
             List<Puesto> listaDePuestos = new List<Puesto>(); //para el retorno de datos
 
-            string consultaSql = "SELECT * FROM puesto WHERE `codigo` = '" + codigo + "' AND `nombreDePuesto` = '"
-                + nombreDePuesto + "' AND `empresa` = '" + empresa + "';";
+            string consultaSql = "SELECT * " +
+                                 "FROM puesto " +
+                                 "WHERE `codigo` LIKE '%" + codigo + "%'" +
+                                 " AND `nombre` LIKE '%" + nombreDePuesto + "%'" +
+                                 " AND `empresa` LIKE '%" + empresa + "%';";
 
             //llamamos al metodo "iniciar conexion"
             conexionExitosa = iniciarConexion();
@@ -142,15 +145,67 @@ namespace Gestores
                 string cod = reader["codigo"].ToString();
                 string nomPuesto = reader["nombreDePuesto"].ToString();
                 string emp = reader["empresa"].ToString();
+                bool eliminado = Boolean.Parse(reader["eliminado"].ToString());
 
-                //Llamamos al gestor de puestos para instanciar el puesto que se obtuvo de la base de datos
-                Puesto objPuesto = gestorPuestos.instanciarPuesto(cod, nomPuesto, emp);
+                Puesto objPuesto;
+                if (eliminado == false)
+                {
+                    //Llamamos al gestor de puestos para instanciar el puesto que se obtuvo de la base de datos
+                    objPuesto = gestorPuestos.instanciarPuesto(cod, nomPuesto, emp);
+                }
+                else
+                    objPuesto = gestorPuestos.instanciarPuesto("ELIMINADO", null, null);
+
                 //El retorno del metodo del gestor es introducido en la lista de puestos
                 listaDePuestos.Add(objPuesto);
             }
 
             terminarConexion();
             return listaDePuestos;
+        }
+
+        /*
+         * RecuperarPuesto tiene la misión de recuperar los datos de un puesto puntual
+         */
+        public Puesto recuperarPuesto(string codigo)
+        {
+            bool conexionExitosa;
+            GestorPuesto gestorPuestos = new GestorPuesto();
+
+            string consultaSql = "SELECT * " +
+                                 "FROM puesto " +
+                                 "WHERE `codigo` = '" + codigo + "';";
+
+            conexionExitosa = iniciarConexion();
+
+            if (!conexionExitosa)
+                return null;
+
+            MySql.Data.MySqlClient.MySqlCommand comando;
+            comando = ObjConexion.CreateCommand();
+
+            comando.CommandText = consultaSql;
+
+            MySqlDataReader reader = comando.ExecuteReader();
+
+            ArrayList listaDePuestos = new ArrayList();
+
+            string cod = reader["codigo"].ToString();
+            string nomPuesto = reader["nombre"].ToString();
+            string emp = reader["empresa"].ToString();
+            bool eliminado = Boolean.Parse(reader["eliminado"].ToString());
+
+            Puesto objPuesto;
+            if (eliminado == false)
+            {
+                //Llamamos al gestor de puestos para instanciar el puesto que se obtuvo de la base de datos
+                objPuesto = gestorPuestos.instanciarPuesto(cod, nomPuesto, emp);
+            }
+            else
+                objPuesto = gestorPuestos.instanciarPuesto("ELIMINADO", null, null);
+
+            terminarConexion();
+            return objPuesto;
         }
 
         /*
@@ -161,7 +216,7 @@ namespace Gestores
             bool conexionExitosa;
             GestorCandidatos gestorCandidatos = new GestorCandidatos();
             List<Candidato> listaCandidatos = new List<Candidato>();//para el retorno de datos
-
+            
             string consultaSql = "SELECT * FROM candidato WHERE  `nro documento` = '" + NroDoc + "' AND `tipo documento` = '"
                 + TipoDoc + "';";
 
@@ -706,9 +761,11 @@ namespace Gestores
                 bool eliminado = Boolean.Parse(reader["eliminado"].ToString());
 
                 Competencia nuevaCompetencia;
+                
                 //Contemplamos la posibilidad de que este eliminada la competencia
                 if (eliminado == false)//Si esta en condiciones de ser usada, se instancia una nueva competencia con los datos
                     nuevaCompetencia = gestorCompetencias.instanciarCompetencia(cod, nomComp, descrip, null);
+                
                 else//Si fue eliminada se instancia una competencia con el codigo indicando esta situación
                     nuevaCompetencia = gestorCompetencias.instanciarCompetencia("ELIMINADA", null, null, null);
                 
@@ -1176,7 +1233,91 @@ namespace Gestores
          * ====================
          *      - Tiene la finalidad de guardar los datos de una entidad
          */
-        public void guardarPuesto(Puesto puesto) { }
+        public bool guardarPuesto(Puesto puesto)
+        {
+            //codigo, nombreDePuesto, empresa, descripcion
+            string consultaSql1 = "INSERT INTO puesto (codigo,nombre,empresa,descripcion) " +
+                "VALUES ('" + puesto.Codigo + "','" + puesto.Nombre + "','" + puesto.Empresa + "','" + puesto.Descripcion + "');";
+
+
+            MySql.Data.MySqlClient.MySqlTransaction transaccion;
+
+            bool conexionExitosa;
+            int cantDeFilasAfectadas = 0;
+
+            conexionExitosa = iniciarConexion();
+
+            MySql.Data.MySqlClient.MySqlCommand comando1 = new MySqlCommand(), comando2 = new MySqlCommand();
+
+
+            comando1.Connection = ObjConexion;
+            comando1.CommandType = CommandType.Text;
+            comando1.CommandTimeout = 0;
+            comando1.CommandText = consultaSql1;
+
+            comando2.Connection = ObjConexion;
+            comando2.CommandType = CommandType.Text;
+            comando2.CommandTimeout = 0;
+
+            transaccion = ObjConexion.BeginTransaction();
+
+            try
+            {
+                if (!conexionExitosa)
+                    return false;
+
+                comando1.Transaction = transaccion;
+                comando2.Transaction = transaccion;
+
+                cantDeFilasAfectadas += comando1.ExecuteNonQuery();
+
+                for (int i = 0; i < puesto.Caracteristicas.Count; i++)
+                {
+                    Competencia competencia1 = (Competencia)puesto.Caracteristicas[i].dato1;
+                    Ponderacion ponderacion1 = (Ponderacion)puesto.Caracteristicas[i].dato2;
+
+                    string consultaSql2 = "INSERT INTO puesto_competencia (Puesto_codigo,Competencia_codigo,ponderacion) " +
+                       "VALUES ('" + puesto.Codigo + "','" + competencia1.Codigo + "','" + ponderacion1.Valor + "');";
+
+
+                    comando2.CommandText = consultaSql2;
+
+                    cantDeFilasAfectadas += comando2.ExecuteNonQuery();
+                }
+
+                transaccion.Commit();
+                terminarConexion();
+
+            }
+
+            catch (MySqlException MysqlEx)
+            {
+                // si algo fallo deshacemos todo
+                transaccion.Rollback();
+                // mostramos el mensaje del error
+                MessageBox.Show("La transaccion no se pudo realizar: " + MysqlEx.Message);
+
+
+            }
+            catch (DataException Ex)
+            {
+                // si algo fallo deshacemos todo
+                transaccion.Rollback();
+                // mostramos el mensaje del error
+                MessageBox.Show("La transaccion no se pudo realizar: " + Ex.Message);
+
+            }
+
+            if (cantDeFilasAfectadas >= 2)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         public void guardarRespuesta(Respuestas respuesta) { }
         public void guardarEstado(Estado estado) { }
         public void guardarBloque(Bloque nuevoBloque) { }
@@ -1187,20 +1328,41 @@ namespace Gestores
          * ====================================
          *      - Tiene la finalidad de BUSCAR y RETORNAR datos de la fuente según algun criterio
          */
-        public bool existePuesto(string codigo = null, string nombre = null)
+        public bool existePuesto(string codigo = null, string nombreDePuesto = null)
         {
-            bool seConecto;
+            bool conexionExitosa;
+            bool bandera = false;
+            string consultaSql = "SELECT * FROM puesto WHERE `codigo` = '" + codigo + "' OR `nombre` = '"
+                + nombreDePuesto + "';";
 
-            seConecto = iniciarConexion();
 
-            //aca va la magia del metodo
+            conexionExitosa = iniciarConexion();
+
+            if (!conexionExitosa)
+                return false;
+
+
+            MySql.Data.MySqlClient.MySqlCommand comando;
+
+            comando = ObjConexion.CreateCommand();
+
+            comando.CommandText = consultaSql;
+
+            MySqlDataReader reader = comando.ExecuteReader();
+
+            while (reader.Read() && !bandera)
+            {
+                string cod = reader["codigo"].ToString();
+                string nomPuesto = reader["nombre"].ToString();
+
+                if ((codigo == cod) || (nombreDePuesto == nomPuesto))
+                {
+                    bandera = true;
+                }
+            }
 
             terminarConexion();
-
-
-            return seConecto; //retorno de prueba
-
-
+            return bandera;
         }
 
         public int preguntasPorBloque()

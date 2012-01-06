@@ -48,13 +48,13 @@ namespace Gestores
                             nuevoCuest = retornoBD_cuestionario[0];
                         }
                         else
-                            return this.instanciarCuestionario(candidatoAsociado, "TIEMPOS VENCIDOS", null);
+                            return this.instanciarCuestionario(null, "LOS TIEMPOS VENCIERON PARA REALIZAR LA EVALUACIÓN", null);
                     }
                     else
-                        return this.instanciarCuestionario(candidatoAsociado, "PUESTO ELIMINADO", null);
+                        return this.instanciarCuestionario(null, "EL PUESTO DE EVALUACION FUE ELIMINADO", null);
                 }
                 else
-                    return this.instanciarCuestionario(candidatoAsociado, "NO POSEE", null);
+                    return this.instanciarCuestionario(null, "NO POSEE UN CUESTIONARIO PARA SER EVALUADO", null);
             }
 
             return nuevoCuest;
@@ -106,7 +106,6 @@ namespace Gestores
             List<Cuestionario> retornoBD_cuestionario = admBD.recuperarCuestionarioActivo(candidatoAsociado);
             Cuestionario nCuestionario = retornoBD_cuestionario[0];//Asignamos el retorno para usar la variable
             
-
             //Re-armamos las relaciones del cuestionario para tener todos los objetos en memoria
             bool re_construido = admBD.reconstruirRelaciones(nCuestionario);
 

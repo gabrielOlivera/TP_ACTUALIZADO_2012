@@ -36,11 +36,11 @@
   <ItemGroup>
     <Reference Include="Entidades, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Entidades\bin\Debug\Entidades.dll</HintPath>
+      <HintPath>..\..\Entidades\bin\Debug\Entidades.dll</HintPath>
     </Reference>
     <Reference Include="Gestores, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Gestores\bin\Debug\Gestores.dll</HintPath>
+      <HintPath>..\..\Gestores\bin\Debug\Gestores.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.ReportViewer.Common, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
     <Reference Include="Microsoft.ReportViewer.WinForms, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
@@ -62,11 +62,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Alta de Puesto o Función .cs">
+    <Compile Include="Alta de Puesto o Funcion .cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Alta de Puesto o Función .Designer.cs">
-      <DependentUpon>Alta de Puesto o Función .cs</DependentUpon>
+    <Compile Include="Alta de Puesto o Funcion .Designer.cs">
+      <DependentUpon>Alta de Puesto o Funcion .cs</DependentUpon>
     </Compile>
     <Compile Include="Completar Cuestionario.cs">
       <SubType>Form</SubType>
@@ -104,11 +104,11 @@
     <Compile Include="Cuestionario Instrucciones.Designer.cs">
       <DependentUpon>Cuestionario Instrucciones.cs</DependentUpon>
     </Compile>
-    <Compile Include="Emitir Orden de Mérito.cs">
+    <Compile Include="Emitir Orden de Merito.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Emitir Orden de Mérito.Designer.cs">
-      <DependentUpon>Emitir Orden de Mérito.cs</DependentUpon>
+    <Compile Include="Emitir Orden de Merito.Designer.cs">
+      <DependentUpon>Emitir Orden de Merito.cs</DependentUpon>
     </Compile>
     <Compile Include="Evaluar Candidato.cs">
       <SubType>Form</SubType>
@@ -121,18 +121,6 @@
     </Compile>
     <Compile Include="Evaluar Candidatos - Ventana 2.Designer.cs">
       <DependentUpon>Evaluar Candidatos - Ventana 2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="GenerarTextBoxsDinamicos.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="GenerarTextBoxsDinamicos.Designer.cs">
-      <DependentUpon>GenerarTextBoxsDinamicos.cs</DependentUpon>
-    </Compile>
-    <Compile Include="SolucionParaTextBoxsDobles.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="SolucionParaTextBoxsDobles.Designer.cs">
-      <DependentUpon>SolucionParaTextBoxsDobles.cs</DependentUpon>
     </Compile>
     <Compile Include="Gestionar Puestos o Funciones.cs">
       <SubType>Form</SubType>
@@ -166,8 +154,8 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Alta de Puesto o Función .resx">
-      <DependentUpon>Alta de Puesto o Función .cs</DependentUpon>
+    <EmbeddedResource Include="Alta de Puesto o Funcion .resx">
+      <DependentUpon>Alta de Puesto o Funcion .cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Completar Cuestionario.resx">
       <DependentUpon>Completar Cuestionario.cs</DependentUpon>
@@ -187,20 +175,14 @@
     <EmbeddedResource Include="Cuestionario Instrucciones.resx">
       <DependentUpon>Cuestionario Instrucciones.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Emitir Orden de Mérito.resx">
-      <DependentUpon>Emitir Orden de Mérito.cs</DependentUpon>
+    <EmbeddedResource Include="Emitir Orden de Merito.resx">
+      <DependentUpon>Emitir Orden de Merito.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Evaluar Candidato.resx">
       <DependentUpon>Evaluar Candidato.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Evaluar Candidatos - Ventana 2.resx">
       <DependentUpon>Evaluar Candidatos - Ventana 2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GenerarTextBoxsDinamicos.resx">
-      <DependentUpon>GenerarTextBoxsDinamicos.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SolucionParaTextBoxsDobles.resx">
-      <DependentUpon>SolucionParaTextBoxsDobles.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Gestionar Puestos o Funciones.resx">
       <DependentUpon>Gestionar Puestos o Funciones.cs</DependentUpon>

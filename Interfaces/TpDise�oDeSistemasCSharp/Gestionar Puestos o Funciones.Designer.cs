@@ -83,7 +83,7 @@
             this.PanelInferior.BackColor = System.Drawing.Color.Gainsboro;
             this.PanelInferior.Controls.Add(this.Fecha);
             this.PanelInferior.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.PanelInferior.Location = new System.Drawing.Point(0, 800);
+            this.PanelInferior.Location = new System.Drawing.Point(0, 794);
             this.PanelInferior.Name = "PanelInferior";
             this.PanelInferior.Size = new System.Drawing.Size(795, 58);
             this.PanelInferior.TabIndex = 5;
@@ -109,7 +109,7 @@
             this.SeleccionDeAcceso.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.SeleccionDeAcceso.Controls.Add(this.Nuevo);
             this.SeleccionDeAcceso.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.SeleccionDeAcceso.Location = new System.Drawing.Point(131, 90);
+            this.SeleccionDeAcceso.Location = new System.Drawing.Point(131, 87);
             this.SeleccionDeAcceso.Name = "SeleccionDeAcceso";
             this.SeleccionDeAcceso.Size = new System.Drawing.Size(430, 56);
             this.SeleccionDeAcceso.TabIndex = 9;
@@ -118,6 +118,7 @@
             // 
             // Nuevo
             // 
+            this.Nuevo.ForeColor = System.Drawing.SystemColors.ControlText;
             this.Nuevo.Location = new System.Drawing.Point(233, 20);
             this.Nuevo.Name = "Nuevo";
             this.Nuevo.Size = new System.Drawing.Size(75, 23);
@@ -188,7 +189,7 @@
             this.DatosParaBusqueda.Controls.Add(this.label2);
             this.DatosParaBusqueda.Controls.Add(this.label1);
             this.DatosParaBusqueda.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.DatosParaBusqueda.Location = new System.Drawing.Point(131, 162);
+            this.DatosParaBusqueda.Location = new System.Drawing.Point(131, 159);
             this.DatosParaBusqueda.Name = "DatosParaBusqueda";
             this.DatosParaBusqueda.Size = new System.Drawing.Size(430, 206);
             this.DatosParaBusqueda.TabIndex = 10;
@@ -197,16 +198,18 @@
             // 
             // BuscarPuestos
             // 
+            this.BuscarPuestos.ForeColor = System.Drawing.SystemColors.ControlText;
             this.BuscarPuestos.Location = new System.Drawing.Point(261, 166);
             this.BuscarPuestos.Name = "BuscarPuestos";
             this.BuscarPuestos.Size = new System.Drawing.Size(75, 23);
             this.BuscarPuestos.TabIndex = 6;
             this.BuscarPuestos.Text = "Buscar";
             this.BuscarPuestos.UseVisualStyleBackColor = true;
-            this.BuscarPuestos.Click += new System.EventHandler(this.BuscarPuesots_Click);
+            this.BuscarPuestos.Click += new System.EventHandler(this.BuscarPuestos_Click);
             // 
             // Empresa
             // 
+            this.Empresa.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.Empresa.Location = new System.Drawing.Point(223, 120);
             this.Empresa.MaxLength = 20;
             this.Empresa.Name = "Empresa";
@@ -215,6 +218,7 @@
             // 
             // NombreDePuesto
             // 
+            this.NombreDePuesto.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.NombreDePuesto.Location = new System.Drawing.Point(223, 75);
             this.NombreDePuesto.MaxLength = 20;
             this.NombreDePuesto.Name = "NombreDePuesto";
@@ -223,6 +227,7 @@
             // 
             // Codigo
             // 
+            this.Codigo.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.Codigo.Location = new System.Drawing.Point(223, 34);
             this.Codigo.MaxLength = 20;
             this.Codigo.Name = "Codigo";
@@ -232,6 +237,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
+            this.label3.ForeColor = System.Drawing.SystemColors.ControlText;
             this.label3.Location = new System.Drawing.Point(129, 123);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(48, 13);
@@ -241,6 +247,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
+            this.label2.ForeColor = System.Drawing.SystemColors.ControlText;
             this.label2.Location = new System.Drawing.Point(82, 78);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(95, 13);
@@ -250,6 +257,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
+            this.label1.ForeColor = System.Drawing.SystemColors.ControlText;
             this.label1.Location = new System.Drawing.Point(137, 37);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(40, 13);
@@ -258,10 +266,12 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.groupBox1.Controls.Add(this.Eliminar);
             this.groupBox1.Controls.Add(this.Modificar);
             this.groupBox1.Controls.Add(this.listaDePuesto);
-            this.groupBox1.Location = new System.Drawing.Point(133, 385);
+            this.groupBox1.ForeColor = System.Drawing.SystemColors.HotTrack;
+            this.groupBox1.Location = new System.Drawing.Point(133, 382);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(540, 359);
             this.groupBox1.TabIndex = 11;
@@ -270,6 +280,7 @@
             // 
             // Eliminar
             // 
+            this.Eliminar.ForeColor = System.Drawing.SystemColors.ControlText;
             this.Eliminar.Location = new System.Drawing.Point(444, 222);
             this.Eliminar.Name = "Eliminar";
             this.Eliminar.Size = new System.Drawing.Size(75, 23);
@@ -280,6 +291,7 @@
             // 
             // Modificar
             // 
+            this.Modificar.ForeColor = System.Drawing.SystemColors.ControlText;
             this.Modificar.Location = new System.Drawing.Point(444, 148);
             this.Modificar.Name = "Modificar";
             this.Modificar.Size = new System.Drawing.Size(75, 23);
@@ -292,11 +304,16 @@
             // 
             this.listaDePuesto.AllowUserToAddRows = false;
             this.listaDePuesto.AllowUserToDeleteRows = false;
+            this.listaDePuesto.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.listaDePuesto.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.listaDePuesto.BackgroundColor = System.Drawing.SystemColors.Control;
             this.listaDePuesto.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.listaDePuesto.Location = new System.Drawing.Point(83, 41);
+            this.listaDePuesto.Location = new System.Drawing.Point(22, 27);
+            this.listaDePuesto.MultiSelect = false;
             this.listaDePuesto.Name = "listaDePuesto";
             this.listaDePuesto.ReadOnly = true;
-            this.listaDePuesto.Size = new System.Drawing.Size(320, 294);
+            this.listaDePuesto.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.listaDePuesto.Size = new System.Drawing.Size(406, 316);
             this.listaDePuesto.TabIndex = 0;
             this.listaDePuesto.Visible = false;
             // 
@@ -305,7 +322,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(795, 858);
+            this.ClientSize = new System.Drawing.Size(812, 750);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.DatosParaBusqueda);
             this.Controls.Add(this.panel2);

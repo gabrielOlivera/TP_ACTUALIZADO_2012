@@ -161,8 +161,6 @@ namespace TpDiseñoCSharp
              * volver al menu principal del consultor*/
             ventanaAnterior.Close();
             
-            
-            
             //Se encarga de cerrar la ventana actual
             Close();
         }

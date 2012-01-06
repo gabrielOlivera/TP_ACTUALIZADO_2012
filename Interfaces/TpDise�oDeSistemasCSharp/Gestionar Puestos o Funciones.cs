@@ -24,11 +24,11 @@ namespace TpDiseñoCSharp
             altaPuesto.ShowDialog();
         }
 
-        private void BuscarPuesots_Click (object sender, EventArgs e)
+        private void BuscarPuestos_Click (object sender, EventArgs e)
         {
-            if ((Codigo.Text != null) || (NombreDePuesto.Text != null) || (Empresa.Text != null))
+            if ((Codigo.Text != "") || (NombreDePuesto.Text != "") || (Empresa.Text != ""))
             {
-                /*BUSCA LOS PUESTOS O FUNCIONES DE ACUERDO A LOS FILTROS ESPECIFICADOS PARA PODER MODIFICARLOS Y ELIMINAR
+                /*BUSCA LOS PUESTOS O FUNCIONES DE ACUERDO A LOS FILTROS ESPECIFICADOS PARA PODER MODIFICARLOS Y/O ELIMINAR
                 Y LOS MUESTRA EN UNA TABLA*/
 
                 GestorPuesto gestorPuesto = new GestorPuesto();
@@ -37,21 +37,26 @@ namespace TpDiseñoCSharp
             }
             else 
             {
-                MessageBox.Show("Debe ingresar al menos un campo para realizar la búsqueda", "ERROR",
-                 MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Debe ingresar al menos un campo para realizar la búsqueda", "ADVERTENCIA",
+                 MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
         }
 
         private void Modificar_Click(object sender, EventArgs e)
         {
+            string codigo = (string)listaDePuesto.CurrentRow.Cells["Codigo"].Value;
+            MessageBox.Show(codigo);
             Modificar_Puesto_o_Funcion modificarPuesto = new Modificar_Puesto_o_Funcion(this.Consultor.Text, this);
             modificarPuesto.ShowDialog();
         }
 
         private void Eliminar_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Los datos del puesto NOMBRE PUESTO serán eliminados del sistema", "Advertencia", 
-            MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
+            if (MessageBox.Show("Los datos del puesto NOMBRE PUESTO serán eliminados del sistema", "Advertencia",
+            MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.Yes)
+            {
+                
+            }
         }
     }
 }

@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows.Forms;
+
 
 
 namespace Validacion
 {
-    public class validarAlphanum
+    public class FuncionesVarias
     {
         public static bool isAlphanum(char c)
         {
@@ -60,7 +62,58 @@ namespace Validacion
 
 
 
+        // Declaramos nuestro metodo que hara la limpieza de los textbox
+        public static void limpiarBoxesFormulario(Form formulario)
+        {
+            // hace un chequeo por todos los textbox del formulario
+            foreach (Control controlDeFormulario in formulario.Controls)
+            {
+                if (controlDeFormulario is GroupBox)
+                {
+                    foreach (Control controlBox in controlDeFormulario.Controls)
+                    {
+                        if (controlBox is TextBox)
+                        {
+                            controlBox.Text = null;
+                        }
+                        else if (controlBox is Panel)
+                        {
+                            foreach (Control controlComboBox in controlBox.Controls)
+                            {
+                                if (controlComboBox is ComboBox)
+                                {
+                                    controlComboBox.Text = null;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
 
+
+
+        public static bool contienePalabra(string fuente, string contenida)
+        {
+            int j = 0;
+            for (int i = 0; i < fuente.Length && j < contenida.Length; i++)
+            {
+                if (fuente[i] == contenida[j])
+                {
+                    j++;
+                }
+            }
+            MessageBox.Show("J es igual a:" + j.ToString() + "Contenida.Length es igual a:" + contenida.Length.ToString()); 
+            if (j == contenida.Length)
+            {
+                Console.WriteLine("Entro al if");
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
 
       
 

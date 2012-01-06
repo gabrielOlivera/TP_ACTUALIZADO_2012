@@ -31,12 +31,16 @@
             this.SeleccionDeAcceso = new System.Windows.Forms.GroupBox();
             this.Fecha = new System.Windows.Forms.LinkLabel();
             this.PanelInferior = new System.Windows.Forms.Panel();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.SeleccionDeAcceso.SuspendLayout();
             this.PanelInferior.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // SeleccionDeAcceso
             // 
             this.SeleccionDeAcceso.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.SeleccionDeAcceso.Controls.Add(this.dataGridView1);
             this.SeleccionDeAcceso.ForeColor = System.Drawing.SystemColors.HotTrack;
             this.SeleccionDeAcceso.Location = new System.Drawing.Point(12, 21);
             this.SeleccionDeAcceso.Name = "SeleccionDeAcceso";
@@ -71,6 +75,18 @@
             this.PanelInferior.Size = new System.Drawing.Size(493, 58);
             this.PanelInferior.TabIndex = 11;
             // 
+            // dataGridView1
+            // 
+            this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.AllowUserToDeleteRows = false;
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Location = new System.Drawing.Point(16, 20);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.ReadOnly = true;
+            this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dataGridView1.Size = new System.Drawing.Size(436, 318);
+            this.dataGridView1.TabIndex = 0;
+            // 
             // Lista_de_Candidatos
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -80,8 +96,10 @@
             this.Controls.Add(this.SeleccionDeAcceso);
             this.Name = "Lista_de_Candidatos";
             this.Text = "Lista de Candidatos";
+            this.SeleccionDeAcceso.ResumeLayout(false);
             this.PanelInferior.ResumeLayout(false);
             this.PanelInferior.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -91,5 +109,6 @@
         private System.Windows.Forms.GroupBox SeleccionDeAcceso;
         private System.Windows.Forms.LinkLabel Fecha;
         private System.Windows.Forms.Panel PanelInferior;
+        private System.Windows.Forms.DataGridView dataGridView1;
     }
 }

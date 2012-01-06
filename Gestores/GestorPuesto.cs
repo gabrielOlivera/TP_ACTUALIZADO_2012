@@ -26,14 +26,20 @@ namespace Gestores
         public List<Puesto> listarPuestos(string codigo = null, string nombreDePuesto = null, string empresa = null)
         {
             List<Puesto> listaPuestos = admBD.recuperarPuestos(codigo, nombreDePuesto, empresa);
+            
+            //VALIDAR RETORNO BD
+
             return listaPuestos;
         }
 
-        public void altaPuesto(string codigo, string nombreDePuesto, string empresa, List<Caracteristica> caract, string descripcion = null)
+        public bool altaPuesto(string codigo, string nombreDePuesto, string empresa, List<Caracteristica> caract, string descripcion = null)
         {
+            //COMPLETAR LOGICA DEL METODO
+
             Puesto nuevoPuesto = new Puesto(codigo, nombreDePuesto, empresa, descripcion);
             inicializarCaracteristicas(nuevoPuesto, caract);
             admBD.guardarPuesto(nuevoPuesto);
+            return true;
         }
 
         private void inicializarCaracteristicas(Puesto puesto, List<Caracteristica> listaCaract)
