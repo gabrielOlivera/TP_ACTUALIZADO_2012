@@ -35,33 +35,29 @@ namespace TpDiseñoCSharp
                         if (NroDoc.Text.Length == 10)
                         {
                             //Nos Fijamos si los datos ingresados pertenecen a un candidato existente en la base de datos y si posee un cuestionario para ser evaluado
-                            bool esValido = gestorCandidatos.validarCandidato(Tipo.Text.ToString(), NroDoc.Text.ToString(), Clave.Text.ToString());
+                            object esValido = gestorCandidatos.validarCandidato(Tipo.Text.ToString(), NroDoc.Text.ToString(), Clave.Text.ToString());
 
-                            if (esValido == true)
+                            if ((esValido is Cuestionario) == true)
                             {
-                                //Le pedimos al gestor de candidatos que nos retorne el Objeto candidato
-                                Candidato cand_ = gestorCandidatos.retornarCandidato(Tipo.Text.ToString(), NroDoc.Text.ToString());
-                                //Con el candidato instanciado, decidimos que acción corresponde tomar (Iniciar el cuestionario, recuperar el cuestionario o finalizar el cuestionario)
-                                ArrayList evento_ = gestorCuestionario.crearCuestionario(cand_);
-
-                                if ((evento_[0] is Bloque) == true)//Si se retorno el bloque -> recuperamos el cuestionario
+                                //Con el CUESTIONARIO instanciado, decidimos que acción corresponde tomar (Iniciar el cuestionario, recuperar el cuestionario o finalizar el cuestionario)
+                                ArrayList evento_ = gestorCuestionario.crearCuestionario((Cuestionario)esValido);
+                                if (evento_.Count != 0)
                                 {
-                                    Completar_Cuestionario cuest_bloques = new Completar_Cuestionario();
-                                    cuest_bloques.Bloque_a_mostrar = (Bloque)evento_[0];
-                                    Close();
-                                    cuest_bloques.Show();
+                                    if ((evento_[0] is Bloque) == true)//Si se retorno el bloque -> recuperamos el cuestionario
+                                    {
+                                        Completar_Cuestionario cuest_bloques = new Completar_Cuestionario();
+                                        cuest_bloques.Bloque_a_mostrar = (Bloque)evento_[0];
+                                        cuest_bloques.Show();
+                                    }
+                                    else if (Equals(evento_[0], "instrucciones") == true)//Si retorno intrucciones -> inicializar el cuestionario
+                                    {
+                                        Cuestionario_Instrucciones cuestInstruc = new Cuestionario_Instrucciones();
+                                        cuestInstruc.ShowDialog();
+                                    }
+                                    else if (((evento_[0] is Bloque) == false) && (Equals(evento_[0], "instrucciones") == false))//Ninguna de las anteriores -> se finalizo el cuestionario
+                                        MessageBox.Show(evento_[0].ToString());
                                 }
-
-                                else if (Equals(evento_[0], "instrucciones") == true) //Si retorno intrucciones -> inicializar el cuestionario
-                                {
-                                    Cuestionario_Instrucciones cuestInstruc = new Cuestionario_Instrucciones();
-                                    cuestInstruc.ShowDialog();
-                                }
-                                else if (((evento_[0] is Bloque) == false) && (Equals(evento_[0], "instrucciones") == true))//Ninguna de las anteriores -> se finalizo el cuestionario
-                                    MessageBox.Show(evento_[0].ToString());
-                            }
-
-                            MessageBox.Show(esValido.ToString());
+                            }   
                         }
                         else
                         {
@@ -88,14 +84,12 @@ namespace TpDiseñoCSharp
                         if (NroDoc.Text.Length == 8)
                         {
                             //Nos Fijamos si los datos ingresados pertenecen a un candidato existente en la base de datos y si posee un cuestionario para ser evaluado
-                            bool esValido = gestorCandidatos.validarCandidato(Tipo.Text.ToString(), NroDoc.Text.ToString(), Clave.Text.ToString());
+                            object esValido = gestorCandidatos.validarCandidato(Tipo.Text.ToString(), NroDoc.Text.ToString(), Clave.Text.ToString());
 
-                            if (esValido == true)
+                            if ((esValido is Cuestionario) == true)
                             {
-                                //Le pedimos al gestor de candidatos que nos retorne el Objeto candidato
-                                Candidato cand_ = gestorCandidatos.retornarCandidato(Tipo.Text.ToString(), NroDoc.Text.ToString());
-                                //Con el candidato instanciado, decidimos que acción corresponde tomar (Iniciar el cuestionario, recuperar el cuestionario o finalizar el cuestionario)
-                                ArrayList evento_ = gestorCuestionario.crearCuestionario(cand_);
+                                //Con el CUESTIONARIO instanciado, decidimos que acción corresponde tomar (Iniciar el cuestionario, recuperar el cuestionario o finalizar el cuestionario)
+                                ArrayList evento_ = gestorCuestionario.crearCuestionario((Cuestionario)esValido);
                                 if (evento_.Count != 0)
                                 {
                                     if ((evento_[0] is Bloque) == true)//Si se retorno el bloque -> recuperamos el cuestionario
@@ -111,13 +105,8 @@ namespace TpDiseñoCSharp
                                     }
                                     else if (((evento_[0] is Bloque) == false) && (Equals(evento_[0], "instrucciones") == false))//Ninguna de las anteriores -> se finalizo el cuestionario
                                         MessageBox.Show(evento_[0].ToString());
-                                    /*Cuestionario_Instrucciones cuestInstruc = new Cuestionario_Instrucciones();
-                                    cuestInstruc.ShowDialog();*/
                                 }
-                                else
-                                    MessageBox.Show("esto no funciona");
                             }
-                            //MessageBox.Show(esValido.ToString());
                         }
                         else
                         {
@@ -127,11 +116,10 @@ namespace TpDiseñoCSharp
                     }
                     else
                     {
-                        MessageBox.Show("El tipo de Documento: "+Tipo.Text+" solo acepta caracteres numéricos", "ERROR", 
+                        MessageBox.Show("El tipo de Documento: " + Tipo.Text + " solo acepta caracteres numéricos", "ERROR",
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                     break;
-
             }
    
         }

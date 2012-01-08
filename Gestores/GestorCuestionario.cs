@@ -18,10 +18,17 @@ namespace Gestores
          * La mision que justifica la existencia de los gestores es hacer de "interfaz" entre las ENTIDADES y el resto del sistema
          * Por esto el gestor debe tener la responsabilidad de instanciar la/s que le corresponde gestionar
          */
-        public Cuestionario instanciarCuestionario(Candidato canditoAsociado, string claveCuestionario, PuestoEvaluado puestoEvAsociado, int maxAccesos = 0, int accesos = 0, Bloque bloqueAsociado = null)
+        public Cuestionario instanciarCuestionario(Candidato canditoAsociado, string claveCuestionario, PuestoEvaluado puestoEvAsociado, int accesos = 0)
         {
-            Cuestionario nuevoCuestionario = new Cuestionario(canditoAsociado, claveCuestionario, puestoEvAsociado, maxAccesos, accesos, bloqueAsociado);
+            int maxAccesos = admBD.darAccesosMaximos();
+            Cuestionario nuevoCuestionario = new Cuestionario(canditoAsociado, claveCuestionario, puestoEvAsociado, maxAccesos, accesos, null);
             return nuevoCuestionario;
+        }
+
+        public Bloque instanciarBloque(int nro_Bloq, Cuestionario cuest)
+        {
+            Bloque nuevoBloque = new Bloque(nro_Bloq, cuest);
+            return nuevoBloque;
         }
 
         public Estado instanciarEstado(Cuestionario cuestAsociado, string _estado, DateTime fecha)
@@ -34,27 +41,27 @@ namespace Gestores
         public Cuestionario cuestionarioAsociado(Candidato candidatoAsociado)
         {
             //Se solicita a la base de datos el retorno del cuestionario activo para el candidato que se pasa como parametro
-            List<Cuestionario> retornoBD_cuestionario = admBD.recuperarCuestionarioActivo(candidatoAsociado);
+            List<Cuestionario> nCuestionario = admBD.recuperarCuestionarioActivo(candidatoAsociado);
             Cuestionario nuevoCuest = null;
 
-            if (retornoBD_cuestionario != null)
+            if (nCuestionario != null)
             {
-                if (retornoBD_cuestionario[0].Clave != "NO POSEE")
+                if (nCuestionario[0].Clave != "NO POSEE")
                 {
-                    if (retornoBD_cuestionario[0].PuestoEvaluado.Codigo != "ELIMINADO")
+                    if (nCuestionario[0].PuestoEvaluado.Codigo != "ELIMINADO")
                     {
-                        if (retornoBD_cuestionario[0].Estado.Estado_ == "ACTIVO" || retornoBD_cuestionario[0].Estado.Estado_ == "EN PROCESO")
+                        if (nCuestionario[0].Estado.Estado_ == "ACTIVO" || nCuestionario[0].Estado.Estado_ == "EN PROCESO")
                         {//Transforma el retorno de la base de datos en un objeto del tipo cuestionario
-                            nuevoCuest = retornoBD_cuestionario[0];
+                            nuevoCuest = nCuestionario[0];
                         }
                         else
-                            return this.instanciarCuestionario(null, "LOS TIEMPOS VENCIERON PARA REALIZAR LA EVALUACIÓN", null);
+                            return this.instanciarCuestionario(null, "LOS TIEMPOS VENCIERON PARA REALIZAR LA EVALUACIÓN", null, 0);
                     }
                     else
-                        return this.instanciarCuestionario(null, "EL PUESTO DE EVALUACION FUE ELIMINADO", null);
+                        return this.instanciarCuestionario(null, "EL PUESTO DE EVALUACION FUE ELIMINADO", null, 0);
                 }
                 else
-                    return this.instanciarCuestionario(null, "NO POSEE UN CUESTIONARIO PARA SER EVALUADO", null);
+                    return this.instanciarCuestionario(null, "NO POSEE UN CUESTIONARIO PARA SER EVALUADO", null, 0);
             }
 
             return nuevoCuest;
@@ -99,21 +106,72 @@ namespace Gestores
             return retorno;
         }
 
-        public ArrayList crearCuestionario(Candidato candidatoAsociado)
+        private int determinarCantidad_DeDiasPasados(DateTime fecha_cuestionario)
+        {
+            int diasPasados = -1, añosPasados;
+            DateTime fecha_de_Actual = DateTime.Now;
+
+            añosPasados = this.derterminarAño(fecha_cuestionario);
+            if (añosPasados != -1)
+            {
+                if (añosPasados == 0)//SON FECHAS DEL MISMO AÑO
+                {
+                    switch (fecha_de_Actual.CompareTo(fecha_cuestionario))
+                    {
+                        case 1://La fecha del cuestionario es anterior 
+                            diasPasados = fecha_de_Actual.DayOfYear - fecha_cuestionario.DayOfYear;
+                            break;
+                        case 0://La fecha del cuestionario es igual
+                            diasPasados = 0;
+                            break;
+                        case -1://La fecha del cuestionario es posterior -> error: ninguna fecha puede ser mayor a la actual
+                            diasPasados = -1;
+                            break;
+                    }
+                }
+
+                else //DIFERENTES AÑOS
+                {
+                    if ((fecha_de_Actual.CompareTo(fecha_cuestionario)) == 1)//La fecha del cuestionario es anterior
+                    {
+                        int aux;
+                        aux = fecha_cuestionario.DayOfYear - fecha_de_Actual.DayOfYear;
+                        diasPasados = (añosPasados * 365) - aux;
+                    }
+                    else //La fecha del cuestionario es igual. La fecha del cuestionario es posterior -> error: ninguna fecha puede ser mayor a la actual
+                        diasPasados = -1;
+                }
+            }
+
+            return diasPasados;
+        }
+
+        private int derterminarAño(DateTime fecha_cuestionario)
+        {
+            int añosPasados = 0;
+            DateTime fecha_de_actual = DateTime.Now;
+
+            switch (fecha_de_actual.Year.CompareTo(fecha_cuestionario.Year))
+            {
+                case 1://El año del cuestionario es anterior
+                    añosPasados = fecha_de_actual.Year - fecha_cuestionario.Year;
+                    break;
+                case 0://El año de cuestionario es igual
+                    añosPasados = 0;
+                    break;
+                case -1://El año del cuestionario es posterior -> error el año no puede ser mayor que el de la fecha actual
+                    añosPasados = -1;
+                    break;
+            }
+
+            return añosPasados;
+        }
+
+        //Toma la decicion de que acción realizar para el cuestionario validado
+        public ArrayList crearCuestionario(Cuestionario nCuestionario)
         {
             ArrayList procesoFinalizado = new ArrayList();
-            //Vamos a buscar primero el cuestionario Activo asociado al candidato si lo tubiere
-            List<Cuestionario> retornoBD_cuestionario = admBD.recuperarCuestionarioActivo(candidatoAsociado);
-            Cuestionario nCuestionario = retornoBD_cuestionario[0];//Asignamos el retorno para usar la variable
             
-            //Re-armamos las relaciones del cuestionario para tener todos los objetos en memoria
-            bool re_construido = admBD.reconstruirRelaciones(nCuestionario);
-
-            if (!re_construido)
-            {
-                procesoFinalizado.Add("No se pudo recuperar Todos los datos requeridos");
-                return procesoFinalizado;
-            }
             int accesos = nCuestionario.NroAccesos;
             int maxAccesos = nCuestionario.MaxAccesos;
             string estadoCuestionario = nCuestionario.obtenerEstado();
@@ -127,8 +185,8 @@ namespace Gestores
                     int tiempoSist = admBD.darTiempoEvaluacion();
 
                     //tiempo actual es el tiempo transcurrido en dias desde el se inicio de la evaluacion
-                    int tiempoActual = DateTime.Now.DayOfYear - fechaComienzoEvaluacion.DayOfYear;
-
+                    int tiempoActual = this.determinarCantidad_DeDiasPasados(fechaComienzoEvaluacion);
+                    
                     switch (tiempoActual <= tiempoSist)
                     {
                         case true:
@@ -136,21 +194,22 @@ namespace Gestores
                             int tiempoMax = admBD.darTiempoActivo();
                             DateTime fechaCuestionario = nCuestionario.obtenerFechaEstado();
                             //tiempo activo es el tiempo que transcurrio desde que se comenzo a realizar el cuestionario
-                            int tiempoActivo = DateTime.Now.DayOfYear - fechaCuestionario.DayOfYear;
-                            MessageBox.Show("tiempo activo: " + tiempoActivo.ToString() + " tiempo max: " + tiempoMax.ToString()+" fecha cuestionario:"+ fechaCuestionario.ToString());
-
+                            int tiempoActivo = this.determinarCantidad_DeDiasPasados(fechaCuestionario);
+                            
                             switch (tiempoActivo <= tiempoMax)
                             {
                                 case true:
-                                    switch (estadoCuestionario)
                                     {
-                                        case "En proceso":
-                                            Bloque bloq_retorno = levantarCuestionario(nCuestionario);
+                                        if (Equals(estadoCuestionario, "EN PROCESO") == true)
+                                        {
+                                            Bloque bloq_retorno = this.levantarCuestionario(nCuestionario);
                                             procesoFinalizado.Add(bloq_retorno);
-                                            break;
-                                        case "Activo":
+                                        }
+                                        else if (Equals(estadoCuestionario, "ACTIVO") == true)
+                                        {
                                             procesoFinalizado.Add("instrucciones"); //va al objeto interfaz
                                             break;
+                                        }
                                     }
                                     break;
                                 case false:
@@ -180,7 +239,7 @@ namespace Gestores
             ordenarListaAleatorio(listaPreguntas);
             int pregXbloque = admBD.preguntasPorBloque();
             this.crearBloque(listaPreguntas, pregXbloque, cuestionario);
-            this.cambiarEstado("En proceso", cuestionario);
+            this.cambiarEstado("EN PROCESO", cuestionario);
             cuestionario.aumentarAcceso();
             Bloque bloq_ = cuestionario.UltimoBloque;
             return bloq_;
@@ -189,7 +248,6 @@ namespace Gestores
         public Bloque levantarCuestionario(Cuestionario cuestionario) 
         {
             cuestionario.aumentarAcceso();
-            //HAY QUE MIRAR SI ESTA INSTANCIADO EL BLOQUE Q VAMOS A TRAER !!!
             Bloque bloq_ = cuestionario.UltimoBloque;
             return bloq_;
         }
@@ -198,11 +256,11 @@ namespace Gestores
         {
             switch (estado)
             {
-                case "Activo":
-                    this.cambiarEstado("Sin contestar", cuestionario);
+                case "ACTIVO":
+                    this.cambiarEstado("SIN CONTESTAR", cuestionario);
                     break;
-                case "En proceso":
-                    this.cambiarEstado("Imcompleto", cuestionario);
+                case "EN PROCESO":
+                    this.cambiarEstado("INCOMPLETO", cuestionario);
                     break;
             }
         }
@@ -224,13 +282,12 @@ namespace Gestores
 
             int nroProxBloque = bloqAnterior.NroBloque;
             nroProxBloque += 1;
-            List<Bloque> retornoBD_Bloque = admBD.retornarProximoBloque(cuestAsociado, nroProxBloque);
-            Bloque proxBloque = retornoBD_Bloque[0];
+            Bloque proxBloque = admBD.retornarBloque(cuestAsociado, nroProxBloque);
             cuestAsociado.UltimoBloque = proxBloque; //seteo el ultimo bloque
             return proxBloque;
         }
 
-        public void crearBloque(List<PreguntaEvaluada> listaPreguntas, int pregXbloque, Cuestionario cuest)
+        private void crearBloque(List<PreguntaEvaluada> listaPreguntas, int pregXbloque, Cuestionario cuest)
         {
             int numBloq = 0, j, contadorDeBloqueCreados = 0;
             int cantidadBloques = (listaPreguntas.Count / pregXbloque);
@@ -263,7 +320,7 @@ namespace Gestores
             }
         }
 
-        public void cambiarEstado(string alEstado, Cuestionario cuest)
+        private void cambiarEstado(string alEstado, Cuestionario cuest)
         {
             AdministradorBD admBD = new AdministradorBD();  //intanciacion del administrador base de datos
 
@@ -272,7 +329,7 @@ namespace Gestores
             admBD.guardarEstado(cuest.Estado); //se lo envia al Adm BD
         }
 
-        internal void ordenarListaAleatorio(List<PreguntaEvaluada> listaPreguntas) 
+        private void ordenarListaAleatorio(List<PreguntaEvaluada> listaPreguntas) 
         {
             listaPreguntas.Sort();
         } //establecer una forma de ordenamiento aleatorio... MIRAR

@@ -50,12 +50,12 @@ namespace Gestores
             return cand;
         }
 
-        public bool validarCandidato(string TipoDoc, string NroDoc, string clave)
+        public object validarCandidato(string TipoDoc, string NroDoc, string clave)
         {
             bool esValido = false;
             List<Candidato> retornoBD_candidato = admBD.recuperarCandidato(TipoDoc, NroDoc);
 
-            if (retornoBD_candidato[0] == null)
+            if (retornoBD_candidato == null)
             {
                 return esValido; //que aca es falso
             }
@@ -68,14 +68,15 @@ namespace Gestores
                 if (cuestAsociado.CandidatoAsociado != null)
                 {
                     bool accesoValido = gestorCuestionario.validarAcceso(cuestAsociado, clave);
-                    
+
                     if (accesoValido != false)
                     {
                         esValido = true;
+                        return cuestAsociado;
                     }
 
                     else
-                        MessageBox.Show("La clave ingresada no es valida para este candidato. \nIntente nuevamente");
+                        MessageBox.Show("La clave ingresada no es valida para este candidato. \n\nIntente nuevamente");
                 }
                 else
                     MessageBox.Show(cuestAsociado.Clave);//Muestra la naturaleza del error

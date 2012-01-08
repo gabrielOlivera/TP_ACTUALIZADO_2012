@@ -91,7 +91,7 @@ namespace Gestores
          * METODOS DE RECUPERACION DE ENTIDADES
          * ====================================
          *      - Tiene la finalidad de recuperar los datos de la BASE DE DATOS segun algún criterio de busqueda
-         *      - Retornaran una lista de objetos que se obtuvieron de dicha busqueda (si los hubiere   )
+         *      - Retornaran una lista de objetos que se obtuvieron de dicha busqueda (si los hubiere)
          *      - De no encontrar un datos o de no poderse realizar la conexion se expondra error y se retornara 'NULL'
          */
 
@@ -241,7 +241,7 @@ namespace Gestores
             if (!reader.HasRows)
             {
                 //si el reader esta vacio, es que no se encontraron datos para la consulta realizada
-                MessageBox.Show("No se encontro ningún puesto");
+                MessageBox.Show("El tipo y número de documento no corresponden a un candidato registrado");
                 terminarConexion();
                 return null;
             }
@@ -438,6 +438,10 @@ namespace Gestores
             //Declaramos una lista auxiliar de enteros para almacenar los ID de PUESTOS EVALUADOS 
             //con el fin de reconstruir las relaciones minimas en la instanciacion del cuestionario
             List<int> listaIdPuestos = new List<int>();
+            
+            //Otra lista auxiliar para guardar los números de bloque
+            List<int> listaNroBloque = new List<int>();
+
 
             //llamamos al metodo "iniciar conexion"
             conexionExitosa = iniciarConexion();
@@ -457,8 +461,24 @@ namespace Gestores
             //La siguiente consulta arroja los datos de los cuestionarios que posee el candidato
             //__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++
             //ME PARECE QUE ESTO NO ANDA __--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++
+            //__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++
+            /*
+             * PARA LA PREGUNTA DE JOSE: "de donde sale cuest? no habria que sacarlo afuera de las comillas dobles?"
+             * LA RESPUESTA ES NO -> XQ: cuest es un apodo que se puede poner a las tablas, no se si se acuerdan de gestion de datos,
+             * pero, a las tablas se las podia renobran con un "seudonimo" para hacer una consulta y no tener que estar utilizando el
+             * nombre completo de la tabla.
+             * LA CONSULTA SI FUNCIONA PORQUE LA PROBE EN EL WORKBENCH. SE LAS DEJO ACA PARA QUE LA PUEDAN EJECUTAR
+             * 
+               SELECT DISTINCT `clave`, `Puesto Evaluado_idPuesto Evaluado` ,`nroaccesos`, `ultimoBloque`
+               FROM `tp base de datos`.`cuestionario` cuest 
+               JOIN `tp base de datos`.`candidato` cand on (cand.`nro documento` = 32376056 AND cand.idCandidato = cuest.Candidato_idCandidato)
+               JOIN `tp base de datos`.`cuestionario_estado` c_est on (cuest.idCuestionario = c_est.Cuestionario_idCuestionario);
+             * 
+             * PERO SI HAY UNA FORMA MAS FACIL DE HACER ESTA CONSULTA BIENBENIDA SEA...
+             */
             //__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++
-            string consultaSql = "SELECT DISTINCT `clave`, `Puesto Evaluado_idPuesto Evaluado` ,`nroaccesos` ";
+            
+            string consultaSql = "SELECT DISTINCT `clave`, `Puesto Evaluado_idPuesto Evaluado` ,`nroaccesos`, `ultimoBloque` ";
             consultaSql += "FROM `cuestionario` cuest "; //de donde sale cuest? no habria que sacarlo afuera de las comillas dobles?
             consultaSql += "JOIN `candidato` cand on (cand.`nro documento` = '" + candidato.NroDoc + "' AND cand.idCandidato = cuest.Candidato_idCandidato) ";
             consultaSql += "JOIN `cuestionario_estado` c_est on (cuest.idCuestionario = c_est.Cuestionario_idCuestionario);";
@@ -475,7 +495,7 @@ namespace Gestores
                 //si el reader esta vacio, es qe no encontro a ese candidato
                 MessageBox.Show("No se encontro ningun cuestionario asociado");
                 terminarConexion();
-                Cuestionario cues = gestorCuestionarios.instanciarCuestionario(candidato, "NO POSEE", null);
+                Cuestionario cues = gestorCuestionarios.instanciarCuestionario(candidato, "NO POSEE", null, 0);
                 listaCuestionariosAsociados.Add(cues);
                 return listaCuestionariosAsociados;
             }
@@ -486,6 +506,12 @@ namespace Gestores
                 string clave = reader["clave"].ToString();
                 int accesos = Int32.Parse(reader["nroAccesos"].ToString());
                 int idPuestoEv = Int32.Parse(reader["Puesto Evaluado_idPuesto Evaluado"].ToString());
+                int nroBloque;
+
+                if (reader["ultimoBloque"].ToString() == "")//Se contempla la posibilidad de que este número sea nulo
+                    nroBloque = 0;//IMPLICA QUE EL CUESTIONARIO ESTA ACTIVO
+                else
+                    nroBloque = Int32.Parse(reader["ultimoBloque"].ToString());//IMPLICA QUE EL CUESTIONARIO ESTA EN PROCESO
 
                 //Llamamos al gestor de cuestionarios para instanciar el cuestionario que se obtuvo de la base de datos
                 Cuestionario cuesAsociado = gestorCuestionarios.instanciarCuestionario(candidato, clave, null, accesos);
@@ -493,6 +519,8 @@ namespace Gestores
                 preSeleccionCuestionarios.Add(cuesAsociado);
                 //Cargamos el ID del Puesto Evaludos para luego buscarlo en la base de datos
                 listaIdPuestos.Add(idPuestoEv);
+                //Cargamos el nroDeBloque
+                listaNroBloque.Add(nroBloque);
             }
 
             /*
@@ -504,7 +532,7 @@ namespace Gestores
             PuestoEvaluado PuestoEv;
             for (int i = 0; i < listaIdPuestos.Count; i++)
             {
-                PuestoEv = this.recuperarPuestoEvaluado(listaIdPuestos[i]);
+                PuestoEv = this.recuperarPuestoEvaluado(listaIdPuestos[i]); 
 
                 if (Equals(PuestoEv.Codigo, "ELIMINADO") == false)
                 {
@@ -517,14 +545,23 @@ namespace Gestores
                         preSeleccionCuestionarios[i].PuestoEvaluado = PuestoEv;
                         //Agrego el estado al cuestionario
                         preSeleccionCuestionarios[i].Estado = estadoCuest;
-                        //Luego de agregar el Estado y el Puesto Evaluado, agregamos el cuestionario a la lista de retorno
+
+                        if (listaNroBloque[i] != 0)//ESTA EN PROCESO
+                        {
+                            //Agrego el bloque al cuestionario
+                            preSeleccionCuestionarios[i].UltimoBloque = this.retornarBloque(preSeleccionCuestionarios[i], listaNroBloque[i]);
+                        }
+                        //Luego de agregar el Estado, el bloque y el Puesto Evaluado, agregamos el cuestionario a la lista de retorno
                         listaCuestionariosAsociados.Add(preSeleccionCuestionarios[i]);
                     }
                     else
                         listaCuestionariosAsociados[i].Estado = estadoCuest;//Agregamos el error para controlarlo
                 }
                 else
-                    listaCuestionariosAsociados[i].PuestoEvaluado = PuestoEv;//Agregamos el error para controlarlo
+                {
+                    preSeleccionCuestionarios[i].PuestoEvaluado = PuestoEv;
+                    listaCuestionariosAsociados.Add(preSeleccionCuestionarios[i]);//Agregamos el error para controlarlo
+                }
             }
 
             return listaCuestionariosAsociados;
@@ -751,17 +788,18 @@ namespace Gestores
 
             while (reader.Read())
             {
-                string cod = reader["codigo"].ToString();
-                string nomComp = reader["nombre"].ToString();
-                string descrip = reader["descripcion"].ToString();
-                bool eliminado = Boolean.Parse(reader["eliminado"].ToString());
-
                 Competencia nuevaCompetencia;
-                
+
                 //Contemplamos la posibilidad de que este eliminada la competencia
-                if (eliminado == false)//Si esta en condiciones de ser usada, se instancia una nueva competencia con los datos
+                if (reader["eliminado"].ToString() == "")
+                {
+                    string cod = reader["codigo"].ToString();
+                    string nomComp = reader["nombre"].ToString();
+                    string descrip = reader["descripcion"].ToString();
+
+                    //Si esta en condiciones de ser usada, se instancia una nueva competencia con los datos
                     nuevaCompetencia = gestorCompetencias.instanciarCompetencia(cod, nomComp, descrip, null);
-                
+                }
                 else//Si fue eliminada se instancia una competencia con el codigo indicando esta situación
                     nuevaCompetencia = gestorCompetencias.instanciarCompetencia("ELIMINADA", null, null, null);
                 
@@ -887,15 +925,18 @@ namespace Gestores
 
             while (reader.Read())
             {
-                string cod = reader["codigo"].ToString();
-                string nomComp = reader["nombre"].ToString();
-                string descrip = reader["descripcion"].ToString();
-                bool eliminda = Boolean.Parse(reader["eliminado"].ToString());
-
                 //Verificamos que la competencia no este eliminada
                 CompetenciaEvaluada competenciaEv;
-                if (eliminda == false)//Si no fue eliminada, la instaciamos con el gestor de evaluacion con los datos obtenidos
+
+                if (reader["eliminado"].ToString() == "")
+                {
+                    string cod = reader["codigo"].ToString();
+                    string nomComp = reader["nombre"].ToString();
+                    string descrip = reader["descripcion"].ToString();
+
+                    //Si no fue eliminada, la instaciamos con el gestor de evaluacion con los datos obtenidos
                     competenciaEv = gestorEvaluacion.instanciarCompetenciaEvaluda(cod, nomComp, descrip);
+                }
                 else//Si fue eliminada, instanciamos una competencia con el atrubuto 'codigo' inicializado en ELIMINADA
                     competenciaEv = gestorEvaluacion.instanciarCompetenciaEvaluda("ELIMINADA", null, null);
 
@@ -1159,22 +1200,44 @@ namespace Gestores
                 listaDeOpRespuesta.Add(OpcionResp);
             }
             terminarConexion();
-
+            
             return listaDeOpRespuesta;
         }
-
         /*
          * retornarProximoBloque tiene la misión de recuperar el proximo bloque de un cuestionario a travez de su numero de bloque
          */
-        public List<Bloque> retornarProximoBloque(Cuestionario cuest, int nroProxBloque)
+        public Bloque retornarBloque(Cuestionario cuestAsociado, int nroBloque)
         {
-            //
-            //FALTA TERMINAR ESTA FUNCIONALIDAD
-            //
-            List<Bloque> listaBloque = new List<Bloque>();//Para el retorno de datos
+            GestorCuestionario gestorCuestionario = new GestorCuestionario();
             bool conexionExitosa;
+            List<PreguntaEvaluada> ListapregAsociadas = new List<PreguntaEvaluada>();
 
-            string consultaSql = "SELECT * FROM ";
+            if (nroBloque == 1)
+            {
+                //Re-armamos las relaciones del cuestionario para tener todos los objetos en memoria
+                bool re_construido = this.reconstruirRelaciones(cuestAsociado);
+
+                if (!re_construido)
+                {
+                    MessageBox.Show("No se pudo recuperar Todos los datos requeridos");
+                    return null;
+                }
+            }
+
+
+            string consultaSql = "SELECT codigo " //Recupero el codigo de las preguntas evaluadas
+                + "FROM item_bloque it_Bloq " //Desde la tabla de ITEM_BLOQUE de la base de datos
+                //CONDICIONO CON UN JOIN que el id que se encuentra en la tabla de `pregunta evaluada` sea igual al id de la tabla `item_bloque`
+                + "JOIN `pregunta evaluada` pEv on (pEv.`idPregunta Evaluada` = it_Bloq.PreguntaEvaluada_idPreguntaEv) "
+                //CON UN SEGUNDO JOIN pido que me busque los datos del bloque que condice con el "nroBloque"
+                + "JOIN bloque bq on (bq.nroBloque = " + nroBloque + ") "
+                //TERCER JOIN pido que me busque entre los cuestionarios los datos del que coincida con el cuestionario que le paso como parametro 
+                + "JOIN cuestionario cuest on (cuest.clave = '" + cuestAsociado.Clave + "') "
+                //Con el WHERE restrinjo que de los datos obtenidos:
+                //El id del bloque que se encuentra en la tabla `item_bloque` sea el mismo al del bloque seleccionado en el JOIN
+                + "WHERE it_Bloq.Bloque_idBloque = bq.idBloque "
+                //Y que el id del cuestionario que esta en la tabla de `bloques` sea el mismo al obtenido del JOIN con la tabla cuestionario
+                + "AND bq.Cuestionario_idCuestrionario = cuest.idCuestionario;";
 
             conexionExitosa = iniciarConexion();
 
@@ -1182,7 +1245,6 @@ namespace Gestores
                 return null; //Error de conexion
 
             MySql.Data.MySqlClient.MySqlCommand comando;
-
             comando = ObjConexion.CreateCommand();
 
             comando.CommandText = consultaSql;
@@ -1194,13 +1256,18 @@ namespace Gestores
 
             while (reader.Read())
             {
+                string codigo = reader["codigo"].ToString();
+
+                ListapregAsociadas.Add(this.retornarPreguntaDeLaRelacion(cuestAsociado.PuestoEvaluado, codigo));
             }
+
+            Bloque bloque_R = gestorCuestionario.instanciarBloque(nroBloque, cuestAsociado);
+            bloque_R.ListaPreguntasEv = ListapregAsociadas;
 
             terminarConexion();
 
-            return listaBloque;
+            return bloque_R;
         }
-
         /*
          * =======================================
          * METODOS DE RECONSTRUCCION DE RELACIONES
@@ -1222,6 +1289,31 @@ namespace Gestores
             return seRealizoConExito;
         }
 
+        private PreguntaEvaluada retornarPreguntaDeLaRelacion(PuestoEvaluado puestoAsociado, string codigo)
+        {
+            int i = 0;
+            PreguntaEvaluada preguntaEncontrada = null;
+            while (i < puestoAsociado.Caracteristicas.Count)
+            {
+                int j = 0;
+                CompetenciaEvaluada competenciaAsociada = (CompetenciaEvaluada)puestoAsociado.Caracteristicas[i].dato1;
+                while (j < competenciaAsociada.ListaFactores.Count)
+                {
+                    int w = 0;
+                    List<PreguntaEvaluada> listaPreguntas = competenciaAsociada.ListaFactores[j].ListaPreguntasEv;
+                    while (w < listaPreguntas.Count)
+                    {
+                        if ((listaPreguntas[w].Codigo == codigo) == true)
+                            return preguntaEncontrada = listaPreguntas[w];
+                        w++;
+                    }
+                    j++;
+                }
+                i++;
+
+            }
+            return preguntaEncontrada;
+        }
 
         /*
          * ====================

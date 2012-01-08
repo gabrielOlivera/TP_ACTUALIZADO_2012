@@ -14,7 +14,9 @@ namespace Gestores
          */
         public PuestoEvaluado instanciarPuestoEvaluado(string codigo, string nombre, string empresa, string descripcion = null, List<Caracteristica> caracteristicas = null)
         {
-            PuestoEvaluado nuevoPuestoEv = new PuestoEvaluado(codigo, nombre, empresa, descripcion, caracteristicas);
+            AdministradorBD admBD = new AdministradorBD();
+            DateTime fecha_evaluacion = admBD.recuperarFechadeComienzoEvaluacion(codigo);
+            PuestoEvaluado nuevoPuestoEv = new PuestoEvaluado(codigo, nombre, empresa, fecha_evaluacion, descripcion, caracteristicas);
             return nuevoPuestoEv;
         }
 
@@ -93,7 +95,7 @@ namespace Gestores
 
         public DateTime obtenerFechaEvaluacion(PuestoEvaluado puestoEv)
         {
-            return puestoEv.getFecha();
+            return puestoEv.Fecha_Comienzo;
         }
     }
 }

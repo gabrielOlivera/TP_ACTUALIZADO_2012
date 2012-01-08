@@ -59,11 +59,10 @@ namespace Entidades
         }
 
         /* Metodo Constructor */
-        public PuestoEvaluado(string cod, string nomb, string emp, string desc = null, List<Caracteristica> caract = null)
+        public PuestoEvaluado(string cod, string nomb, string emp, DateTime fecha, string desc = null, List<Caracteristica> caract = null)
         {
-            //AdministradorBD admBD = new AdministradorBD();
-            codigo = cod;
-            //this.Fecha_Comienzo = admBD.recuperarFechadeComienzoEvaluacion(cod);
+            this.Codigo = cod;
+            this.Fecha_Comienzo = fecha;
             this.Nombre = nomb;
             this.Empresa = emp;
             this.Descripcion = desc;
@@ -71,9 +70,6 @@ namespace Entidades
         }
 
         //Metodos de inicializacion y modificación 
-        public void setNombre(string nomb) { nombre = nomb; }
-        public void setEmpresa(string empr) { empresa = empr; }
-        public void setDescripcion(string desc) { descripcion = desc; }
         public void addListaCaracteristicas(CompetenciaEvaluada comp, Ponderacion pond)
         {
             Caracteristica elemento;
@@ -83,10 +79,6 @@ namespace Entidades
         }
 
         //Metodos de retorno
-        public string getCodigo() { return codigo; }
-        public string getNombre() { return nombre; }
-        public string getEmpresa() { return empresa; }
-        public DateTime getFecha() { return fecha_Comienzo; }
         public List<Caracteristica> getCaracteristicas() { return caracteristicas; }
 
     }
