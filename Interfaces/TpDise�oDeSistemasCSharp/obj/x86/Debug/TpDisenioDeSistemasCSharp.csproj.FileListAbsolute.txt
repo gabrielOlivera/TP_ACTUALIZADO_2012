@@ -87,3 +87,5 @@ D:\jose\TP 2012 repositorio\Interfaces\TpDiseñoDeSistemasCSharp\obj\x86\Debug\T
 D:\jose\TP 2012 repositorio\Interfaces\TpDiseñoDeSistemasCSharp\obj\x86\Debug\TpDiseñoCSharp.Properties.Resources.resources
 D:\jose\TP 2012 repositorio\Interfaces\TpDiseñoDeSistemasCSharp\obj\x86\Debug\GenerateResource.read.1.tlog
 D:\jose\TP 2012 repositorio\Interfaces\TpDiseñoDeSistemasCSharp\obj\x86\Debug\GenerateResource.write.1.tlog
+D:\UTN\Diseño de Sistemas\TP 2012 repositorio\Interfaces\TpDiseñoDeSistemasCSharp\obj\x86\Debug\VentanaGeneralTpDiseño.exe
+D:\UTN\Diseño de Sistemas\TP 2012 repositorio\Interfaces\TpDiseñoDeSistemasCSharp\obj\x86\Debug\VentanaGeneralTpDiseño.pdb
