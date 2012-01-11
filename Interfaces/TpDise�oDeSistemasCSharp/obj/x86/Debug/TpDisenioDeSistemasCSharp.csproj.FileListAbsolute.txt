@@ -145,3 +145,32 @@ C:\Users\GRACIANA\Desktop\TP_disenio2012\Interfaces\TpDiseñoDeSistemasCSharp\bi
 C:\Users\GRACIANA\Desktop\TP_disenio2012\Interfaces\TpDiseñoDeSistemasCSharp\bin\Debug\Validacion.pdb
 C:\Users\GRACIANA\Desktop\TP_disenio2012\Interfaces\TpDiseñoDeSistemasCSharp\obj\x86\Debug\VentanaGeneralTpDiseño.exe
 C:\Users\GRACIANA\Desktop\TP_disenio2012\Interfaces\TpDiseñoDeSistemasCSharp\obj\x86\Debug\VentanaGeneralTpDiseño.pdb
+C:\Users\usuario\Desktop\TP 2012 Repositorio Online\Interfaces\TpDiseñoDeSistemasCSharp\bin\Debug\VentanaGeneralTpDiseño.exe
+C:\Users\usuario\Desktop\TP 2012 Repositorio Online\Interfaces\TpDiseñoDeSistemasCSharp\bin\Debug\VentanaGeneralTpDiseño.pdb
+C:\Users\usuario\Desktop\TP 2012 Repositorio Online\Interfaces\TpDiseñoDeSistemasCSharp\bin\Debug\Entidades.dll
+C:\Users\usuario\Desktop\TP 2012 Repositorio Online\Interfaces\TpDiseñoDeSistemasCSharp\bin\Debug\Gestores.dll
+C:\Users\usuario\Desktop\TP 2012 Repositorio Online\Interfaces\TpDiseñoDeSistemasCSharp\bin\Debug\Validacion.dll
+C:\Users\usuario\Desktop\TP 2012 Repositorio Online\Interfaces\TpDiseñoDeSistemasCSharp\bin\Debug\Entidades.pdb
+C:\Users\usuario\Desktop\TP 2012 Repositorio Online\Interfaces\TpDiseñoDeSistemasCSharp\bin\Debug\Gestores.pdb
+C:\Users\usuario\Desktop\TP 2012 Repositorio Online\Interfaces\TpDiseñoDeSistemasCSharp\bin\Debug\Validacion.pdb
+C:\Users\usuario\Desktop\TP 2012 Repositorio Online\Interfaces\TpDiseñoDeSistemasCSharp\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\usuario\Desktop\TP 2012 Repositorio Online\Interfaces\TpDiseñoDeSistemasCSharp\obj\x86\Debug\TpDiseñoCSharp.Alta_De_Puesto.resources
+C:\Users\usuario\Desktop\TP 2012 Repositorio Online\Interfaces\TpDiseñoDeSistemasCSharp\obj\x86\Debug\TpDiseñoCSharp.Completar_Cuestionario.resources
+C:\Users\usuario\Desktop\TP 2012 Repositorio Online\Interfaces\TpDiseñoDeSistemasCSharp\obj\x86\Debug\TpDiseñoCSharp.Evaluar_Candidatos___Ventana_3.resources
+C:\Users\usuario\Desktop\TP 2012 Repositorio Online\Interfaces\TpDiseñoDeSistemasCSharp\obj\x86\Debug\TpDiseñoCSharp.Modificar_Puesto_o_Funcion.resources
+C:\Users\usuario\Desktop\TP 2012 Repositorio Online\Interfaces\TpDiseñoDeSistemasCSharp\obj\x86\Debug\TpDiseñoCSharp.OrdenDeMerito_VistaImpresion.resources
+C:\Users\usuario\Desktop\TP 2012 Repositorio Online\Interfaces\TpDiseñoDeSistemasCSharp\obj\x86\Debug\TpDiseñoCSharp.PantallaPrincipal.resources
+C:\Users\usuario\Desktop\TP 2012 Repositorio Online\Interfaces\TpDiseñoDeSistemasCSharp\obj\x86\Debug\TpDiseñoCSharp.Cuestionario_Instrucciones.resources
+C:\Users\usuario\Desktop\TP 2012 Repositorio Online\Interfaces\TpDiseñoDeSistemasCSharp\obj\x86\Debug\TpDiseñoCSharp.Emitir_Orden_de_Mérito.resources
+C:\Users\usuario\Desktop\TP 2012 Repositorio Online\Interfaces\TpDiseñoDeSistemasCSharp\obj\x86\Debug\TpDiseñoCSharp.Evaluar_Candidato.resources
+C:\Users\usuario\Desktop\TP 2012 Repositorio Online\Interfaces\TpDiseñoDeSistemasCSharp\obj\x86\Debug\TpDiseñoCSharp.Evaluar_Candidatos___Ventana_2.resources
+C:\Users\usuario\Desktop\TP 2012 Repositorio Online\Interfaces\TpDiseñoDeSistemasCSharp\obj\x86\Debug\TpDiseñoCSharp.Gestionar_Puestos.resources
+C:\Users\usuario\Desktop\TP 2012 Repositorio Online\Interfaces\TpDiseñoDeSistemasCSharp\obj\x86\Debug\TpDiseñoCSharp.Lista_de_Candidatos.resources
+C:\Users\usuario\Desktop\TP 2012 Repositorio Online\Interfaces\TpDiseñoDeSistemasCSharp\obj\x86\Debug\TpDiseñoCSharp.LoginCandidato.resources
+C:\Users\usuario\Desktop\TP 2012 Repositorio Online\Interfaces\TpDiseñoDeSistemasCSharp\obj\x86\Debug\TpDiseñoCSharp.LoginConsultor.resources
+C:\Users\usuario\Desktop\TP 2012 Repositorio Online\Interfaces\TpDiseñoDeSistemasCSharp\obj\x86\Debug\TpDiseñoCSharp.MenuPrincipalConsultor.resources
+C:\Users\usuario\Desktop\TP 2012 Repositorio Online\Interfaces\TpDiseñoDeSistemasCSharp\obj\x86\Debug\TpDiseñoCSharp.Properties.Resources.resources
+C:\Users\usuario\Desktop\TP 2012 Repositorio Online\Interfaces\TpDiseñoDeSistemasCSharp\obj\x86\Debug\GenerateResource.read.1.tlog
+C:\Users\usuario\Desktop\TP 2012 Repositorio Online\Interfaces\TpDiseñoDeSistemasCSharp\obj\x86\Debug\GenerateResource.write.1.tlog
+C:\Users\usuario\Desktop\TP 2012 Repositorio Online\Interfaces\TpDiseñoDeSistemasCSharp\obj\x86\Debug\VentanaGeneralTpDiseño.exe
+C:\Users\usuario\Desktop\TP 2012 Repositorio Online\Interfaces\TpDiseñoDeSistemasCSharp\obj\x86\Debug\VentanaGeneralTpDiseño.pdb

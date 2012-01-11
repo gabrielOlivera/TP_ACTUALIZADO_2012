@@ -28,3 +28,8 @@ C:\Users\GRACIANA\Desktop\TP_disenio2012\Interfaces\Validacion\bin\Debug\Validac
 C:\Users\GRACIANA\Desktop\TP_disenio2012\Interfaces\Validacion\obj\Debug\ResolveAssemblyReference.cache
 C:\Users\GRACIANA\Desktop\TP_disenio2012\Interfaces\Validacion\obj\Debug\Validacion.dll
 C:\Users\GRACIANA\Desktop\TP_disenio2012\Interfaces\Validacion\obj\Debug\Validacion.pdb
+C:\Users\usuario\Desktop\TP 2012 Repositorio Online\Interfaces\Validacion\bin\Debug\Validacion.dll
+C:\Users\usuario\Desktop\TP 2012 Repositorio Online\Interfaces\Validacion\bin\Debug\Validacion.pdb
+C:\Users\usuario\Desktop\TP 2012 Repositorio Online\Interfaces\Validacion\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\usuario\Desktop\TP 2012 Repositorio Online\Interfaces\Validacion\obj\Debug\Validacion.dll
+C:\Users\usuario\Desktop\TP 2012 Repositorio Online\Interfaces\Validacion\obj\Debug\Validacion.pdb
