@@ -7,3 +7,4 @@ GENTE!
 Antes de seguir agregando cambios tienen que actualizar porfavor a esta version asi no tenemos mas problemas con los archivos binarios al hacer los merge. Y solo tenemos conflictos solucionables.
 
 
+Probando
