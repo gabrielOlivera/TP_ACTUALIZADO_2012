@@ -236,13 +236,28 @@ namespace Gestores
         {
             PuestoEvaluado pEv = cuestionario.PuestoEvaluado;
             List<PreguntaEvaluada> listaPreguntas = gestorEvaluacion.listarPreguntas(pEv);
-            ordenarListaAleatorio(listaPreguntas);
-            int pregXbloque = admBD.preguntasPorBloque();
-            this.crearBloque(listaPreguntas, pregXbloque, cuestionario);
-            this.cambiarEstado("EN PROCESO", cuestionario);
-            cuestionario.aumentarAcceso();
-            Bloque bloq_ = cuestionario.UltimoBloque;
-            return bloq_;
+            if (listaPreguntas.Count != 0)
+            {
+                ordenarListaAleatorio(listaPreguntas);
+                int pregXbloque = admBD.preguntasPorBloque();
+                if (pregXbloque != -1 && pregXbloque != -2)
+                {
+                    bool bloques_Creados = this.crearBloque(listaPreguntas, pregXbloque, cuestionario);
+                    if (bloques_Creados)
+                    {
+                        this.cambiarEstado("EN PROCESO", cuestionario);
+                        cuestionario.aumentarAcceso();
+                        Bloque bloq_ = cuestionario.UltimoBloque;
+                        return bloq_;
+                    }
+                    else
+                        return null;
+                }
+                else
+                    return null;
+            }
+            else
+                return null;
         }
 
         public Bloque levantarCuestionario(Cuestionario cuestionario) 
@@ -287,37 +302,61 @@ namespace Gestores
             return proxBloque;
         }
 
-        private void crearBloque(List<PreguntaEvaluada> listaPreguntas, int pregXbloque, Cuestionario cuest)
+        private bool crearBloque(List<PreguntaEvaluada> listaPreguntas, int pregXbloque, Cuestionario cuest)
         {
-            int numBloq = 0, j, contadorDeBloqueCreados = 0;
+            AdministradorBD admBD = new AdministradorBD();  //intanciacion del administrador base de datos
+
+            bool operacionRealizadaConExito = false;
+
+            int numBloq = 1, contadorDeBloqueCreados = 0;
             int cantidadBloques = (listaPreguntas.Count / pregXbloque);
 
             for (int i = 0; i <= listaPreguntas.Count; i++)
             {
-                AdministradorBD admBD = new AdministradorBD();  //intanciacion del administrador base de datos
-
-                Bloque nuevoBloque = new Bloque(numBloq++, cuest);
-                PreguntaEvaluada preg;
-                for (j = 0; j <= pregXbloque; j++)
+                Bloque nuevoBloque = new Bloque(numBloq, cuest);
+                for (int j = 0; j <= pregXbloque; j++)
                 {
-                    preg = listaPreguntas[j];
-                    nuevoBloque.addPreguntaEv(preg);
+                    nuevoBloque.addPreguntaEv(listaPreguntas[j]);
                 }
+
                 contadorDeBloqueCreados += 1;
-                i += j;
+                if (numBloq == 1)
+                {
+                    cuest.UltimoBloque = nuevoBloque;
+                }
+                numBloq++;
+                i += pregXbloque;
+
                 switch (contadorDeBloqueCreados == cantidadBloques)
                 {
                     case true:
                         {
                             nuevoBloque.marcarUltimobloque();
-                            admBD.guardarBloque(nuevoBloque); // mensaje se envia al Adm de BD
+                            bool echo = admBD.guardarBloque(nuevoBloque); // mensaje se envia al Adm de BD
+                            if (echo)
+                                operacionRealizadaConExito = true;
+                            else
+                            {
+                                MessageBox.Show("No se pudieron resguardar los datos de su evaluación\nComuniquese con su evaluador");
+                                operacionRealizadaConExito = false;
+                            }
                         }
                         break;
                     default:
-                        admBD.guardarBloque(nuevoBloque); // mensaje se envia al Adm de BD
+                        {
+                            bool echo = admBD.guardarBloque(nuevoBloque); // mensaje se envia al Adm de BD
+                            if (echo)
+                                operacionRealizadaConExito = true;
+                            else
+                            {
+                                MessageBox.Show("No se pudieron resguardar los datos de su evaluación\nComuniquese con su evaluador");
+                                operacionRealizadaConExito = false;
+                            }
+                        }
                         break;
                 }
             }
+            return operacionRealizadaConExito;
         }
 
         private void cambiarEstado(string alEstado, Cuestionario cuest)

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Windows.Forms;
 using System.Linq;
 using System.Text;
 using Entidades;
@@ -44,12 +45,38 @@ namespace Gestores
             return nuevaOpRespuestEv;
         }
 
-        public OpcionesEvaluadas instanciarOpcionEv(string nombre, int ponderacion)
+        public OpcionesEvaluadas instanciarOpcionEv(string nombre, int ponderacion, int ordenVisualizacion)
         {
-            OpcionesEvaluadas nuevoOpcionEv = new OpcionesEvaluadas(nombre, ponderacion);
+            OpcionesEvaluadas nuevoOpcionEv = new OpcionesEvaluadas(nombre, ponderacion, ordenVisualizacion);
             return nuevoOpcionEv;
         }
 
+
+        public PreguntaEvaluada retornarPreguntaDeLaRelacion(PuestoEvaluado puestoAsociado, string codigo)
+        {
+            int i = 0;
+            PreguntaEvaluada preguntaEncontrada = null;
+            while (i < puestoAsociado.Caracteristicas.Count)
+            {
+                int j = 0;
+                CompetenciaEvaluada competenciaAsociada = (CompetenciaEvaluada)puestoAsociado.Caracteristicas[i].dato1;
+                while (j < competenciaAsociada.ListaFactores.Count)
+                {
+                    int w = 0;
+                    List<PreguntaEvaluada> listaPreguntas = competenciaAsociada.ListaFactores[j].ListaPreguntasEv;
+                    while (w < listaPreguntas.Count)
+                    {
+                        if ((listaPreguntas[w].Codigo == codigo) == true)
+                            return preguntaEncontrada = listaPreguntas[w];
+                        w++;
+                    }
+                    j++;
+                }
+                i++;
+
+            }
+            return preguntaEncontrada;
+        }
 
         //mira nuevamente esta funcionalidad
         public List<PreguntaEvaluada> listarPreguntas(PuestoEvaluado puesto)
@@ -83,8 +110,14 @@ namespace Gestores
             }
             if(Equals(factoresNoEvaluados.Count, 0))
             {
-                //interfazUsuario.mostrarFactoresNoEvaluados(factoresNoEvaluados);
+                string mensajeBox = "Los siguiente factores no fueron evaludos por no cumplir con el minimo de preguntas para la evaluación:\n";
+                for (int i = 0; i < factoresNoEvaluados.Count; i++)
+                {
+                    mensajeBox += factoresNoEvaluados[i] + "\t\n";
+                }
+                MessageBox.Show(mensajeBox);
             }
+
             return listaRetorno;
         }
 

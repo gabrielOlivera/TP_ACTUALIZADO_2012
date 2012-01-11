@@ -1091,7 +1091,7 @@ namespace Gestores
                     List<OpcionesEvaluadas> opciones = recuperarOpcionesEvaluadas(listaDePreguntas[i]);
                     //Completamos el objeto Opciones_de_respuestas_evaludas con la lista de opciones
                     opcionesRespuesta[0].ListaOpcionesEv = opciones;
-
+                    
                     //Realizamos la asignacion de la opcion de respuesta y las opciones corespondientes para la pregunta
                     listaDePreguntas[i].Op_respuestaEv = opcionesRespuesta[0];
                     listaDePreguntas[i].ListaOpcionesEv = opciones;
@@ -1111,12 +1111,12 @@ namespace Gestores
             GestorEvaluacion gestionEvaluacion = new GestorEvaluacion();
             List<OpcionesEvaluadas> listaDeOpciones = new List<OpcionesEvaluadas>();//Para el retorno de datos 
 
-            string consultaSql = "SELECT DISTINCT opc.nombre, opR_opc.ordenDeVisualizacion, pr_opc.ponderacion " +
-            "FROM `opcion evaluada` opc " +
-            "JOIN `opcion de respuesta evaluada_opcion evaluada` opR_opc on (opR_opc.`Opcion Evaluada_idOpcion` = opc.`idOpcion`) " +
-            "JOIN `pregunta evaluada` pr on (pr.`Opcion de Respuesta Evaluada_idOpcion de Respuesta Evaluada` = opR_opc.`Opcion de Respuesta Evaluada_idOpcion de Respuesta Evaluada`) " +
-            "JOIN `pregunta evaluada_opcion evaluada` pr_opc on (pr_opc.`Pregunta Evaluada_idPregunta Evaluada` = pr.`idPregunta Evaluada`) " +
-            "WHERE pr.codigo = '" + pregAsociada.Codigo + "';";
+            string consultaSql = "SELECT op.nombre, pr_op.ponderacion, opr_op.ordenDeVisualizacion "
+            + "FROM `tp base de datos`.`pregunta evaluada_opcion evaluada` pr_op "
+            + "JOIN `tp base de datos`.`pregunta evaluada` pr on (pr_op.`Pregunta Evaluada_idPregunta Evaluada` = pr.`idPregunta Evaluada` AND pr.codigo = '" + pregAsociada.Codigo + "') "
+            + "JOIN `tp base de datos`.`opcion evaluada` op on (pr_op.`Opcion Evaluada_idOpcion` = op.idOpcion) "
+            + "JOIN `tp base de datos`.`opcion de respuesta evaluada_opcion evaluada` opr_op on (pr_op.`Opcion Evaluada_idOpcion` = opr_op.`Opcion Evaluada_idOpcion`) "
+            + "GROUP BY nombre, ponderacion, ordenDeVisualizacion;";
 
             //llamamos al metodo "iniciar conexion"
             conexionExitosa = iniciarConexion();
@@ -1149,11 +1149,12 @@ namespace Gestores
                 int ponderacion = Int32.Parse(reader["ponderacion"].ToString());
                 int ordenVisualizacion = Int32.Parse(reader["ordenDeVisualizacion"].ToString());
 
-                OpcionesEvaluadas preguntaEv = gestionEvaluacion.instanciarOpcionEv(nomOpcion, ponderacion);
+                OpcionesEvaluadas preguntaEv = gestionEvaluacion.instanciarOpcionEv(nomOpcion, ponderacion, ordenVisualizacion);
                 listaDeOpciones.Add(preguntaEv);
             }
-            terminarConexion();
 
+            terminarConexion();
+            
             return listaDeOpciones;
         }
 
@@ -1209,6 +1210,8 @@ namespace Gestores
         public Bloque retornarBloque(Cuestionario cuestAsociado, int nroBloque)
         {
             GestorCuestionario gestorCuestionario = new GestorCuestionario();
+            GestorEvaluacion gestorEvaluacion = new GestorEvaluacion();
+
             bool conexionExitosa;
             List<PreguntaEvaluada> ListapregAsociadas = new List<PreguntaEvaluada>();
 
@@ -1223,7 +1226,6 @@ namespace Gestores
                     return null;
                 }
             }
-
 
             string consultaSql = "SELECT codigo " //Recupero el codigo de las preguntas evaluadas
                 + "FROM item_bloque it_Bloq " //Desde la tabla de ITEM_BLOQUE de la base de datos
@@ -1258,16 +1260,58 @@ namespace Gestores
             {
                 string codigo = reader["codigo"].ToString();
 
-                ListapregAsociadas.Add(this.retornarPreguntaDeLaRelacion(cuestAsociado.PuestoEvaluado, codigo));
+                ListapregAsociadas.Add(gestorEvaluacion.retornarPreguntaDeLaRelacion(cuestAsociado.PuestoEvaluado, codigo));
             }
 
+            terminarConexion();
+
+            bool esUltimoBloque = esUltimimoBloque(cuestAsociado, nroBloque);
+            MessageBox.Show("EN BLOQUE -> es ultimo? "+ esUltimoBloque);
             Bloque bloque_R = gestorCuestionario.instanciarBloque(nroBloque, cuestAsociado);
+            bloque_R.EsUltimoNloque = esUltimoBloque;
             bloque_R.ListaPreguntasEv = ListapregAsociadas;
 
             terminarConexion();
 
             return bloque_R;
         }
+
+        private bool esUltimimoBloque(Cuestionario cuestAsociado, int nroBloque)
+        {
+            bool esUltimoBloque_ = false;//POR DEFECTO ES FALSO
+            bool conexionExitosa;
+
+            conexionExitosa = iniciarConexion();
+
+            if (!conexionExitosa)
+                return false; //Error de conexion
+
+            string consultaSql = "SELECT bloq.esUltimoBloque "
+                + "FROM bloque bloq "
+                + "JOIN cuestionario cuest on (bloq.Cuestionario_idCuestrionario = cuest.idCuestionario) "
+                + "WHERE cuest.clave = '" + cuestAsociado.Clave + "' AND bloq.nroBloque = " + nroBloque + ";";
+
+            MySql.Data.MySqlClient.MySqlCommand comando;
+            comando = ObjConexion.CreateCommand();
+            comando.CommandText = consultaSql;
+
+            MySqlDataReader reader = comando.ExecuteReader();
+
+            if (!reader.HasRows)
+            {//si el reader esta vacio, no se encontro el parametro buscado
+                MessageBox.Show("algo salio mal en el bloque ... ");
+                return false;
+            }
+
+            while (reader.Read())
+            {
+                if (reader["esUltimoBloque"].ToString() != "")
+                    esUltimoBloque_ = Boolean.Parse(reader["esUltimoBloque"].ToString());
+            }
+
+            return esUltimoBloque_;
+        }
+
         /*
          * =======================================
          * METODOS DE RECONSTRUCCION DE RELACIONES
@@ -1287,32 +1331,6 @@ namespace Gestores
             }
             
             return seRealizoConExito;
-        }
-
-        private PreguntaEvaluada retornarPreguntaDeLaRelacion(PuestoEvaluado puestoAsociado, string codigo)
-        {
-            int i = 0;
-            PreguntaEvaluada preguntaEncontrada = null;
-            while (i < puestoAsociado.Caracteristicas.Count)
-            {
-                int j = 0;
-                CompetenciaEvaluada competenciaAsociada = (CompetenciaEvaluada)puestoAsociado.Caracteristicas[i].dato1;
-                while (j < competenciaAsociada.ListaFactores.Count)
-                {
-                    int w = 0;
-                    List<PreguntaEvaluada> listaPreguntas = competenciaAsociada.ListaFactores[j].ListaPreguntasEv;
-                    while (w < listaPreguntas.Count)
-                    {
-                        if ((listaPreguntas[w].Codigo == codigo) == true)
-                            return preguntaEncontrada = listaPreguntas[w];
-                        w++;
-                    }
-                    j++;
-                }
-                i++;
-
-            }
-            return preguntaEncontrada;
         }
 
         /*
@@ -1408,7 +1426,7 @@ namespace Gestores
 
         public void guardarRespuesta(Respuestas respuesta) { }
         public void guardarEstado(Estado estado) { }
-        public void guardarBloque(Bloque nuevoBloque) { }
+        public bool guardarBloque(Bloque nuevoBloque) { return true; }
 
         /*
          * ====================================

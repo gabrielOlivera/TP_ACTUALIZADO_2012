@@ -9,6 +9,7 @@ namespace Entidades
     {
         private string nombre;
         private int valor;
+        private int ordenDeVisualizacion;
 
         public string Nombre
         {
@@ -22,6 +23,20 @@ namespace Entidades
             get { return valor; }
             set { valor = value; }
 
+        }
+
+        public int OrdenDeVisualizacion
+        {
+            get { return ordenDeVisualizacion; }
+            set { ordenDeVisualizacion = value; }
+
+        }
+
+        public Opciones(string nom, int ponderacion, int ordenVisualizacion)
+        {
+            nombre = nom;
+            valor = ponderacion;
+            ordenDeVisualizacion = ordenVisualizacion;
         }
     }
 }

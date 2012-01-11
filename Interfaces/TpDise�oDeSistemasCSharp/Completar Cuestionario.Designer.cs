@@ -36,12 +36,8 @@
             this.PanelSuperior = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.CerrarSesion = new System.Windows.Forms.LinkLabel();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.Siguiente = new System.Windows.Forms.Button();
+            this.panel_pregunta = new System.Windows.Forms.Panel();
             this.PanelInferior.SuspendLayout();
             this.PanelSuperior.SuspendLayout();
             this.SuspendLayout();
@@ -52,7 +48,7 @@
             this.TituloEmpresa.AutoSize = true;
             this.TituloEmpresa.Font = new System.Drawing.Font("Viner Hand ITC", 15.75F, System.Drawing.FontStyle.Bold);
             this.TituloEmpresa.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.TituloEmpresa.Location = new System.Drawing.Point(308, 18);
+            this.TituloEmpresa.Location = new System.Drawing.Point(317, 18);
             this.TituloEmpresa.Name = "TituloEmpresa";
             this.TituloEmpresa.Size = new System.Drawing.Size(157, 34);
             this.TituloEmpresa.TabIndex = 0;
@@ -60,7 +56,7 @@
             // 
             // panel2
             // 
-            this.panel2.Location = new System.Drawing.Point(0, 648);
+            this.panel2.Location = new System.Drawing.Point(0, 546);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(28, 37);
             this.panel2.TabIndex = 12;
@@ -70,9 +66,9 @@
             this.PanelInferior.BackColor = System.Drawing.Color.Gainsboro;
             this.PanelInferior.Controls.Add(this.Fecha);
             this.PanelInferior.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.PanelInferior.Location = new System.Drawing.Point(0, 691);
+            this.PanelInferior.Location = new System.Drawing.Point(0, 586);
             this.PanelInferior.Name = "PanelInferior";
-            this.PanelInferior.Size = new System.Drawing.Size(799, 58);
+            this.PanelInferior.Size = new System.Drawing.Size(817, 58);
             this.PanelInferior.TabIndex = 9;
             // 
             // Fecha
@@ -83,7 +79,7 @@
             this.Fecha.DisabledLinkColor = System.Drawing.Color.Black;
             this.Fecha.Enabled = false;
             this.Fecha.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.Fecha.Location = new System.Drawing.Point(637, 24);
+            this.Fecha.Location = new System.Drawing.Point(655, 24);
             this.Fecha.Name = "Fecha";
             this.Fecha.Size = new System.Drawing.Size(151, 13);
             this.Fecha.TabIndex = 0;
@@ -108,13 +104,14 @@
             this.PanelSuperior.Enabled = false;
             this.PanelSuperior.Location = new System.Drawing.Point(0, 0);
             this.PanelSuperior.Name = "PanelSuperior";
-            this.PanelSuperior.Size = new System.Drawing.Size(799, 62);
+            this.PanelSuperior.Size = new System.Drawing.Size(817, 62);
             this.PanelSuperior.TabIndex = 10;
             // 
             // label1
             // 
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(613, 39);
+            this.label1.Location = new System.Drawing.Point(655, 39);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(55, 13);
             this.label1.TabIndex = 15;
@@ -124,79 +121,41 @@
             // 
             this.CerrarSesion.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.CerrarSesion.AutoSize = true;
-            this.CerrarSesion.Location = new System.Drawing.Point(718, 39);
+            this.CerrarSesion.Location = new System.Drawing.Point(736, 39);
             this.CerrarSesion.Name = "CerrarSesion";
             this.CerrarSesion.Size = new System.Drawing.Size(70, 13);
             this.CerrarSesion.TabIndex = 14;
             this.CerrarSesion.TabStop = true;
             this.CerrarSesion.Text = "Cerrar Sesión";
             // 
-            // groupBox1
-            // 
-            this.groupBox1.Location = new System.Drawing.Point(104, 90);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(512, 92);
-            this.groupBox1.TabIndex = 13;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "groupBox1";
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Location = new System.Drawing.Point(104, 195);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(512, 89);
-            this.groupBox2.TabIndex = 14;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "groupBox2";
-            // 
-            // groupBox3
-            // 
-            this.groupBox3.Location = new System.Drawing.Point(104, 290);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(512, 100);
-            this.groupBox3.TabIndex = 15;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "groupBox3";
-            // 
-            // groupBox4
-            // 
-            this.groupBox4.Location = new System.Drawing.Point(104, 396);
-            this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(512, 100);
-            this.groupBox4.TabIndex = 16;
-            this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "groupBox4";
-            // 
-            // groupBox5
-            // 
-            this.groupBox5.Location = new System.Drawing.Point(104, 503);
-            this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(512, 91);
-            this.groupBox5.TabIndex = 17;
-            this.groupBox5.TabStop = false;
-            this.groupBox5.Text = "groupBox5";
-            // 
             // Siguiente
             // 
-            this.Siguiente.Location = new System.Drawing.Point(325, 601);
+            this.Siguiente.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.Siguiente.Location = new System.Drawing.Point(711, 545);
             this.Siguiente.Name = "Siguiente";
             this.Siguiente.Size = new System.Drawing.Size(75, 23);
             this.Siguiente.TabIndex = 18;
             this.Siguiente.Text = "Siguiente >>";
             this.Siguiente.UseVisualStyleBackColor = true;
+            this.Siguiente.Click += new System.EventHandler(this.Siguiente_Click);
+            // 
+            // panel_pregunta
+            // 
+            this.panel_pregunta.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
+            this.panel_pregunta.AutoScroll = true;
+            this.panel_pregunta.Location = new System.Drawing.Point(15, 90);
+            this.panel_pregunta.Name = "panel_pregunta";
+            this.panel_pregunta.Size = new System.Drawing.Size(790, 449);
+            this.panel_pregunta.TabIndex = 19;
             // 
             // Completar_Cuestionario
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(799, 749);
+            this.ClientSize = new System.Drawing.Size(817, 644);
+            this.Controls.Add(this.panel_pregunta);
             this.Controls.Add(this.Siguiente);
-            this.Controls.Add(this.groupBox5);
-            this.Controls.Add(this.groupBox4);
-            this.Controls.Add(this.groupBox3);
-            this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.PanelInferior);
             this.Controls.Add(this.panel1);
@@ -220,12 +179,8 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel PanelSuperior;
         private System.Windows.Forms.LinkLabel CerrarSesion;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.GroupBox groupBox4;
-        private System.Windows.Forms.GroupBox groupBox5;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button Siguiente;
+        private System.Windows.Forms.Panel panel_pregunta;
     }
 }

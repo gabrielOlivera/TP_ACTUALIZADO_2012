@@ -21,6 +21,10 @@ namespace TpDiseñoCSharp
         public LoginCandidato()
         {
             InitializeComponent();
+            this.Fecha.Text = DateTime.Now.DayOfWeek.ToString() + " " 
+                +DateTime.Now.Day.ToString() + " de "
+                +DateTime.Now.Month.ToString() + " del "
+                +DateTime.Now.Year.ToString();
         }
 
         private void Entrar_Click(object sender, EventArgs e)
@@ -45,13 +49,13 @@ namespace TpDiseñoCSharp
                                 {
                                     if ((evento_[0] is Bloque) == true)//Si se retorno el bloque -> recuperamos el cuestionario
                                     {
-                                        Completar_Cuestionario cuest_bloques = new Completar_Cuestionario();
-                                        cuest_bloques.Bloque_a_mostrar = (Bloque)evento_[0];
+                                        Completar_Cuestionario cuest_bloques = new Completar_Cuestionario((Bloque)evento_[0]);
                                         cuest_bloques.Show();
                                     }
                                     else if (Equals(evento_[0], "instrucciones") == true)//Si retorno intrucciones -> inicializar el cuestionario
                                     {
                                         Cuestionario_Instrucciones cuestInstruc = new Cuestionario_Instrucciones();
+                                        cuestInstruc.Cuestionario_A_mostrar = (Cuestionario)esValido;
                                         cuestInstruc.ShowDialog();
                                     }
                                     else if (((evento_[0] is Bloque) == false) && (Equals(evento_[0], "instrucciones") == false))//Ninguna de las anteriores -> se finalizo el cuestionario
@@ -94,9 +98,8 @@ namespace TpDiseñoCSharp
                                 {
                                     if ((evento_[0] is Bloque) == true)//Si se retorno el bloque -> recuperamos el cuestionario
                                     {
-                                        Completar_Cuestionario cuest_bloques = new Completar_Cuestionario();
-                                        cuest_bloques.Bloque_a_mostrar = (Bloque)evento_[0];
-                                        cuest_bloques.Show();
+                                        Completar_Cuestionario cuest_bloques = new Completar_Cuestionario((Bloque)evento_[0]);
+                                        cuest_bloques.ShowDialog();
                                     }
                                     else if (Equals(evento_[0], "instrucciones") == true)//Si retorno intrucciones -> inicializar el cuestionario
                                     {
@@ -128,6 +131,11 @@ namespace TpDiseñoCSharp
         private void Cancelar_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void LoginCandidato_Load(object sender, EventArgs e)
+        {
+
         }
 
 
