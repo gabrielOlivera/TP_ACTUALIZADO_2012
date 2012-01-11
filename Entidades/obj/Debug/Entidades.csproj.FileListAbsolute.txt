@@ -28,3 +28,8 @@ D:\jose\TP 2012 repositorio\Entidades\bin\Debug\Entidades.pdb
 D:\jose\TP 2012 repositorio\Entidades\obj\Debug\ResolveAssemblyReference.cache
 D:\jose\TP 2012 repositorio\Entidades\obj\Debug\Entidades.dll
 D:\jose\TP 2012 repositorio\Entidades\obj\Debug\Entidades.pdb
+D:\UTN\Diseño de Sistemas\TP 2012 repositorio\Entidades\bin\Debug\Entidades.dll
+D:\UTN\Diseño de Sistemas\TP 2012 repositorio\Entidades\bin\Debug\Entidades.pdb
+D:\UTN\Diseño de Sistemas\TP 2012 repositorio\Entidades\obj\Debug\ResolveAssemblyReference.cache
+D:\UTN\Diseño de Sistemas\TP 2012 repositorio\Entidades\obj\Debug\Entidades.dll
+D:\UTN\Diseño de Sistemas\TP 2012 repositorio\Entidades\obj\Debug\Entidades.pdb
