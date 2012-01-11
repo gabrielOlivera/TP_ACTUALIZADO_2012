@@ -124,8 +124,6 @@ namespace TpDiseñoCSharp
 
         private void Siguiente_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("A VER QUE SALE!!!");
-
             if (this.Siguiente.Text != "Finalizar")
             {
                 GestorCuestionario gestorCuestionario = new GestorCuestionario();
