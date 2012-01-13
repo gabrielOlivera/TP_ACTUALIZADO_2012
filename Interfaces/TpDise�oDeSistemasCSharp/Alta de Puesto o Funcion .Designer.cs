@@ -34,7 +34,7 @@
             this.Fecha = new System.Windows.Forms.LinkLabel();
             this.SeleccionDeAcceso = new System.Windows.Forms.GroupBox();
             this.errorDescripcion = new System.Windows.Forms.Label();
-            this.errorCaracteristicasDelPuesto = new System.Windows.Forms.Label();
+            this.errorpanelCaracteristicas = new System.Windows.Forms.Label();
             this.errorEmpresa = new System.Windows.Forms.Label();
             this.errorNombreDePuesto = new System.Windows.Forms.Label();
             this.errorCodigo = new System.Windows.Forms.Label();
@@ -113,7 +113,7 @@
             // 
             this.SeleccionDeAcceso.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.SeleccionDeAcceso.Controls.Add(this.errorDescripcion);
-            this.SeleccionDeAcceso.Controls.Add(this.errorCaracteristicasDelPuesto);
+            this.SeleccionDeAcceso.Controls.Add(this.errorpanelCaracteristicas);
             this.SeleccionDeAcceso.Controls.Add(this.errorEmpresa);
             this.SeleccionDeAcceso.Controls.Add(this.errorNombreDePuesto);
             this.SeleccionDeAcceso.Controls.Add(this.errorCodigo);
@@ -150,16 +150,16 @@
             this.errorDescripcion.Text = "label6";
             this.errorDescripcion.Visible = false;
             // 
-            // errorCaracteristicasDelPuesto
+            // errorpanelCaracteristicas
             // 
-            this.errorCaracteristicasDelPuesto.AutoSize = true;
-            this.errorCaracteristicasDelPuesto.ForeColor = System.Drawing.Color.Red;
-            this.errorCaracteristicasDelPuesto.Location = new System.Drawing.Point(6, 478);
-            this.errorCaracteristicasDelPuesto.Name = "errorCaracteristicasDelPuesto";
-            this.errorCaracteristicasDelPuesto.Size = new System.Drawing.Size(79, 13);
-            this.errorCaracteristicasDelPuesto.TabIndex = 18;
-            this.errorCaracteristicasDelPuesto.Text = "errorComboBox";
-            this.errorCaracteristicasDelPuesto.Visible = false;
+            this.errorpanelCaracteristicas.AutoSize = true;
+            this.errorpanelCaracteristicas.ForeColor = System.Drawing.Color.Red;
+            this.errorpanelCaracteristicas.Location = new System.Drawing.Point(6, 478);
+            this.errorpanelCaracteristicas.Name = "errorpanelCaracteristicas";
+            this.errorpanelCaracteristicas.Size = new System.Drawing.Size(41, 13);
+            this.errorpanelCaracteristicas.TabIndex = 18;
+            this.errorpanelCaracteristicas.Text = "label10";
+            this.errorpanelCaracteristicas.Visible = false;
             // 
             // errorEmpresa
             // 
@@ -198,7 +198,7 @@
             // 
             this.labelPond.AutoSize = true;
             this.labelPond.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.labelPond.Location = new System.Drawing.Point(313, 371);
+            this.labelPond.Location = new System.Drawing.Point(340, 371);
             this.labelPond.Name = "labelPond";
             this.labelPond.Size = new System.Drawing.Size(67, 13);
             this.labelPond.TabIndex = 13;
@@ -208,7 +208,7 @@
             // 
             this.labelComp.AutoSize = true;
             this.labelComp.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.labelComp.Location = new System.Drawing.Point(47, 371);
+            this.labelComp.Location = new System.Drawing.Point(97, 371);
             this.labelComp.Name = "labelComp";
             this.labelComp.Size = new System.Drawing.Size(69, 13);
             this.labelComp.TabIndex = 12;
@@ -462,7 +462,7 @@
         private System.Windows.Forms.Label errorEmpresa;
         private System.Windows.Forms.Label errorNombreDePuesto;
         private System.Windows.Forms.Label errorCodigo;
-        private System.Windows.Forms.Label errorCaracteristicasDelPuesto;
+        private System.Windows.Forms.Label errorpanelCaracteristicas;
         private System.Windows.Forms.Label errorDescripcion;
     }
 }

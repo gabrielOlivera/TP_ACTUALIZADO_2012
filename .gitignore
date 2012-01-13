@@ -4,3 +4,4 @@
 *.dll
 *.suo
 *.tlog
+*.csproj.FileListAbsolute.txt

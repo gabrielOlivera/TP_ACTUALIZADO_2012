@@ -20,9 +20,10 @@ namespace TpDiseñoCSharp
         de puesto usada para llevar la cuenta de cuantos text boxs se agregaron y quitaron*/
 
         /*Estructura usada para crear las caracteristicas de los puestos*/
-     
+
         /*Lista de caracteristicas de los puestos*/
         List<Caracteristica> CaractPuesto = new List<Caracteristica>();
+        List<CheckBox> listaDeCheckBox = new List<CheckBox>();
 
         GestorCompetencias gestorCompetencias = new GestorCompetencias();
 
@@ -32,8 +33,8 @@ namespace TpDiseñoCSharp
 
         ArrayList listaDePonderaciones = new ArrayList();
 
-        
-        int mayor=0;
+
+        int mayor = 0;
         /*
          * ===================================================
          * INICIALIZA LA PANTALLA DE ALTA DE PUESTO O FUNCION
@@ -60,10 +61,15 @@ namespace TpDiseñoCSharp
         {
             Caracteristica Elemento;
 
-            //Crea los nuevos text boxs
+
+            //Crea los CheckBox
+            CheckBox check = new CheckBox();
+
+
+            //Crea los nuevos ComboBox
             ComboBox Comp = new ComboBox();
             ComboBox Pond = new ComboBox();
-           
+
             for (int j = 0; j <= 10; j++)
             {
                 Pond.Items.Add(j);
@@ -74,7 +80,7 @@ namespace TpDiseñoCSharp
 
                 Comp.Items.Add(listaDeCompetencias[k]);
 
-          
+
                 if (mayor < listaDeCompetencias[k].Nombre.Length)
                 {
                     mayor = listaDeCompetencias[k].Nombre.Length;
@@ -83,7 +89,7 @@ namespace TpDiseñoCSharp
             }
             Comp.Width = (mayor) * 8;
 
-            
+            check.Text = "";
             //Inicializa cada miembro de elemento con el text box correspondiente
             Elemento.dato1 = Comp;
             Elemento.dato2 = Pond;
@@ -91,20 +97,19 @@ namespace TpDiseñoCSharp
 
             //Agrega elemente a la "lista CaracPuesto"
             CaractPuesto.Add(Elemento);
-
+            listaDeCheckBox.Add(check);
 
             //Inicializa las propiedades de los text boxes para ser mostrados de manera alineada
-            Comp.Location = new Point(labelComp.Height, (i * 30));
-            Pond.Location = new Point(Comp.Width + 50, Comp.Top);
+            Comp.Location = new Point((labelComp.Location.X) - (labelComp.Size.Width / 2), (i * 30));
+            Pond.Location = new Point((labelPond.Location.X) - (labelPond.Size.Width / 2), Comp.Top);
+            check.Location = new Point((labelComp.Location.X) - (labelComp.Size.Width), Comp.Top);
             Comp.DropDownStyle = ComboBoxStyle.DropDownList;
             Pond.DropDownStyle = ComboBoxStyle.DropDownList;
 
             //Agrega los text boxes al panel que se encuentra en "Alta de Puesto o Funcion"
             panelCaracteristicas.Controls.Add((ComboBox)Elemento.dato1);
             panelCaracteristicas.Controls.Add((ComboBox)Elemento.dato2);
-
-           /* panelCaracteristicas.Controls.Add((ComboBox)CaractPuesto[i].dato1);
-            panelCaracteristicas.Controls.Add((ComboBox)CaractPuesto[i].dato2);*/
+            panelCaracteristicas.Controls.Add(check);
         }
 
 
@@ -115,14 +120,20 @@ namespace TpDiseñoCSharp
         * PUESTO O FUNCION Y QUITARLOS DE LA LISTA "caractPuesto"
         * ===================================================================
         */
-        private void eliminarTextBox()
+        private void eliminarTextBox(ArrayList listaDeIndices_a_Eliminar)
         {
-            //Se eliminan los text box puestos en el panel de la pantalla
-            panelCaracteristicas.Controls.Remove((ComboBox)CaractPuesto[i - 1].dato1);
-            panelCaracteristicas.Controls.Remove((ComboBox)CaractPuesto[i - 1].dato2);
+            for (int n = 0; n < listaDeIndices_a_Eliminar.Count; n++)
+            {
+                int indice_a_Eliminar = (int)listaDeIndices_a_Eliminar[n];
+                //Se eliminan los text box puestos en el panel de la pantalla
+                panelCaracteristicas.Controls.Remove((ComboBox)CaractPuesto[indice_a_Eliminar].dato1);
+                panelCaracteristicas.Controls.Remove((ComboBox)CaractPuesto[indice_a_Eliminar].dato2);
+                panelCaracteristicas.Controls.Remove(listaDeCheckBox[indice_a_Eliminar]);
 
-            //Elimina la caracteristica que se agrego a puesto
-            CaractPuesto.Remove(CaractPuesto[i - 1]);
+                //Elimina la caracteristica que se agrego a puesto
+                CaractPuesto.Remove(CaractPuesto[indice_a_Eliminar]);
+                listaDeCheckBox.Remove(listaDeCheckBox[indice_a_Eliminar]);
+            }
         }
 
         //BOTON MAS
@@ -146,10 +157,21 @@ namespace TpDiseñoCSharp
         */
         private void Quitar_Click(object sender, EventArgs e)
         {
+            ArrayList aux = new ArrayList();
             if (i > 0)
             {
-                eliminarTextBox();
-                i--;
+                for (int n = 0; n < listaDeCheckBox.Count; n++)
+                {
+                    int estadoCheckBox = (int)listaDeCheckBox[n].CheckState;
+                    if (estadoCheckBox == 1)
+                    {
+                        aux.Add(n);
+                    }
+                }
+
+                aux.Reverse();
+                eliminarTextBox(aux);
+                i -= aux.Count;
             }
         }
 
@@ -185,7 +207,7 @@ namespace TpDiseñoCSharp
             errorNombreDePuesto.Visible = false;
             errorEmpresa.Visible = false;
             errorDescripcion.Visible = false;
-            errorCaracteristicasDelPuesto.Visible = false;
+            errorpanelCaracteristicas.Visible = false;
             listaDeErrores = encontrarTextBoxVacios(this);
             
             //Si se encuentran errores, se informa de ellos y se muestra debajo de cada campo que contiene el error
@@ -194,8 +216,8 @@ namespace TpDiseñoCSharp
                 //si no se agregó ninguna competencia se informa de ello
                 if (i == 0)
                 {
-                    errorCaracteristicasDelPuesto.Visible = true;
-                    errorCaracteristicasDelPuesto.Text = "Para poder dar de alta un puesto se debe "+
+                    errorpanelCaracteristicas.Visible = true;
+                    errorpanelCaracteristicas.Text = "Para poder dar de alta un puesto se debe "+
                                                          "cargar al menos una competencia " +
                                                          "con su debida ponderación";
                 }
@@ -254,8 +276,8 @@ namespace TpDiseñoCSharp
                     //Si existen competencias repetidas, se informa del error
                     if (error)
                     {
-                        errorCaracteristicasDelPuesto.Visible = true;
-                        errorCaracteristicasDelPuesto.Text = "No puede haber competencias repetidas";
+                        errorpanelCaracteristicas.Visible = true;
+                        errorpanelCaracteristicas.Text = "No puede haber competencias repetidas";
                     }
 
                     //Si no existen competencias repetidas, se pasa a crear el puesto
@@ -278,11 +300,11 @@ namespace TpDiseñoCSharp
                                 "Exito", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
                             {
                                 FuncionesVarias.limpiarBoxesFormulario(this);
-                                while (i > 0)
+                                /*while (i > 0)
                                 {
                                     eliminarTextBox();
                                     i--;
-                                }
+                                }*/
 
                             }
                             else
@@ -337,7 +359,7 @@ namespace TpDiseñoCSharp
                                 {
                                     if (controlComboBox.Text == "")
                                     {
-                                        error.Name = "errorComboBox";
+                                        error.Name = "error" + controlBox.Name;
                                         listaDeErrores.Add(error.Name);
                                     }
                                    
@@ -415,12 +437,12 @@ namespace TpDiseñoCSharp
                     errorEmpresa.Text = "El campo no puede ser vacío";
                     errorEmpresa.Visible = true;
                 }
-                if (errorCaracteristicasDelPuesto.Text == listaDeErrores[i].ToString())
+                if (errorpanelCaracteristicas.Name == listaDeErrores[i].ToString())
                 {
-                    errorCaracteristicasDelPuesto.Text = "Debe seleccionar una competencia y una ponderacion";
-                    errorCaracteristicasDelPuesto.Visible = true;
+                    errorpanelCaracteristicas.Text = "Debe seleccionar una competencia y una ponderacion en cada ComboBox";
+                    errorpanelCaracteristicas.Visible = true;
                 }
-                MessageBox.Show("El item de la lista es:" + listaDeErrores[i].ToString());
+                
 
             }
         }
