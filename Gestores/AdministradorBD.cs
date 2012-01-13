@@ -1211,21 +1211,23 @@ namespace Gestores
         {
             GestorCuestionario gestorCuestionario = new GestorCuestionario();
             GestorEvaluacion gestorEvaluacion = new GestorEvaluacion();
+            
+            if (nroBloque == 1)
+            {
+                if (cuestAsociado.PuestoEvaluado.Caracteristicas == null)
+                {
+                    //Re-armamos las relaciones del cuestionario para tener todos los objetos en memoria
+                    bool re_construido = this.reconstruirRelaciones(cuestAsociado);
+                    if (!re_construido)
+                    {
+                        MessageBox.Show("No se pudo recuperar Todos los datos requeridos");
+                        return null;
+                    }
+                }
+            }
 
             bool conexionExitosa;
             List<PreguntaEvaluada> ListapregAsociadas = new List<PreguntaEvaluada>();
-
-            if (nroBloque == 1)
-            {
-                //Re-armamos las relaciones del cuestionario para tener todos los objetos en memoria
-                bool re_construido = this.reconstruirRelaciones(cuestAsociado);
-
-                if (!re_construido)
-                {
-                    MessageBox.Show("No se pudo recuperar Todos los datos requeridos");
-                    return null;
-                }
-            }
 
             string consultaSql = "SELECT codigo " //Recupero el codigo de las preguntas evaluadas
                 + "FROM item_bloque it_Bloq " //Desde la tabla de ITEM_BLOQUE de la base de datos
@@ -1266,7 +1268,6 @@ namespace Gestores
             terminarConexion();
 
             bool esUltimoBloque = esUltimimoBloque(cuestAsociado, nroBloque);
-            MessageBox.Show("EN BLOQUE -> es ultimo? "+ esUltimoBloque);
             Bloque bloque_R = gestorCuestionario.instanciarBloque(nroBloque, cuestAsociado);
             bloque_R.EsUltimoNloque = esUltimoBloque;
             bloque_R.ListaPreguntasEv = ListapregAsociadas;
@@ -1424,7 +1425,7 @@ namespace Gestores
             }
         }
 
-        public void guardarRespuesta(Respuestas respuesta) { }
+        public bool guardarRespuesta(Respuestas respuesta) { return true; }
         public void guardarEstado(Estado estado) { }
         public bool guardarBloque(Bloque nuevoBloque) { return true; }
 

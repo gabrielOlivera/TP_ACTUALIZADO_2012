@@ -24,10 +24,10 @@ namespace Entidades
 
         }
 
-        public Respuestas(Cuestionario cuestAsociado)
+        public Respuestas(Cuestionario cuestAsociado, List<Caracteristica> listasRespuestas)
         {
             cuestionarioAsociado = cuestAsociado;
-            preguntasMasOpciones = new List<Caracteristica>();
+            preguntasMasOpciones = listasRespuestas;
         }
 
         public void addRespueta(PreguntaEvaluada pregContestada, OpcionesEvaluadas opcionElegida)

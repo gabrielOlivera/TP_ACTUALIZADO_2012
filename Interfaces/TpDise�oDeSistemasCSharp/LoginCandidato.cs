@@ -49,7 +49,7 @@ namespace TpDiseñoCSharp
                                 {
                                     if ((evento_[0] is Bloque) == true)//Si se retorno el bloque -> recuperamos el cuestionario
                                     {
-                                        Completar_Cuestionario cuest_bloques = new Completar_Cuestionario((Bloque)evento_[0]);
+                                        Completar_Cuestionario cuest_bloques = new Completar_Cuestionario((Bloque)evento_[0], this);
                                         cuest_bloques.Show();
                                     }
                                     else if (Equals(evento_[0], "instrucciones") == true)//Si retorno intrucciones -> inicializar el cuestionario
@@ -98,12 +98,13 @@ namespace TpDiseñoCSharp
                                 {
                                     if ((evento_[0] is Bloque) == true)//Si se retorno el bloque -> recuperamos el cuestionario
                                     {
-                                        Completar_Cuestionario cuest_bloques = new Completar_Cuestionario((Bloque)evento_[0]);
-                                        cuest_bloques.ShowDialog();
+                                        Completar_Cuestionario cuest_bloques = new Completar_Cuestionario((Bloque)evento_[0], this);
+                                        cuest_bloques.Show();
                                     }
                                     else if (Equals(evento_[0], "instrucciones") == true)//Si retorno intrucciones -> inicializar el cuestionario
                                     {
                                         Cuestionario_Instrucciones cuestInstruc = new Cuestionario_Instrucciones();
+                                        cuestInstruc.Cuestionario_A_mostrar = (Cuestionario)esValido;
                                         cuestInstruc.ShowDialog();
                                     }
                                     else if (((evento_[0] is Bloque) == false) && (Equals(evento_[0], "instrucciones") == false))//Ninguna de las anteriores -> se finalizo el cuestionario

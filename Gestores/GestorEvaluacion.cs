@@ -85,19 +85,18 @@ namespace Gestores
             List<String> factoresNoEvaluados = new List<string>();
 
             List<Caracteristica> listCaracteristicas = puesto.getCaracteristicas();
-            for (int i = 0; i <= listCaracteristicas.LongCount(); i++)
+            for (int i = 0; i < listCaracteristicas.Count; i++)
             {
                 CompetenciaEvaluada compEv = (CompetenciaEvaluada)listCaracteristicas[i].dato1;
                 List<FactorEvaluado> factores = compEv.ListaFactores;
-                for (int j = 0; j <= factores.LongCount(); j++)
+                for (int j = 0; j < factores.Count; j++)
                 {
                     int apto = factores[j].ListaPreguntasEv.Count;//retorna la cantidad de preguntas en el factor
                     switch (apto >= 5)
                     {
                         case true:
-                            List<PreguntaEvaluada> listPreguntas = factores[j].ListaPreguntasEv;
-                            ordenarLista(listPreguntas);
-                            for (int h = 0; h <= 5; h++)
+                            List<PreguntaEvaluada> listPreguntas = ordenarLista(factores[j].ListaPreguntasEv);
+                            for (int h = 0; h < 5; h++)
                             {
                                 listaRetorno.Add(listPreguntas[h]);
                             }
@@ -121,9 +120,61 @@ namespace Gestores
             return listaRetorno;
         }
 
-        public void ordenarLista(List<PreguntaEvaluada> listaPreg)
+        public List<PreguntaEvaluada> ordenarLista(List<PreguntaEvaluada> listaPreg)
         {
-            listaPreg.Sort();//deberia tomar algun criterio para reordenar la lista de preguntas
+            int selector, i = 0;
+            List<int> historial_Selectores = new List<int>();
+            Random selectorRamdom = new Random();
+            List<PreguntaEvaluada> listaAuxiliar = new List<PreguntaEvaluada>();
+
+            MessageBox.Show("Antes de pasar " + listaAuxiliar.Count.ToString() + " TIENE Q LLEGAR A " + listaPreg.Count);
+            //deberia tomar algun criterio para reordenar la lista de preguntas
+
+            while(i < listaPreg.Count)
+            {
+                selector = selectorRamdom.Next(listaPreg.Count);
+                if (historial_Selectores.Count != 0)
+                {
+                    bool selectorFueUsado = false;
+                    int j = 0; 
+                    while (j < historial_Selectores.Count)
+                    {
+                        //MessageBox.Show("en el historial " + j.ToString() +" = "+ historial_Selectores[j].ToString() + " -- selector " + selector.ToString());
+                        if (selector != historial_Selectores[j])
+                        {
+                            selectorFueUsado = false;
+                            j++;
+                        }
+                        else
+                        {
+                            selectorFueUsado = true;
+                            j = historial_Selectores.Count;
+                        }
+                    }
+
+                    if (selectorFueUsado == false)
+                    {
+                        historial_Selectores.Add(selector);
+                        listaAuxiliar.Add(listaPreg[selector]);
+                        //MessageBox.Show("Selector = " + selector.ToString() + " -- Pregunta " + listaPreg[selector].Nombre);
+                        i++;
+                    }
+                    //else
+                       // MessageBox.Show("FUE USADO EL "+ selector.ToString());
+                }
+                else
+                {
+                    historial_Selectores.Add(selector);
+                    listaAuxiliar.Add(listaPreg[selector]);
+                    //MessageBox.Show("Selector = "+ selector.ToString() + " -- Pregunta " + listaPreg[selector].Nombre);
+                    i++;
+                }
+            }
+
+            MessageBox.Show("Despues de pasar "+ listaAuxiliar.Count.ToString());
+            MessageBox.Show("termino");
+
+            return listaAuxiliar;
         }
 
         public DateTime obtenerFechaEvaluacion(PuestoEvaluado puestoEv)

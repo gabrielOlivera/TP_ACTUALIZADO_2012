@@ -14,21 +14,28 @@ namespace TpDiseñoCSharp
     public partial class Completar_Cuestionario : Form
     {
         private Bloque bloque_A_mostrar;
+        private List<Caracteristica> opciones_A_preguntas;
 
-        public Completar_Cuestionario(Bloque bloqueAsociado)
+        public Completar_Cuestionario(Bloque bloqueAsociado, Form pantalla_Anterior)
         {
             InitializeComponent();
             this.Fecha.Text = DateTime.Now.DayOfWeek.ToString();
             this.mostrarPreguntas(bloqueAsociado);
             this.bloque_A_mostrar = bloqueAsociado;
+
+            pantalla_Anterior.Close();
         }
 
+        /*
+         * El metodo mostrarPreguntas hace la construccion en pantalla del bloque con las preguntas que se deberan responder
+         */
         public void mostrarPreguntas(Bloque bloqueAsociado)
         {
             int cadena_pregunta_mas_larga = 0;
             int cadena_opcion_mas_larga = 0;
             int tamanio_especioPregunta_anterior = 0;
-            List<Caracteristica> listaChecks = new List<Caracteristica>();
+            CheckBox checks_mas_opciones = new CheckBox();
+            this.opciones_A_preguntas = new List<Caracteristica>();
             
             for (int k = 0; k < bloqueAsociado.ListaPreguntasEv.Count; k++)
             {
@@ -60,18 +67,24 @@ namespace TpDiseñoCSharp
                 int ordenVisualizacionOpcion = 1;
                 for (int j = 0; j < pregunta_A_mostrar.ListaOpcionesEv.Count; j++)
                 {
-                    Label opcion = new Label();
+                    string opcion = "";
                     for (int indice = 0; indice < pregunta_A_mostrar.ListaOpcionesEv.Count; indice++)
                     {
                         if (ordenVisualizacionOpcion == pregunta_A_mostrar.ListaOpcionesEv[indice].OrdenDeVisualizacion)
                         {
                             ordenVisualizacionOpcion = pregunta_A_mostrar.ListaOpcionesEv[indice].OrdenDeVisualizacion;
 
-                            opcion.Text = pregunta_A_mostrar.ListaOpcionesEv[indice].Nombre;
+                            opcion = pregunta_A_mostrar.ListaOpcionesEv[indice].Nombre;
                         }
                     }
+                    
+                    checks_mas_opciones = this.ubicarOpcion(espacioPregunta, opcion, ordenVisualizacionOpcion, cadena_opcion_mas_larga + 5);
+                    //Agrego el elemento a la lista de opciones_ para luego evaluar las respuestas
+                    Caracteristica elementos = new Caracteristica();
+                    elementos.dato1 = pregunta_A_mostrar;
+                    elementos.dato2 = checks_mas_opciones;
+                    this.opciones_A_preguntas.Add(elementos);
 
-                    this.ubicarOpcion(espacioPregunta, opcion, ordenVisualizacionOpcion, cadena_opcion_mas_larga + 5);
                     ordenVisualizacionOpcion++;
                 }
 
@@ -81,13 +94,16 @@ namespace TpDiseñoCSharp
             }
         }
 
-        private void ubicarOpcion(GroupBox espacioPreguntas, Label opcion, int ordenVisualizacion, int distanciaMaxima)
+        /*
+         * Metodo ubicarOpcion: es complemetentario al mostrarPreguntas, su finalidad es ubicar en la pantalla los groupBox
+         * que agruparan las opciones de respuestas posibles para una pregunta, añadiendoles un checkBox para señalar la respuesta
+         * seleccionada por el usuario o candidato
+         */
+        private CheckBox ubicarOpcion(GroupBox espacioPreguntas, string opcion, int ordenVisualizacion, int distanciaMaxima)
         {
-
-            Caracteristica elementos;
             CheckBox checkPregunta = new CheckBox();
 
-            if (opcion.Text != "")
+            if (opcion != "")
             {
                 int selecionDeParidad = (ordenVisualizacion % 2);
 
@@ -96,52 +112,111 @@ namespace TpDiseñoCSharp
                     case true://Ubicacion mas a la derecha
                         {
                             ordenVisualizacion--;
-                            opcion.Location = new Point((espacioPreguntas.Height + distanciaMaxima) + 200, (ordenVisualizacion * 20) + 5);
+                            checkPregunta.Text = opcion;
                             checkPregunta.Location = new Point((espacioPreguntas.Height + distanciaMaxima) + 180, (ordenVisualizacion * 20));
 
-                            elementos.dato1 = opcion;
-                            elementos.dato2 = checkPregunta;
-
-                            espacioPreguntas.Controls.Add((Label)elementos.dato1);
-                            espacioPreguntas.Controls.Add((CheckBox)elementos.dato2);
+                            espacioPreguntas.Controls.Add(checkPregunta);
                         }
                         break;
                     case false://Ubicacion mas a la izquierda
                         {
-                            opcion.Location = new Point(espacioPreguntas.Height + 20, (ordenVisualizacion * 20) + 5);
+                            checkPregunta.Text = opcion;
                             checkPregunta.Location = new Point(espacioPreguntas.Height, (ordenVisualizacion * 20));
 
-                            elementos.dato1 = opcion;
-                            elementos.dato2 = checkPregunta;
-
-                            espacioPreguntas.Controls.Add((Label)elementos.dato1);
-                            espacioPreguntas.Controls.Add((CheckBox)elementos.dato2);
+                            espacioPreguntas.Controls.Add(checkPregunta);
                         }
                         break;
                 }
             }
+            return checkPregunta;
         }
 
+        /* 
+         * Secuencia del caso de uso a seguir luego de presionar el boton "Siguiente" (o finalizar de ser el caso)
+         */
         private void Siguiente_Click(object sender, EventArgs e)
         {
+            AdministradorBD admiBD = new AdministradorBD();
+            GestorCuestionario gestorCuestionario = new GestorCuestionario();
+            
+            int bloque_completo = 0;
+            List<Caracteristica> respuestaUsuario = new List<Caracteristica>();
+            string nombre_opcion;
+
             if (this.Siguiente.Text != "Finalizar")
             {
-                GestorCuestionario gestorCuestionario = new GestorCuestionario();
-                Bloque proximoBloque = gestorCuestionario.proximoBloque(this.bloque_A_mostrar);
-                MessageBox.Show(proximoBloque.EsUltimoNloque.ToString());
-                Completar_Cuestionario siguienteBloque = new Completar_Cuestionario(proximoBloque);
+                for (int i = 0; i < this.opciones_A_preguntas.Count ; i++)
+                {
+                    CheckBox checks_Mas_opciones = (CheckBox)this.opciones_A_preguntas[i].dato2;
+                    //MessageBox.Show(checks_Mas_opciones.Checked.ToString() + " " + checks_Mas_opciones.Text + " bloque_completo al = " + bloque_completo.ToString());
+                    if (Equals(checks_Mas_opciones.Checked, true) == true)
+                    {
+                        bloque_completo++;
+                        PreguntaEvaluada pregunta = (PreguntaEvaluada)opciones_A_preguntas[i].dato1;
+                        nombre_opcion = checks_Mas_opciones.Text;
+                        int j = 0;
+                        while (j < pregunta.ListaOpcionesEv.Count)
+                        {
+                            if (nombre_opcion == pregunta.ListaOpcionesEv[j].Nombre)
+                            {
+                                Caracteristica respuestas = new Caracteristica();
+                                respuestas.dato1 = pregunta;
+                                respuestas.dato2 = pregunta.ListaOpcionesEv[j];
 
-                if (proximoBloque.EsUltimoNloque == true)
-                    siguienteBloque.Siguiente.Text = "Finalizar";
+                                respuestaUsuario.Add(respuestas);
 
-                siguienteBloque.ShowDialog();
+                                j = pregunta.ListaOpcionesEv.Count;
+                            }
+                            else
+                                j++;
+                        }
+                    }
+                }
 
+                //ESTO ME INDICA SI LA CANTIDAD DE OPCIONES SELECCIONADAS ES IGUAL A LA CANTIDAD DE PREGUNTAS DEL BLOQUE
+                if (bloque_completo != this.bloque_A_mostrar.ListaPreguntasEv.Count)
+                {
+                    MessageBox.Show("Hay preguntas que no poseen una respuesta\n\nComplete TODAS las preguntas y luego presiones 'SIGUIENTE'\n");
+                }
+                else
+                {
+                    bool resguardoRealizado = gestorCuestionario.guardarRespuestas(bloque_A_mostrar.CuestAsociado, respuestaUsuario);
+
+                    if (resguardoRealizado == true)
+                    {
+                        //UNA VEZ RESGURDADAS LAS RESPUESTAS
+                        Bloque proximoBloque = gestorCuestionario.proximoBloque(this.bloque_A_mostrar);
+                        //MessageBox.Show(proximoBloque.EsUltimoNloque.ToString());
+                        Completar_Cuestionario siguienteBloque = new Completar_Cuestionario(proximoBloque, this);
+
+                        if (proximoBloque.EsUltimoNloque == true)
+                            siguienteBloque.Siguiente.Text = "Finalizar";
+
+                        siguienteBloque.Show();
+                    }
+                    else
+                        MessageBox.Show("! OCURRIO UN ERROR AL RESGUARDAR SUS RESPUESTA\n\n\tPor favor reinicie su sesión");
+                }
             }
             else
             {
-                MessageBox.Show("TERMINO LA EVALUACION");
+                bool resguardoRealizado = gestorCuestionario.guardarRespuestas(bloque_A_mostrar.CuestAsociado, respuestaUsuario);
+
+                if (resguardoRealizado == true)
+                {
+                    gestorCuestionario.cambiarEstado("COMPLETO", bloque_A_mostrar.CuestAsociado);
+                    MessageBox.Show("TERMINO LA EVALUACION");
+                }
+                else
+                    MessageBox.Show("! OCURRIO UN ERROR AL RESGUARDAR SUS RESPUESTA\n\n\tPor favor reinicie su sesión");
+
                 this.Close();
             }
+        }
+
+        private void Cancelar_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

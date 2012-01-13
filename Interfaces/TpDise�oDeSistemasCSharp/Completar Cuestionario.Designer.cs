@@ -162,6 +162,7 @@
             this.Controls.Add(this.PanelSuperior);
             this.Name = "Completar_Cuestionario";
             this.Text = "Completar Cuestionario";
+            this.TopMost = true;
             this.PanelInferior.ResumeLayout(false);
             this.PanelInferior.PerformLayout();
             this.PanelSuperior.ResumeLayout(false);

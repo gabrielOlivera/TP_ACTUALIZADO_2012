@@ -239,7 +239,6 @@
             this.Controls.Add(this.PanelSuperior);
             this.Name = "LoginCandidato";
             this.Text = "LoginCandidato";
-            this.Load += new System.EventHandler(this.LoginCandidato_Load);
             this.PanelInferior.ResumeLayout(false);
             this.PanelInferior.PerformLayout();
             this.SeleccionDeAcceso.ResumeLayout(false);

@@ -37,6 +37,12 @@ namespace Gestores
             return nuevoEstado;
         }
 
+        public Respuestas instanciarRespuesta(Cuestionario cuestAsociado, List<Caracteristica> listaRespuestas)
+        {
+            Respuestas nuevaRespuestas = new Respuestas(cuestAsociado, listaRespuestas);
+            return nuevaRespuestas;
+        }
+
         //recupera el cuestionario activo, si lo tuviere, para el candidato pasado como parametro
         public Cuestionario cuestionarioAsociado(Candidato candidatoAsociado)
         {
@@ -53,6 +59,14 @@ namespace Gestores
                         if (nCuestionario[0].Estado.Estado_ == "ACTIVO" || nCuestionario[0].Estado.Estado_ == "EN PROCESO")
                         {//Transforma el retorno de la base de datos en un objeto del tipo cuestionario
                             nuevoCuest = nCuestionario[0];
+                            //Re-armamos las relaciones del cuestionario para tener todos los objetos en memoria
+                            bool re_construido = admBD.reconstruirRelaciones(nuevoCuest);
+
+                            if (!re_construido)
+                            {
+                                MessageBox.Show("No se pudo recuperar Todos los datos requeridos");
+                                return null;
+                            }
                         }
                         else
                             return this.instanciarCuestionario(null, "LOS TIEMPOS VENCIERON PARA REALIZAR LA EVALUACIÓN", null, 0);
@@ -280,14 +294,16 @@ namespace Gestores
             }
         }
         
-        public void guardarRespuestas(Cuestionario cuestAsociado, List<Caracteristica> respuestaUsuario)
+        public bool guardarRespuestas(Cuestionario cuestAsociado, List<Caracteristica> respuestaUsuario)
         {
-            Respuestas Respuesta = new Respuestas(cuestAsociado);
-            for (int i = 0; i < respuestaUsuario.LongCount(); i++)
-            {
-                Respuesta.addRespueta((PreguntaEvaluada)respuestaUsuario[i].dato1, (OpcionesEvaluadas)respuestaUsuario[i].dato2);
-            }
-            admBD.guardarRespuesta(Respuesta);
+            bool procesoCompleto = false;
+            Respuestas Respuesta = this.instanciarRespuesta(cuestAsociado, respuestaUsuario);
+            
+            procesoCompleto = admBD.guardarRespuesta(Respuesta);
+            if (procesoCompleto == true)
+                return true;
+            else
+                return false;
         }
         
         public Bloque proximoBloque(Bloque bloqAnterior)
@@ -359,7 +375,7 @@ namespace Gestores
             return operacionRealizadaConExito;
         }
 
-        private void cambiarEstado(string alEstado, Cuestionario cuest)
+        public void cambiarEstado(string alEstado, Cuestionario cuest)
         {
             AdministradorBD admBD = new AdministradorBD();  //intanciacion del administrador base de datos
 
@@ -370,7 +386,7 @@ namespace Gestores
 
         private void ordenarListaAleatorio(List<PreguntaEvaluada> listaPreguntas) 
         {
-            listaPreguntas.Sort();
+            //listaPreguntas.Sort();
         } //establecer una forma de ordenamiento aleatorio... MIRAR
     }
 }

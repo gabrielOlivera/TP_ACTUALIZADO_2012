@@ -38,7 +38,7 @@ namespace TpDiseñoCSharp
             Bloque bloqueA_Mostrar = gestorCuestionarios.inicializarCuestionario(this.Cuestionario_A_mostrar);
             if (bloqueA_Mostrar != null)
             {
-                Completar_Cuestionario completarCuestionario = new Completar_Cuestionario(bloqueA_Mostrar);
+                Completar_Cuestionario completarCuestionario = new Completar_Cuestionario(bloqueA_Mostrar, this);
                 completarCuestionario.ShowDialog();
             }
         }
