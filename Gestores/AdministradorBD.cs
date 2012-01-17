@@ -142,22 +142,20 @@ namespace Gestores
             //Si el reader contiene datos, se realiza la lectura de todos los ellos.
             while (reader.Read())
             {
-                string cod = reader["codigo"].ToString();
-                string nomPuesto = reader["nombreDePuesto"].ToString();
-                string emp = reader["empresa"].ToString();
-                bool eliminado = Boolean.Parse(reader["eliminado"].ToString());
-
                 Puesto objPuesto;
-                if (eliminado == false)
+                string nomPuesto;
+                string emp;
+                if (reader["eliminado"].ToString() == "")
                 {
+                    string cod = reader["codigo"].ToString();
+                    nomPuesto = reader["nombre"].ToString();
+                    emp = reader["empresa"].ToString();
                     //Llamamos al gestor de puestos para instanciar el puesto que se obtuvo de la base de datos
                     objPuesto = gestorPuestos.instanciarPuesto(cod, nomPuesto, emp);
+                    //El retorno del metodo del gestor es introducido en la lista de puestos    
+                    listaDePuestos.Add(objPuesto);
                 }
-                else
-                    objPuesto = gestorPuestos.instanciarPuesto("ELIMINADO", null, null);
-
-                //El retorno del metodo del gestor es introducido en la lista de puestos
-                listaDePuestos.Add(objPuesto);
+                    
             }
 
             terminarConexion();
