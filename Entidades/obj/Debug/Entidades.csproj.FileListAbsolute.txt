@@ -33,3 +33,8 @@ C:\Users\GRACIANA\Desktop\TP_disenio2012\Entidades\bin\Debug\Entidades.pdb
 C:\Users\GRACIANA\Desktop\TP_disenio2012\Entidades\obj\Debug\ResolveAssemblyReference.cache
 C:\Users\GRACIANA\Desktop\TP_disenio2012\Entidades\obj\Debug\Entidades.dll
 C:\Users\GRACIANA\Desktop\TP_disenio2012\Entidades\obj\Debug\Entidades.pdb
+D:\UTN\Diseño de Sistemas\TP 2012 repositorio\Entidades\bin\Debug\Entidades.dll
+D:\UTN\Diseño de Sistemas\TP 2012 repositorio\Entidades\bin\Debug\Entidades.pdb
+D:\UTN\Diseño de Sistemas\TP 2012 repositorio\Entidades\obj\Debug\ResolveAssemblyReference.cache
+D:\UTN\Diseño de Sistemas\TP 2012 repositorio\Entidades\obj\Debug\Entidades.dll
+D:\UTN\Diseño de Sistemas\TP 2012 repositorio\Entidades\obj\Debug\Entidades.pdb

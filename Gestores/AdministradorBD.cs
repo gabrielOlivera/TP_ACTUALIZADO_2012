@@ -472,7 +472,7 @@ namespace Gestores
                JOIN `tp base de datos`.`candidato` cand on (cand.`nro documento` = 32376056 AND cand.idCandidato = cuest.Candidato_idCandidato)
                JOIN `tp base de datos`.`cuestionario_estado` c_est on (cuest.idCuestionario = c_est.Cuestionario_idCuestionario);
              * 
-             * PERO SI HAY UNA FORMA MAS FACIL DE HACER ESTA CONSULTA BIENBENIDA SEA...
+             * PERO SI HAY UNA FORMA MAS FACIL DE HACER ESTA CONSULTA BIENVENIDA SEA...
              */
             //__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++__--++
             
@@ -744,6 +744,74 @@ namespace Gestores
             }
             terminarConexion();
             return objPuesto;
+        }
+
+        public List<PuestoEvaluado> recuperarPuestos_ev(string codigo)
+        {
+            bool conexionExitosa;
+            GestorEvaluacion gestorPuestos = new GestorEvaluacion();
+            List<PuestoEvaluado> listaDePuestos_ev = new List<PuestoEvaluado>(); //para el retorno de datos
+            List<Int32> lista_de_ID_Puesto_ev = new List<Int32>();
+
+            string consultaSql = "SELECT DISTINCT codigo, nombre, empresa, fecha " +
+                "FROM `puesto evaluado` pu_ev " +
+                "JOIN cuestionario cuest on (pu_ev.codigo = '" + codigo + "' AND pu_ev.`idPuesto evaluado` = cuest.`Puesto Evaluado_idPuesto Evaluado`) " +
+                "JOIN `cuestionario_estado` c_est on (cuest.idCuestionario = c_est.Cuestionario_idCuestionario) " +
+                "WHERE Estado_idEstado = 1;";
+
+            //llamamos al metodo "iniciar conexion"
+            conexionExitosa = iniciarConexion();
+
+            //Evaluamos si la conexion se realizo con exito
+            if (!conexionExitosa)
+            {
+                MessageBox.Show("No se pudo realizar la conexión con la Base de Datos");
+                terminarConexion();
+                return null;
+            }
+
+            //Creamos un adaptador llamado "comando" para realizar la consultaSql que definimos mas arriba
+            MySql.Data.MySqlClient.MySqlCommand comando;
+            comando = ObjConexion.CreateCommand();
+            //En el adaptador comando hacemos un asignacion en su atributo CommandText de la consultaSql
+            comando.CommandText = consultaSql;
+
+            //Se hace la ejecucion del comando con el metodo ExecuterReader 
+            //y se lo asigna a una variable reader que contendra los resultados de la busqueda en la base de datos
+            MySqlDataReader reader = comando.ExecuteReader();
+
+            if (!reader.HasRows)
+            {
+                //si el reader esta vacio, es que no se encontraron datos para la consulta realizada
+                MessageBox.Show("No se encontro ningún puesto");
+                terminarConexion();
+                return null;
+            }
+
+            //Si el reader contiene datos, se realiza la lectura de todos los ellos.
+            while (reader.Read())
+            {
+                PuestoEvaluado objPuestoEv;
+                
+                string cod = reader["codigo"].ToString();
+                string nomPuesto = reader["nombre"].ToString();
+                string emp = reader["empresa"].ToString();
+                DateTime fecha = DateTime.Parse( reader["fecha"].ToString() );
+                
+
+                //Llamamos al gestor de puestos para instanciar el puesto que se obtuvo de la base de datos
+                objPuestoEv = gestorPuestos.instanciarPuestoEvaluado(cod, nomPuesto, emp);
+                
+                objPuestoEv.Fecha_Comienzo = fecha;
+
+                //El retorno del metodo del gestor es introducido en la lista de puestos    
+                listaDePuestos_ev.Add(objPuestoEv);
+            }
+
+            terminarConexion();
+
+
+            return listaDePuestos_ev;
         }
 
         /*

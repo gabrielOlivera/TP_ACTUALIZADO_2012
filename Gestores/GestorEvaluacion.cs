@@ -10,7 +10,7 @@ namespace Gestores
     class GestorEvaluacion
     {
         /*
-         * La mision que justifica la existencia de los gestores es hacer de "interfaz" entre las ENTIDADES y el resto del sistema
+         * La mision que justifica la existencia de los gestores es hacer de "intermediario" entre las ENTIDADES y el resto del sistema
          * Por esto el gestor debe tener la responsabilidad de instanciar la/s que le corresponde gestionar
          */
         public PuestoEvaluado instanciarPuestoEvaluado(string codigo, string nombre, string empresa, string descripcion = null, List<Caracteristica> caracteristicas = null)
@@ -182,4 +182,6 @@ namespace Gestores
             return puestoEv.Fecha_Comienzo;
         }
     }
+
+
 }
