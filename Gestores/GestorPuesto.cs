@@ -38,8 +38,16 @@ namespace Gestores
 
             Puesto nuevoPuesto = new Puesto(codigo, nombreDePuesto, empresa, descripcion);
             inicializarCaracteristicas(nuevoPuesto, caract);
-            admBD.guardarPuesto(nuevoPuesto);
-            return true;
+
+            return admBD.guardarPuesto(nuevoPuesto);
+        }
+
+        public bool modificarPuesto(string codigo, string nombreDePuesto, string empresa, List<Caracteristica> caract, string descripcion = null)
+        {
+            Puesto nuevoPuesto = new Puesto(codigo, nombreDePuesto, empresa, descripcion);
+            inicializarCaracteristicas(nuevoPuesto, caract);
+
+            return admBD.modificarPuesto(nuevoPuesto);
         }
 
         private void inicializarCaracteristicas(Puesto puesto, List<Caracteristica> listaCaract)
@@ -51,9 +59,9 @@ namespace Gestores
             }
         }
 
-        public bool buscarPuesto(string codigo = null, string nombreDePuesto = null)
+        public Puesto buscarPuesto(string codigo = null, string nombreDePuesto = null)
         {
-            bool retornoBD = admBD.existePuesto(codigo, nombreDePuesto);
+            Puesto retornoBD = admBD.existePuesto(codigo, nombreDePuesto);
             return retornoBD;
         }
 

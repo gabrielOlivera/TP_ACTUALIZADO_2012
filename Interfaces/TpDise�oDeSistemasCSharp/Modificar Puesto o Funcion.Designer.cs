@@ -94,6 +94,7 @@
             this.Aceptar.TabIndex = 17;
             this.Aceptar.Text = "Aceptar";
             this.Aceptar.UseVisualStyleBackColor = true;
+            this.Aceptar.Click += new System.EventHandler(this.Aceptar_Click);
             // 
             // panel2
             // 
@@ -261,7 +262,7 @@
             this.panelCaracteristicas.AutoScroll = true;
             this.panelCaracteristicas.Location = new System.Drawing.Point(38, 387);
             this.panelCaracteristicas.Name = "panelCaracteristicas";
-            this.panelCaracteristicas.Size = new System.Drawing.Size(422, 88);
+            this.panelCaracteristicas.Size = new System.Drawing.Size(446, 88);
             this.panelCaracteristicas.TabIndex = 9;
             // 
             // label5
