@@ -15,9 +15,9 @@ namespace TpDiseñoCSharp
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new PantallaPrincipal());
+            //Application.Run(new PantallaPrincipal());
             //Application.Run(new Emitir_Orden_de_Mérito("niko121"));
-            //Application.Run(new Gestionar_Puestos("niko121"));
+            Application.Run(new Gestionar_Puestos("niko121"));
         }
     }
 }

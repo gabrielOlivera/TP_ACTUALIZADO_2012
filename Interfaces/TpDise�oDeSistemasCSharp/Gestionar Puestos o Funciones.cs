@@ -45,8 +45,7 @@ namespace TpDiseñoCSharp
         private void Modificar_Click(object sender, EventArgs e)
         {
             string codigo = (string)listaDePuesto.CurrentRow.Cells["Codigo"].Value;
-            MessageBox.Show(codigo);
-            Modificar_Puesto_o_Funcion modificarPuesto = new Modificar_Puesto_o_Funcion(this.Consultor.Text, this);
+            Modificar_Puesto_o_Funcion modificarPuesto = new Modificar_Puesto_o_Funcion(this.Consultor.Text, this, codigo);
             modificarPuesto.ShowDialog();
         }
 

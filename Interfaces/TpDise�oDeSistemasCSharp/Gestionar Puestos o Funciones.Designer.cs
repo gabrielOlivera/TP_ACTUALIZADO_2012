@@ -109,7 +109,7 @@
             this.SeleccionDeAcceso.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.SeleccionDeAcceso.Controls.Add(this.Nuevo);
             this.SeleccionDeAcceso.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.SeleccionDeAcceso.Location = new System.Drawing.Point(131, 87);
+            this.SeleccionDeAcceso.Location = new System.Drawing.Point(104, 90);
             this.SeleccionDeAcceso.Name = "SeleccionDeAcceso";
             this.SeleccionDeAcceso.Size = new System.Drawing.Size(430, 56);
             this.SeleccionDeAcceso.TabIndex = 9;
@@ -189,7 +189,7 @@
             this.DatosParaBusqueda.Controls.Add(this.label2);
             this.DatosParaBusqueda.Controls.Add(this.label1);
             this.DatosParaBusqueda.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.DatosParaBusqueda.Location = new System.Drawing.Point(131, 159);
+            this.DatosParaBusqueda.Location = new System.Drawing.Point(104, 152);
             this.DatosParaBusqueda.Name = "DatosParaBusqueda";
             this.DatosParaBusqueda.Size = new System.Drawing.Size(430, 206);
             this.DatosParaBusqueda.TabIndex = 10;
@@ -271,9 +271,9 @@
             this.groupBox1.Controls.Add(this.Modificar);
             this.groupBox1.Controls.Add(this.listaDePuesto);
             this.groupBox1.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.groupBox1.Location = new System.Drawing.Point(133, 382);
+            this.groupBox1.Location = new System.Drawing.Point(104, 364);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(540, 359);
+            this.groupBox1.Size = new System.Drawing.Size(540, 340);
             this.groupBox1.TabIndex = 11;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Resultados de la búsqueda";
@@ -313,7 +313,7 @@
             this.listaDePuesto.Name = "listaDePuesto";
             this.listaDePuesto.ReadOnly = true;
             this.listaDePuesto.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.listaDePuesto.Size = new System.Drawing.Size(406, 316);
+            this.listaDePuesto.Size = new System.Drawing.Size(406, 295);
             this.listaDePuesto.TabIndex = 0;
             this.listaDePuesto.Visible = false;
             // 

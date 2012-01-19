@@ -185,21 +185,26 @@ namespace Gestores
             comando.CommandText = consultaSql;
 
             MySqlDataReader reader = comando.ExecuteReader();
-
-            string cod = reader["codigo"].ToString();
-            string nomPuesto = reader["nombre"].ToString();
-            string emp = reader["empresa"].ToString();
-            bool eliminado = Boolean.Parse(reader["eliminado"].ToString());
-
             Puesto objPuesto;
-            if (eliminado == false)
+
+            if (reader.Read())
             {
-                //Llamamos al gestor de puestos para instanciar el puesto que se obtuvo de la base de datos
+                if ((reader["eliminado"].ToString()) == "")
+                {
+                string cod = reader["codigo"].ToString();
+                string nomPuesto = reader["nombre"].ToString();
+                string emp = reader["empresa"].ToString();
+
+
                 objPuesto = gestorPuestos.instanciarPuesto(cod, nomPuesto, emp);
+                }
+                 else
+                     objPuesto = gestorPuestos.instanciarPuesto("ELIMINADO", null, null);
+
+               
             }
             else
-                objPuesto = gestorPuestos.instanciarPuesto("ELIMINADO", null, null);
-
+                objPuesto = gestorPuestos.instanciarPuesto(null, null, null);
             terminarConexion();
             return objPuesto;
         }
@@ -875,11 +880,77 @@ namespace Gestores
             return listaDeCompetencias;
         }
 
+        public List<Caracteristica> recuperarCaracteristicasPuesto(string codigo)
+        {
+            bool conexionExitosa;
+            List<Caracteristica> listaDeCaracteristicas = new List<Caracteristica>();
+
+            /*string consultaSql = "SELECT DISTINCT c.nombre, p_c.ponderacion " +
+                                    "FROM puesto " +
+                                    "JOIN puesto_competencia AS p_c " +
+                                    "ON `codigo`= '" + codigo + "' =p_c.Puesto_codigo " +
+                                    "JOIN competencia AS c ON p_c.Competencia_codigo=c.codigo;";
+            */
+
+            string consultaSql = "SELECT DISTINCT c.nombre, p_c.ponderacion " +
+                                    "FROM puesto " +
+                                    "JOIN puesto_competencia AS p_c " +
+                                    "ON '"+codigo+"'=p_c.Puesto_codigo " +
+                                    "JOIN competencia AS c ON p_c.Competencia_codigo=c.codigo;";
+
+           
+            //llamamos al metodo "iniciar conexion"
+            conexionExitosa = iniciarConexion();
+
+            //Evaluamos si la conexion se realizo con exito
+            if (!conexionExitosa)
+            {
+                MessageBox.Show("Fallo la conexion con la base de datos");
+                terminarConexion();
+                return null;
+            }
+
+            MySql.Data.MySqlClient.MySqlCommand comando;
+            comando = ObjConexion.CreateCommand();
+
+            comando.CommandText = consultaSql;
+
+            MySqlDataReader reader = comando.ExecuteReader();
+
+            if (!reader.HasRows)
+            {
+                //Si el reader esta vacio, es qe no encontro a ese candidato
+                MessageBox.Show("No se encontraron competencias asociadas");
+                terminarConexion();
+                return null;
+            }
+
+            
+            
+            while (reader.Read())
+            {
+                Caracteristica caracteristica;
+                string nombre = reader["nombre"].ToString();
+                string ponderacion = reader["ponderacion"].ToString();
+
+                caracteristica.dato1 = nombre;
+                caracteristica.dato2 = ponderacion;
+
+
+                listaDeCaracteristicas.Add(caracteristica);
+                
+            }
+            terminarConexion();
+            return listaDeCaracteristicas;
+        }
+
+
+
         /*
          * - RecuperarCaracteristicasPuesto tiene la misión de recuperar todas las competencias que estan activas (no eliminadas)
          *   y ponederaciones asociades a un puesto puntual de la base de datos
          */
-        public List<Caracteristica> recuperarCaracteristicasPuesto(PuestoEvaluado puestoEvAsociado)
+        public List<Caracteristica> recuperarCaracteristicasPuestoEv(PuestoEvaluado puestoEvAsociado)
         {
             bool conexionExitosa;
             //Lista que se retornara con los datos finales de la busqueda
@@ -1392,7 +1463,7 @@ namespace Gestores
 
             if (Equals(puestoEvAsociado.Caracteristicas, null) == true)
             {
-                List<Caracteristica> caracteristicasPuesto = recuperarCaracteristicasPuesto(puestoEvAsociado);
+                List<Caracteristica> caracteristicasPuesto = recuperarCaracteristicasPuestoEv(puestoEvAsociado);
                 puestoEvAsociado.Caracteristicas = caracteristicasPuesto;
                 seRealizoConExito = true;
             }

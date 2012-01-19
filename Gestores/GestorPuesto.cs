@@ -56,5 +56,14 @@ namespace Gestores
             bool retornoBD = admBD.existePuesto(codigo, nombreDePuesto);
             return retornoBD;
         }
+
+        public Puesto recuperarUnPuesto(string codigo)
+        {
+            return admBD.recuperarPuesto(codigo);
+        }
+        public List<Caracteristica> recuperarCaracteristicas(string codigo)
+        {
+            return admBD.recuperarCaracteristicasPuesto(codigo);
+        }
     }
 }
