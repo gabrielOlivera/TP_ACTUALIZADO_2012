@@ -535,37 +535,19 @@ namespace TpDiseñoCSharp
                             listaAuxiliarCaracteristicaPuesto, Descripcion.Text))
                         {
 
-                            if (MessageBox.Show("El nombre de puesto " + NombreDePuesto.Text + " se ha creado correctamente ¿Desea cargar otro?",
-                                "Exito", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
+                            if (MessageBox.Show("La operación ha culminado con éxito",
+                                "Exito",MessageBoxButtons.OK, MessageBoxIcon.Information) == DialogResult.OK)
                             {
-                                //Si decide crear otro puesto, se pasa a limpiar el formulario y las listas usadas
-                                FuncionesVarias.limpiarBoxesFormulario(this);
-                                while (i > 0)
-                                {
-                                    eliminarComboBox();
-                                    i--;
-                                }
-
-                                CaractPuesto.Clear();
-                                listaDeCaracteristica.Clear();
-                                listaDeCompetencias.Clear();
-                                listaDeErrores.Clear();
-                                listaDeCheckBox.Clear();
-                                listaAuxiliarCaracteristicaPuesto.Clear();
-                                listaAuxiliarCompetenciaPonderacion.Clear();
-                                 
-
-                            }
-                            //Si no quiere dar de alta otro puesto, se sale de la pantalla "Alta de Puesto o Funcion"
-                            else
-                            {
+                                ventanaAnterior.Refresh();
                                 this.Close();
+
                             }
+                            
                         }
                         //Si se produjo un error en la creación del puesto se informa de ello
                         else
                         {
-                            MessageBox.Show("Error en la creacion del puesto, intente nuevamente", "ERROR",
+                            MessageBox.Show("Error en la modificación del puesto, intente nuevamente", "ERROR",
                                 MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                     }

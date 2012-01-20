@@ -73,5 +73,16 @@ namespace Gestores
         {
             return admBD.recuperarCaracteristicasPuesto(codigo);
         }
+
+        public bool tieneElPuestoEvaluacionesAsociadas(string codigo)
+        {
+            bool valor=admBD.tieneElPuestoEvaluacionesAsociadas(codigo);
+            return valor;
+        }
+        public bool eliminarPuesto(string codigo)
+        {
+            bool retornoBD = admBD.eliminarPuesto(codigo);
+            return retornoBD;
+        }
     }
 }
