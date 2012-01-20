@@ -45,18 +45,41 @@ namespace TpDiseñoCSharp
         private void Modificar_Click(object sender, EventArgs e)
         {
             string codigo = (string)listaDePuesto.CurrentRow.Cells["Codigo"].Value;
-            MessageBox.Show(codigo);
-            Modificar_Puesto_o_Funcion modificarPuesto = new Modificar_Puesto_o_Funcion(this.Consultor.Text, this);
+            Modificar_Puesto_o_Funcion modificarPuesto = new Modificar_Puesto_o_Funcion(this.Consultor.Text, this, codigo);
             modificarPuesto.ShowDialog();
         }
 
         private void Eliminar_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Los datos del puesto NOMBRE PUESTO serán eliminados del sistema", "Advertencia",
-            MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.Yes)
+            string codigo = (string)listaDePuesto.CurrentRow.Cells["Codigo"].Value;
+            string nomPuesto = (string)listaDePuesto.CurrentRow.Cells["Nombre"].Value;
+            GestorPuesto gestorPuesto = new GestorPuesto();
+            bool puestoEvaluado,eliminado;
+            puestoEvaluado = gestorPuesto.tieneElPuestoEvaluacionesAsociadas(codigo);
+            if (!puestoEvaluado)
             {
                 
+                if (MessageBox.Show("Los datos del puesto " + nomPuesto + " serán eliminados del sistema", "Advertencia",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.Yes)
+                {
+                    eliminado = gestorPuesto.eliminarPuesto(codigo);
+                    if (eliminado)
+                    {
+                        MessageBox.Show("Los datos del puesto " + nomPuesto + " han sido eliminados del sistema", "Éxito",
+                MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        BuscarPuestos_Click(sender,e);
+                    }
+                    else
+                        MessageBox.Show("No se ha podido eliminar el puesto", "Error",
+                MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                }
+                else
+                    this.Close();
             }
+            else
+                MessageBox.Show("El puesto " + nomPuesto + " está siendo usado en la base de datos y no puede eliminarse", "Advertencia",
+                MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
         }
     }
 }

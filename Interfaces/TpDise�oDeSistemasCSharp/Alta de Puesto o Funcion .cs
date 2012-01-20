@@ -16,25 +16,25 @@ namespace TpDiseñoCSharp
     public partial class Alta_De_Puesto : Form
     {
         private Gestionar_Puestos ventanaAnterior;
+
+
         public int i = 0;/*Variable global a la pantalla de Alta 
         de puesto usada para llevar la cuenta de cuantos text boxs se agregaron y quitaron*/
 
-        /*Estructura usada para crear las caracteristicas de los puestos*/
+        
 
-        /*Lista de caracteristicas de los puestos*/
+        //Listas usadas para distintas ocaciones
         List<Caracteristica> CaractPuesto = new List<Caracteristica>();
         List<CheckBox> listaDeCheckBox = new List<CheckBox>();
-
-        GestorCompetencias gestorCompetencias = new GestorCompetencias();
-
         List<Competencia> listaDeCompetencias = new List<Competencia>();
 
-        ArrayList listaNombresDeCompetencia = new ArrayList();
+        //Gestores usados
+        GestorCompetencias gestorCompetencias = new GestorCompetencias();
 
-        ArrayList listaDePonderaciones = new ArrayList();
-
-
+        //Variable que es usada para dar el tamaño al mayor combo box
         int mayor = 0;
+
+
         /*
          * ===================================================
          * INICIALIZA LA PANTALLA DE ALTA DE PUESTO O FUNCION
@@ -45,16 +45,16 @@ namespace TpDiseñoCSharp
             ventanaAnterior= gestPuesto;
             InitializeComponent();
             this.Consultor.Text = User;
+            //Se llena una lista con todas las competencias que se encuentran creadas en la BD
             listaDeCompetencias = gestorCompetencias.listarCompetencias();
-            
-            
+
         }
 
 
         /*
          * ===================================================
-         * FUNCION QUE SE ENCARGA DE CREAR Y AGREGAR LOS TEXT
-         * BOX EN LA PANTALLA ALTA DE PUESTO O FUNCION
+         * FUNCION QUE SE ENCARGA DE CREAR Y AGREGAR LOS COMBO
+         * Y CHECK BOX EN LA PANTALLA ALTA DE PUESTO O FUNCION
          * ==================================================
          */
         private void agregarComboBox(int i)
@@ -116,8 +116,8 @@ namespace TpDiseñoCSharp
 
         /*
         * ===================================================================
-        * FUNCION QUE SE ENCARGA ELIMINAR LOS TEXT BOX DE LA PANTALLA ALTA DE
-        * PUESTO O FUNCION Y QUITARLOS DE LA LISTA "caractPuesto"
+        * FUNCION QUE SE ENCARGA ELIMINAR LOS COMBO BOX QUE ESTAN TILDADOS 
+        * DE LA PANTALLA ALTA DE PUESTO O FUNCION Y QUITARLOS DE LA LISTA "CaractPuesto"
         * ===================================================================
         */
         private void eliminarTextBox(ArrayList listaDeIndices_a_Eliminar)
@@ -139,8 +139,8 @@ namespace TpDiseñoCSharp
         //BOTON MAS
         /*
         * ===================================================================
-        * SE ENCARGA DE LLAMAR A LA FUNCION "agregarTextBox"
-        * Y SUMA UNO A i PARA LLEVAR LA CUENTA DE LOS TEXT BOXES
+        * SE ENCARGA DE LLAMAR A LA FUNCION "agregarComboBox"
+        * Y SUMA UNO A i PARA LLEVAR LA CUENTA DE LOS COMBO Y CHECK BOXES
         * ===================================================================
         */
         private void Agregar_Click(object sender, EventArgs e)
@@ -149,29 +149,33 @@ namespace TpDiseñoCSharp
             i++;
         }
 
+
+        //BOTON MENOS
         /*
-        * ===================================================================
-        * SE ENCARGA DE LLAMAR A LA FUNCION "elimnarTextBox"
-        * Y RESTA UNO A i PARA LLEVAR LA CUENTA DE LOS TEXT BOXES
-        * ===================================================================
+        * ======================================================================================
+        * SE ENCARGA DE LLAMAR A LA FUNCION "elimnarTextBox" PARA QUE ELIMINE LOS
+        * COMBO BOXES QUE FUERON SELECCIONADOS MEDIANTE UN TILDE EN EL CHECK BOX CORRESPONDIENTE
+        * Y RESTA A i LA CANTIDAD DE COMBO BOXES ELIMINADOS PARA LLEVAR LA CUENTA DE LOS MISMOS
+        * ======================================================================================
         */
         private void Quitar_Click(object sender, EventArgs e)
         {
             ArrayList aux = new ArrayList();
             if (i > 0)
             {
+                //Se recorre la lista con los checkbox para ver si alguno fue tildado
                 for (int n = 0; n < listaDeCheckBox.Count; n++)
                 {
                     int estadoCheckBox = (int)listaDeCheckBox[n].CheckState;
                     if (estadoCheckBox == 1)
                     {
-                        aux.Add(n);
+                        aux.Add(n);//se guardan el indice de los checkbox tildados, para saber cual combo box eliminar
                     }
                 }
 
-                aux.Reverse();
+                aux.Reverse();//Se da vuelta la lista, y se eliminan los combo y checks desde el final de la lista
                 eliminarTextBox(aux);
-                i -= aux.Count;
+                i -= aux.Count;//Se restan a i la cantidad que fueron eliminados
             }
         }
 
@@ -180,8 +184,8 @@ namespace TpDiseñoCSharp
         /*
         * =================================================
         * CIERRA LA PANTALLA "Alta de Puesto o Funcion", CIERRA
-         * LA PANTALLA "Gestionar Puestos o Funciones"
-         * Y RETORNA AL MENU CONSULTOR
+        * LA PANTALLA "Gestionar Puestos o Funciones"
+        * Y RETORNA AL MENU CONSULTOR
         * =================================================
         */
         private void Cancelar_Click(object sender, EventArgs e)
@@ -198,18 +202,31 @@ namespace TpDiseñoCSharp
             Close();
         }
 
-
+        /*
+       * =======================================================================
+       * SE ENCARGA DE REVISAR QUE NO HAYA NINGUN ERROR EN EL FORMULARIO Y LUEGO
+       * SE CREA EL PUESTO CON LOS DATOS SUMINISTRADOS EN EL FORMULARIO
+       * =======================================================================
+       */
         private void Aceptar_Click(object sender, EventArgs e)
         {
+            //Se crea la lista y se la inicializa en null
             ArrayList listaDeErrores = new ArrayList();
             listaDeErrores = null;
+
+            //Se ocultan todos los errores
             errorCodigo.Visible = false;
             errorNombreDePuesto.Visible = false;
             errorEmpresa.Visible = false;
             errorDescripcion.Visible = false;
             errorpanelCaracteristicas.Visible = false;
+
+            //Se llama a la funcion encontrarTextBoxVacios para ver si alguno de los text box esta en blanco
             listaDeErrores = encontrarTextBoxVacios(this);
             
+            /*
+             * COMIENZO DE LAS VALIDACIONES PARA VER SI HAY ERRORES
+             */
             //Si se encuentran errores, se informa de ellos y se muestra debajo de cada campo que contiene el error
             if ((listaDeErrores.Count>0)||(i==0))
             {
@@ -228,25 +245,26 @@ namespace TpDiseñoCSharp
                     imprimirErrores(listaDeErrores);
                 }
                 System.Media.SystemSounds.Asterisk.Play();
-               
-
             }
 
-
-                
 
             //Si todos los campos se encuentran completos, verifica que el puesto y/o nombre existan
             else if((listaDeErrores.Count == 0)&&(i>0))
             {
-                bool existePuesto;
+                Puesto objPuesto;
                 GestorPuesto gestPuesto = new GestorPuesto();
-                existePuesto = gestPuesto.buscarPuesto(Codigo.Text, NombreDePuesto.Text);
+                objPuesto = gestPuesto.buscarPuesto(Codigo.Text, NombreDePuesto.Text);
                 //Si existe el código y/o nombre se informa de ello
-                if (existePuesto)
+                if (objPuesto.Codigo==Codigo.Text)
                 {
-                    errorCodigo.Text = "El código y/o nombre ya existen";
+                    errorCodigo.Text = "El código ya existe";
                     errorCodigo.Visible = true;
-                    errorNombreDePuesto.Text = "El código y/o nombre ya existen";
+                    System.Media.SystemSounds.Asterisk.Play();
+                    
+                }
+                if (objPuesto.Nombre == NombreDePuesto.Text)
+                {
+                    errorNombreDePuesto.Text = "El nombre ya existe";
                     errorNombreDePuesto.Visible = true;
                     System.Media.SystemSounds.Asterisk.Play();
                 }
@@ -257,7 +275,7 @@ namespace TpDiseñoCSharp
                     //Comienzo de verificacion de que no existan competencias repetidas
                     ArrayList listaAuxiliarCompetenciaPonderacion = new ArrayList();
                     listaAuxiliarCompetenciaPonderacion = llenarListaCompetenciaPonderacion(this);
-                   
+
                     bool error = false;
 
                     for (int j = 0; j < listaAuxiliarCompetenciaPonderacion.Count && !error; j += 2)
@@ -268,7 +286,7 @@ namespace TpDiseñoCSharp
                             {
                                 error = true;
                             }
-                           
+
                         }
 
                     }
@@ -278,64 +296,92 @@ namespace TpDiseñoCSharp
                     {
                         errorpanelCaracteristicas.Visible = true;
                         errorpanelCaracteristicas.Text = "No puede haber competencias repetidas";
+                        System.Media.SystemSounds.Asterisk.Play();
                     }
+
+                    /*
+                     * FIN DE LAS VALIDACIONES PARA VER SI HAY ERRORES
+                     */
+
 
                     //Si no existen competencias repetidas, se pasa a crear el puesto
                     else
                     {
+                        //Se crea una lista con las caracteristicas del puesto (Nombre de la competencia y su debida Ponderacion)
                         List<Caracteristica> listaAuxiliarCaracteristicaPuesto = new List<Caracteristica>();
                         Caracteristica auxiliarCompetencia = new Caracteristica();
-                        for (int n = 0; n < listaAuxiliarCompetenciaPonderacion.Count; n+=2)
+                        for (int n = 0; n < listaAuxiliarCompetenciaPonderacion.Count; n += 2)
                         {
                             auxiliarCompetencia.dato1 = listaAuxiliarCompetenciaPonderacion[n];
                             auxiliarCompetencia.dato2 = listaAuxiliarCompetenciaPonderacion[n + 1];
                             listaAuxiliarCaracteristicaPuesto.Add(auxiliarCompetencia);
                         }
+
                         //Si se pudo crear el puesto se informa de ello
-                        if (gestPuesto.altaPuesto(Codigo.Text, NombreDePuesto.Text, Empresa.Text, 
+                        if (gestPuesto.altaPuesto(Codigo.Text, NombreDePuesto.Text, Empresa.Text,
                             listaAuxiliarCaracteristicaPuesto, Descripcion.Text))
                         {
 
                             if (MessageBox.Show("El nombre de puesto " + NombreDePuesto.Text + " se ha creado correctamente ¿Desea cargar otro?",
                                 "Exito", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
                             {
+                                //Si decide crear otro puesto, se pasa a limpiar el formulario y las listas usadas
                                 FuncionesVarias.limpiarBoxesFormulario(this);
-                                /*while (i > 0)
+                                while (i > 0)
                                 {
-                                    eliminarTextBox();
+                                    eliminarComboBox();
                                     i--;
-                                }*/
-
+                                }
+                                CaractPuesto.Clear();
+                                listaDeCompetencias.Clear();
+                                listaDeErrores.Clear();
+                                listaDeCheckBox.Clear();
+                                listaAuxiliarCaracteristicaPuesto.Clear();
+                                listaAuxiliarCompetenciaPonderacion.Clear();
                             }
+                            //Si no quiere dar de alta otro puesto, se sale de la pantalla "Alta de Puesto o Funcion"
                             else
                             {
                                 this.Close();
                             }
                         }
-                        else 
-                        { 
-                            MessageBox.Show("Error en la creacion del puesto, intente nuevamente","ERROR",
-                                MessageBoxButtons.OK,MessageBoxIcon.Error); 
+                        //Si se produjo un error en la creación del puesto se informa de ello
+                        else
+                        {
+                            MessageBox.Show("Error en la creacion del puesto, intente nuevamente", "ERROR",
+                                MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                     }
                 }
             }
         }
 
-
+        /*
+        * ====================================================
+        * ESTA FUNCION ES LA ENCARGADA DE ELIMINAR LOS COMBO Y 
+        * CHECK BOXES QUE FUERON AGREGADOS EN LA PANTALLA
+        * ====================================================
+        */
+        private void eliminarComboBox()
+        {
+           
+                panelCaracteristicas.Controls.Remove((ComboBox)CaractPuesto[i-1].dato1);
+                panelCaracteristicas.Controls.Remove((ComboBox)CaractPuesto[i-1].dato2);
+                panelCaracteristicas.Controls.Remove(listaDeCheckBox[i-1]);
+        }
 
 
         /*
-        * =================================================
-        * SE ENCARGA DE ENCONTRAR SI HAY TEXT BOXS VACIOS y
-        * COMBO BOX EN EL FORMULARIO Y LOS GUARDA EN UNA LISTA
-        * =================================================
+        * ===============================================
+        * SE ENCARGA DE ENCONTRAR SI HAY COMBO BOX VACIOS
+        * EN EL FORMULARIO Y LOS GUARDA EN UNA LISTA
+        * ===============================================
         */
         private ArrayList encontrarTextBoxVacios(Form formulario)
         {
             ArrayList listaDeErrores = new ArrayList();
             Label error = new Label() ;
-            // hace un chequeo por todos los textbox del formulario
+            // hace un chequeo por todos los CONTROLES del formulario
             foreach (Control controlDeFormulario in this.Controls)
             {
                 if (controlDeFormulario is GroupBox)
@@ -373,7 +419,12 @@ namespace TpDiseñoCSharp
         }
 
 
-
+        /*
+        * =====================================================
+        * SE ENCARGA DE LLENAR UNA LISTA CON LAS COMPETENCIAS Y
+        * PONDERACIONES QUE FUERON AGREGADAS AL PUESTO
+        * =====================================================
+        */
         private ArrayList llenarListaCompetenciaPonderacion(Form formulario)
         {
            ArrayList listaAuxiliar = new ArrayList();
@@ -442,7 +493,6 @@ namespace TpDiseñoCSharp
                     errorpanelCaracteristicas.Text = "Debe seleccionar una competencia y una ponderacion en cada ComboBox";
                     errorpanelCaracteristicas.Visible = true;
                 }
-                
 
             }
         }

@@ -185,21 +185,26 @@ namespace Gestores
             comando.CommandText = consultaSql;
 
             MySqlDataReader reader = comando.ExecuteReader();
-
-            string cod = reader["codigo"].ToString();
-            string nomPuesto = reader["nombre"].ToString();
-            string emp = reader["empresa"].ToString();
-            bool eliminado = Boolean.Parse(reader["eliminado"].ToString());
-
             Puesto objPuesto;
-            if (eliminado == false)
+
+            if (reader.Read())
             {
-                //Llamamos al gestor de puestos para instanciar el puesto que se obtuvo de la base de datos
-                objPuesto = gestorPuestos.instanciarPuesto(cod, nomPuesto, emp);
+                if ((reader["eliminado"].ToString()) == "")
+                {
+                string cod = reader["codigo"].ToString();
+                string nomPuesto = reader["nombre"].ToString();
+                string emp = reader["empresa"].ToString();
+                string desc = reader["descripcion"].ToString();
+
+                objPuesto = gestorPuestos.instanciarPuesto(cod, nomPuesto, emp, desc);
+                }
+                 else
+                     objPuesto = gestorPuestos.instanciarPuesto("ELIMINADO", null, null);
+
+               
             }
             else
-                objPuesto = gestorPuestos.instanciarPuesto("ELIMINADO", null, null);
-
+                objPuesto = gestorPuestos.instanciarPuesto(null, null, null);
             terminarConexion();
             return objPuesto;
         }
@@ -875,11 +880,77 @@ namespace Gestores
             return listaDeCompetencias;
         }
 
+        public List<Caracteristica> recuperarCaracteristicasPuesto(string codigo)
+        {
+            bool conexionExitosa;
+            List<Caracteristica> listaDeCaracteristicas = new List<Caracteristica>();
+
+            /*string consultaSql = "SELECT DISTINCT c.nombre, p_c.ponderacion " +
+                                    "FROM puesto " +
+                                    "JOIN puesto_competencia AS p_c " +
+                                    "ON `codigo`= '" + codigo + "' =p_c.Puesto_codigo " +
+                                    "JOIN competencia AS c ON p_c.Competencia_codigo=c.codigo;";
+            */
+
+            string consultaSql = "SELECT DISTINCT c.nombre, p_c.ponderacion " +
+                                    "FROM puesto " +
+                                    "JOIN puesto_competencia AS p_c " +
+                                    "ON '"+codigo+"'=p_c.Puesto_codigo " +
+                                    "JOIN competencia AS c ON p_c.Competencia_codigo=c.codigo;";
+
+           
+            //llamamos al metodo "iniciar conexion"
+            conexionExitosa = iniciarConexion();
+
+            //Evaluamos si la conexion se realizo con exito
+            if (!conexionExitosa)
+            {
+                MessageBox.Show("Fallo la conexion con la base de datos");
+                terminarConexion();
+                return null;
+            }
+
+            MySql.Data.MySqlClient.MySqlCommand comando;
+            comando = ObjConexion.CreateCommand();
+
+            comando.CommandText = consultaSql;
+
+            MySqlDataReader reader = comando.ExecuteReader();
+
+            if (!reader.HasRows)
+            {
+                //Si el reader esta vacio, es qe no encontro a ese candidato
+                MessageBox.Show("No se encontraron competencias asociadas");
+                terminarConexion();
+                return null;
+            }
+
+            
+            
+            while (reader.Read())
+            {
+                Caracteristica caracteristica;
+                string nombre = reader["nombre"].ToString();
+                string ponderacion = reader["ponderacion"].ToString();
+
+                caracteristica.dato1 = nombre;
+                caracteristica.dato2 = ponderacion;
+
+
+                listaDeCaracteristicas.Add(caracteristica);
+                
+            }
+            terminarConexion();
+            return listaDeCaracteristicas;
+        }
+
+
+
         /*
          * - RecuperarCaracteristicasPuesto tiene la misión de recuperar todas las competencias que estan activas (no eliminadas)
          *   y ponederaciones asociades a un puesto puntual de la base de datos
          */
-        public List<Caracteristica> recuperarCaracteristicasPuesto(PuestoEvaluado puestoEvAsociado)
+        public List<Caracteristica> recuperarCaracteristicasPuestoEv(PuestoEvaluado puestoEvAsociado)
         {
             bool conexionExitosa;
             //Lista que se retornara con los datos finales de la busqueda
@@ -1392,7 +1463,7 @@ namespace Gestores
 
             if (Equals(puestoEvAsociado.Caracteristicas, null) == true)
             {
-                List<Caracteristica> caracteristicasPuesto = recuperarCaracteristicasPuesto(puestoEvAsociado);
+                List<Caracteristica> caracteristicasPuesto = recuperarCaracteristicasPuestoEv(puestoEvAsociado);
                 puestoEvAsociado.Caracteristicas = caracteristicasPuesto;
                 seRealizoConExito = true;
             }
@@ -1491,6 +1562,185 @@ namespace Gestores
             }
         }
 
+        public bool modificarPuesto(Puesto puesto)
+        {
+            //codigo, nombreDePuesto, empresa, descripcion
+            string consultaSql1 = "UPDATE `puesto` " +
+                "SET nombre='"+ puesto.Nombre +"', descripcion='"+ puesto.Descripcion +"', empresa='"+ puesto.Empresa +"' "+
+                "WHERE codigo='"+ puesto.Codigo +"';";
+
+            string consultaSqlDelete = "DELETE FROM `puesto_competencia` " +
+                                       "WHERE Puesto_codigo='" + puesto.Codigo + "';";
+
+            MySql.Data.MySqlClient.MySqlTransaction transaccion;
+
+            bool conexionExitosa;
+            int cantDeFilasAfectadas = 0;
+
+            conexionExitosa = iniciarConexion();
+
+            MySql.Data.MySqlClient.MySqlCommand comando1 = new MySqlCommand(), comando2 = new MySqlCommand(), comandoDelete = new MySqlCommand();
+
+            comandoDelete.Connection = ObjConexion;
+            comandoDelete.CommandType = CommandType.Text;
+            comandoDelete.CommandTimeout = 0;
+            comandoDelete.CommandText = consultaSqlDelete;
+
+            comando1.Connection = ObjConexion;
+            comando1.CommandType = CommandType.Text;
+            comando1.CommandTimeout = 0;
+            comando1.CommandText = consultaSql1;
+
+            comando2.Connection = ObjConexion;
+            comando2.CommandType = CommandType.Text;
+            comando2.CommandTimeout = 0;
+
+            transaccion = ObjConexion.BeginTransaction();
+
+            try
+            {
+                if (!conexionExitosa)
+                    return false;
+
+                comando1.Transaction = transaccion;
+                comandoDelete.Transaction = transaccion;
+                comando2.Transaction = transaccion;
+
+                cantDeFilasAfectadas += comando1.ExecuteNonQuery();
+                comandoDelete.ExecuteNonQuery();
+                for (int i = 0; i < puesto.Caracteristicas.Count; i++)
+                {
+                    Competencia competencia1 = (Competencia)puesto.Caracteristicas[i].dato1;
+                    Ponderacion ponderacion1 = (Ponderacion)puesto.Caracteristicas[i].dato2;
+
+                    string consultaSql2 = "INSERT INTO puesto_competencia (Puesto_codigo,Competencia_codigo,ponderacion) " +
+                       "VALUES ('" + puesto.Codigo + "','" + competencia1.Codigo + "','" + ponderacion1.Valor + "');";
+
+                    comando2.CommandText = consultaSql2;
+
+                    cantDeFilasAfectadas += comando2.ExecuteNonQuery();
+                }
+
+                transaccion.Commit();
+                terminarConexion();
+
+            }
+
+            catch (MySqlException MysqlEx)
+            {
+                // si algo fallo deshacemos todo
+                transaccion.Rollback();
+                // mostramos el mensaje del error
+                MessageBox.Show("La transaccion no se pudo realizar: " + MysqlEx.Message);
+
+
+            }
+            catch (DataException Ex)
+            {
+                // si algo fallo deshacemos todo
+                transaccion.Rollback();
+                // mostramos el mensaje del error
+                MessageBox.Show("La transaccion no se pudo realizar: " + Ex.Message);
+
+            }
+            terminarConexion();
+            if (cantDeFilasAfectadas >= 2)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool tieneElPuestoEvaluacionesAsociadas(string codigo)
+        {
+            bool conexionExitosa;
+
+            conexionExitosa = iniciarConexion();
+
+            if (!conexionExitosa)
+                return false; //Error de conexion
+
+            string consultaSql = "SELECT DISTINCT `idPuesto Evaluado` "
+                + "FROM puesto "
+                + "JOIN `puesto evaluado` p "
+                + "ON '" + codigo + "'=p.codigo;";
+
+            MySql.Data.MySqlClient.MySqlCommand comando;
+            comando = ObjConexion.CreateCommand();
+            comando.CommandText = consultaSql;
+
+            MySqlDataReader reader = comando.ExecuteReader();
+            if (!reader.HasRows)
+            {
+                terminarConexion();
+                //Si el reader está vacio significa que el puesto no tiene evaluaciones asociadas y puede ser eliminado
+                return false;
+            }
+            else
+            {
+                terminarConexion();
+                return true;
+            }
+        }
+
+        public bool eliminarPuesto(string codigo)
+        {
+            bool conexionExitosa, bandera;
+
+            conexionExitosa = iniciarConexion();
+
+            MySql.Data.MySqlClient.MySqlTransaction transaccion;
+
+
+            string consultaSql = "UPDATE `puesto` " +
+                                 "SET eliminado='"+ 1 +"' "+
+                                 "WHERE codigo='"+ codigo +"';";
+
+            MySql.Data.MySqlClient.MySqlCommand comando= new MySqlCommand();
+
+            comando.Connection = ObjConexion;
+            comando.CommandType = CommandType.Text;
+            comando.CommandTimeout = 0;
+            comando.CommandText = consultaSql;
+
+            transaccion = ObjConexion.BeginTransaction();
+            
+
+             try
+            {
+                if (!conexionExitosa)
+                    return false;
+
+                comando.Transaction = transaccion;
+                comando.ExecuteNonQuery();
+
+                transaccion.Commit();
+                terminarConexion();
+                bandera = true;
+            }
+             catch (MySqlException MysqlEx)
+             {
+                 // si algo fallo deshacemos todo
+                 transaccion.Rollback();
+                 // mostramos el mensaje del error
+                 MessageBox.Show("La transaccion no se pudo realizar: " + MysqlEx.Message);
+                 bandera = false;
+
+             }
+             catch (DataException Ex)
+             {
+                 // si algo fallo deshacemos todo
+                 transaccion.Rollback();
+                 // mostramos el mensaje del error
+                 MessageBox.Show("La transaccion no se pudo realizar: " + Ex.Message);
+                 bandera = false;
+             }
+             return bandera;
+        }
+
         public bool guardarRespuesta(Respuestas respuesta) { return true; }
         public void guardarEstado(Estado estado) { }
         public bool guardarBloque(Bloque nuevoBloque) { return true; }
@@ -1501,10 +1751,12 @@ namespace Gestores
          * ====================================
          *      - Tiene la finalidad de BUSCAR y RETORNAR datos de la fuente según algun criterio
          */
-        public bool existePuesto(string codigo = null, string nombreDePuesto = null)
+        public Puesto existePuesto(string codigo = null, string nombreDePuesto = null)
         {
             bool conexionExitosa;
             bool bandera = false;
+            Puesto objPuesto;
+            GestorPuesto gestorPuesto = new GestorPuesto();
             string consultaSql = "SELECT * FROM puesto WHERE `codigo` = '" + codigo + "' OR `nombre` = '"
                 + nombreDePuesto + "';";
 
@@ -1512,7 +1764,7 @@ namespace Gestores
             conexionExitosa = iniciarConexion();
 
             if (!conexionExitosa)
-                return false;
+                return null;
 
 
             MySql.Data.MySqlClient.MySqlCommand comando;
@@ -1522,7 +1774,7 @@ namespace Gestores
             comando.CommandText = consultaSql;
 
             MySqlDataReader reader = comando.ExecuteReader();
-
+            objPuesto = gestorPuesto.instanciarPuesto(null, null, null);
             while (reader.Read() && !bandera)
             {
                 string cod = reader["codigo"].ToString();
@@ -1530,12 +1782,14 @@ namespace Gestores
 
                 if ((codigo == cod) || (nombreDePuesto == nomPuesto))
                 {
-                    bandera = true;
+                    objPuesto = gestorPuesto.instanciarPuesto(cod, nomPuesto, null);
                 }
+                else
+                    objPuesto = gestorPuesto.instanciarPuesto(null, null, null);
             }
 
             terminarConexion();
-            return bandera;
+            return objPuesto;
         }
 
         public int preguntasPorBloque()
