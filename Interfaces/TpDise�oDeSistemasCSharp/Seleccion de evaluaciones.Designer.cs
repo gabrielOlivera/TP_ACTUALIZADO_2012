@@ -28,20 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.panel_evaluaciones = new System.Windows.Forms.Panel();
             this.todos = new System.Windows.Forms.Button();
             this.ninguno = new System.Windows.Forms.Button();
             this.aceptar = new System.Windows.Forms.Button();
-            this.puesto = new System.Windows.Forms.Label();
+            this.selecciondatagridW = new System.Windows.Forms.DataGridView();
+            ((System.ComponentModel.ISupportInitialize)(this.selecciondatagridW)).BeginInit();
             this.SuspendLayout();
-            // 
-            // panel_evaluaciones
-            // 
-            this.panel_evaluaciones.AutoSize = true;
-            this.panel_evaluaciones.Location = new System.Drawing.Point(12, 38);
-            this.panel_evaluaciones.Name = "panel_evaluaciones";
-            this.panel_evaluaciones.Size = new System.Drawing.Size(975, 509);
-            this.panel_evaluaciones.TabIndex = 0;
             // 
             // todos
             // 
@@ -65,47 +57,54 @@
             // 
             // aceptar
             // 
-            this.aceptar.Location = new System.Drawing.Point(993, 453);
+            this.aceptar.Location = new System.Drawing.Point(993, 460);
             this.aceptar.Name = "aceptar";
             this.aceptar.Size = new System.Drawing.Size(113, 62);
             this.aceptar.TabIndex = 3;
             this.aceptar.Text = "Aceptar";
             this.aceptar.UseVisualStyleBackColor = true;
+            this.aceptar.Click += new System.EventHandler(this.aceptar_Click);
             // 
-            // puesto
+            // selecciondatagridW
             // 
-            this.puesto.AutoSize = true;
-            this.puesto.Location = new System.Drawing.Point(39, 9);
-            this.puesto.Name = "puesto";
-            this.puesto.Size = new System.Drawing.Size(65, 17);
-            this.puesto.TabIndex = 4;
-            this.puesto.Text = "PUESTO";
+            this.selecciondatagridW.AllowUserToAddRows = false;
+            this.selecciondatagridW.AllowUserToDeleteRows = false;
+            this.selecciondatagridW.AllowUserToOrderColumns = true;
+            this.selecciondatagridW.AllowUserToResizeColumns = false;
+            this.selecciondatagridW.AllowUserToResizeRows = false;
+            this.selecciondatagridW.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
+            this.selecciondatagridW.BackgroundColor = System.Drawing.SystemColors.Control;
+            this.selecciondatagridW.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.selecciondatagridW.Location = new System.Drawing.Point(21, 21);
+            this.selecciondatagridW.Name = "selecciondatagridW";
+            this.selecciondatagridW.ReadOnly = true;
+            this.selecciondatagridW.RowTemplate.Height = 24;
+            this.selecciondatagridW.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.selecciondatagridW.Size = new System.Drawing.Size(685, 601);
+            this.selecciondatagridW.TabIndex = 4;
             // 
             // Seleccion_de_evaluaciones
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(1291, 646);
-            this.Controls.Add(this.puesto);
+            this.Controls.Add(this.selecciondatagridW);
             this.Controls.Add(this.aceptar);
             this.Controls.Add(this.ninguno);
             this.Controls.Add(this.todos);
-            this.Controls.Add(this.panel_evaluaciones);
             this.Name = "Seleccion_de_evaluaciones";
             this.Text = "Elija las evaluaciones para las que desea emitir un Reporte de Meritos";
+            ((System.ComponentModel.ISupportInitialize)(this.selecciondatagridW)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
 
-        private System.Windows.Forms.Panel panel_evaluaciones;
         private System.Windows.Forms.Button todos;
         private System.Windows.Forms.Button ninguno;
         private System.Windows.Forms.Button aceptar;
-        private System.Windows.Forms.Label puesto;
+        private System.Windows.Forms.DataGridView selecciondatagridW;
 
     }
 }
