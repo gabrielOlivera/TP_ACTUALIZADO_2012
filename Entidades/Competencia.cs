@@ -53,5 +53,12 @@ namespace Entidades
         }
 
         public void addFactor(Factor fact) { listaFactores.Add(fact); }
+
+
+        //IMPORTANTE NO BORRAR ESTE METODO YA QUE SIN EL NO SE PUEDEN VER LAS COMPETENCIAS EN LOS COMBO BOX
+        public override string ToString()
+        {
+            return this.Nombre;
+        }
     }
 }

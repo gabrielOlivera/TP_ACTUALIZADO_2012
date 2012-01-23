@@ -40,6 +40,11 @@ namespace TpDiseñoCSharp
         private void EmitirOrdenDeMerito_Click(object sender, EventArgs e)
         {
             AdministradorBD AdminBD = new AdministradorBD();
+            if (ResultadosDeBusqueda.Visible == false)
+            {
+                MessageBox.Show("Por favor, realize antes la busqueda del puesto deseado");
+                return;
+            }
 
             int numero_fila_seleccionada = ResultadosDeBusqueda.CurrentRow.Index;
             
@@ -51,7 +56,11 @@ namespace TpDiseñoCSharp
 
             List<PuestoEvaluado> Lista_puestos_ev = AdminBD.recuperarPuestos_ev(puesto_seleccionado.Codigo);
 
-            ResultadosDeBusqueda.DataSource = Lista_puestos_ev;
+            //ResultadosDeBusqueda.DataSource = Lista_puestos_ev;
+            
+            Seleccion_de_evaluaciones SelEvaluaciones = new Seleccion_de_evaluaciones(Lista_puestos_ev);
+            SelEvaluaciones.ShowDialog();
+
 
 
         }
