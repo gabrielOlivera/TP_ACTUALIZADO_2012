@@ -1,7 +1,14 @@
-GABRIEL:
+MUCHACHOS: 
 
-Mira la ventana nueva "seleccion de evaluaciones" y fijate que en el codigo correspondiente al boton aceptar esta el Pseudocodigo que idee para que muestre el reporte de orden de merito.
+En esta Push esta casi completo los casos de uso de AUTENTICAR USUARIO y COMPLETAR CUESTIONARIO.
 
-Necesito ayuda con la/s consulta/s que me darian la "puntuacion" de un determinado cuestionario  en una evaluacion particular.
+Basicamente si ejecutan desde la PantallaPrincipal y se logean con algun usuario que les paso en el Pruevas de COMPLETAR CUESTIONARIO.txt
 
-En la BD: Donde esta La respuesta dada por el tipo a cada pregunta? Donde esta cuanto vale una opcion?
+deberia poder completar algún cuestionario, todos los los datos de los bloques y las respuesta que hagan quedan plasmadas en la BD
+
+por eso tambien subo dos copias de la base de datos (una para que la monten y puedan modificarla sin problemas, y la otra para que nos quede limpia)
+
+Solo faltaria algunas validaciones a nivel interfaz y tambien de codigo pero ya casi esta.
+
+Cualquier cosa nos estamos comunicando.
+
