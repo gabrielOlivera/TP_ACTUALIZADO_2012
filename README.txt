@@ -1,9 +1,7 @@
-GENTE! 
+GABRIEL:
 
- Borre todos los archivos binarios que no habia que versionar
- Agregue las respectivas extensiones a el archivo llamado gitignore
- que es el encargado de ignorar los archivos que uno no quiere  versionar.
+Mira la ventana nueva "seleccion de evaluaciones" y fijate que en el codigo correspondiente al boton aceptar esta el Pseudocodigo que idee para que muestre el reporte de orden de merito.
 
-Antes de seguir agregando cambios tienen que actualizar porfavor a esta version asi no tenemos mas problemas con los archivos binarios al hacer los merge. Y solo tenemos conflictos solucionables.
+Necesito ayuda con la/s consulta/s que me darian la "puntuacion" de un determinado cuestionario  en una evaluacion particular.
 
-
+En la BD: Donde esta La respuesta dada por el tipo a cada pregunta? Donde esta cuanto vale una opcion?
