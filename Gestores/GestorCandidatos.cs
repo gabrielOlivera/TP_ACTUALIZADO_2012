@@ -59,13 +59,13 @@ namespace Gestores
             {
                 return esValido; //que aca es falso
             }
+
             else
             {
                 Candidato nuevoCandidato = retornoBD_candidato[0];
-
                 Cuestionario cuestAsociado = gestorCuestionario.cuestionarioAsociado(nuevoCandidato);
 
-                if (cuestAsociado.CandidatoAsociado != null)
+                if (cuestAsociado != null)
                 {
                     bool accesoValido = gestorCuestionario.validarAcceso(cuestAsociado, clave);
 
