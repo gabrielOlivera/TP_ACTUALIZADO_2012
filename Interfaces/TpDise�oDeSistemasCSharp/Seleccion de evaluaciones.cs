@@ -32,6 +32,7 @@ namespace TpDiseñoCSharp
 
         private void aceptar_Click(object sender, EventArgs e)
         {
+            MessageBox.Show("No implementado, Ver Pseudocodigo! (donde iria el codigo de este boton)");
             /*
              por cada puesto_evaluado seleccionado 
             {
