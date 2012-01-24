@@ -23,6 +23,12 @@ namespace Gestores
             return nuevoPuesto;
         }
 
+        /*
+        * ===========================================================
+        * FUNCION QUE SE ENCARGA DE LISTAR LOS PUESTOS QUE CONCUERDEN 
+        * CON LOS FILTROS DE BUSQUEDA Y NO SE ENCUENTREN ELIMINADOS
+        * ===========================================================
+        */
         public List<Puesto> listarPuestos(string codigo = null, string nombreDePuesto = null, string empresa = null)
         {
             List<Puesto> listaPuestos = admBD.recuperarPuestos(codigo, nombreDePuesto, empresa);
@@ -34,7 +40,6 @@ namespace Gestores
 
         public bool altaPuesto(string codigo, string nombreDePuesto, string empresa, List<Caracteristica> caract, string descripcion = null)
         {
-            //COMPLETAR LOGICA DEL METODO
 
             Puesto nuevoPuesto = new Puesto(codigo, nombreDePuesto, empresa, descripcion);
             inicializarCaracteristicas(nuevoPuesto, caract);
@@ -65,15 +70,36 @@ namespace Gestores
             return retornoBD;
         }
 
+
+       /*
+        * =======================================
+        * FUNCION QUE SE ENCARGA DE RECUPERAR UN  
+        * PUESTO QUE VA A SER MODIFICADO
+        * =======================================
+        */
         public Puesto recuperarUnPuesto(string codigo)
         {
             return admBD.recuperarPuesto(codigo);
         }
+        
+
+        /*
+         * =======================================
+         * FUNCION QUE SE ENCARGA DE RECUPERAR LAS   
+         * CARACTERISTICAS ASOCIADAS A UN PUESTO
+         * =======================================
+         */
         public List<Caracteristica> recuperarCaracteristicas(string codigo)
         {
             return admBD.recuperarCaracteristicasPuesto(codigo);
         }
 
+        /*
+         * ================================================
+         * FUNCION QUE SE ENCARGA DE VERIFICAR SI UN PUESTO   
+         * TIENE EVALUACIONES ASOCIADAS
+         * ================================================
+         */
         public bool tieneElPuestoEvaluacionesAsociadas(string codigo)
         {
             bool valor=admBD.tieneElPuestoEvaluacionesAsociadas(codigo);

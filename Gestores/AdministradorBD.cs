@@ -98,6 +98,12 @@ namespace Gestores
         /*
          * - RecuperarPuestos tiene la misión de recuperar los datos de los puestos según un criterion de busqueda
          */
+        /*
+       * ===========================================================================
+       * FUNCION QUE SE ENCARGA DE RECUPERAR LOS DATOS DE LOS PUESTOS QUE CONCUERDEN
+       * CON LOS FILTROS DE BUSQUEDA Y NO SE ENCUENTREN ELIMINADOS
+       * ===========================================================================
+       */
         public List<Puesto> recuperarPuestos(string codigo = null, string nombreDePuesto = null, string empresa = null)
         {
             bool conexionExitosa;
@@ -143,13 +149,13 @@ namespace Gestores
             while (reader.Read())
             {
                 Puesto objPuesto;
-                string nomPuesto;
-                string emp;
+                
                 if (reader["eliminado"].ToString() == "")
                 {
                     string cod = reader["codigo"].ToString();
-                    nomPuesto = reader["nombre"].ToString();
-                    emp = reader["empresa"].ToString();
+                    string nomPuesto = reader["nombre"].ToString();
+                    string emp = reader["empresa"].ToString();
+
                     //Llamamos al gestor de puestos para instanciar el puesto que se obtuvo de la base de datos
                     objPuesto = gestorPuestos.instanciarPuesto(cod, nomPuesto, emp);
                     //El retorno del metodo del gestor es introducido en la lista de puestos    
@@ -880,18 +886,17 @@ namespace Gestores
             return listaDeCompetencias;
         }
 
+        /*
+         * =======================================
+         * FUNCION QUE SE ENCARGA DE RECUPERAR LAS   
+         * CARACTERISTICAS ASOCIADAS A UN PUESTO
+         * =======================================
+         */
         public List<Caracteristica> recuperarCaracteristicasPuesto(string codigo)
         {
             bool conexionExitosa;
             List<Caracteristica> listaDeCaracteristicas = new List<Caracteristica>();
-
-            /*string consultaSql = "SELECT DISTINCT c.nombre, p_c.ponderacion " +
-                                    "FROM puesto " +
-                                    "JOIN puesto_competencia AS p_c " +
-                                    "ON `codigo`= '" + codigo + "' =p_c.Puesto_codigo " +
-                                    "JOIN competencia AS c ON p_c.Competencia_codigo=c.codigo;";
-            */
-
+            
             string consultaSql = "SELECT DISTINCT c.nombre, p_c.ponderacion " +
                                     "FROM puesto " +
                                     "JOIN puesto_competencia AS p_c " +
@@ -1654,6 +1659,12 @@ namespace Gestores
             }
         }
 
+        /*
+         * ====================================================
+         * FUNCION QUE SE ENCARGA DE VERIFICAR SI EL PUESTO QUE     
+         * SE QUIERE ELIMINAR TIENE EVALUACIONES ASOCIADAS
+         * ====================================================
+         */
         public bool tieneElPuestoEvaluacionesAsociadas(string codigo)
         {
             bool conexionExitosa;
