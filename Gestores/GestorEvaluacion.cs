@@ -107,7 +107,8 @@ namespace Gestores
                     }
                 }
             }
-            if(Equals(factoresNoEvaluados.Count, 0))
+
+            if(factoresNoEvaluados.Count != 0)
             {
                 string mensajeBox = "Los siguiente factores no fueron evaludos por no cumplir con el minimo de preguntas para la evaluación:\n";
                 for (int i = 0; i < factoresNoEvaluados.Count; i++)
@@ -127,9 +128,6 @@ namespace Gestores
             Random selectorRamdom = new Random();
             List<PreguntaEvaluada> listaAuxiliar = new List<PreguntaEvaluada>();
 
-            MessageBox.Show("Antes de pasar " + listaAuxiliar.Count.ToString() + " TIENE Q LLEGAR A " + listaPreg.Count);
-            //deberia tomar algun criterio para reordenar la lista de preguntas
-
             while(i < listaPreg.Count)
             {
                 selector = selectorRamdom.Next(listaPreg.Count);
@@ -139,7 +137,6 @@ namespace Gestores
                     int j = 0; 
                     while (j < historial_Selectores.Count)
                     {
-                        //MessageBox.Show("en el historial " + j.ToString() +" = "+ historial_Selectores[j].ToString() + " -- selector " + selector.ToString());
                         if (selector != historial_Selectores[j])
                         {
                             selectorFueUsado = false;
@@ -156,23 +153,17 @@ namespace Gestores
                     {
                         historial_Selectores.Add(selector);
                         listaAuxiliar.Add(listaPreg[selector]);
-                        //MessageBox.Show("Selector = " + selector.ToString() + " -- Pregunta " + listaPreg[selector].Nombre);
                         i++;
                     }
-                    //else
-                       // MessageBox.Show("FUE USADO EL "+ selector.ToString());
+                    
                 }
                 else
                 {
                     historial_Selectores.Add(selector);
                     listaAuxiliar.Add(listaPreg[selector]);
-                    //MessageBox.Show("Selector = "+ selector.ToString() + " -- Pregunta " + listaPreg[selector].Nombre);
                     i++;
                 }
             }
-
-            MessageBox.Show("Despues de pasar "+ listaAuxiliar.Count.ToString());
-            MessageBox.Show("termino");
 
             return listaAuxiliar;
         }

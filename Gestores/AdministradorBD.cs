@@ -1463,16 +1463,18 @@ namespace Gestores
          */
         public bool reconstruirRelaciones(Cuestionario cuestionarioAsociado)
         {
-            bool seRealizoConExito = false;
+            bool seRealizoConExito = true;
             PuestoEvaluado puestoEvAsociado = cuestionarioAsociado.PuestoEvaluado;
 
             if (Equals(puestoEvAsociado.Caracteristicas, null) == true)
             {
                 List<Caracteristica> caracteristicasPuesto = recuperarCaracteristicasPuestoEv(puestoEvAsociado);
                 puestoEvAsociado.Caracteristicas = caracteristicasPuesto;
-                seRealizoConExito = true;
+                if (Equals(caracteristicasPuesto[0].dato1.GetType(), "stringEJEMPLO".GetType()) == false)
+                    seRealizoConExito = true;
+                else
+                    seRealizoConExito = false;
             }
-            
             return seRealizoConExito;
         }
 
@@ -1752,9 +1754,176 @@ namespace Gestores
              return bandera;
         }
 
-        public bool guardarRespuesta(Respuestas respuesta) { return true; }
+        public bool guardarRespuesta(Respuestas respuesta, int nroBloque)
+        {
+            MySql.Data.MySqlClient.MySqlTransaction transaccion;
+
+            bool conexionExitosa;
+            int cantDeFilasAfectadas = 0;
+
+            conexionExitosa = iniciarConexion();
+
+            MySql.Data.MySqlClient.MySqlCommand comando = new MySqlCommand();
+
+            comando.Connection = ObjConexion;
+            comando.CommandType = CommandType.Text;
+            comando.CommandTimeout = 0;
+
+            transaccion = ObjConexion.BeginTransaction();
+
+            try
+            {
+                if (!conexionExitosa)
+                    return false;
+
+                for (int i = 0; i < respuesta.PreguntasMasOpciones.Count; i++)
+                {
+                    PreguntaEvaluada pregAsociada = (PreguntaEvaluada)respuesta.PreguntasMasOpciones[i].dato1;
+                    OpcionesEvaluadas opcionAsociada = (OpcionesEvaluadas)respuesta.PreguntasMasOpciones[i].dato2;
+
+                    //CONSULTA QUE ACTUALIZA LA TABLA ITEM_BLOQUE PARA RESGUARDAR LAS RESPUESTAS
+                    string consultaSql = "UPDATE item_bloque "
+                                         + "SET `Opcion Evaluada_idOpcion_seleccionada` = "
+                                         + "(SELECT idOpcion FROM `opcion evaluada` WHERE nombre = '" + opcionAsociada.Nombre + "')"
+                                         + "WHERE (Bloque_idBloque = ( SELECT idBloque FROM `tp base de datos`.bloque AS bloq "
+                                         + "JOIN cuestionario AS cuest "
+                                         + "ON (cuest.clave = '" + respuesta.CuestionarioAsociado.Clave + "' AND cuest.idCuestionario = bloq.Cuestionario_idCuestrionario)  "
+                                         + "WHERE bloq.nroBloque = " + nroBloque + ")) "
+                                         + "AND (PreguntaEvaluada_idPreguntaEv = (SELECT `idPregunta Evaluada` "
+                                         + "FROM `pregunta evaluada` "
+                                         + "WHERE codigo = '" + pregAsociada.Codigo + "'));";
+
+
+                    comando.CommandText = consultaSql;
+
+                    cantDeFilasAfectadas += comando.ExecuteNonQuery();
+                }
+
+                transaccion.Commit();
+                terminarConexion();
+
+            }
+
+            catch (MySqlException MysqlEx)
+            {
+                // si algo fallo deshacemos todo
+                transaccion.Rollback();
+                // mostramos el mensaje del error
+                MessageBox.Show("La transaccion no se pudo realizar: " + MysqlEx.Message);
+
+
+            }
+
+            catch (DataException Ex)
+            {
+                // si algo fallo deshacemos todo
+                transaccion.Rollback();
+                // mostramos el mensaje del error
+                MessageBox.Show("La transaccion no se pudo realizar: " + Ex.Message);
+
+            }
+
+            if (cantDeFilasAfectadas > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         public void guardarEstado(Estado estado) { }
-        public bool guardarBloque(Bloque nuevoBloque) { return true; }
+        public bool guardarBloque(Bloque nuevoBloque)
+        {
+            //CONSULTA QUE ACTUALIZA LA TABLA DE BLOQUES CON UNA NUEVA FILA
+            string consultaSql1 = "INSERT INTO `bloque` (`nroBloque`,`Cuestionario_idCuestrionario`,`esUltimoBloque`) ";
+            if (nuevoBloque.EsUltimoNloque == false)
+                consultaSql1 += "VALUES (" + nuevoBloque.NroBloque + ",(SELECT idCuestionario FROM cuestionario WHERE clave = '" + nuevoBloque.CuestAsociado.Clave + "'),null);";
+            else
+                consultaSql1 += "VALUES (" + nuevoBloque.NroBloque + ",(SELECT idCuestionario FROM cuestionario WHERE clave = '" + nuevoBloque.CuestAsociado.Clave + "')," + nuevoBloque.EsUltimoNloque + ");";
+
+            MySql.Data.MySqlClient.MySqlTransaction transaccion;
+
+            bool conexionExitosa;
+            int cantDeFilasAfectadas = 0;
+
+            conexionExitosa = iniciarConexion();
+
+            MySql.Data.MySqlClient.MySqlCommand comando1 = new MySqlCommand(), comando2 = new MySqlCommand();
+
+
+            comando1.Connection = ObjConexion;
+            comando1.CommandType = CommandType.Text;
+            comando1.CommandTimeout = 0;
+            comando1.CommandText = consultaSql1;
+
+            comando2.Connection = ObjConexion;
+            comando2.CommandType = CommandType.Text;
+            comando2.CommandTimeout = 0;
+
+            transaccion = ObjConexion.BeginTransaction();
+
+            try
+            {
+                if (!conexionExitosa)
+                    return false;
+
+                comando1.Transaction = transaccion;
+                comando2.Transaction = transaccion;
+
+                cantDeFilasAfectadas += comando1.ExecuteNonQuery();
+
+                for (int i = 0; i < nuevoBloque.ListaPreguntasEv.Count; i++)
+                {
+                    PreguntaEvaluada preguntaAsociada = nuevoBloque.ListaPreguntasEv[i];
+                    //CONSULTA QUE ACTUALIZA LA TABLA DE ITEM_BLOQUE CON NUEVAS FILAS PARA ASOCIAR LAS PREGUNTAS A LOS BLOQUES
+                    string consultaSql2 = "INSERT INTO item_bloque (`Bloque_idBloque`,`PreguntaEvaluada_idPreguntaEv`,`Opcion Evaluada_idOpcion_seleccionada`) "
+                        + "VALUES ((SELECT idBloque FROM bloque AS b "
+                        + "JOIN cuestionario AS c ON (b.Cuestionario_idCuestrionario = c.idCuestionario AND c.clave = '" + nuevoBloque.CuestAsociado.Clave + "') "
+                        + "WHERE b.nroBloque = " + nuevoBloque.NroBloque + "),"
+                        + "(SELECT `idPregunta Evaluada` FROM `pregunta evaluada` AS p_ev "
+                        + "JOIN `factor evaluado` AS f_ev ON (f_ev.`idFactor Evaluado` = p_ev.`Factor Evaluado_idFactor Evaluado`) "
+                        + "JOIN `opcion de respuesta evaluada` AS opR ON (opR.`idOpcion de Respuesta Evaluada` = p_ev.`Opcion de Respuesta Evaluada_idOpcion de Respuesta Evaluada`) "
+                        + "WHERE p_ev.codigo = '" + preguntaAsociada.Codigo + "'),null);";
+
+                    comando2.CommandText = consultaSql2;
+
+                    cantDeFilasAfectadas += comando2.ExecuteNonQuery();
+                }
+
+                transaccion.Commit();
+                terminarConexion();
+
+            }
+
+            catch (MySqlException MysqlEx)
+            {
+                // si algo fallo deshacemos todo
+                transaccion.Rollback();
+                // mostramos el mensaje del error
+                MessageBox.Show("La transaccion no se pudo realizar: " + MysqlEx.Message);
+
+
+            }
+            catch (DataException Ex)
+            {
+                // si algo fallo deshacemos todo
+                transaccion.Rollback();
+                // mostramos el mensaje del error
+                MessageBox.Show("La transaccion no se pudo realizar: " + Ex.Message);
+
+            }
+
+            if (cantDeFilasAfectadas > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
 
         /*
          * ====================================

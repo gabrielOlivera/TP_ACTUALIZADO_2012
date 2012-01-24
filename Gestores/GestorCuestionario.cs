@@ -48,6 +48,7 @@ namespace Gestores
         {
             //Se solicita a la base de datos el retorno del cuestionario activo para el candidato que se pasa como parametro
             List<Cuestionario> nCuestionario = admBD.recuperarCuestionarioActivo(candidatoAsociado);
+            //Transforma el retorno de la base de datos en un objeto del tipo cuestionario
             Cuestionario nuevoCuest = null;
 
             if (nCuestionario != null)
@@ -57,12 +58,13 @@ namespace Gestores
                     if (nCuestionario[0].PuestoEvaluado.Codigo != "ELIMINADO")
                     {
                         if (nCuestionario[0].Estado.Estado_ == "ACTIVO" || nCuestionario[0].Estado.Estado_ == "EN PROCESO")
-                        {//Transforma el retorno de la base de datos en un objeto del tipo cuestionario
+                        {
                             nuevoCuest = nCuestionario[0];
+
                             //Re-armamos las relaciones del cuestionario para tener todos los objetos en memoria
                             bool re_construido = admBD.reconstruirRelaciones(nuevoCuest);
 
-                            if (!re_construido)
+                            if (re_construido == false)
                             {
                                 MessageBox.Show("No se pudo recuperar Todos los datos requeridos");
                                 return null;
@@ -294,12 +296,12 @@ namespace Gestores
             }
         }
         
-        public bool guardarRespuestas(Cuestionario cuestAsociado, List<Caracteristica> respuestaUsuario)
+        public bool guardarRespuestas(Cuestionario cuestAsociado, List<Caracteristica> respuestaUsuario, int nroBloque_Asociado)
         {
-            bool procesoCompleto = false;
             Respuestas Respuesta = this.instanciarRespuesta(cuestAsociado, respuestaUsuario);
             
-            procesoCompleto = admBD.guardarRespuesta(Respuesta);
+            bool procesoCompleto = admBD.guardarRespuesta(Respuesta, nroBloque_Asociado);
+
             if (procesoCompleto == true)
                 return true;
             else

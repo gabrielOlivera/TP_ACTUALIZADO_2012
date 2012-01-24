@@ -138,55 +138,54 @@ namespace TpDiseñoCSharp
         {
             AdministradorBD admiBD = new AdministradorBD();
             GestorCuestionario gestorCuestionario = new GestorCuestionario();
-            
+
             int bloque_completo = 0;
             List<Caracteristica> respuestaUsuario = new List<Caracteristica>();
             string nombre_opcion;
 
-            if (this.Siguiente.Text != "Finalizar")
+            for (int i = 0; i < this.opciones_A_preguntas.Count; i++)
             {
-                for (int i = 0; i < this.opciones_A_preguntas.Count ; i++)
+                CheckBox checks_Mas_opciones = (CheckBox)this.opciones_A_preguntas[i].dato2;
+                if (Equals(checks_Mas_opciones.Checked, true) == true)
                 {
-                    CheckBox checks_Mas_opciones = (CheckBox)this.opciones_A_preguntas[i].dato2;
-                    //MessageBox.Show(checks_Mas_opciones.Checked.ToString() + " " + checks_Mas_opciones.Text + " bloque_completo al = " + bloque_completo.ToString());
-                    if (Equals(checks_Mas_opciones.Checked, true) == true)
+                    bloque_completo++;
+                    PreguntaEvaluada pregunta = (PreguntaEvaluada)opciones_A_preguntas[i].dato1;
+                    nombre_opcion = checks_Mas_opciones.Text;
+                    int j = 0;
+                    while (j < pregunta.ListaOpcionesEv.Count)
                     {
-                        bloque_completo++;
-                        PreguntaEvaluada pregunta = (PreguntaEvaluada)opciones_A_preguntas[i].dato1;
-                        nombre_opcion = checks_Mas_opciones.Text;
-                        int j = 0;
-                        while (j < pregunta.ListaOpcionesEv.Count)
+                        if (nombre_opcion == pregunta.ListaOpcionesEv[j].Nombre)
                         {
-                            if (nombre_opcion == pregunta.ListaOpcionesEv[j].Nombre)
-                            {
-                                Caracteristica respuestas = new Caracteristica();
-                                respuestas.dato1 = pregunta;
-                                respuestas.dato2 = pregunta.ListaOpcionesEv[j];
+                            Caracteristica respuestas = new Caracteristica();
+                            respuestas.dato1 = pregunta;
+                            respuestas.dato2 = pregunta.ListaOpcionesEv[j];
 
-                                respuestaUsuario.Add(respuestas);
+                            respuestaUsuario.Add(respuestas);
 
-                                j = pregunta.ListaOpcionesEv.Count;
-                            }
-                            else
-                                j++;
+                            j = pregunta.ListaOpcionesEv.Count;
                         }
+                        else
+                            j++;
                     }
                 }
+            }
 
-                //ESTO ME INDICA SI LA CANTIDAD DE OPCIONES SELECCIONADAS ES IGUAL A LA CANTIDAD DE PREGUNTAS DEL BLOQUE
-                if (bloque_completo != this.bloque_A_mostrar.ListaPreguntasEv.Count)
-                {
-                    MessageBox.Show("Hay preguntas que no poseen una respuesta\n\nComplete TODAS las preguntas y luego presiones 'SIGUIENTE'\n");
-                }
-                else
-                {
-                    bool resguardoRealizado = gestorCuestionario.guardarRespuestas(bloque_A_mostrar.CuestAsociado, respuestaUsuario);
+            //ESTO ME INDICA SI LA CANTIDAD DE OPCIONES SELECCIONADAS ES IGUAL A LA CANTIDAD DE PREGUNTAS DEL BLOQUE
+            if (bloque_completo != this.bloque_A_mostrar.ListaPreguntasEv.Count)
+            {
+                MessageBox.Show("Hay preguntas que no poseen una respuesta\n\nComplete TODAS las preguntas y luego presiones 'SIGUIENTE'\n");
+            }
 
+            else
+            {
+                bool resguardoRealizado = gestorCuestionario.guardarRespuestas(bloque_A_mostrar.CuestAsociado, respuestaUsuario, bloque_A_mostrar.NroBloque);
+
+                if (this.Siguiente.Text != "Finalizar")
+                {
                     if (resguardoRealizado == true)
                     {
                         //UNA VEZ RESGURDADAS LAS RESPUESTAS
                         Bloque proximoBloque = gestorCuestionario.proximoBloque(this.bloque_A_mostrar);
-                        //MessageBox.Show(proximoBloque.EsUltimoNloque.ToString());
                         Completar_Cuestionario siguienteBloque = new Completar_Cuestionario(proximoBloque, this);
 
                         if (proximoBloque.EsUltimoNloque == true)
@@ -196,26 +195,26 @@ namespace TpDiseñoCSharp
                     }
                     else
                         MessageBox.Show("! OCURRIO UN ERROR AL RESGUARDAR SUS RESPUESTA\n\n\tPor favor reinicie su sesión");
-                }
-            }
-            else
-            {
-                bool resguardoRealizado = gestorCuestionario.guardarRespuestas(bloque_A_mostrar.CuestAsociado, respuestaUsuario);
 
-                if (resguardoRealizado == true)
-                {
-                    gestorCuestionario.cambiarEstado("COMPLETO", bloque_A_mostrar.CuestAsociado);
-                    MessageBox.Show("TERMINO LA EVALUACION");
                 }
                 else
-                    MessageBox.Show("! OCURRIO UN ERROR AL RESGUARDAR SUS RESPUESTA\n\n\tPor favor reinicie su sesión");
+                {
+                    if (resguardoRealizado == true)
+                    {
+                        gestorCuestionario.cambiarEstado("COMPLETO", bloque_A_mostrar.CuestAsociado);
+                        MessageBox.Show("TERMINO LA EVALUACION");
+                    }
+                    else
+                        MessageBox.Show("! OCURRIO UN ERROR AL RESGUARDAR SUS RESPUESTA\n\n\tPor favor reinicie su sesión");
 
-                this.Close();
+                    this.Close();
+                }
             }
         }
 
         private void Cancelar_Click(object sender, EventArgs e)
         {
+            MessageBox.Show("Cerrando su evaluacion.\n\nLos datos de sus respuesta actuales no serán guardados\n\nPresione 'Cancelar' y 'Siguiente' para guardarlos datos\n\nDe lo contrario presiones 'Aceptar'");
             this.Close();
         }
     }

@@ -1,9 +1,14 @@
-GENTE! 
+MUCHACHOS: 
 
- Borre todos los archivos binarios que no habia que versionar
- Agregue las respectivas extensiones a el archivo llamado gitignore
- que es el encargado de ignorar los archivos que uno no quiere  versionar.
+En esta Push esta casi completo los casos de uso de AUTENTICAR USUARIO y COMPLETAR CUESTIONARIO.
 
-Antes de seguir agregando cambios tienen que actualizar porfavor a esta version asi no tenemos mas problemas con los archivos binarios al hacer los merge. Y solo tenemos conflictos solucionables.
+Basicamente si ejecutan desde la PantallaPrincipal y se logean con algun usuario que les paso en el Pruevas de COMPLETAR CUESTIONARIO.txt
 
+deberia poder completar algún cuestionario, todos los los datos de los bloques y las respuesta que hagan quedan plasmadas en la BD
+
+por eso tambien subo dos copias de la base de datos (una para que la monten y puedan modificarla sin problemas, y la otra para que nos quede limpia)
+
+Solo faltaria algunas validaciones a nivel interfaz y tambien de codigo pero ya casi esta.
+
+Cualquier cosa nos estamos comunicando.
 
