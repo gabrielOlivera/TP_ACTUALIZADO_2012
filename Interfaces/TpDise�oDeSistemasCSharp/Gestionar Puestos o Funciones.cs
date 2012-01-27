@@ -26,6 +26,7 @@ namespace TpDiseñoCSharp
 
         private void BuscarPuestos_Click (object sender, EventArgs e)
         {
+            //Verifica que al menos uno de los campos contenga datos a buscar
             if ((Codigo.Text != "") || (NombreDePuesto.Text != "") || (Empresa.Text != ""))
             {
                 /*BUSCA LOS PUESTOS O FUNCIONES DE ACUERDO A LOS FILTROS ESPECIFICADOS PARA PODER MODIFICARLOS Y/O ELIMINAR
@@ -35,6 +36,7 @@ namespace TpDiseñoCSharp
                 listaDePuesto.DataSource = gestorPuesto.listarPuestos(Codigo.Text, NombreDePuesto.Text, Empresa.Text);
                 listaDePuesto.Visible = true;
             }
+            //Si todos los campos están vacíos se informa de ello
             else 
             {
                 MessageBox.Show("Debe ingresar al menos un campo para realizar la búsqueda", "ADVERTENCIA",
@@ -55,7 +57,10 @@ namespace TpDiseñoCSharp
             string nomPuesto = (string)listaDePuesto.CurrentRow.Cells["Nombre"].Value;
             GestorPuesto gestorPuesto = new GestorPuesto();
             bool puestoEvaluado,eliminado;
+
+            //En puestoEvaluado guardamos el retorno del método tieneElPuestoEvaluacionesAsociadas
             puestoEvaluado = gestorPuesto.tieneElPuestoEvaluacionesAsociadas(codigo);
+
             if (!puestoEvaluado)
             {
                 

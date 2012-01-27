@@ -1,5 +1,6 @@
-MUCHACHOS: 
+Si llegan a tener problemas para importar la BD abranla con el bloc de notas y asegurense de que la guardan codificandola con UTF-8. NO ANSI ni unicode
 
+**********************
 En esta Push esta casi completo los casos de uso de AUTENTICAR USUARIO y COMPLETAR CUESTIONARIO.
 
 Basicamente si ejecutan desde la PantallaPrincipal y se logean con algun usuario que les paso en el Pruevas de COMPLETAR CUESTIONARIO.txt

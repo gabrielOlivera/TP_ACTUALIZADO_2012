@@ -98,6 +98,12 @@ namespace Gestores
         /*
          * - RecuperarPuestos tiene la misión de recuperar los datos de los puestos según un criterion de busqueda
          */
+        /*
+       * ===========================================================================
+       * FUNCION QUE SE ENCARGA DE RECUPERAR LOS DATOS DE LOS PUESTOS QUE CONCUERDEN
+       * CON LOS FILTROS DE BUSQUEDA Y NO SE ENCUENTREN ELIMINADOS
+       * ===========================================================================
+       */
         public List<Puesto> recuperarPuestos(string codigo = null, string nombreDePuesto = null, string empresa = null)
         {
             bool conexionExitosa;
@@ -143,13 +149,13 @@ namespace Gestores
             while (reader.Read())
             {
                 Puesto objPuesto;
-                string nomPuesto;
-                string emp;
+                
                 if (reader["eliminado"].ToString() == "")
                 {
                     string cod = reader["codigo"].ToString();
-                    nomPuesto = reader["nombre"].ToString();
-                    emp = reader["empresa"].ToString();
+                    string nomPuesto = reader["nombre"].ToString();
+                    string emp = reader["empresa"].ToString();
+
                     //Llamamos al gestor de puestos para instanciar el puesto que se obtuvo de la base de datos
                     objPuesto = gestorPuestos.instanciarPuesto(cod, nomPuesto, emp);
                     //El retorno del metodo del gestor es introducido en la lista de puestos    
@@ -768,11 +774,12 @@ namespace Gestores
             List<PuestoEvaluado> listaDePuestos_ev = new List<PuestoEvaluado>(); //para el retorno de datos
             List<Int32> lista_de_ID_Puesto_ev = new List<Int32>();
 
-            string consultaSql = "SELECT DISTINCT codigo, nombre, empresa, fecha " +
+            string consultaSql = "SELECT DISTINCT `idPuesto Evaluado`, codigo, nombre, empresa, fecha " +
                 "FROM `puesto evaluado` pu_ev " +
                 "JOIN cuestionario cuest on (pu_ev.codigo = '" + codigo + "' AND pu_ev.`idPuesto evaluado` = cuest.`Puesto Evaluado_idPuesto Evaluado`) " +
                 "JOIN `cuestionario_estado` c_est on (cuest.idCuestionario = c_est.Cuestionario_idCuestionario) " +
-                "WHERE Estado_idEstado = 1;";
+                "WHERE Estado_idEstado = 1 "+
+                "GROUP BY `idPuesto Evaluado`";
 
             //llamamos al metodo "iniciar conexion"
             conexionExitosa = iniciarConexion();
@@ -807,12 +814,11 @@ namespace Gestores
             while (reader.Read())
             {
                 PuestoEvaluado objPuestoEv;
-                
+                string id_puesto_ev = reader[0].ToString();
                 string cod = reader["codigo"].ToString();
                 string nomPuesto = reader["nombre"].ToString();
                 string emp = reader["empresa"].ToString();
-                DateTime fecha = DateTime.Parse( reader["fecha"].ToString() );
-                
+                DateTime fecha = (DateTime) reader["fecha"] ;
 
                 //Llamamos al gestor de puestos para instanciar el puesto que se obtuvo de la base de datos
                 objPuestoEv = gestorPuestos.instanciarPuestoEvaluado(cod, nomPuesto, emp);
@@ -890,18 +896,17 @@ namespace Gestores
             return listaDeCompetencias;
         }
 
+        /*
+         * =======================================
+         * FUNCION QUE SE ENCARGA DE RECUPERAR LAS   
+         * CARACTERISTICAS ASOCIADAS A UN PUESTO
+         * =======================================
+         */
         public List<Caracteristica> recuperarCaracteristicasPuesto(string codigo)
         {
             bool conexionExitosa;
             List<Caracteristica> listaDeCaracteristicas = new List<Caracteristica>();
-
-            /*string consultaSql = "SELECT DISTINCT c.nombre, p_c.ponderacion " +
-                                    "FROM puesto " +
-                                    "JOIN puesto_competencia AS p_c " +
-                                    "ON `codigo`= '" + codigo + "' =p_c.Puesto_codigo " +
-                                    "JOIN competencia AS c ON p_c.Competencia_codigo=c.codigo;";
-            */
-
+            
             string consultaSql = "SELECT DISTINCT c.nombre, p_c.ponderacion " +
                                     "FROM puesto " +
                                     "JOIN puesto_competencia AS p_c " +
@@ -1665,6 +1670,12 @@ namespace Gestores
             }
         }
 
+        /*
+         * ====================================================
+         * FUNCION QUE SE ENCARGA DE VERIFICAR SI EL PUESTO QUE     
+         * SE QUIERE ELIMINAR TIENE EVALUACIONES ASOCIADAS
+         * ====================================================
+         */
         public bool tieneElPuestoEvaluacionesAsociadas(string codigo)
         {
             bool conexionExitosa;
@@ -2312,6 +2323,113 @@ namespace Gestores
 
             return instrucciones;
 
+        }
+
+        public List<Candidato> listarCandidatosPorEvaluacion(DateTime fecha_ev, string codigo_ev)
+        {
+            bool conexionExitosa;
+            List<Candidato> listaCandidatos = new List<Candidato>();
+            GestorCandidatos gestorCandidatos = new GestorCandidatos();
+            
+            string fecha_formateada = this.formatear_fecha(fecha_ev);
+
+            MessageBox.Show(fecha_formateada);
+
+            string consultaSql = "SELECT `tipo documento`, `nro documento`,  nombre, apellido, nroCandidato, nroEmpleado" +
+                " FROM candidato cand " +
+                " JOIN cuestionario cuest on (Candidato_idCandidato = idCandidato) "+
+                " WHERE `Puesto Evaluado_idPuesto Evaluado` = (SELECT DISTINCT `idPuesto Evaluado` "+
+                " FROM candidato cand " +
+                " JOIN cuestionario cuest on (idCandidato = Candidato_idCandidato) " +
+                " JOIN cuestionario_estado cuest_estado on (idCuestionario = Cuestionario_idCuestionario) " +
+                " JOIN `puesto evaluado` puesto_ev on (`idPuesto Evaluado` =`Puesto Evaluado_idPuesto Evaluado`) " +
+                " WHERE puesto_ev.codigo =  '"+ codigo_ev +"' AND fecha = '"+ fecha_formateada +"');";
+
+            //llamamos al metodo "iniciar conexion"
+            conexionExitosa = iniciarConexion();
+
+            //Evaluamos si la conexion se realizo con exito
+            if (!conexionExitosa)
+            {
+                MessageBox.Show("Fallo la conexion con la base de datos");
+                terminarConexion();
+                return null;
+            }
+
+            //Creamos un adaptador llamado "comando" para realizar la consultaSql que definimos mas arriba
+            MySql.Data.MySqlClient.MySqlCommand comando;
+            comando = ObjConexion.CreateCommand();
+            comando.CommandText = consultaSql;//En el adaptador comando hacemos un asignacion en su atributo CommandText de la consultaSql
+
+            //Se hace la ejecucion del comando con el metodo ExecuterReader 
+            //y se lo asigna a una variable reader que contendra los resultados de la busqueda en la base de datos
+            MySqlDataReader reader = comando.ExecuteReader();
+
+            if (!reader.HasRows)
+            {
+                //si el reader esta vacio, es que no se encontraron datos para la consulta realizada
+                MessageBox.Show("No existen candidatos que hayan participado de esta evaluacion[Imposible!]");
+                terminarConexion();
+                return null;
+            }
+
+            while (reader.Read())
+            {
+                string tipoDoc = reader["tipo documento"].ToString();
+                string nroDoc = reader["nro documento"].ToString();
+                string nombre = reader["nombre"].ToString();
+                string apellido = reader["apellido"].ToString();
+
+                int nroCandidato;
+                if (reader["nroCandidato"].ToString() == "")//Se contempla la posibilidad de que este número sea nulo
+                    nroCandidato = 0;
+                else
+                    nroCandidato = Int32.Parse(reader["nroCandidato"].ToString());//Se lo transforma a un numero entero
+
+                int nroEmpleado;
+                if (reader["nroEmpleado"].ToString() == "")//Se contempla la posibilidad de que este número sea nulo
+                    nroEmpleado = 0;
+                else
+                    nroEmpleado = Int32.Parse(reader["nroEmpleado"].ToString());//Se lo transforma a un numero entero
+
+
+                //Llamamos al gestor de candidatos para instanciar el candidato que se obtuvo de la base de datos
+                Candidato objCandidato = gestorCandidatos.instanciarCandidato(nombre, apellido, tipoDoc, nroDoc, nroCandidato, nroEmpleado);
+                //El retorno del metodo del gestor es introducido en la lista de candidatos
+                listaCandidatos.Add(objCandidato);
+            }
+
+            terminarConexion();
+            return listaCandidatos;
+        }
+        public string formatear_fecha(DateTime fecha) 
+        {
+            string fecha_formateada;
+            
+            string mes = fecha.Month.ToString();
+            string dia = fecha.Day.ToString();
+            string hora = fecha.Hour.ToString();
+            string minutos = fecha.Minute.ToString();
+            string segundos = fecha.Second.ToString();
+
+            if (Int32.Parse(fecha.Month.ToString()) < 10)
+                mes = "0" + mes;
+
+            if (Int32.Parse(fecha.Day.ToString()) < 10)
+                dia = "0" + dia;
+
+            if (Int32.Parse(fecha.Hour.ToString()) < 10)
+                hora = "0" + hora;
+            
+            if (Int32.Parse(fecha.Minute.ToString()) < 10)
+                minutos = "0" + minutos;
+            
+            if (Int32.Parse(fecha.Second.ToString()) < 10)
+                segundos = "0" + segundos;
+
+            fecha_formateada = fecha.Year + "-" + mes + "-" + dia + " " + hora + ":" + minutos + ":" + segundos;
+            
+            return fecha_formateada;
         }
 
         /*
