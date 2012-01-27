@@ -78,8 +78,6 @@ namespace Gestores
                     else
                         MessageBox.Show("La clave ingresada no es valida para este candidato. \n\nIntente nuevamente");
                 }
-                else
-                    MessageBox.Show(cuestAsociado.Clave);//Muestra la naturaleza del error
             }
             return esValido;
         }

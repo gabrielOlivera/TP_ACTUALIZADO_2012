@@ -16,8 +16,7 @@ namespace Gestores
         public PuestoEvaluado instanciarPuestoEvaluado(string codigo, string nombre, string empresa, string descripcion = null, List<Caracteristica> caracteristicas = null)
         {
             AdministradorBD admBD = new AdministradorBD();
-            DateTime fecha_evaluacion = admBD.recuperarFechadeComienzoEvaluacion(codigo);
-            PuestoEvaluado nuevoPuestoEv = new PuestoEvaluado(codigo, nombre, empresa, fecha_evaluacion, descripcion, caracteristicas);
+            PuestoEvaluado nuevoPuestoEv = new PuestoEvaluado(codigo, nombre, empresa, DateTime.Now, descripcion, caracteristicas);
             return nuevoPuestoEv;
         }
 

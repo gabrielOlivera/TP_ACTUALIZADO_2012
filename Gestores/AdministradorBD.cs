@@ -535,7 +535,7 @@ namespace Gestores
             PuestoEvaluado PuestoEv;
             for (int i = 0; i < listaIdPuestos.Count; i++)
             {
-                PuestoEv = this.recuperarPuestoEvaluado(listaIdPuestos[i]); 
+                PuestoEv = this.recuperarPuestoEvaluado(listaIdPuestos[i]);
 
                 if (Equals(PuestoEv.Codigo, "ELIMINADO") == false)
                 {
@@ -558,7 +558,14 @@ namespace Gestores
                         listaCuestionariosAsociados.Add(preSeleccionCuestionarios[i]);
                     }
                     else
-                        listaCuestionariosAsociados[i].Estado = estadoCuest;//Agregamos el error para controlarlo
+                    {
+
+                        //Agrego el puesto evaluado al cuestionario
+                        preSeleccionCuestionarios[i].PuestoEvaluado = PuestoEv;
+                        //Agrego el estado al cuestionario
+                        preSeleccionCuestionarios[i].Estado = estadoCuest;
+                        listaCuestionariosAsociados.Add(preSeleccionCuestionarios[i]);//Agregamos el error para controlarlo
+                    }
                 }
                 else
                 {
@@ -701,6 +708,8 @@ namespace Gestores
             GestorEvaluacion gestorEvaluados = new GestorEvaluacion();
             PuestoEvaluado objPuesto = null;
 
+            DateTime fecha_evaluacion = this.recuperarFechadeComienzoEvaluacion(idPuestoEv);
+
             string consultaSql = "SELECT * FROM `puesto evaluado` WHERE `idPuesto Evaluado` = " + idPuestoEv + " ;";
 
             //llamamos al metodo "iniciar conexion"
@@ -739,6 +748,7 @@ namespace Gestores
                         string empresa = reader["empresa"].ToString();
                         //Usamos el gestor de evaluacion para instanciar el puesto evaludado con los datos encontrados en la base de datos
                         objPuesto = gestorEvaluados.instanciarPuestoEvaluado(codigo, nombrePuestoEv, empresa);
+                        objPuesto.Fecha_Comienzo = fecha_evaluacion;
                     }
                     else
                     {
@@ -943,8 +953,6 @@ namespace Gestores
             terminarConexion();
             return listaDeCaracteristicas;
         }
-
-
 
         /*
          * - RecuperarCaracteristicasPuesto tiene la misión de recuperar todas las competencias que estan activas (no eliminadas)
@@ -1341,6 +1349,7 @@ namespace Gestores
             
             return listaDeOpRespuesta;
         }
+
         /*
          * retornarProximoBloque tiene la misión de recuperar el proximo bloque de un cuestionario a travez de su numero de bloque
          */
@@ -1798,7 +1807,7 @@ namespace Gestores
                 // si algo fallo deshacemos todo
                 transaccion.Rollback();
                 // mostramos el mensaje del error
-                MessageBox.Show("La transaccion no se pudo realizar: " + MysqlEx.Message);
+                MessageBox.Show("RESGUARDO DE RESPUESTAS: La transaccion no se pudo realizar: " + MysqlEx.Message);
 
 
             }
@@ -1808,7 +1817,7 @@ namespace Gestores
                 // si algo fallo deshacemos todo
                 transaccion.Rollback();
                 // mostramos el mensaje del error
-                MessageBox.Show("La transaccion no se pudo realizar: " + Ex.Message);
+                MessageBox.Show("RESGUARDO DE RESPUESTAS: La transaccion no se pudo realizar: " + Ex.Message);
 
             }
 
@@ -1822,7 +1831,73 @@ namespace Gestores
             }
         }
 
-        public void guardarEstado(Estado estado) { }
+        public bool guardarEstado(Estado nuevoEstado_) 
+        {
+            MySql.Data.MySqlClient.MySqlTransaction transaccion;
+
+            bool conexionExitosa;
+            int cantDeFilasAfectadas = 0;
+
+            conexionExitosa = iniciarConexion();
+
+            MySql.Data.MySqlClient.MySqlCommand comando = new MySqlCommand();
+
+            comando.Connection = ObjConexion;
+            comando.CommandType = CommandType.Text;
+            comando.CommandTimeout = 0;
+
+            transaccion = ObjConexion.BeginTransaction();
+
+
+            try
+            {
+                if (!conexionExitosa)
+                    return false;
+                else
+                {
+                    string fecha = nuevoEstado_.Fecha_hora.Year + "-" + nuevoEstado_.Fecha_hora.Month + "-" + nuevoEstado_.Fecha_hora.Day + " " + nuevoEstado_.Fecha_hora.Hour + ":" + nuevoEstado_.Fecha_hora.Minute + ":" + nuevoEstado_.Fecha_hora.Second;
+                    //CONSULTA QUE ACTUALIZA LA TABLA CUESTIONARIO_ESTADO PARA RESGUARDAR EL ESTADO 
+                    string consultaSql = "INSERT INTO cuestionario_estado (Cuestionario_idCuestionario,Estado_idEstado,fecha) "
+                        + "VALUES ((SELECT idCuestionario FROM cuestionario WHERE clave = '" + nuevoEstado_.Cuestionario.Clave + "'),"
+                        + "(SELECT idEstado FROM estado WHERE estado = '" + nuevoEstado_.Estado_ + "'), "
+                        + " '" + fecha + "');";
+
+                    comando.CommandText = consultaSql;
+
+                    cantDeFilasAfectadas += comando.ExecuteNonQuery();
+                }
+
+                transaccion.Commit();
+                terminarConexion();
+
+            }
+
+            catch (MySqlException MysqlEx)
+            {
+                // si algo fallo deshacemos todo
+                transaccion.Rollback();
+                // mostramos el mensaje del error
+                MessageBox.Show("RESGUARDO DE ESTADO: La transaccion no se pudo realizar: " + MysqlEx.Message);
+            }
+
+            catch (DataException Ex)
+            {
+                // si algo fallo deshacemos todo
+                transaccion.Rollback();
+                // mostramos el mensaje del error
+                MessageBox.Show("RESGUARDO DE ESTADO: La transaccion no se pudo realizar: " + Ex.Message);
+            }
+
+            if (cantDeFilasAfectadas > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         public bool guardarBloque(Bloque nuevoBloque)
         {
             //CONSULTA QUE ACTUALIZA LA TABLA DE BLOQUES CON UNA NUEVA FILA
@@ -1891,7 +1966,7 @@ namespace Gestores
                 // si algo fallo deshacemos todo
                 transaccion.Rollback();
                 // mostramos el mensaje del error
-                MessageBox.Show("La transaccion no se pudo realizar: " + MysqlEx.Message);
+                MessageBox.Show("RESGUARDO DE BLOQUES: La transaccion no se pudo realizar: " + MysqlEx.Message);
 
 
             }
@@ -1900,7 +1975,75 @@ namespace Gestores
                 // si algo fallo deshacemos todo
                 transaccion.Rollback();
                 // mostramos el mensaje del error
-                MessageBox.Show("La transaccion no se pudo realizar: " + Ex.Message);
+                MessageBox.Show("RESGUARDO DE BLOQUES: La transaccion no se pudo realizar: " + Ex.Message);
+
+            }
+
+            if (cantDeFilasAfectadas > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool guardarAtrubutosCuestionario(Cuestionario cuest_)
+        {
+            MySql.Data.MySqlClient.MySqlTransaction transaccion;
+
+            bool conexionExitosa;
+            int cantDeFilasAfectadas = 0;
+
+            conexionExitosa = iniciarConexion();
+
+            MySql.Data.MySqlClient.MySqlCommand comando = new MySqlCommand();
+
+            comando.Connection = ObjConexion;
+            comando.CommandType = CommandType.Text;
+            comando.CommandTimeout = 0;
+
+            transaccion = ObjConexion.BeginTransaction();
+
+            try
+            {
+                if (!conexionExitosa)
+                    return false;
+
+                else
+                {
+                    //CONSULTA QUE ACTUALIZA LA TABLA ITEM_BLOQUE PARA RESGUARDAR LAS RESPUESTAS
+                    string consultaSql = "UPDATE `cuestionario` SET `nroAccesos`=" + cuest_.NroAccesos + ", `ultimoBloque`=" + cuest_.UltimoBloque.NroBloque + " "
+                        + "WHERE clave='" + cuest_.Clave + "';";
+
+
+                    comando.CommandText = consultaSql;
+
+                    cantDeFilasAfectadas += comando.ExecuteNonQuery();
+                }
+
+                transaccion.Commit();
+                terminarConexion();
+
+            }
+
+            catch (MySqlException MysqlEx)
+            {
+                // si algo fallo deshacemos todo
+                transaccion.Rollback();
+                // mostramos el mensaje del error
+                MessageBox.Show("RESGUARDO DE DATOS CUESTIONARIO: La transaccion no se pudo realizar: " + MysqlEx.Message);
+
+
+            }
+
+            catch (DataException Ex)
+            {
+                // si algo fallo deshacemos todo
+                transaccion.Rollback();
+                // mostramos el mensaje del error
+                MessageBox.Show("RESGUARDO DE DATOS CUESTIONARIO: La transaccion no se pudo realizar: " + Ex.Message);
 
             }
 
@@ -2098,21 +2241,23 @@ namespace Gestores
             return tiempoActivo;
         }
 
-        public DateTime recuperarFechadeComienzoEvaluacion(string cod)
+        public DateTime recuperarFechadeComienzoEvaluacion(int idPuestoEV)
         {
             bool conexionExitosa;
             DateTime fechaComienzo = new DateTime();
 
             string consultaSql = "SELECT DISTINCT `fecha` FROM `cuestionario_estado` cu_est " +
-                "JOIN `puesto evaluado` p on (p.codigo = '" + cod + "') " +
+                "JOIN `puesto evaluado` p on (p.`idPuesto Evaluado` = '" + idPuestoEV + "') " +
                 "JOIN `cuestionario` cuest on (cuest.`Puesto Evaluado_idPuesto Evaluado` = p.`idPuesto Evaluado`) " +
                 "WHERE cu_est.Cuestionario_idCuestionario = cuest.idCuestionario AND Estado_idEstado = 1;";
 
             conexionExitosa = iniciarConexion();
 
             if (!conexionExitosa)
+            {
+                MessageBox.Show("ERROR DE CONEXION CON LA BASE DE DATOS");
                 return fechaComienzo.AddDays(0); //Error de conexion
-
+            }
             MySql.Data.MySqlClient.MySqlCommand comando;
 
             comando = ObjConexion.CreateCommand();
@@ -2122,12 +2267,13 @@ namespace Gestores
             MySqlDataReader reader = comando.ExecuteReader();
 
             if (!reader.HasRows)//si el reader esta vacio, no se encontro el parametro buscado
+            {
+                MessageBox.Show("DATOS DE LA FECHA DEL PUESTO NO ENCONTRADOS");
                 return fechaComienzo.AddDays(0);
+            }
 
             while (reader.Read())
-            {
                 fechaComienzo = DateTime.Parse(reader["fecha"].ToString());
-            }
 
             terminarConexion();
 
