@@ -17,14 +17,14 @@ namespace TpDiseñoCSharp
     {
         GestorCandidatos gestorCandidatos = new GestorCandidatos();
         Gestores.GestorCuestionario gestorCuestionario = new GestorCuestionario();
+        private Form pantallaAnterior;
 
-        public LoginCandidato()
+        public LoginCandidato(Form pantalla_Anterior)
         {
             InitializeComponent();
-            this.Fecha.Text = DateTime.Now.DayOfWeek.ToString() + " " 
-                +DateTime.Now.Day.ToString() + " de "
-                +DateTime.Now.Month.ToString() + " del "
-                +DateTime.Now.Year.ToString();
+            this.Fecha.Text = DateTime.Now.ToLongDateString();
+
+            pantallaAnterior = pantalla_Anterior;
         }
 
         private void Entrar_Click(object sender, EventArgs e)
@@ -49,13 +49,13 @@ namespace TpDiseñoCSharp
                                 {
                                     if ((evento_[0] is Bloque) == true)//Si se retorno el bloque -> recuperamos el cuestionario
                                     {
-                                        Completar_Cuestionario cuest_bloques = new Completar_Cuestionario((Bloque)evento_[0], this);
+                                        Completar_Cuestionario cuest_bloques = new Completar_Cuestionario((Bloque)evento_[0], this, pantallaAnterior);
+                                        pantallaAnterior.MinimizeBox = true;
                                         cuest_bloques.Show();
                                     }
                                     else if (Equals(evento_[0], "instrucciones") == true)//Si retorno intrucciones -> inicializar el cuestionario
                                     {
-                                        Cuestionario_Instrucciones cuestInstruc = new Cuestionario_Instrucciones();
-                                        cuestInstruc.Cuestionario_A_mostrar = (Cuestionario)esValido;
+                                        Cuestionario_Instrucciones cuestInstruc = new Cuestionario_Instrucciones(pantallaAnterior, (Cuestionario)esValido);
                                         cuestInstruc.ShowDialog();
                                     }
                                     else if (((evento_[0] is Bloque) == false) && (Equals(evento_[0], "instrucciones") == false))//Ninguna de las anteriores -> se finalizo el cuestionario
@@ -98,13 +98,13 @@ namespace TpDiseñoCSharp
                                 {
                                     if ((evento_[0] is Bloque) == true)//Si se retorno el bloque -> recuperamos el cuestionario
                                     {
-                                        Completar_Cuestionario cuest_bloques = new Completar_Cuestionario((Bloque)evento_[0], this);
+                                        Completar_Cuestionario cuest_bloques = new Completar_Cuestionario((Bloque)evento_[0], this, pantallaAnterior);
+                                        pantallaAnterior.WindowState = FormWindowState.Minimized;
                                         cuest_bloques.Show();
                                     }
                                     else if (Equals(evento_[0], "instrucciones") == true)//Si retorno intrucciones -> inicializar el cuestionario
                                     {
-                                        Cuestionario_Instrucciones cuestInstruc = new Cuestionario_Instrucciones();
-                                        cuestInstruc.Cuestionario_A_mostrar = (Cuestionario)esValido;
+                                        Cuestionario_Instrucciones cuestInstruc = new Cuestionario_Instrucciones(pantallaAnterior, (Cuestionario)esValido);
                                         cuestInstruc.ShowDialog();
                                     }
                                     else if (((evento_[0] is Bloque) == false) && (Equals(evento_[0], "instrucciones") == false))//Ninguna de las anteriores -> se finalizo el cuestionario
@@ -131,14 +131,13 @@ namespace TpDiseñoCSharp
         //Si presiona el boton cancelar, se cierra la ventana "LoginCandidato" y vuelve a la "PantallaPrincipal"
         private void Cancelar_Click(object sender, EventArgs e)
         {
-            Close();
+            this.Close();
         }
 
         private void LoginCandidato_Load(object sender, EventArgs e)
         {
 
         }
-
 
     }
 }

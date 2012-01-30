@@ -71,13 +71,30 @@ namespace Gestores
                             }
                         }
                         else
-                            return this.instanciarCuestionario(null, "LOS TIEMPOS VENCIERON PARA REALIZAR LA EVALUACIÓN", null, 0);
+                        {
+                            if (nCuestionario[0].Estado.Estado_ == "COMPLETO")
+                            {
+                                MessageBox.Show("USTED YA A COMPLETADO SU CUESTIONARIO PARA ESTA EVALUACION");
+                                return null;
+                            }
+                            else
+                            {
+                                MessageBox.Show("LOS TIEMPOS VENCIERON PARA REALIZAR LA EVALUACIÓN");
+                                return null;
+                            }
+                        }
                     }
                     else
-                        return this.instanciarCuestionario(null, "EL PUESTO DE EVALUACION FUE ELIMINADO", null, 0);
+                    {
+                        MessageBox.Show("EL PUESTO DE EVALUACION FUE ELIMINADO");
+                        return null;
+                    }
                 }
                 else
-                    return this.instanciarCuestionario(null, "NO POSEE UN CUESTIONARIO PARA SER EVALUADO", null, 0);
+                {
+                    MessageBox.Show("NO POSEE UN CUESTIONARIO PARA SER EVALUADO");
+                    return null;
+                }
             }
 
             return nuevoCuest;
@@ -128,6 +145,7 @@ namespace Gestores
             DateTime fecha_de_Actual = DateTime.Now;
 
             añosPasados = this.derterminarAño(fecha_cuestionario);
+
             if (añosPasados != -1)
             {
                 if (añosPasados == 0)//SON FECHAS DEL MISMO AÑO
@@ -187,7 +205,7 @@ namespace Gestores
         public ArrayList crearCuestionario(Cuestionario nCuestionario)
         {
             ArrayList procesoFinalizado = new ArrayList();
-            
+
             int accesos = nCuestionario.NroAccesos;
             int maxAccesos = nCuestionario.MaxAccesos;
             string estadoCuestionario = nCuestionario.obtenerEstado();
@@ -202,7 +220,7 @@ namespace Gestores
 
                     //tiempo actual es el tiempo transcurrido en dias desde el se inicio de la evaluacion
                     int tiempoActual = this.determinarCantidad_DeDiasPasados(fechaComienzoEvaluacion);
-                    
+
                     switch (tiempoActual <= tiempoSist)
                     {
                         case true:
@@ -211,7 +229,7 @@ namespace Gestores
                             DateTime fechaCuestionario = nCuestionario.obtenerFechaEstado();
                             //tiempo activo es el tiempo que transcurrio desde que se comenzo a realizar el cuestionario
                             int tiempoActivo = this.determinarCantidad_DeDiasPasados(fechaCuestionario);
-                            
+
                             switch (tiempoActivo <= tiempoMax)
                             {
                                 case true:
@@ -259,6 +277,7 @@ namespace Gestores
                 if (pregXbloque != -1 && pregXbloque != -2)
                 {
                     bool bloques_Creados = this.crearBloque(listaPreguntas, pregXbloque, cuestionario);
+
                     if (bloques_Creados)
                     {
                         this.cambiarEstado("EN PROCESO", cuestionario);
@@ -279,6 +298,8 @@ namespace Gestores
         public Bloque levantarCuestionario(Cuestionario cuestionario) 
         {
             cuestionario.aumentarAcceso();
+            cuestionario.Estado.Fecha_hora = DateTime.Now;
+            admBD.guardarEstado(cuestionario.Estado);
             Bloque bloq_ = cuestionario.UltimoBloque;
             return bloq_;
         }
@@ -377,18 +398,41 @@ namespace Gestores
             return operacionRealizadaConExito;
         }
 
-        public void cambiarEstado(string alEstado, Cuestionario cuest)
+        public bool cambiarEstado(string alEstado, Cuestionario cuest)
         {
             AdministradorBD admBD = new AdministradorBD();  //intanciacion del administrador base de datos
 
             Estado nuevoEstado = new Estado(cuest, alEstado);
             cuest.Estado = nuevoEstado;
-            admBD.guardarEstado(cuest.Estado); //se lo envia al Adm BD
+            bool seCambio_elEstado = admBD.guardarEstado(cuest.Estado); //se lo envia al Adm BD
+            
+            if (seCambio_elEstado == true)
+                return true;
+            else
+            {
+                MessageBox.Show("No se realizo el cambio de estado de su cuestionario\n\nPor favor reinicie su sesión");
+                return false;
+            }
         }
 
         private void ordenarListaAleatorio(List<PreguntaEvaluada> listaPreguntas) 
         {
             //listaPreguntas.Sort();
         } //establecer una forma de ordenamiento aleatorio... MIRAR
+
+        public bool resguardarCuestionario(Cuestionario cuest_)
+        {
+            AdministradorBD admBD = new AdministradorBD();
+
+            bool seGuardaronAtrubutos = admBD.guardarAtrubutosCuestionario(cuest_);
+
+            if (seGuardaronAtrubutos == true)
+                return true;
+            else
+            {
+                MessageBox.Show("Ocurrio un error al resguardar los datos del cuestionario\n\n\tReinicie su sesión\n\n\t\tDisculpe las molestias");
+                return false;
+            }
+        }
     }
 }

@@ -151,6 +151,7 @@
             // Cancelar
             // 
             this.Cancelar.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.Cancelar.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.Cancelar.Location = new System.Drawing.Point(383, 315);
             this.Cancelar.Name = "Cancelar";
             this.Cancelar.Size = new System.Drawing.Size(75, 23);
@@ -160,9 +161,11 @@
             // 
             // Cuestionario_Instrucciones
             // 
+            this.AcceptButton = this.Aceptar;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
+            this.CancelButton = this.Cancelar;
             this.ClientSize = new System.Drawing.Size(647, 459);
             this.Controls.Add(this.Cancelar);
             this.Controls.Add(this.Aceptar);

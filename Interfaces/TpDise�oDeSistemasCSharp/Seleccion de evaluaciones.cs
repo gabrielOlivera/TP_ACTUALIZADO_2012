@@ -51,9 +51,7 @@ namespace TpDiseñoCSharp
 
 	            //por cada candidato que participo en esta evaluacion
                 
-
                 listaCandidatos = AdminBD.listarCandidatosPorEvaluacion(fecha, codigo);
-                
                 
                 for (int r = 0; r < listaCandidatos.Count; r++)
                 {
