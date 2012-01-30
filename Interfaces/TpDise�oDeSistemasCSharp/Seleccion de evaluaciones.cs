@@ -33,12 +33,10 @@ namespace TpDiseñoCSharp
         private void aceptar_Click(object sender, EventArgs e)
         {
             AdministradorBD AdminBD = new AdministradorBD();
-            List<Candidato> listaCandidatos= new List<Candidato>();
-
+                       
             //por cada evaluacion (p_ev segun fecha) seleccionada
             for (int i = 0; i < selecciondatagridW.SelectedRows.Count ; i++)
             {
-
                 int fila_seleccionada = selecciondatagridW.SelectedRows[i].Index;
 
                 DateTime fecha = (DateTime) selecciondatagridW[0, fila_seleccionada].Value;
@@ -49,16 +47,54 @@ namespace TpDiseñoCSharp
                 string info_evaluacion = "Orden de merito para la evaluacion del puesto: "+ nombre_puesto + 
                     " tomada para la empresa: " + empresa + " el: " + fecha;
 
-	            //por cada candidato que participo en esta evaluacion
-                
-                listaCandidatos = AdminBD.listarCandidatosPorEvaluacion(fecha, codigo);
-                
-                for (int r = 0; r < listaCandidatos.Count; r++)
+	        
+                //listamos los "sin contestar" estado 3                
+                List<Object> sinContestar = new List<object>();
+                sinContestar = AdminBD.listarCandidatosPorEvaluacion(fecha, codigo, 3);
+                if (sinContestar != null)
                 {
-                    MessageBox.Show(listaCandidatos[r].Nombre.ToString());    
-                }
-                
+                    List<Candidato> listaCandidatos_SinContestar = (List<Candidato>)sinContestar[0];
+                    List<int> listaAccesos_SinContestar = (List<int>)sinContestar[1];
 
+                    MessageBox.Show("Lista de SIN CONTESTAR");
+                    for (int r = 0; r < listaCandidatos_SinContestar.Count; r++)
+                    {
+                        MessageBox.Show(listaCandidatos_SinContestar[r].Nombre.ToString() + " " + listaAccesos_SinContestar[r].ToString());
+                    }
+                }
+
+                List<Object> incompletos = new List<object>();
+                
+                //listamos los "Incompletos" estado 4                
+                
+                incompletos = AdminBD.listarCandidatosPorEvaluacion(fecha, codigo, 4);
+                if (incompletos != null)
+                {
+                    List<Candidato> listaCandidatos_Incompletos = (List<Candidato>)incompletos[0];
+                    List<int> listaAccesos_Incompletos = (List<int>)incompletos[1];
+                    
+                    MessageBox.Show("Lista de INCOMPLETOS");
+                    for (int r = 0; r < listaCandidatos_Incompletos.Count; r++)
+                    {
+                        MessageBox.Show(listaCandidatos_Incompletos[r].Nombre.ToString() + " " + listaAccesos_Incompletos[r].ToString());
+                    }
+                }
+
+                List<Object> completos = new List<object>();
+                //listamos los "completos" estado 5                
+
+                completos = AdminBD.listarCandidatosPorEvaluacion(fecha, codigo, 5);
+                if (completos != null)
+                {
+                    List<Candidato> listaCandidatos_completos = (List<Candidato>)completos[0];
+                    List<int> listaAccesos_completos = (List<int>)completos[1];
+
+                    MessageBox.Show("Lista de COMPLETOS");
+                    for (int r = 0; r < listaCandidatos_completos.Count; r++)
+                    {
+                        MessageBox.Show(listaCandidatos_completos[r].Nombre.ToString() + " " + listaAccesos_completos[r].ToString());
+                    }
+                }
 
                 //{
 	            /*    completo la evaluacion? NO: a lista de "incompletos" y BREAK
