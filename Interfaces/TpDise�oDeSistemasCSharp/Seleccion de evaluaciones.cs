@@ -32,17 +32,38 @@ namespace TpDiseñoCSharp
 
         private void aceptar_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("No implementado, Ver Pseudocodigo! (donde iria el codigo de este boton)");
-            /*
-             por cada puesto_evaluado seleccionado 
+            AdministradorBD AdminBD = new AdministradorBD();
+            List<Candidato> listaCandidatos= new List<Candidato>();
+
+            //por cada evaluacion (p_ev segun fecha) seleccionada
+            for (int i = 0; i < selecciondatagridW.SelectedRows.Count ; i++)
             {
-                por cada evaluacion (p_ev segun fecha) seleccionada
+
+                int fila_seleccionada = selecciondatagridW.SelectedRows[i].Index;
+
+                DateTime fecha = (DateTime) selecciondatagridW[0, fila_seleccionada].Value;
+                string codigo = selecciondatagridW[1, fila_seleccionada].Value.ToString();
+                string empresa = selecciondatagridW[2, fila_seleccionada].Value.ToString();
+                string nombre_puesto = selecciondatagridW[3, fila_seleccionada].Value.ToString();
+                
+                string info_evaluacion = "Orden de merito para la evaluacion del puesto: "+ nombre_puesto + 
+                    " tomada para la empresa: " + empresa + " el: " + fecha;
+
+	            //por cada candidato que participo en esta evaluacion
+                
+
+                listaCandidatos = AdminBD.listarCandidatosPorEvaluacion(fecha, codigo);
+                
+                
+                for (int r = 0; r < listaCandidatos.Count; r++)
                 {
-	            Colocar datos de la evaluacion
-	
-	            por cada candidato que participo en esta evaluacion
-	            {
-	                completo la evaluacion? NO: a lista de "incompletos" y BREAK
+                    MessageBox.Show(listaCandidatos[r].Nombre.ToString());    
+                }
+                
+
+
+                //{
+	            /*    completo la evaluacion? NO: a lista de "incompletos" y BREAK
 	
     	                obtener puntuacion
 	
@@ -63,6 +84,9 @@ namespace TpDiseñoCSharp
                 }
             }
              */
+        
+            }
+
         }
 
        

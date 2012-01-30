@@ -272,9 +272,11 @@
             // 
             this.ResultadosDeBusqueda.AllowUserToAddRows = false;
             this.ResultadosDeBusqueda.AllowUserToDeleteRows = false;
+            this.ResultadosDeBusqueda.BackgroundColor = System.Drawing.SystemColors.Control;
             this.ResultadosDeBusqueda.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.ResultadosDeBusqueda.Location = new System.Drawing.Point(23, 36);
             this.ResultadosDeBusqueda.Margin = new System.Windows.Forms.Padding(4);
+            this.ResultadosDeBusqueda.MultiSelect = false;
             this.ResultadosDeBusqueda.Name = "ResultadosDeBusqueda";
             this.ResultadosDeBusqueda.ReadOnly = true;
             this.ResultadosDeBusqueda.RowTemplate.Height = 24;
