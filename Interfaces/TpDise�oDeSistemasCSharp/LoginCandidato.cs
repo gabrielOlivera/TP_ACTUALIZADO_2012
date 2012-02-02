@@ -50,13 +50,14 @@ namespace TpDiseñoCSharp
                                     if ((evento_[0] is Bloque) == true)//Si se retorno el bloque -> recuperamos el cuestionario
                                     {
                                         Completar_Cuestionario cuest_bloques = new Completar_Cuestionario((Bloque)evento_[0], this, pantallaAnterior);
-                                        pantallaAnterior.MinimizeBox = true;
+                                        pantallaAnterior.Visible = false;
                                         cuest_bloques.Show();
                                     }
                                     else if (Equals(evento_[0], "instrucciones") == true)//Si retorno intrucciones -> inicializar el cuestionario
                                     {
-                                        Cuestionario_Instrucciones cuestInstruc = new Cuestionario_Instrucciones(pantallaAnterior, (Cuestionario)esValido);
-                                        cuestInstruc.ShowDialog();
+                                        Cuestionario_Instrucciones cuestInstruc = new Cuestionario_Instrucciones(pantallaAnterior, this, (Cuestionario)esValido);
+                                        pantallaAnterior.Visible = false;
+                                        cuestInstruc.Show();
                                     }
                                     else if (((evento_[0] is Bloque) == false) && (Equals(evento_[0], "instrucciones") == false))//Ninguna de las anteriores -> se finalizo el cuestionario
                                         MessageBox.Show(evento_[0].ToString());
@@ -99,13 +100,14 @@ namespace TpDiseñoCSharp
                                     if ((evento_[0] is Bloque) == true)//Si se retorno el bloque -> recuperamos el cuestionario
                                     {
                                         Completar_Cuestionario cuest_bloques = new Completar_Cuestionario((Bloque)evento_[0], this, pantallaAnterior);
-                                        pantallaAnterior.WindowState = FormWindowState.Minimized;
+                                        pantallaAnterior.Visible = false;
                                         cuest_bloques.Show();
                                     }
                                     else if (Equals(evento_[0], "instrucciones") == true)//Si retorno intrucciones -> inicializar el cuestionario
                                     {
-                                        Cuestionario_Instrucciones cuestInstruc = new Cuestionario_Instrucciones(pantallaAnterior, (Cuestionario)esValido);
-                                        cuestInstruc.ShowDialog();
+                                        Cuestionario_Instrucciones cuestInstruc = new Cuestionario_Instrucciones(pantallaAnterior, this, (Cuestionario)esValido);
+                                        pantallaAnterior.Visible = false;
+                                        cuestInstruc.Show();
                                     }
                                     else if (((evento_[0] is Bloque) == false) && (Equals(evento_[0], "instrucciones") == false))//Ninguna de las anteriores -> se finalizo el cuestionario
                                         MessageBox.Show(evento_[0].ToString());

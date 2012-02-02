@@ -61,13 +61,16 @@ namespace Gestores
                         {
                             nuevoCuest = nCuestionario[0];
 
-                            //Re-armamos las relaciones del cuestionario para tener todos los objetos en memoria
-                            bool re_construido = admBD.reconstruirRelaciones(nuevoCuest);
-
-                            if (re_construido == false)
+                            if (nuevoCuest.PuestoEvaluado.Caracteristicas == null)
                             {
-                                MessageBox.Show("No se pudo recuperar Todos los datos requeridos");
-                                return null;
+                                //Re-armamos las relaciones del cuestionario para tener todos los objetos en memoria
+                                bool re_construido = admBD.reconstruirRelaciones(nuevoCuest);
+
+                                if (re_construido == false)
+                                {
+                                    MessageBox.Show("No se pudo recuperar Todos los datos requeridos");
+                                    return null;
+                                }
                             }
                         }
                         else
@@ -350,12 +353,13 @@ namespace Gestores
             int numBloq = 1, contadorDeBloqueCreados = 0;
             int cantidadBloques = (listaPreguntas.Count / pregXbloque);
 
-            for (int i = 0; i <= listaPreguntas.Count; i++)
+            for (int i = 0; i < listaPreguntas.Count; i++)
             {
                 Bloque nuevoBloque = new Bloque(numBloq, cuest);
-                for (int j = 0; j <= pregXbloque; j++)
+                for (int j = 0; j < pregXbloque; j++)
                 {
-                    nuevoBloque.addPreguntaEv(listaPreguntas[j]);
+                    nuevoBloque.addPreguntaEv(listaPreguntas[i]);
+                    i++;
                 }
 
                 contadorDeBloqueCreados += 1;
@@ -364,7 +368,6 @@ namespace Gestores
                     cuest.UltimoBloque = nuevoBloque;
                 }
                 numBloq++;
-                i += pregXbloque;
 
                 switch (contadorDeBloqueCreados == cantidadBloques)
                 {
@@ -417,6 +420,10 @@ namespace Gestores
 
         private void ordenarListaAleatorio(List<PreguntaEvaluada> listaPreguntas) 
         {
+            /*for (int i = 0; i < listaPreguntas.Count; i++)
+            {
+                MessageBox.Show("codigo de pregunta " + i + " -> " + listaPreguntas[i].Codigo);
+            }*/
             //listaPreguntas.Sort();
         } //establecer una forma de ordenamiento aleatorio... MIRAR
 

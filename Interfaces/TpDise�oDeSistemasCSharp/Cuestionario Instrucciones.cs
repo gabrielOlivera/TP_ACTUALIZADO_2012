@@ -25,10 +25,11 @@ namespace TpDiseñoCSharp
 
         }
 
-        public Cuestionario_Instrucciones(Form pantallaPrincipal, Cuestionario cuestionario_Asociado)
+        public Cuestionario_Instrucciones(Form pantallaPrincipal, Form pantallaAnterior, Cuestionario cuestionario_Asociado)
         {
             InitializeComponent();
             pantalla_Inicial = pantallaPrincipal;
+            pantallaAnterior.Close();
             this.Cuestionario_A_mostrar = cuestionario_Asociado;
             this.Candidato.Text = Cuestionario_A_mostrar.CandidatoAsociado.Nombre + " " + Cuestionario_A_mostrar.CandidatoAsociado.Apellido;
             this.Fecha.Text = DateTime.Now.ToLongDateString();

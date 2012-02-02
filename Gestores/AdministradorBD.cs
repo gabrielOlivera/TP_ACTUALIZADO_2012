@@ -1362,18 +1362,15 @@ namespace Gestores
         {
             GestorCuestionario gestorCuestionario = new GestorCuestionario();
             GestorEvaluacion gestorEvaluacion = new GestorEvaluacion();
-            
-            if (nroBloque == 1)
+
+            if (cuestAsociado.PuestoEvaluado.Caracteristicas == null)
             {
-                if (cuestAsociado.PuestoEvaluado.Caracteristicas == null)
+                //Re-armamos las relaciones del cuestionario para tener todos los objetos en memoria
+                bool re_construido = this.reconstruirRelaciones(cuestAsociado);
+                if (!re_construido)
                 {
-                    //Re-armamos las relaciones del cuestionario para tener todos los objetos en memoria
-                    bool re_construido = this.reconstruirRelaciones(cuestAsociado);
-                    if (!re_construido)
-                    {
-                        MessageBox.Show("No se pudo recuperar Todos los datos requeridos");
-                        return null;
-                    }
+                    MessageBox.Show("No se pudo recuperar Todos los datos requeridos");
+                    return null;
                 }
             }
 

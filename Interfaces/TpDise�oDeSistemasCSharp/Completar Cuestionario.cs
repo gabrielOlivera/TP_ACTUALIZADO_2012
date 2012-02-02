@@ -26,7 +26,7 @@ namespace TpDiseñoCSharp
             this.mostrarPreguntas(bloqueAsociado);
             this.bloque_A_mostrar = bloqueAsociado;
 
-            pantalla_Anterior.Close();
+            pantalla_Anterior.Visible = false;
             pantallaInicial = pantallaPrincipal;
 
             this.FormClosing += Cancelar_Click;
@@ -212,43 +212,21 @@ namespace TpDiseñoCSharp
                     if (resguardoRealizado == true)
                     {
                         gestorCuestionario.cambiarEstado("COMPLETO", bloque_A_mostrar.CuestAsociado);
-                        MessageBox.Show("TERMINO LA EVALUACION");
+                        MessageBox.Show("**** ----- TERMINO LA EVALUACION ----- ****");
                     }
                     else
                         MessageBox.Show("! OCURRIO UN ERROR AL RESGUARDAR SUS RESPUESTA\n\n\tPresione 'Aceptar' para reiniciar su sesión");
-
-                    this.Close("guardar");
+                    this.Close();
                 }
             }
         }
         
         private void Cancelar_Click(object sender, EventArgs e)
         {
-            if (sender != null)
-            {
-                Close("cerrar");
-            }
-            else
-                Close("guardar");
-            /*GestorCuestionario gestorCuestionario = new GestorCuestionario();
-            MessageBox.Show("Cerrando su sesión...\n\n\tSe estan guardando sus datos");
-            gestorCuestionario.resguardarCuestionario(bloque_A_mostrar.CuestAsociado);
-            pantallaInicial.WindowState = FormWindowState.Maximized;*/
-        }
-
-        private void Close(string e = null)
-        {
-            if ((Equals(e, "cerrar")) == true)
-            {
-                Close();
-            }
-            else
-            {
                 GestorCuestionario gestorCuestionario = new GestorCuestionario();
                 MessageBox.Show("Cerrando su sesión...\n\n\tSe estan guardando sus datos");
                 gestorCuestionario.resguardarCuestionario(bloque_A_mostrar.CuestAsociado);
-                pantallaInicial.WindowState = FormWindowState.Maximized;
-            }
+                pantallaInicial.Visible = true;
         }
     }
 }

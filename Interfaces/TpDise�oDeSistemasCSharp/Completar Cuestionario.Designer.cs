@@ -111,7 +111,7 @@
             // 
             this.nomb_candidato.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.nomb_candidato.AutoSize = true;
-            this.nomb_candidato.Location = new System.Drawing.Point(636, 39);
+            this.nomb_candidato.Location = new System.Drawing.Point(632, 39);
             this.nomb_candidato.Name = "nomb_candidato";
             this.nomb_candidato.Size = new System.Drawing.Size(55, 13);
             this.nomb_candidato.TabIndex = 15;
@@ -122,7 +122,7 @@
             this.CerrarSesion.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.CerrarSesion.AutoSize = true;
             this.CerrarSesion.LinkVisited = true;
-            this.CerrarSesion.Location = new System.Drawing.Point(736, 39);
+            this.CerrarSesion.Location = new System.Drawing.Point(735, 39);
             this.CerrarSesion.Name = "CerrarSesion";
             this.CerrarSesion.Size = new System.Drawing.Size(70, 13);
             this.CerrarSesion.TabIndex = 14;
