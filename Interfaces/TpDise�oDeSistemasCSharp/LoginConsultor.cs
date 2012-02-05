@@ -13,9 +13,12 @@ namespace TpDiseñoCSharp
 {
     public partial class LoginConsultor : Form
     {
-        public LoginConsultor()
+        private Form pantanllaPrincipal;
+
+        public LoginConsultor(Form pantallaPrincipal_parametro)
         {
             InitializeComponent();
+            pantanllaPrincipal = pantallaPrincipal_parametro;
         }
 
         private void Entrar_Click(object sender, EventArgs e)
@@ -26,8 +29,9 @@ namespace TpDiseñoCSharp
                 {
                     if (Contraseña.Text.Length > 7)
                     {
-                        MenuPrincipalConsultor menuConsultor = new MenuPrincipalConsultor(Usuario.Text);
-                        menuConsultor.ShowDialog();
+                        MenuPrincipalConsultor menuConsultor = new MenuPrincipalConsultor(Usuario.Text, pantanllaPrincipal, this);
+                        pantanllaPrincipal.Visible = false;
+                        menuConsultor.Show();
                     }
                     else
                     {

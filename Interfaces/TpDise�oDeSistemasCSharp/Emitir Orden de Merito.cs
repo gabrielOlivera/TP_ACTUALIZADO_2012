@@ -60,9 +60,6 @@ namespace TpDiseñoCSharp
             
             Seleccion_de_evaluaciones SelEvaluaciones = new Seleccion_de_evaluaciones(Lista_puestos_ev);
             SelEvaluaciones.ShowDialog();
-
-
-
         }
 
     }

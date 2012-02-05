@@ -132,6 +132,7 @@
             // 
             // Clave
             // 
+            this.Clave.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.Clave.Location = new System.Drawing.Point(105, 131);
             this.Clave.MaxLength = 20;
             this.Clave.Name = "Clave";

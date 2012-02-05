@@ -22,7 +22,7 @@ namespace TpDiseñoCSharp
 
         private void LoginConsultor_Click(object sender, EventArgs e)
         {
-            LoginConsultor logCons= new LoginConsultor();
+            LoginConsultor logCons= new LoginConsultor(this);
             logCons.ShowDialog();
 
         }

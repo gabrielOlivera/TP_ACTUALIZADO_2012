@@ -367,22 +367,22 @@ namespace Gestores
 
                 //A continuacion se contemplan todas las posibilidades en fragmentos de consulta
                 if (TipoDoc != null)
-                    listaConsultas.Add("`tipo documento` = '" + TipoDoc + "' ");
+                    listaConsultas.Add("`tipo documento` LIKE '%" + TipoDoc + "%'");
                 if (NroDoc != null)
-                    listaConsultas.Add("`nro documento` = '" + NroDoc + "' ");
+                    listaConsultas.Add("`nro documento` LIKE '%" + NroDoc + "%'");
                 if (nombre != null)
-                    listaConsultas.Add("`nombre` = '" + nombre + "' ");
+                    listaConsultas.Add("`nombre` LIKE '%" + nombre + "%'");
                 if (apellido != null)
-                    listaConsultas.Add("`apellido` = '" + apellido + "' ");
+                    listaConsultas.Add("`apellido` LIKE '%" + apellido + "%'");
                 if (nroEmp != 0)
-                    listaConsultas.Add("`nroEmpleado` = '" + nroEmp + "' ");
+                    listaConsultas.Add("`nroEmpleado` LIKE '%" + nroEmp + "%'");
                 if (nroCand != 0)
-                    listaConsultas.Add("`nroCandidato` = '" + nroCand + "' ");
+                    listaConsultas.Add("`nroCandidato` LIKE '%" + nroCand + "%'");
 
                 //Se agregan los fragmentos de consulta a la variable "consultaSql"
                 for (int i = 0; i != (listaConsultas.Count - 1); i++)
                 {
-                    consultaSql += listaConsultas[i] + "AND ";
+                    consultaSql += listaConsultas[i] + " AND ";
                 }
                 //Se concluye la declaracion de la consulta
                 consultaSql += listaConsultas[(listaConsultas.Count - 1)] + ";";
@@ -502,7 +502,6 @@ namespace Gestores
             if (!reader.HasRows)
             { 
                 //si el reader esta vacio, es qe no encontro a ese candidato
-                MessageBox.Show("No se encontro ningun cuestionario asociado");
                 terminarConexion();
                 Cuestionario cues = gestorCuestionarios.instanciarCuestionario(candidato, "NO POSEE", null, 0);
                 listaCuestionariosAsociados.Add(cues);
@@ -565,7 +564,6 @@ namespace Gestores
                     }
                     else
                     {
-
                         //Agrego el puesto evaluado al cuestionario
                         preSeleccionCuestionarios[i].PuestoEvaluado = PuestoEv;
                         //Agrego el estado al cuestionario
@@ -2399,6 +2397,7 @@ namespace Gestores
             terminarConexion();
             return listaCandidatos;
         }
+
         public string formatear_fecha(DateTime fecha) 
         {
             string fecha_formateada;

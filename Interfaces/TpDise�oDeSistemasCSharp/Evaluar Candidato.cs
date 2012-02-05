@@ -6,32 +6,102 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using Gestores;
+using Entidades;
 
 namespace TpDiseñoCSharp
 {
     public partial class Evaluar_Candidato : Form
     {
-        public Evaluar_Candidato(string user)
+        private List<Candidato> listaCandidatos_agregados;
+        private Form pantallaPrincipal;
+
+        public Evaluar_Candidato(string user, Form pantallaPrincipal_parametro, Form pantallaAnterior)
         {
             InitializeComponent();
+            pantallaPrincipal = pantallaPrincipal_parametro;
+            pantallaAnterior.Close();
+            listaCandidatos_agregados = new List<Candidato>();
             this.Consultor.Text = user;
         }
 
         private void VerAgregados_Click(object sender, EventArgs e)
         {
-            Lista_de_Candidatos listCandidatos = new Lista_de_Candidatos();
+            Lista_de_Candidatos listCandidatos = new Lista_de_Candidatos(listaCandidatos_agregados);
             listCandidatos.ShowDialog();
         }
 
         private void Siguiente_Click(object sender, EventArgs e)
         {
-            Evaluar_Candidatos___Ventana_2 evCandidatos2 = new Evaluar_Candidatos___Ventana_2(this.Consultor.Text);
-            evCandidatos2.ShowDialog();
+            AdministradorBD admBD = new AdministradorBD();
+            List<Candidato> lista_Candidatos_EnEvaluaciones = new List<Candidato>();
+
+            for (int i = 0; i < listaCandidatos_agregados.Count; i++)
+            {
+                List<Cuestionario> lista_cuest_Asociados = admBD.recuperarCuestionarioActivo(listaCandidatos_agregados[i]);
+                if (lista_cuest_Asociados[0].Clave != "NO POSEE")
+                {
+                    if ((lista_cuest_Asociados[0].Estado.Estado_ == "ACTIVO") || (lista_cuest_Asociados[0].Estado.Estado_ == "EN PROCESO"))
+                    {
+                        lista_Candidatos_EnEvaluaciones.Add(listaCandidatos_agregados[i]);
+                        listaCandidatos_agregados.Remove(listaCandidatos_agregados[i]);
+                    }
+                }
+            }
+
+            if (lista_Candidatos_EnEvaluaciones.Count != 0)
+            {
+                string mensaje_ = "";
+                for (int i = 0; i < lista_Candidatos_EnEvaluaciones.Count; i++)
+                {
+                    mensaje_ += "\n\t " + lista_Candidatos_EnEvaluaciones[i].TipoDoc + " " + lista_Candidatos_EnEvaluaciones[i].NroDoc + " " + lista_Candidatos_EnEvaluaciones[i].Apellido + " " + lista_Candidatos_EnEvaluaciones[i].Nombre;
+                }
+
+                MessageBox.Show("Los siguientes candidatos estan siendo evaluados:" + mensaje_ + "\n\nNO PUEDEN SER NUEVAMENTE EVALUADOS");
+                resultadosDeBusqueda.Visible = false;
+            }
+            else
+            {
+                Evaluar_Candidatos___Ventana_2 evCandidatos2 = new Evaluar_Candidatos___Ventana_2(this.Consultor.Text, listaCandidatos_agregados);
+                evCandidatos2.ShowDialog();
+            }
         }
 
         private void Buscar_Click(object sender, EventArgs e)
         {
+            GestorCandidatos gestorCandidatos = new GestorCandidatos();
+
+            int nroCandidato;
+            if (this.nroEmpleado.Text.ToString() == "")//Se contempla la posibilidad de que este número sea nulo
+                nroCandidato = 0;
+            else
+                nroCandidato = Int32.Parse(this.nroEmpleado.Text.ToString());//Se lo transforma a un numero entero
+
+            int nroEmpleado;
+            if (this.nroCandidato.Text.ToString() == "")//Se contempla la posibilidad de que este número sea nulo
+                nroEmpleado = 0;
+            else
+                nroEmpleado = Int32.Parse(this.nroCandidato.Text.ToString());//Se lo transforma a un numero entero
+
+            List<Candidato> listaCandidatos = gestorCandidatos.listarCandidatos(apellido.Text.ToString(), nombre.Text.ToString(), nroEmpleado, nroCandidato);
             resultadosDeBusqueda.Visible = true;
+            resultadosDeBusqueda.DataSource = listaCandidatos;
+        }
+
+        private void Agregar_Click(object sender, EventArgs e)
+        {
+            int fila_seleccionada = resultadosDeBusqueda.CurrentRow.Index;
+            bool noAgregado = true;
+
+            List<Candidato> lista_cand_ = (List<Candidato>)resultadosDeBusqueda.DataSource;
+            //MessageBox.Show("candidato seleccionado " + lista_cand_[fila_seleccionada].Apellido +" "+ lista_cand_[fila_seleccionada].Nombre);
+
+            if(listaCandidatos_agregados.Exists(delegate(Candidato c) { return c.NroDoc == lista_cand_[fila_seleccionada].NroDoc; }))
+                noAgregado = false;
+
+            //MessageBox.Show("NO fue agregado ?? " + noAgregado);
+            if(noAgregado == true)
+                listaCandidatos_agregados.Add(lista_cand_[fila_seleccionada]);
 
         }
     }
