@@ -2093,6 +2093,7 @@ namespace Gestores
 
             MySqlDataReader reader = comando.ExecuteReader();
             objPuesto = gestorPuesto.instanciarPuesto(null, null, null);
+
             while (reader.Read() && !bandera)
             {
                 string cod = reader["codigo"].ToString();
