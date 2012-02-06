@@ -1,4 +1,4 @@
--- MySQL dump 10.13  Distrib 5.5.15, for Win32 (x86)
+﻿-- MySQL dump 10.13  Distrib 5.5.15, for Win32 (x86)
 --
 -- Host: localhost    Database: tp base de datos
 -- ------------------------------------------------------
@@ -195,7 +195,7 @@ CREATE TABLE `cuestionario` (
   KEY `fk_Cuestionario_Candidato1` (`Candidato_idCandidato`),
   CONSTRAINT `fk_Cuestionario_Candidato1` FOREIGN KEY (`Candidato_idCandidato`) REFERENCES `candidato` (`idCandidato`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_Cuestionario_Puesto Evaluado1` FOREIGN KEY (`Puesto Evaluado_idPuesto Evaluado`) REFERENCES `puesto evaluado` (`idPuesto Evaluado`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -204,7 +204,7 @@ CREATE TABLE `cuestionario` (
 
 LOCK TABLES `cuestionario` WRITE;
 /*!40000 ALTER TABLE `cuestionario` DISABLE KEYS */;
-INSERT INTO `cuestionario` VALUES (1,'JPM056P1',0,1,1,1),(2,'ACF698P1',0,1,3,1),(3,'ECM684P3',0,4,8,1),(4,'MMF125P2',0,2,4,NULL),(5,'WDM158P2',0,2,10,NULL),(6,'MPF126P2',0,2,13,NULL),(8,'MNF425P3',4,3,1,4);
+INSERT INTO `cuestionario` VALUES (1,'JPM056P1',0,1,1,1),(2,'ACF698P1',0,1,3,1),(3,'ECM684P3',0,4,8,1),(4,'MMF125P2',0,2,4,NULL),(5,'WDM158P2',0,2,10,NULL),(6,'MPF126P2',0,5,13,NULL),(8,'MNF425P3',4,3,1,4),(9,'NBM666P2',4,5,2,4);
 /*!40000 ALTER TABLE `cuestionario` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -233,7 +233,7 @@ CREATE TABLE `cuestionario_estado` (
 
 LOCK TABLES `cuestionario_estado` WRITE;
 /*!40000 ALTER TABLE `cuestionario_estado` DISABLE KEYS */;
-INSERT INTO `cuestionario_estado` VALUES (1,1,'2011-12-30 09:10:12'),(2,1,'2011-12-30 09:10:12'),(3,1,'2011-12-31 09:05:33'),(4,1,'2011-12-31 09:05:33'),(5,1,'2011-12-31 09:05:33'),(6,1,'2011-12-31 09:05:33'),(8,1,'2011-08-10 10:05:32'),(1,2,'2012-01-02 16:32:21'),(2,2,'2012-01-01 18:25:30'),(3,2,'2012-01-02 10:15:00'),(8,3,'2011-08-15 16:02:14');
+INSERT INTO `cuestionario_estado` VALUES (1,1,'2011-12-30 09:10:12'),(2,1,'2011-12-30 09:10:12'),(3,1,'2011-12-31 09:05:33'),(4,1,'2011-12-31 09:05:33'),(5,1,'2011-12-31 09:05:33'),(6,1,'2011-12-31 09:05:33'),(8,1,'2011-08-10 10:05:32'),(1,2,'2012-01-02 16:32:21'),(2,2,'2012-01-01 18:25:30'),(3,2,'2012-01-02 10:15:00'),(8,3,'2011-08-15 16:02:14'),(9,5,'2006-08-23 09:02:14');
 /*!40000 ALTER TABLE `cuestionario_estado` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -381,7 +381,7 @@ CREATE TABLE `item_bloque` (
 
 LOCK TABLES `item_bloque` WRITE;
 /*!40000 ALTER TABLE `item_bloque` DISABLE KEYS */;
-INSERT INTO `item_bloque` VALUES (1,1,22,NULL),(2,1,28,NULL),(3,1,33,NULL),(4,1,23,NULL),(5,1,29,NULL),(6,2,34,NULL),(7,2,25,NULL),(8,2,30,NULL),(9,2,35,NULL),(10,2,26,NULL),(11,3,31,NULL),(12,3,36,NULL),(13,3,27,NULL),(14,3,32,NULL),(15,3,37,NULL),(16,4,27,NULL),(17,4,32,NULL),(18,4,37,NULL),(19,4,26,NULL),(20,4,31,NULL),(21,5,36,NULL),(22,5,25,NULL),(23,5,30,NULL),(24,5,35,NULL),(25,5,22,NULL),(26,6,28,NULL),(27,6,34,NULL),(28,6,23,NULL),(29,6,29,NULL),(30,6,33,NULL),(31,7,1,NULL),(32,7,12,NULL),(33,7,17,NULL),(34,7,18,NULL),(35,7,6,NULL),(36,8,28,NULL),(37,8,22,NULL),(38,8,2,NULL),(39,8,3,NULL),(40,8,13,NULL),(41,9,8,NULL),(42,9,29,NULL),(43,9,24,NULL),(44,9,4,NULL),(45,9,14,NULL),(46,10,19,NULL),(47,10,9,NULL),(48,10,30,NULL),(49,10,25,NULL),(50,10,5,NULL),(51,11,15,NULL),(52,11,20,NULL),(53,11,11,NULL),(54,11,31,NULL),(55,11,26,NULL),(56,12,16,NULL),(57,12,21,NULL),(58,12,7,NULL),(59,12,32,NULL),(60,12,27,NULL);
+INSERT INTO `item_bloque` VALUES (1,1,22,24),(2,1,28,45),(3,1,33,17),(4,1,23,30),(5,1,29,44),(6,2,34,2),(7,2,25,37),(8,2,30,2),(9,2,35,1),(10,2,26,40),(11,3,31,1),(12,3,36,47),(13,3,27,11),(14,3,32,2),(15,3,37,43),(16,4,27,NULL),(17,4,32,NULL),(18,4,37,NULL),(19,4,26,NULL),(20,4,31,NULL),(21,5,36,NULL),(22,5,25,NULL),(23,5,30,NULL),(24,5,35,NULL),(25,5,22,NULL),(26,6,28,NULL),(27,6,34,NULL),(28,6,23,NULL),(29,6,29,NULL),(30,6,33,NULL),(31,7,1,NULL),(32,7,12,NULL),(33,7,17,NULL),(34,7,18,NULL),(35,7,6,NULL),(36,8,28,NULL),(37,8,22,NULL),(38,8,2,NULL),(39,8,3,NULL),(40,8,13,NULL),(41,9,8,NULL),(42,9,29,NULL),(43,9,24,NULL),(44,9,4,NULL),(45,9,14,NULL),(46,10,19,NULL),(47,10,9,NULL),(48,10,30,NULL),(49,10,25,NULL),(50,10,5,NULL),(51,11,15,NULL),(52,11,20,NULL),(53,11,11,NULL),(54,11,31,NULL),(55,11,26,NULL),(56,12,16,NULL),(57,12,21,NULL),(58,12,7,NULL),(59,12,32,NULL),(60,12,27,NULL);
 /*!40000 ALTER TABLE `item_bloque` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -730,7 +730,7 @@ CREATE TABLE `puesto evaluado` (
   `empresa` varchar(20) NOT NULL,
   PRIMARY KEY (`idPuesto Evaluado`),
   UNIQUE KEY `idPuesto Evaluado_UNIQUE` (`idPuesto Evaluado`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -739,7 +739,7 @@ CREATE TABLE `puesto evaluado` (
 
 LOCK TABLES `puesto evaluado` WRITE;
 /*!40000 ALTER TABLE `puesto evaluado` DISABLE KEYS */;
-INSERT INTO `puesto evaluado` VALUES (1,'P01','DESARROLLADOR JAVA',NULL,NULL,'MILENIO'),(2,'P02','DISE?ADOR SISTEMAS',NULL,NULL,'SIMS'),(3,'P03','PROGRAMADOR C++',NULL,1,'MILENIO'),(4,'P03','PROGRAMADOR C++',NULL,NULL,'MILENIO');
+INSERT INTO `puesto evaluado` VALUES (1,'P01','DESARROLLADOR JAVA',NULL,NULL,'MILENIO'),(2,'P02','DISEÑADOR SISTEMAS',NULL,NULL,'SIMS'),(3,'P03','PROGRAMADOR C++',NULL,1,'MILENIO'),(4,'P03','PROGRAMADOR C++',NULL,NULL,'MILENIO'),(5,'P02','DISEÑADOR SISTEMAS',NULL,1,'SIMS');
 /*!40000 ALTER TABLE `puesto evaluado` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -768,7 +768,7 @@ CREATE TABLE `puesto evaluado_competencia evaluada` (
 
 LOCK TABLES `puesto evaluado_competencia evaluada` WRITE;
 /*!40000 ALTER TABLE `puesto evaluado_competencia evaluada` DISABLE KEYS */;
-INSERT INTO `puesto evaluado_competencia evaluada` VALUES (1,3,5),(1,4,2),(1,5,3),(2,1,1),(2,2,5),(2,3,3),(2,4,1);
+INSERT INTO `puesto evaluado_competencia evaluada` VALUES (1,3,5),(1,4,2),(1,5,3),(2,1,1),(2,2,5),(2,3,3),(2,4,1),(5,1,4),(5,2,3),(5,3,3),(5,4,2);
 /*!40000 ALTER TABLE `puesto evaluado_competencia evaluada` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -811,3 +811,4 @@ UNLOCK TABLES;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2012-01-27 16:31:52
+
