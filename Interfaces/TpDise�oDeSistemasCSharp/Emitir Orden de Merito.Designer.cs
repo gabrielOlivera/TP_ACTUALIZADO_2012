@@ -39,9 +39,9 @@
             this.SeleccionDeAcceso = new System.Windows.Forms.GroupBox();
             this.Cancelar = new System.Windows.Forms.Button();
             this.Buscar = new System.Windows.Forms.Button();
-            this.empresa = new System.Windows.Forms.TextBox();
-            this.nombre = new System.Windows.Forms.TextBox();
-            this.codigo = new System.Windows.Forms.TextBox();
+            this.Empresa = new System.Windows.Forms.TextBox();
+            this.NombreDePuesto = new System.Windows.Forms.TextBox();
+            this.Codigo = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -146,14 +146,14 @@
             this.SeleccionDeAcceso.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.SeleccionDeAcceso.Controls.Add(this.Cancelar);
             this.SeleccionDeAcceso.Controls.Add(this.Buscar);
-            this.SeleccionDeAcceso.Controls.Add(this.empresa);
-            this.SeleccionDeAcceso.Controls.Add(this.nombre);
-            this.SeleccionDeAcceso.Controls.Add(this.codigo);
+            this.SeleccionDeAcceso.Controls.Add(this.Empresa);
+            this.SeleccionDeAcceso.Controls.Add(this.NombreDePuesto);
+            this.SeleccionDeAcceso.Controls.Add(this.Codigo);
             this.SeleccionDeAcceso.Controls.Add(this.label3);
             this.SeleccionDeAcceso.Controls.Add(this.label2);
             this.SeleccionDeAcceso.Controls.Add(this.label1);
             this.SeleccionDeAcceso.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.SeleccionDeAcceso.Location = new System.Drawing.Point(206, 182);
+            this.SeleccionDeAcceso.Location = new System.Drawing.Point(203, 182);
             this.SeleccionDeAcceso.Name = "SeleccionDeAcceso";
             this.SeleccionDeAcceso.Size = new System.Drawing.Size(421, 241);
             this.SeleccionDeAcceso.TabIndex = 8;
@@ -182,29 +182,29 @@
             this.Buscar.UseVisualStyleBackColor = true;
             this.Buscar.Click += new System.EventHandler(this.Buscar_Click);
             // 
-            // empresa
+            // Empresa
             // 
-            this.empresa.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.empresa.Location = new System.Drawing.Point(179, 133);
-            this.empresa.Name = "empresa";
-            this.empresa.Size = new System.Drawing.Size(100, 20);
-            this.empresa.TabIndex = 5;
+            this.Empresa.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.Empresa.Location = new System.Drawing.Point(179, 133);
+            this.Empresa.Name = "Empresa";
+            this.Empresa.Size = new System.Drawing.Size(100, 20);
+            this.Empresa.TabIndex = 5;
             // 
-            // nombre
+            // NombreDePuesto
             // 
-            this.nombre.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.nombre.Location = new System.Drawing.Point(179, 89);
-            this.nombre.Name = "nombre";
-            this.nombre.Size = new System.Drawing.Size(100, 20);
-            this.nombre.TabIndex = 4;
+            this.NombreDePuesto.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.NombreDePuesto.Location = new System.Drawing.Point(179, 89);
+            this.NombreDePuesto.Name = "NombreDePuesto";
+            this.NombreDePuesto.Size = new System.Drawing.Size(100, 20);
+            this.NombreDePuesto.TabIndex = 4;
             // 
-            // codigo
+            // Codigo
             // 
-            this.codigo.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.codigo.Location = new System.Drawing.Point(179, 37);
-            this.codigo.Name = "codigo";
-            this.codigo.Size = new System.Drawing.Size(100, 20);
-            this.codigo.TabIndex = 3;
+            this.Codigo.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.Codigo.Location = new System.Drawing.Point(179, 37);
+            this.Codigo.Name = "Codigo";
+            this.Codigo.Size = new System.Drawing.Size(100, 20);
+            this.Codigo.TabIndex = 3;
             // 
             // label3
             // 
@@ -241,7 +241,7 @@
             this.groupBox1.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.groupBox1.Controls.Add(this.ResultadosDeBusqueda);
             this.groupBox1.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.groupBox1.Location = new System.Drawing.Point(206, 429);
+            this.groupBox1.Location = new System.Drawing.Point(203, 429);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(421, 277);
             this.groupBox1.TabIndex = 9;
@@ -267,7 +267,7 @@
             // EmitirOrdenDeMerito
             // 
             this.EmitirOrdenDeMerito.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.EmitirOrdenDeMerito.Location = new System.Drawing.Point(353, 713);
+            this.EmitirOrdenDeMerito.Location = new System.Drawing.Point(335, 897);
             this.EmitirOrdenDeMerito.Name = "EmitirOrdenDeMerito";
             this.EmitirOrdenDeMerito.Size = new System.Drawing.Size(107, 37);
             this.EmitirOrdenDeMerito.TabIndex = 10;
@@ -313,9 +313,9 @@
         private System.Windows.Forms.GroupBox SeleccionDeAcceso;
         private System.Windows.Forms.Button Cancelar;
         private System.Windows.Forms.Button Buscar;
-        private System.Windows.Forms.TextBox empresa;
-        private System.Windows.Forms.TextBox nombre;
-        private System.Windows.Forms.TextBox codigo;
+        private System.Windows.Forms.TextBox Empresa;
+        private System.Windows.Forms.TextBox NombreDePuesto;
+        private System.Windows.Forms.TextBox Codigo;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;

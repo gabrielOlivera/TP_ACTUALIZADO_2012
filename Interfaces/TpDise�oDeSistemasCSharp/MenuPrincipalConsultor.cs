@@ -19,7 +19,13 @@ namespace TpDiseñoCSharp
             InitializeComponent();
             pantalla_Principal = pantallaPricipal_parametro;
             pantallaAnterior.Close();
+
+            //Este codigo se utiliza para setear el nombre del usuario conectado y su ubicacion
             this.Consultor.Text = User;
+            int largoTextoConsultor = Consultor.Width;
+            int ubicacionCerrarSesion = CerrarSesion.Location.X;
+            Consultor.Location = new Point(ubicacionCerrarSesion - largoTextoConsultor - 2, CerrarSesion.Top);
+
             FormClosing += CerrarVentana;
         }
 

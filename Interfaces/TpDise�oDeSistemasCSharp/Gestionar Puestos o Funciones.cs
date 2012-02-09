@@ -16,7 +16,12 @@ namespace TpDiseñoCSharp
         public Gestionar_Puestos(string user)
         {
             InitializeComponent();
+
+            //Este codigo se utiliza para setear el nombre del usuario conectado y su ubicacion
             this.Consultor.Text = user;
+            int largoTextoConsultor = Consultor.Width;
+            int ubicacionCerrarSesion = CerrarSesion.Location.X;
+            Consultor.Location = new Point(ubicacionCerrarSesion - largoTextoConsultor - 2, CerrarSesion.Top);
         }
 
         private void Nuevo_Click(object sender, EventArgs e)
@@ -36,6 +41,7 @@ namespace TpDiseñoCSharp
                     || (FuncionesVarias.validarCamposAlfanum(Empresa.Text)))
                 {
                     MessageBox.Show("Los campos solo aceptan letras y/o números");
+                    
                 }
                 else
                 {
@@ -94,13 +100,6 @@ namespace TpDiseñoCSharp
                 MessageBox.Show("El puesto " + nomPuesto + " está siendo usado en la base de datos y no puede eliminarse", "Advertencia",
                 MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
         }
-        private void validarTextBoxs(TextBox dato)
-        {
-            if (FuncionesVarias.validarCamposAlfanum(dato))
-            {
-                MessageBox.Show("Los campos solo aceptan letras y/o numeros");
-            }
-
-        }
+        
     }
 }
