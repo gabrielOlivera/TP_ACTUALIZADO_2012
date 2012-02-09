@@ -27,7 +27,6 @@ namespace TpDiseñoCSharp
         private void ninguno_Click(object sender, EventArgs e)
         {
             selecciondatagridW.ClearSelection();
-        
         }
 
         private void aceptar_Click(object sender, EventArgs e)
@@ -46,9 +45,8 @@ namespace TpDiseñoCSharp
                 
                 string info_evaluacion = "Orden de merito para la evaluacion del puesto: "+ nombre_puesto + 
                     " tomada para la empresa: " + empresa + " el: " + fecha;
-
 	        
-                //listamos los "sin contestar" estado 3                
+                //listamos los "sin contestar" estado 3
                 List<Object> sinContestar = new List<object>();
                 sinContestar = AdminBD.listarCandidatosPorEvaluacion(fecha, codigo, 3);
                 if (sinContestar != null)
@@ -92,7 +90,7 @@ namespace TpDiseñoCSharp
                     MessageBox.Show("Lista de COMPLETOS");
                     for (int r = 0; r < listaCandidatos_completos.Count; r++)
                     {
-                        MessageBox.Show(listaCandidatos_completos[r].Nombre.ToString() + " " + listaAccesos_completos[r].ToString());
+                        MessageBox.Show(listaCandidatos_completos[r].Nombre.ToString() + " puntuacion: " + AdminBD.obtener_puntuacion(listaCandidatos_completos[r].NroDoc.ToString(), fecha, codigo).ToString() );
                     }
                 }
 

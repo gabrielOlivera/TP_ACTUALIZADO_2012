@@ -2365,7 +2365,6 @@ namespace Gestores
             if (!reader.HasRows)
             {
                 //si el reader esta vacio, es que no se encontraron datos para la consulta realizada
-                MessageBox.Show("No existen candidatos que hayan participado de esta evaluacion[Imposible!]");
                 terminarConexion();
                 return null;
             }
@@ -2400,6 +2399,69 @@ namespace Gestores
             listaRetorno.Add(listaAccesos);
             terminarConexion();
             return listaRetorno;
+        }
+        // -1 si la consulta no devuelve nada. -2 si no se puede realizar la conexion
+        public int obtener_puntuacion(string dni_candidato, DateTime fecha_ev, string codigo_ev) 
+        {
+            bool conexionExitosa;
+            
+            string fecha_formateada = this.formatear_fecha(fecha_ev);
+
+            string consultaSql = "SELECT SUM(ponderacion) " +
+                    " FROM `tp base de datos`.`pregunta evaluada_opcion evaluada` AS pr_oEV "+
+                    " JOIN `tp base de datos`.item_bloque AS itbloq " +
+                    " ON (itbloq.`Opcion Evaluada_idOpcion_seleccionada` = pr_oEV.`Opcion Evaluada_idOpcion` " +
+                    " AND itbloq.PreguntaEvaluada_idPreguntaEv = pr_oEV.`Pregunta Evaluada_idPregunta Evaluada`) " +
+                    " WHERE itbloq.Bloque_idBloque IN ( " +
+                    " SELECT idBloque " +
+                    " FROM `tp base de datos`.bloque AS b " +
+                    " JOIN `tp base de datos`.cuestionario AS c ON (c.idCuestionario = b.Cuestionario_idCuestrionario) " + 
+                    " JOIN `tp base de datos`.`puesto evaluado` AS p_ev ON (`idPuesto Evaluado` = `Puesto Evaluado_idPuesto Evaluado`) " +
+                    " JOIN `tp base de datos`.candidato AS cand ON ( idCandidato = Candidato_idCandidato) " +
+                    " WHERE `nro documento` = '"+ dni_candidato +"' AND `idPuesto Evaluado` = ( " +
+                    " SELECT DISTINCT `idPuesto Evaluado` " +
+                    " FROM candidato cand " +
+                    " JOIN cuestionario cuest on (idCandidato = Candidato_idCandidato) " +
+                    " JOIN cuestionario_estado cuest_estado on (idCuestionario = Cuestionario_idCuestionario) " +
+                    " JOIN `puesto evaluado` puesto_ev on (`idPuesto Evaluado` =`Puesto Evaluado_idPuesto Evaluado`) " +
+                    " WHERE puesto_ev.codigo =  '"+ codigo_ev +"' AND fecha = '"+ fecha_formateada +"'))";
+
+            //llamamos al metodo "iniciar conexion"
+            conexionExitosa = iniciarConexion();
+
+            //Evaluamos si la conexion se realizo con exito
+            if (!conexionExitosa)
+            {
+                MessageBox.Show("Fallo la conexion con la base de datos");
+                terminarConexion();
+                return -2;
+            }
+
+            //Creamos un adaptador llamado "comando" para realizar la consultaSql que definimos mas arriba
+            MySql.Data.MySqlClient.MySqlCommand comando;
+            comando = ObjConexion.CreateCommand();
+            comando.CommandText = consultaSql;//En el adaptador comando hacemos un asignacion en su atributo CommandText de la consultaSql
+
+            //Se hace la ejecucion del comando con el metodo ExecuterReader 
+            //y se lo asigna a una variable reader que contendra los resultados de la busqueda en la base de datos
+            MySqlDataReader reader = comando.ExecuteReader();
+
+            if (!reader.HasRows)
+            {
+                //si el reader esta vacio, es que no se encontraron datos para la consulta realizada
+                MessageBox.Show("No se pudo recuperar la puntuacion para este usuario [Logicamente Imposible]");
+                terminarConexion();
+                return -1;
+            }
+
+            int puntuacion = 0;
+            while (reader.Read())
+            {
+                puntuacion = Int32.Parse(reader["SUM(ponderacion)"].ToString());
+            }
+            
+            terminarConexion();
+            return puntuacion;
         }
 
         public string formatear_fecha(DateTime fecha) 
@@ -2707,10 +2769,10 @@ namespace Gestores
             GestorPreguntas gestorPreguntas = new GestorPreguntas();
             List<Pregunta> listaDePreguntas = new List<Pregunta>();
 
-            string consultaSql = "SELECT `pregunta evaluada`.nombre ,`pregunta evaluada`.codigo, `pregunta evaluada`.pregunta, `pregunta evaluada`.`Opcion de Respuesta Evaluada_idOpcion de Respuesta Evaluada` "
-            + "FROM `pregunta evaluada` "
-            + "JOIN `factor evaluado` fac on (fac.`codigo` = '" + factorAsociado.Codigo + "') "
-            + "WHERE `pregunta evaluada`.`Factor Evaluado_idFactor Evaluado` = fac.`idFactor Evaluado`;";
+            string consultaSql = "SELECT `pregunta evaluada`.nombre ,`pregunta`.codigo, `pregunta evaluada`.pregunta, `pregunta evaluada`.`Opcion de Respuesta Evaluada_idOpcion de Respuesta Evaluada` "
+            + "FROM `pregunta` "
+            + "JOIN `factor` fac on (fac.`codigo` = '" + factorAsociado.Codigo + "') "
+            + "WHERE `pregunta`.`Factor Evaluado_idFactor Evaluado` = fac.`idFactor`;";
 
             conexionExitosa = iniciarConexion();
 
