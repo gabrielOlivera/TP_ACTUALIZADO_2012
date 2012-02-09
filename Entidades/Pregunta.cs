@@ -8,35 +8,60 @@ namespace Entidades
 {
     public class Pregunta
     {
-        private string pregunta;
+        private string pregunta_;
         private string nombre;
         private string descripcion;
         private Factor factorAsociado;
         private OpciondeRespuesta Op_respuesta; // Una opcion de respuesta seria "Bueno, Muy bueno, Excelente"
         private List<Opciones> listaOpciones; // ej de opcion: "Excelente = 10" Excelente es el 'nombre' y 10 el 'valor'
 
-
-
-        public Pregunta(string preg, string nom, string des, Factor fact, OpciondeRespuesta op_res)
+        public string Preg_aRealizar
         {
-            pregunta = preg;
-            factorAsociado = fact;
-            nombre = nom;
-            descripcion = des;
-            Op_respuesta = op_res;
-            listaOpciones = new List<Opciones>();
+            get { return pregunta_; }
+            set { pregunta_ = value; }
         }
 
-        public void setNombre(string nom) { nombre = nom; }
-        public void setDescripcion(string des) { descripcion = des; }
+        public string Nombre
+        {
+            get { return nombre; }
+            set { nombre = value; }
+        }
+
+        public string Descripcion
+        {
+            get { return descripcion; }
+            set { descripcion = value; }
+        }
+
+        public Factor FactorAsociado
+        {
+            get { return factorAsociado; }
+            set { factorAsociado = value; }
+        }
+
+        public OpciondeRespuesta OpcionRespuesta_Asociada
+        {
+            get { return Op_respuesta; }
+            set { Op_respuesta = value; }
+        }
+
+        public List<Opciones> ListaOpciones
+        {
+            get { return listaOpciones; }
+            set { listaOpciones = value; }
+        }
+
+
+        public Pregunta(string preg, string nom, Factor fact, OpciondeRespuesta op_res = null, string des = null)
+        {
+            Preg_aRealizar = preg;
+            FactorAsociado = fact;
+            Nombre = nom;
+            Descripcion = des;
+            OpcionRespuesta_Asociada = op_res;
+            ListaOpciones = new List<Opciones>();
+        }
+
         public void addOpcion(Opciones opcion) { listaOpciones.Add(opcion); }
-
-        public string getPregunta() { return pregunta; }
-        public string getNombre() { return nombre; }
-        public string getDescripcion() { return descripcion; }
-        public Factor getFactores() { return factorAsociado; }
-        public List<Opciones> getOpciones() { return listaOpciones; }
-        public OpciondeRespuesta getOp_respuesta() { return Op_respuesta; } //deberiamos devolver el objeto entero? despues ver quien llama esto y como lo usa
-
     }
 }
