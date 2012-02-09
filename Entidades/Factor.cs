@@ -8,18 +8,17 @@ namespace Entidades
 {
     public class Factor
     {
-        private int codigo;
+        private string codigo;
         private string nombre;
         private Competencia competenciaAsociada;
         private string descripcion;
         private int nro_orden;
         private List<Pregunta> listaPreguntas;
 
-        public int Codigo
+        public string Codigo
         {
             get { return codigo; }
             set { codigo = value; }
-
         }
 
         public int Nro_orden
@@ -58,7 +57,7 @@ namespace Entidades
         }
 
         //Competencia -> Factor -> Pregunta
-        public Factor(int cod, string nom, Competencia comp, string des, int nOrden)
+        public Factor(string cod, string nom, Competencia comp, string des = null, int nOrden = 0)
         {
             codigo = cod;
             competenciaAsociada = comp;
@@ -67,7 +66,6 @@ namespace Entidades
             nro_orden = nOrden;
             listaPreguntas = new List<Pregunta>();
         }
-
 
         public void addPregunta(Pregunta preg) { listaPreguntas.Add(preg); }
 

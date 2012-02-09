@@ -2556,84 +2556,323 @@ namespace Gestores
 
         }
 
-        /*
-        public List<Factor> recuperarFactores(string codigoDeCompetencia)
+
+         /*
+         * - RecuperarCompetenciasEvaludas tiene la misión de recuperar una competencia evaluada según su ID
+         *   que corresponde a la BASE DE DATOS
+         */
+        public List<Competencia> recuperarCompetencias(string codigoCompetencia)
         {
             bool conexionExitosa;
+            GestorCompetencias gestorCompetencias = new GestorCompetencias();
+            List<Competencia> listaDeCompetencias = new List<Competencia>();//Para el retorno de datos
 
-            string consultaSql = "SELECT * FROM factor WHERE `Competencia_codigo` = '" + codigoDeCompetencia + "';";
+            string consultaSql = "SELECT * FROM `competencia` AS comp"
+                + "WHERE comp.codigo ='" + codigoCompetencia + "';";
 
             conexionExitosa = iniciarConexion();
 
             if (!conexionExitosa)
+            {
+                MessageBox.Show("No se realizo la conexion con la base de datos");
+                terminarConexion();
                 return null;
-
+            }
 
             MySql.Data.MySqlClient.MySqlCommand comando;
-
             comando = ObjConexion.CreateCommand();
-
             comando.CommandText = consultaSql;
 
             MySqlDataReader reader = comando.ExecuteReader();
 
-            List<Factor> listaDeFactores;
+            if (!reader.HasRows)
+            { //si el reader esta vacio, es qe no encontro a ese candidato
+                MessageBox.Show("El puesto no posee competencias para ser evaluado");
+                terminarConexion();
+                return null;
+            }
 
             while (reader.Read())
             {
-                int codigo;
-                string nombre;
-                string descripcion;
-                int nro_orden;
-                private List<Pregunta> listaPreguntas;
+                //Verificamos que la competencia no este eliminada
+                Competencia competenciaEv;
 
+                if (reader["eliminado"].ToString() == "")
+                {
+                    string cod = reader["codigo"].ToString();
+                    string nomComp = reader["nombre"].ToString();
+                    string descrip = reader["descripcion"].ToString();
+
+                    //Si no fue eliminada, la instaciamos con el gestor de evaluacion con los datos obtenidos
+                    competenciaEv = gestorCompetencias.instanciarCompetencia(cod, nomComp, descrip);
+                }
+                else//Si fue eliminada, instanciamos una competencia con el atrubuto 'codigo' inicializado en ELIMINADA
+                    competenciaEv = gestorCompetencias.instanciarCompetencia("ELIMINADA", null, null);
+
+                listaDeCompetencias.Add(competenciaEv);
             }
 
-            return listaDeFactores;
-        }*/
-        /*
-        public List<Pregunta> recuperarPreguntas()
-        {
+            terminarConexion();
 
+            //Agregamos la lista de Factores para cada una de las competencias encontradas
+            for (int i = 0; i < listaDeCompetencias.Count; i++)
+            {
+                //Recuperamos los factores asociados a la competencia
+                List<Factor> factoresList = recuperarFactores(listaDeCompetencias[i]);
+
+                for (int j = 0; j < factoresList.Count; j++)
+                {
+                    //Para la competencia Evaluada que esta resguardada en la posición i 
+                    //le agregamos a su lista de factores, el factor evaluado que se encentre en la posición j
+                    listaDeCompetencias[i].addFactor(factoresList[j]);
+                }
+            }
+
+            return listaDeCompetencias;
         }
-        */
+
         /*
-        public List<Opciones> recuperarOpciones()
+         * - RecuperarFactoresEvaludos tiene la misión de recuperar los factores evaluados para una competencia puntual
+         *   de a la BASE DE DATOS
+         */
+        public List<Factor> recuperarFactores(Competencia competenciaAsociada)
         {
             bool conexionExitosa;
+            GestorFactores gestorFactores = new GestorFactores();
+            List<Factor> listaDeFactores = new List<Factor>();//Para el retorno de datos
 
-            string consultaSql1 = "SELECT * FROM opciones;";
-            string consultaSql2 = "SELECT * FROM pregunta_opciones WHERE `ponderacion`;";
+            string consultaSql = "SELECT `factor evaluado`.nombre ,`factor evaluado`.codigo ,nroOrden " +
+            "FROM `factor evaluado` " +
+            "JOIN `competencia evaluada` comEv on (comEv.`codigo` = '" + competenciaAsociada.Codigo + "') " +
+            "WHERE `factor evaluado`.`Competencia Evaluada_idCompetencia Evaluada` = comEv.`idCompetencia Evaluada`;";
 
             conexionExitosa = iniciarConexion();
 
             if (!conexionExitosa)
-                return null;
-
-
-            MySql.Data.MySqlClient.MySqlCommand comando1;
-            MySql.Data.MySqlClient.MySqlCommand comando2;
-
-            comando1 = ObjConexion.CreateCommand();
-            comando2 = ObjConexion.CreateCommand();
-
-            comando1.CommandText = consultaSql1;
-            comando2.CommandText = consultaSql2;
-
-            List<Opciones> listaDeOpciones = new List<Opciones>();
-            MySqlDataReader reader1 = comando1.ExecuteReader();
-            ArrayList nombreDeOpciones = new ArrayList();
-            while (reader1.Read())
             {
-                string nom = reader1["nombre"].ToString();
-                nombreDeOpciones.Add(nom);
+                MessageBox.Show("No se realizo la conexion con la base de datos");
+                terminarConexion();
+                return null;
             }
 
-            MySqlDataReader reader2 = comando1.ExecuteReader();
-            while (reader2.Read())
+            MySql.Data.MySqlClient.MySqlCommand comando;
+            comando = ObjConexion.CreateCommand();
+            comando.CommandText = consultaSql;
+
+            MySqlDataReader reader = comando.ExecuteReader();
+
+            if (!reader.HasRows)
+            { //si el reader esta vacio, es qe no encontro a ese candidato
+                MessageBox.Show("El puesto no posee competencias para ser evaluado");
+                terminarConexion();
+                return null;
+            }
+
+            while (reader.Read())
+            {   
+                string cod = reader["codigo"].ToString();
+                string nomFactor = reader["nombre"].ToString();
+                int nrOrden = Int32.Parse(reader["nroOrden"].ToString());
+                //Ahora vamos a crear una instancia del objeto factor, a través del gestor de factores 
+                Factor factorEv = gestorFactores.instanciarFactor(cod, nomFactor, competenciaAsociada, null, nrOrden);
+                listaDeFactores.Add(factorEv);
+            }
+            terminarConexion();
+    
+            //Agregamos la lista de Factores para cada una de las competencias encontradas
+            for (int i = 0; i < listaDeFactores.Count; i++)
             {
-                string pond = reader2["ponderacion"].ToString();*/
-           
+                List<Pregunta> preguntasList = recuperarPreguntas(listaDeFactores[i]);
+                if (preguntasList[i] != null)
+                {
+                    for (int j = 0; j < preguntasList.Count; j++)
+                    {
+                        listaDeFactores[i].addPregunta(preguntasList[j]);
+                    }
+                }
+                /*else
+                    listaDeFactores.Add(preguntasList[i]);*/
+            }
+
+            return listaDeFactores;
+        }
+
+        /*
+         * - RecuperarPreguntas evaluadas tiene la misión de recuperar Las preguntas evaluadas para Un factor puntual
+         *   de a la BASE DE DATOS
+         */
+        public List<Pregunta> recuperarPreguntas(Factor factorAsociado)
+        {
+            bool conexionExitosa;
+            GestorPreguntas gestorPreguntas = new GestorPreguntas();
+            List<Pregunta> listaDePreguntas = new List<Pregunta>();
+
+            string consultaSql = "SELECT `pregunta evaluada`.nombre ,`pregunta evaluada`.codigo, `pregunta evaluada`.pregunta, `pregunta evaluada`.`Opcion de Respuesta Evaluada_idOpcion de Respuesta Evaluada` "
+            + "FROM `pregunta evaluada` "
+            + "JOIN `factor evaluado` fac on (fac.`codigo` = '" + factorAsociado.Codigo + "') "
+            + "WHERE `pregunta evaluada`.`Factor Evaluado_idFactor Evaluado` = fac.`idFactor Evaluado`;";
+
+            conexionExitosa = iniciarConexion();
+
+            if (!conexionExitosa)
+            {
+                MessageBox.Show("No se realizo la conexion con la base de datos");
+                terminarConexion();
+                return null;
+            }
+
+
+            MySql.Data.MySqlClient.MySqlCommand comando;
+            comando = ObjConexion.CreateCommand();
+            comando.CommandText = consultaSql;
+
+            MySqlDataReader reader = comando.ExecuteReader();
+
+            if (!reader.HasRows)
+            { //si el reader esta vacio, es qe no encontro a ese candidato
+                MessageBox.Show("El factor no posee preguntas para ser evaluado");
+                terminarConexion();
+                return null;
+            }
+
+            List<int> listaIdOpRespuesta = new List<int>();
+            while (reader.Read())
+            {
+                string cod = reader["codigo"].ToString();
+                string nomPreg = reader["nombre"].ToString();
+                string preg = reader["pregunta"].ToString();
+                int idOpRespuesta = Int32.Parse(reader["Opcion de Respuesta Evaluada_idOpcion de Respuesta Evaluada"].ToString());
+
+                Pregunta pregunta = gestorPreguntas.instanciarPregunta(preg, nomPreg, factorAsociado);
+                listaDePreguntas.Add(pregunta);
+                listaIdOpRespuesta.Add(idOpRespuesta);
+            }
+            terminarConexion();
+
+            //Agregamos la listas de Opciones de respuesta y las opciones para cada una de las preguntas encontradas
+            for (int i = 0; i < listaDePreguntas.Count; i++)
+            {
+                //Se recuperan la opcion de respuesta de la pregunta
+                List<OpciondeRespuesta> opcionesRespuesta = recuperarOpcionRespuesta(listaIdOpRespuesta[i]);
+                if (opcionesRespuesta[0] != null)
+                {
+                    //Recuperamos la opcion que contiene la poneracion para esa pregunta
+                    List<Opciones> opciones = recuperarOpciones(listaDePreguntas[i]);
+                    //Completamos el objeto Opciones_de_respuestas_evaludas con la lista de opciones
+                    opcionesRespuesta[0].ListaOpciones = opciones;
+                    
+                    //Realizamos la asignacion de la opcion de respuesta y las opciones corespondientes para la pregunta
+                    listaDePreguntas[i].OpcionRespuesta_Asociada = opcionesRespuesta[0];
+                    listaDePreguntas[i].ListaOpciones = opciones;
+                }
+            }
+
+            return listaDePreguntas;
+        }
+        
+        /*
+         * - RecuperarOpcionesEvaludas tiene la misión de recuperar las opciones evaluadas para una pregunta puntual
+         *   de a la BASE DE DATOS
+         */
+        public List<Opciones> recuperarOpciones(Pregunta pregAsociada)
+        {
+            bool conexionExitosa;
+            GestorOpRespuesta gestionOpciones = new GestorOpRespuesta();
+            List<Opciones> listaDeOpciones = new List<Opciones>();//Para el retorno de datos 
+
+            string consultaSql = "SELECT op.nombre, pr_op.ponderacion, opr_op.ordenDeVisualizacion "
+            + "FROM `tp base de datos`.`pregunta evaluada_opcion evaluada` pr_op "
+            + "JOIN `tp base de datos`.`pregunta evaluada` pr on (pr_op.`Pregunta Evaluada_idPregunta Evaluada` = pr.`idPregunta Evaluada` AND pr.codigo = '" + pregAsociada.Nombre + "') "
+            + "JOIN `tp base de datos`.`opcion evaluada` op on (pr_op.`Opcion Evaluada_idOpcion` = op.idOpcion) "
+            + "JOIN `tp base de datos`.`opcion de respuesta evaluada_opcion evaluada` opr_op on (pr_op.`Opcion Evaluada_idOpcion` = opr_op.`Opcion Evaluada_idOpcion`) "
+            + "GROUP BY nombre, ponderacion, ordenDeVisualizacion;";
+
+            //llamamos al metodo "iniciar conexion"
+            conexionExitosa = iniciarConexion();
+
+            //Evaluamos si la conexion se realizo con exito
+            if (!conexionExitosa)
+            {
+                MessageBox.Show("Fallo la conexion con la base de datos");
+                terminarConexion();
+                return null;
+            }
+
+            MySql.Data.MySqlClient.MySqlCommand comando;
+            comando = ObjConexion.CreateCommand();
+            comando.CommandText = consultaSql;
+
+            MySqlDataReader reader = comando.ExecuteReader();
+
+            if (!reader.HasRows)
+            { //si el reader esta vacio, es qe no encontro a ese candidato
+                MessageBox.Show("No se entraron opciones para la pregunta solicitada");
+                terminarConexion();
+                return null;
+            }
+
+            while (reader.Read())
+            {
+                //opc.nombre, opR_opc.ordenDeVisualizacion, pr.`idPregunta Evaluada`
+                string nomOpcion = reader["nombre"].ToString();
+                int ponderacion = Int32.Parse(reader["ponderacion"].ToString());
+                int ordenVisualizacion = Int32.Parse(reader["ordenDeVisualizacion"].ToString());
+
+                Opciones preguntaEv = gestionOpciones.instanciarOpcion(nomOpcion, ponderacion, ordenVisualizacion);
+                listaDeOpciones.Add(preguntaEv);
+            }
+
+            terminarConexion();
+            
+            return listaDeOpciones;
+        }
+
+        /*
+         * - RecuperarOpcionRespuestaEvaluda tiene la misión de recuperar las opciones evaluadas para una pregunta puntual
+         *   de a la BASE DE DATOS
+         */
+        public List<OpciondeRespuesta> recuperarOpcionRespuesta(int idOpcionDeRespuesta)
+        {
+            bool conexionExitosa;
+            GestorOpRespuesta gestorOpcionResp = new GestorOpRespuesta();
+            List<OpciondeRespuesta> listaDeOpRespuesta = new List<OpciondeRespuesta>();//Para el retorno de datos
+
+            string consultaSql = "SELECT * FROM `opcion de respuesta evaluada` opcRes WHERE opcRes.`idOpcion de Respuesta Evaluada` = '" + idOpcionDeRespuesta + "';";
+
+            conexionExitosa = iniciarConexion();
+
+            if (!conexionExitosa)
+            {
+                MessageBox.Show("No se pudo realizar la conexion con la base de datos");
+                terminarConexion();
+                return null;
+            }
+
+            MySql.Data.MySqlClient.MySqlCommand comando;
+            comando = ObjConexion.CreateCommand();
+            comando.CommandText = consultaSql;
+
+            MySqlDataReader reader = comando.ExecuteReader();
+
+            if (!reader.HasRows)
+            { //si el reader esta vacio, es qe no encontro a esa opcion de respuesta evaluada
+                MessageBox.Show("No se encontro la opcion de respuesta solicitada");
+                terminarConexion();
+                return null;
+            }
+
+            while (reader.Read())
+            {
+                string nomOpcionResp = reader["nombre"].ToString();
+                string codigo = reader["codigo"].ToString();
+
+                OpciondeRespuesta OpcionResp = gestorOpcionResp.instanciarOpcionDeRespuesta(nomOpcionResp, codigo);
+                listaDeOpRespuesta.Add(OpcionResp);
+            }
+            terminarConexion();
+            
+            return listaDeOpRespuesta;
+        }           
         
         }
 }

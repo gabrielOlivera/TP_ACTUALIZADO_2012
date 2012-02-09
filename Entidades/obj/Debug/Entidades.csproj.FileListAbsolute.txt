@@ -43,3 +43,8 @@ C:\Users\usuario\Desktop\TP 2012 Repositorio Online\Entidades\bin\Debug\Entidade
 C:\Users\usuario\Desktop\TP 2012 Repositorio Online\Entidades\obj\Debug\ResolveAssemblyReference.cache
 C:\Users\usuario\Desktop\TP 2012 Repositorio Online\Entidades\obj\Debug\Entidades.dll
 C:\Users\usuario\Desktop\TP 2012 Repositorio Online\Entidades\obj\Debug\Entidades.pdb
+C:\Documents and Settings\Administrador\Escritorio\TP_disenio2012\Entidades\bin\Debug\Entidades.dll
+C:\Documents and Settings\Administrador\Escritorio\TP_disenio2012\Entidades\bin\Debug\Entidades.pdb
+C:\Documents and Settings\Administrador\Escritorio\TP_disenio2012\Entidades\obj\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\Administrador\Escritorio\TP_disenio2012\Entidades\obj\Debug\Entidades.dll
+C:\Documents and Settings\Administrador\Escritorio\TP_disenio2012\Entidades\obj\Debug\Entidades.pdb
