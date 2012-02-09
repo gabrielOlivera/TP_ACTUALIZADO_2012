@@ -21,15 +21,24 @@ namespace TpDiseñoCSharp
         {
             InitializeComponent();
             string nombreCandidato = bloqueAsociado.CuestAsociado.CandidatoAsociado.Nombre + " " + bloqueAsociado.CuestAsociado.CandidatoAsociado.Apellido;
-            this.nomb_candidato.Text = nombreCandidato;
+
             this.Fecha.Text = DateTime.Now.ToLongDateString();
             this.mostrarPreguntas(bloqueAsociado);
             this.bloque_A_mostrar = bloqueAsociado;
+
+
+            this.Candidato.Text = "USER";
+            int largoTextoConsultor = Candidato.Width;
+            int ubicacionCerrarSesion = CerrarSesion.Location.X;
+            Candidato.Location = new Point(ubicacionCerrarSesion - largoTextoConsultor - 2, CerrarSesion.Top);
+
+            pantalla_Anterior.Close();
 
             pantalla_Anterior.Visible = false;
             pantallaInicial = pantallaPrincipal;
 
             this.FormClosing += Cancelar_Click;
+
         }
 
         /*

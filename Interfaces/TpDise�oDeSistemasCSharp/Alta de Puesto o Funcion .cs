@@ -45,6 +45,9 @@ namespace TpDiseñoCSharp
             ventanaAnterior= gestPuesto;
             InitializeComponent();
             this.Consultor.Text = User;
+            int largoTextoConsultor = Consultor.Width;
+            int ubicacionCerrarSesion = CerrarSesion.Location.X;
+            Consultor.Location = new Point(ubicacionCerrarSesion - largoTextoConsultor - 2, CerrarSesion.Top);
             //Se llena una lista con todas las competencias que se encuentran creadas en la BD
             listaDeCompetencias = gestorCompetencias.listarCompetencias();
 

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using Gestores;
+using Validacion;
 
 namespace TpDiseñoCSharp
 {
@@ -31,10 +32,17 @@ namespace TpDiseñoCSharp
             {
                 /*BUSCA LOS PUESTOS O FUNCIONES DE ACUERDO A LOS FILTROS ESPECIFICADOS PARA PODER MODIFICARLOS Y/O ELIMINAR
                 Y LOS MUESTRA EN UNA TABLA*/
-
-                GestorPuesto gestorPuesto = new GestorPuesto();
-                listaDePuesto.DataSource = gestorPuesto.listarPuestos(Codigo.Text, NombreDePuesto.Text, Empresa.Text);
-                listaDePuesto.Visible = true;
+                if ((FuncionesVarias.validarCamposAlfanum(Codigo.Text)) || (FuncionesVarias.validarCamposAlfanum(NombreDePuesto.Text))
+                    || (FuncionesVarias.validarCamposAlfanum(Empresa.Text)))
+                {
+                    MessageBox.Show("Los campos solo aceptan letras y/o números");
+                }
+                else
+                {
+                    GestorPuesto gestorPuesto = new GestorPuesto();
+                    listaDePuesto.DataSource = gestorPuesto.listarPuestos(Codigo.Text, NombreDePuesto.Text, Empresa.Text);
+                    listaDePuesto.Visible = true;
+                }
             }
             //Si todos los campos están vacíos se informa de ello
             else 
@@ -85,6 +93,14 @@ namespace TpDiseñoCSharp
             else
                 MessageBox.Show("El puesto " + nomPuesto + " está siendo usado en la base de datos y no puede eliminarse", "Advertencia",
                 MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+        }
+        private void validarTextBoxs(TextBox dato)
+        {
+            if (FuncionesVarias.validarCamposAlfanum(dato))
+            {
+                MessageBox.Show("Los campos solo aceptan letras y/o numeros");
+            }
+
         }
     }
 }
