@@ -17,21 +17,20 @@ namespace TpDiseñoCSharp
         public PantallaPrincipal()
         {
             InitializeComponent();
+            this.Fecha.Text = DateTime.Now.ToLongDateString();
         }
 
         private void LoginConsultor_Click(object sender, EventArgs e)
         {
-            LoginConsultor logCons= new LoginConsultor();
+            LoginConsultor logCons= new LoginConsultor(this);
             logCons.ShowDialog();
 
         }
 
         private void LoginCandidato_Click(object sender, EventArgs e)
         {
-            LoginCandidato logCand = new LoginCandidato();
+            LoginCandidato logCand = new LoginCandidato(this);
             logCand.ShowDialog();
         }
-
-        
     }
 }

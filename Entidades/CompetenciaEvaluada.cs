@@ -11,6 +11,7 @@ namespace Entidades
         private string codigo;
         private string nombre;
         private string descripcion;
+        private int ponderacion;
         private List<FactorEvaluado> listaFactores;
 
         public List<FactorEvaluado> ListaFactores
@@ -38,6 +39,13 @@ namespace Entidades
         {
             get { return descripcion; }
             set { descripcion = value; }
+
+        }
+
+        public int Ponderacion
+        {
+            get { return ponderacion; }
+            set { ponderacion = value; }
 
         }
 

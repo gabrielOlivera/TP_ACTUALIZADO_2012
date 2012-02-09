@@ -367,22 +367,22 @@ namespace Gestores
 
                 //A continuacion se contemplan todas las posibilidades en fragmentos de consulta
                 if (TipoDoc != null)
-                    listaConsultas.Add("`tipo documento` = '" + TipoDoc + "' ");
+                    listaConsultas.Add("`tipo documento` LIKE '%" + TipoDoc + "%'");
                 if (NroDoc != null)
-                    listaConsultas.Add("`nro documento` = '" + NroDoc + "' ");
+                    listaConsultas.Add("`nro documento` LIKE '%" + NroDoc + "%'");
                 if (nombre != null)
-                    listaConsultas.Add("`nombre` = '" + nombre + "' ");
+                    listaConsultas.Add("`nombre` LIKE '%" + nombre + "%'");
                 if (apellido != null)
-                    listaConsultas.Add("`apellido` = '" + apellido + "' ");
+                    listaConsultas.Add("`apellido` LIKE '%" + apellido + "%'");
                 if (nroEmp != 0)
-                    listaConsultas.Add("`nroEmpleado` = '" + nroEmp + "' ");
+                    listaConsultas.Add("`nroEmpleado` LIKE '%" + nroEmp + "%'");
                 if (nroCand != 0)
-                    listaConsultas.Add("`nroCandidato` = '" + nroCand + "' ");
+                    listaConsultas.Add("`nroCandidato` LIKE '%" + nroCand + "%'");
 
                 //Se agregan los fragmentos de consulta a la variable "consultaSql"
                 for (int i = 0; i != (listaConsultas.Count - 1); i++)
                 {
-                    consultaSql += listaConsultas[i] + "AND ";
+                    consultaSql += listaConsultas[i] + " AND ";
                 }
                 //Se concluye la declaracion de la consulta
                 consultaSql += listaConsultas[(listaConsultas.Count - 1)] + ";";
@@ -502,7 +502,6 @@ namespace Gestores
             if (!reader.HasRows)
             { 
                 //si el reader esta vacio, es qe no encontro a ese candidato
-                MessageBox.Show("No se encontro ningun cuestionario asociado");
                 terminarConexion();
                 Cuestionario cues = gestorCuestionarios.instanciarCuestionario(candidato, "NO POSEE", null, 0);
                 listaCuestionariosAsociados.Add(cues);
@@ -541,7 +540,7 @@ namespace Gestores
             PuestoEvaluado PuestoEv;
             for (int i = 0; i < listaIdPuestos.Count; i++)
             {
-                PuestoEv = this.recuperarPuestoEvaluado(listaIdPuestos[i]); 
+                PuestoEv = this.recuperarPuestoEvaluado(listaIdPuestos[i]);
 
                 if (Equals(PuestoEv.Codigo, "ELIMINADO") == false)
                 {
@@ -564,7 +563,13 @@ namespace Gestores
                         listaCuestionariosAsociados.Add(preSeleccionCuestionarios[i]);
                     }
                     else
-                        listaCuestionariosAsociados[i].Estado = estadoCuest;//Agregamos el error para controlarlo
+                    {
+                        //Agrego el puesto evaluado al cuestionario
+                        preSeleccionCuestionarios[i].PuestoEvaluado = PuestoEv;
+                        //Agrego el estado al cuestionario
+                        preSeleccionCuestionarios[i].Estado = estadoCuest;
+                        listaCuestionariosAsociados.Add(preSeleccionCuestionarios[i]);//Agregamos el error para controlarlo
+                    }
                 }
                 else
                 {
@@ -707,6 +712,8 @@ namespace Gestores
             GestorEvaluacion gestorEvaluados = new GestorEvaluacion();
             PuestoEvaluado objPuesto = null;
 
+            DateTime fecha_evaluacion = this.recuperarFechadeComienzoEvaluacion(idPuestoEv);
+
             string consultaSql = "SELECT * FROM `puesto evaluado` WHERE `idPuesto Evaluado` = " + idPuestoEv + " ;";
 
             //llamamos al metodo "iniciar conexion"
@@ -745,6 +752,7 @@ namespace Gestores
                         string empresa = reader["empresa"].ToString();
                         //Usamos el gestor de evaluacion para instanciar el puesto evaludado con los datos encontrados en la base de datos
                         objPuesto = gestorEvaluados.instanciarPuestoEvaluado(codigo, nombrePuestoEv, empresa);
+                        objPuesto.Fecha_Comienzo = fecha_evaluacion;
                     }
                     else
                     {
@@ -764,11 +772,12 @@ namespace Gestores
             List<PuestoEvaluado> listaDePuestos_ev = new List<PuestoEvaluado>(); //para el retorno de datos
             List<Int32> lista_de_ID_Puesto_ev = new List<Int32>();
 
-            string consultaSql = "SELECT DISTINCT codigo, nombre, empresa, fecha " +
+            string consultaSql = "SELECT DISTINCT `idPuesto Evaluado`, codigo, nombre, empresa, fecha " +
                 "FROM `puesto evaluado` pu_ev " +
                 "JOIN cuestionario cuest on (pu_ev.codigo = '" + codigo + "' AND pu_ev.`idPuesto evaluado` = cuest.`Puesto Evaluado_idPuesto Evaluado`) " +
                 "JOIN `cuestionario_estado` c_est on (cuest.idCuestionario = c_est.Cuestionario_idCuestionario) " +
-                "WHERE Estado_idEstado = 1;";
+                "WHERE Estado_idEstado = 1 "+
+                "GROUP BY `idPuesto Evaluado`";
 
             //llamamos al metodo "iniciar conexion"
             conexionExitosa = iniciarConexion();
@@ -803,12 +812,11 @@ namespace Gestores
             while (reader.Read())
             {
                 PuestoEvaluado objPuestoEv;
-                
+                string id_puesto_ev = reader[0].ToString();
                 string cod = reader["codigo"].ToString();
                 string nomPuesto = reader["nombre"].ToString();
                 string emp = reader["empresa"].ToString();
-                DateTime fecha = DateTime.Parse( reader["fecha"].ToString() );
-                
+                DateTime fecha = (DateTime) reader["fecha"] ;
 
                 //Llamamos al gestor de puestos para instanciar el puesto que se obtuvo de la base de datos
                 objPuestoEv = gestorPuestos.instanciarPuestoEvaluado(cod, nomPuesto, emp);
@@ -948,8 +956,6 @@ namespace Gestores
             terminarConexion();
             return listaDeCaracteristicas;
         }
-
-
 
         /*
          * - RecuperarCaracteristicasPuesto tiene la misión de recuperar todas las competencias que estan activas (no eliminadas)
@@ -1346,6 +1352,7 @@ namespace Gestores
             
             return listaDeOpRespuesta;
         }
+
         /*
          * retornarProximoBloque tiene la misión de recuperar el proximo bloque de un cuestionario a travez de su numero de bloque
          */
@@ -1353,18 +1360,15 @@ namespace Gestores
         {
             GestorCuestionario gestorCuestionario = new GestorCuestionario();
             GestorEvaluacion gestorEvaluacion = new GestorEvaluacion();
-            
-            if (nroBloque == 1)
+
+            if (cuestAsociado.PuestoEvaluado.Caracteristicas == null)
             {
-                if (cuestAsociado.PuestoEvaluado.Caracteristicas == null)
+                //Re-armamos las relaciones del cuestionario para tener todos los objetos en memoria
+                bool re_construido = this.reconstruirRelaciones(cuestAsociado);
+                if (!re_construido)
                 {
-                    //Re-armamos las relaciones del cuestionario para tener todos los objetos en memoria
-                    bool re_construido = this.reconstruirRelaciones(cuestAsociado);
-                    if (!re_construido)
-                    {
-                        MessageBox.Show("No se pudo recuperar Todos los datos requeridos");
-                        return null;
-                    }
+                    MessageBox.Show("No se pudo recuperar Todos los datos requeridos");
+                    return null;
                 }
             }
 
@@ -1809,7 +1813,7 @@ namespace Gestores
                 // si algo fallo deshacemos todo
                 transaccion.Rollback();
                 // mostramos el mensaje del error
-                MessageBox.Show("La transaccion no se pudo realizar: " + MysqlEx.Message);
+                MessageBox.Show("RESGUARDO DE RESPUESTAS: La transaccion no se pudo realizar: " + MysqlEx.Message);
 
 
             }
@@ -1819,7 +1823,7 @@ namespace Gestores
                 // si algo fallo deshacemos todo
                 transaccion.Rollback();
                 // mostramos el mensaje del error
-                MessageBox.Show("La transaccion no se pudo realizar: " + Ex.Message);
+                MessageBox.Show("RESGUARDO DE RESPUESTAS: La transaccion no se pudo realizar: " + Ex.Message);
 
             }
 
@@ -1833,7 +1837,73 @@ namespace Gestores
             }
         }
 
-        public void guardarEstado(Estado estado) { }
+        public bool guardarEstado(Estado nuevoEstado_) 
+        {
+            MySql.Data.MySqlClient.MySqlTransaction transaccion;
+
+            bool conexionExitosa;
+            int cantDeFilasAfectadas = 0;
+
+            conexionExitosa = iniciarConexion();
+
+            MySql.Data.MySqlClient.MySqlCommand comando = new MySqlCommand();
+
+            comando.Connection = ObjConexion;
+            comando.CommandType = CommandType.Text;
+            comando.CommandTimeout = 0;
+
+            transaccion = ObjConexion.BeginTransaction();
+
+
+            try
+            {
+                if (!conexionExitosa)
+                    return false;
+                else
+                {
+                    string fecha = nuevoEstado_.Fecha_hora.Year + "-" + nuevoEstado_.Fecha_hora.Month + "-" + nuevoEstado_.Fecha_hora.Day + " " + nuevoEstado_.Fecha_hora.Hour + ":" + nuevoEstado_.Fecha_hora.Minute + ":" + nuevoEstado_.Fecha_hora.Second;
+                    //CONSULTA QUE ACTUALIZA LA TABLA CUESTIONARIO_ESTADO PARA RESGUARDAR EL ESTADO 
+                    string consultaSql = "INSERT INTO cuestionario_estado (Cuestionario_idCuestionario,Estado_idEstado,fecha) "
+                        + "VALUES ((SELECT idCuestionario FROM cuestionario WHERE clave = '" + nuevoEstado_.Cuestionario.Clave + "'),"
+                        + "(SELECT idEstado FROM estado WHERE estado = '" + nuevoEstado_.Estado_ + "'), "
+                        + " '" + fecha + "');";
+
+                    comando.CommandText = consultaSql;
+
+                    cantDeFilasAfectadas += comando.ExecuteNonQuery();
+                }
+
+                transaccion.Commit();
+                terminarConexion();
+
+            }
+
+            catch (MySqlException MysqlEx)
+            {
+                // si algo fallo deshacemos todo
+                transaccion.Rollback();
+                // mostramos el mensaje del error
+                MessageBox.Show("RESGUARDO DE ESTADO: La transaccion no se pudo realizar: " + MysqlEx.Message);
+            }
+
+            catch (DataException Ex)
+            {
+                // si algo fallo deshacemos todo
+                transaccion.Rollback();
+                // mostramos el mensaje del error
+                MessageBox.Show("RESGUARDO DE ESTADO: La transaccion no se pudo realizar: " + Ex.Message);
+            }
+
+            if (cantDeFilasAfectadas > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         public bool guardarBloque(Bloque nuevoBloque)
         {
             //CONSULTA QUE ACTUALIZA LA TABLA DE BLOQUES CON UNA NUEVA FILA
@@ -1902,7 +1972,7 @@ namespace Gestores
                 // si algo fallo deshacemos todo
                 transaccion.Rollback();
                 // mostramos el mensaje del error
-                MessageBox.Show("La transaccion no se pudo realizar: " + MysqlEx.Message);
+                MessageBox.Show("RESGUARDO DE BLOQUES: La transaccion no se pudo realizar: " + MysqlEx.Message);
 
 
             }
@@ -1911,7 +1981,75 @@ namespace Gestores
                 // si algo fallo deshacemos todo
                 transaccion.Rollback();
                 // mostramos el mensaje del error
-                MessageBox.Show("La transaccion no se pudo realizar: " + Ex.Message);
+                MessageBox.Show("RESGUARDO DE BLOQUES: La transaccion no se pudo realizar: " + Ex.Message);
+
+            }
+
+            if (cantDeFilasAfectadas > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool guardarAtrubutosCuestionario(Cuestionario cuest_)
+        {
+            MySql.Data.MySqlClient.MySqlTransaction transaccion;
+
+            bool conexionExitosa;
+            int cantDeFilasAfectadas = 0;
+
+            conexionExitosa = iniciarConexion();
+
+            MySql.Data.MySqlClient.MySqlCommand comando = new MySqlCommand();
+
+            comando.Connection = ObjConexion;
+            comando.CommandType = CommandType.Text;
+            comando.CommandTimeout = 0;
+
+            transaccion = ObjConexion.BeginTransaction();
+
+            try
+            {
+                if (!conexionExitosa)
+                    return false;
+
+                else
+                {
+                    //CONSULTA QUE ACTUALIZA LA TABLA ITEM_BLOQUE PARA RESGUARDAR LAS RESPUESTAS
+                    string consultaSql = "UPDATE `cuestionario` SET `nroAccesos`=" + cuest_.NroAccesos + ", `ultimoBloque`=" + cuest_.UltimoBloque.NroBloque + " "
+                        + "WHERE clave='" + cuest_.Clave + "';";
+
+
+                    comando.CommandText = consultaSql;
+
+                    cantDeFilasAfectadas += comando.ExecuteNonQuery();
+                }
+
+                transaccion.Commit();
+                terminarConexion();
+
+            }
+
+            catch (MySqlException MysqlEx)
+            {
+                // si algo fallo deshacemos todo
+                transaccion.Rollback();
+                // mostramos el mensaje del error
+                MessageBox.Show("RESGUARDO DE DATOS CUESTIONARIO: La transaccion no se pudo realizar: " + MysqlEx.Message);
+
+
+            }
+
+            catch (DataException Ex)
+            {
+                // si algo fallo deshacemos todo
+                transaccion.Rollback();
+                // mostramos el mensaje del error
+                MessageBox.Show("RESGUARDO DE DATOS CUESTIONARIO: La transaccion no se pudo realizar: " + Ex.Message);
 
             }
 
@@ -1955,6 +2093,7 @@ namespace Gestores
 
             MySqlDataReader reader = comando.ExecuteReader();
             objPuesto = gestorPuesto.instanciarPuesto(null, null, null);
+
             while (reader.Read() && !bandera)
             {
                 string cod = reader["codigo"].ToString();
@@ -2109,21 +2248,23 @@ namespace Gestores
             return tiempoActivo;
         }
 
-        public DateTime recuperarFechadeComienzoEvaluacion(string cod)
+        public DateTime recuperarFechadeComienzoEvaluacion(int idPuestoEV)
         {
             bool conexionExitosa;
             DateTime fechaComienzo = new DateTime();
 
             string consultaSql = "SELECT DISTINCT `fecha` FROM `cuestionario_estado` cu_est " +
-                "JOIN `puesto evaluado` p on (p.codigo = '" + cod + "') " +
+                "JOIN `puesto evaluado` p on (p.`idPuesto Evaluado` = '" + idPuestoEV + "') " +
                 "JOIN `cuestionario` cuest on (cuest.`Puesto Evaluado_idPuesto Evaluado` = p.`idPuesto Evaluado`) " +
                 "WHERE cu_est.Cuestionario_idCuestionario = cuest.idCuestionario AND Estado_idEstado = 1;";
 
             conexionExitosa = iniciarConexion();
 
             if (!conexionExitosa)
+            {
+                MessageBox.Show("ERROR DE CONEXION CON LA BASE DE DATOS");
                 return fechaComienzo.AddDays(0); //Error de conexion
-
+            }
             MySql.Data.MySqlClient.MySqlCommand comando;
 
             comando = ObjConexion.CreateCommand();
@@ -2133,12 +2274,13 @@ namespace Gestores
             MySqlDataReader reader = comando.ExecuteReader();
 
             if (!reader.HasRows)//si el reader esta vacio, no se encontro el parametro buscado
+            {
+                MessageBox.Show("DATOS DE LA FECHA DEL PUESTO NO ENCONTRADOS");
                 return fechaComienzo.AddDays(0);
+            }
 
             while (reader.Read())
-            {
                 fechaComienzo = DateTime.Parse(reader["fecha"].ToString());
-            }
 
             terminarConexion();
 
@@ -2176,6 +2318,241 @@ namespace Gestores
             terminarConexion();
 
             return instrucciones;
+
+        }
+
+        public List<Object> listarCandidatosPorEvaluacion(DateTime fecha_ev, string codigo_ev, int estado)
+        {
+            bool conexionExitosa;
+            List<Candidato> listaCandidatos = new List<Candidato>();
+            List<int> listaAccesos = new List<int>();
+            List<Object> listaRetorno = new List<object>();
+            GestorCandidatos gestorCandidatos = new GestorCandidatos();
+            
+            string fecha_formateada = this.formatear_fecha(fecha_ev);
+            
+            string consultaSql = "SELECT `tipo documento`, `nro documento`,  nombre, apellido, nroCandidato, nroEmpleado, nroAccesos" +
+                " FROM cuestionario_estado cuest_est "+
+                " JOIN cuestionario cuest on (idCuestionario = Cuestionario_idCuestionario) "+
+                " JOIN candidato cand on ( idCandidato = Candidato_idCandidato) "+
+                " WHERE Estado_idEstado = " + estado + " AND `Puesto Evaluado_idPuesto Evaluado` = (SELECT DISTINCT `idPuesto Evaluado` " +
+                " FROM candidato cand " +
+                " JOIN cuestionario cuest on (idCandidato = Candidato_idCandidato) " +
+                " JOIN cuestionario_estado cuest_estado on (idCuestionario = Cuestionario_idCuestionario) " +
+                " JOIN `puesto evaluado` puesto_ev on (`idPuesto Evaluado` =`Puesto Evaluado_idPuesto Evaluado`) " +
+                " WHERE puesto_ev.codigo =  '"+ codigo_ev +"' AND fecha = '"+ fecha_formateada +"');";
+
+            //llamamos al metodo "iniciar conexion"
+            conexionExitosa = iniciarConexion();
+
+            //Evaluamos si la conexion se realizo con exito
+            if (!conexionExitosa)
+            {
+                MessageBox.Show("Fallo la conexion con la base de datos");
+                terminarConexion();
+                return null;
+            }
+
+            //Creamos un adaptador llamado "comando" para realizar la consultaSql que definimos mas arriba
+            MySql.Data.MySqlClient.MySqlCommand comando;
+            comando = ObjConexion.CreateCommand();
+            comando.CommandText = consultaSql;//En el adaptador comando hacemos un asignacion en su atributo CommandText de la consultaSql
+
+            //Se hace la ejecucion del comando con el metodo ExecuterReader 
+            //y se lo asigna a una variable reader que contendra los resultados de la busqueda en la base de datos
+            MySqlDataReader reader = comando.ExecuteReader();
+
+            if (!reader.HasRows)
+            {
+                //si el reader esta vacio, es que no se encontraron datos para la consulta realizada
+                MessageBox.Show("No existen candidatos que hayan participado de esta evaluacion[Imposible!]");
+                terminarConexion();
+                return null;
+            }
+
+            while (reader.Read())
+            {
+                string tipoDoc = reader["tipo documento"].ToString();
+                string nroDoc = reader["nro documento"].ToString();
+                string nombre = reader["nombre"].ToString();
+                string apellido = reader["apellido"].ToString();
+                int nroAccesos = Int32.Parse(reader["nroAccesos"].ToString());
+                int nroCandidato;
+                if (reader["nroCandidato"].ToString() == "")//Se contempla la posibilidad de que este número sea nulo
+                    nroCandidato = 0;
+                else
+                    nroCandidato = Int32.Parse(reader["nroCandidato"].ToString());//Se lo transforma a un numero entero
+
+                int nroEmpleado;
+                if (reader["nroEmpleado"].ToString() == "")//Se contempla la posibilidad de que este número sea nulo
+                    nroEmpleado = 0;
+                else
+                    nroEmpleado = Int32.Parse(reader["nroEmpleado"].ToString());//Se lo transforma a un numero entero
+
+                listaAccesos.Add(nroAccesos);
+
+                //Llamamos al gestor de candidatos para instanciar el candidato que se obtuvo de la base de datos
+                Candidato objCandidato = gestorCandidatos.instanciarCandidato(nombre, apellido, tipoDoc, nroDoc, nroCandidato, nroEmpleado);
+                //El retorno del metodo del gestor es introducido en la lista de candidatos
+                listaCandidatos.Add(objCandidato);
+            }
+            listaRetorno.Add(listaCandidatos);
+            listaRetorno.Add(listaAccesos);
+            terminarConexion();
+            return listaRetorno;
+        }
+
+        public string formatear_fecha(DateTime fecha) 
+        {
+            string fecha_formateada;
+            
+            string mes = fecha.Month.ToString();
+            string dia = fecha.Day.ToString();
+            string hora = fecha.Hour.ToString();
+            string minutos = fecha.Minute.ToString();
+            string segundos = fecha.Second.ToString();
+
+            if (Int32.Parse(fecha.Month.ToString()) < 10)
+                mes = "0" + mes;
+
+            if (Int32.Parse(fecha.Day.ToString()) < 10)
+                dia = "0" + dia;
+
+            if (Int32.Parse(fecha.Hour.ToString()) < 10)
+                hora = "0" + hora;
+            
+            if (Int32.Parse(fecha.Minute.ToString()) < 10)
+                minutos = "0" + minutos;
+            
+            if (Int32.Parse(fecha.Second.ToString()) < 10)
+                segundos = "0" + segundos;
+
+            fecha_formateada = fecha.Year + "-" + mes + "-" + dia + " " + hora + ":" + minutos + ":" + segundos;
+            
+            return fecha_formateada;
+        }
+        public List<CompetenciaEvaluada> competencias_segun_puesto(DateTime fecha_ev, string codigo_ev, int estado)
+        {
+            bool conexionExitosa;
+            GestorEvaluacion gestor_de_Evaluacion = new GestorEvaluacion();
+            List<CompetenciaEvaluada> listaCompetenciasEvaluadas= new List<CompetenciaEvaluada>();
+            string fecha_formateada = this.formatear_fecha(fecha_ev);
+
+            string consultaSql = "SELECT ponderacion , codigo, nombre " +
+                    " FROM `puesto evaluado_competencia evaluada` pe_ce " +
+                    " JOIN `competencia evaluada` comp_ev on (`idCompetencia Evaluada` = `Competencia Evaluada_idCompetencia Evaluada`) " +
+                    " WHERE `Puesto Evaluado_idPuesto Evaluado` = (SELECT `idPuesto Evaluado` " +
+                    " FROM candidato cand " +
+                    " JOIN cuestionario cuest on (idCandidato = Candidato_idCandidato) " +
+                    " JOIN cuestionario_estado cuest_estado on (idCuestionario = Cuestionario_idCuestionario) " +
+                    " JOIN `puesto evaluado` puesto_ev on (`idPuesto Evaluado` =`Puesto Evaluado_idPuesto Evaluado`) " +
+                    " WHERE puesto_ev.codigo =  '" + codigo_ev + "' AND fecha = '" + fecha_formateada + "');";
+
+            //llamamos al metodo "iniciar conexion"
+            conexionExitosa = iniciarConexion();
+
+            //Evaluamos si la conexion se realizo con exito
+            if (!conexionExitosa)
+            {
+                MessageBox.Show("Fallo la conexion con la base de datos");
+                terminarConexion();
+                return null;
+            }
+
+            //Creamos un adaptador llamado "comando" para realizar la consultaSql que definimos mas arriba
+            MySql.Data.MySqlClient.MySqlCommand comando;
+            comando = ObjConexion.CreateCommand();
+            comando.CommandText = consultaSql;//En el adaptador comando hacemos un asignacion en su atributo CommandText de la consultaSql
+
+            //Se hace la ejecucion del comando con el metodo ExecuterReader 
+            //y se lo asigna a una variable reader que contendra los resultados de la busqueda en la base de datos
+            MySqlDataReader reader = comando.ExecuteReader();
+
+            if (!reader.HasRows)
+            {
+                //si el reader esta vacio, es que no se encontraron datos para la consulta realizada
+                MessageBox.Show("No existen competencias asociadas a esta evaluacion[Imposible!]");
+                terminarConexion();
+                return null;
+            }
+
+            while (reader.Read())
+            {
+                
+                string codigo = reader["codigo"].ToString();
+                string nombre = reader["nombre"].ToString();
+                
+                int ponderacion = Int32.Parse(reader["ponderacion"].ToString());
+
+                CompetenciaEvaluada competencia_ev = gestor_de_Evaluacion.instanciarCompetenciaEvaluda(codigo, nombre);
+                competencia_ev.Ponderacion = ponderacion;
+
+                listaCompetenciasEvaluadas.Add(competencia_ev);
+            }
+
+            terminarConexion();
+            return listaCompetenciasEvaluadas;
+
+        }
+
+        public int cantidad_De_Preguntas_Por_Competencia(string codigo_de_competencia, DateTime fecha_ev, string codigo_ev, int estado)
+        {
+            bool conexionExitosa;
+            GestorEvaluacion gestor_de_Evaluacion = new GestorEvaluacion();
+            List<CompetenciaEvaluada> listaCompetenciasEvaluadas = new List<CompetenciaEvaluada>();
+            string fecha_formateada = this.formatear_fecha(fecha_ev);
+            int cantidad_preguntas = -1; 
+
+            string consultaSql = "SELECT COUNT(*) " +
+                " FROM `factor evaluado` fa " +
+                " JOIN `pregunta evaluada` pe on( `Factor Evaluado_idFactor Evaluado` = `idFactor Evaluado`) " +
+                " WHERE `Competencia Evaluada_idCompetencia Evaluada` = (SELECT `idCompetencia Evaluada` " +
+                " FROM `puesto evaluado_competencia evaluada` pe_ce " +
+                " JOIN `competencia evaluada` comp_ev on (codigo = '" + codigo_de_competencia + 
+                "' AND `Competencia Evaluada_idCompetencia Evaluada` = `idCompetencia Evaluada`) " +
+                " WHERE `Puesto Evaluado_idPuesto Evaluado` = (SELECT `idPuesto Evaluado` " +
+                " FROM candidato cand " +
+                " JOIN cuestionario cuest on (idCandidato = Candidato_idCandidato) " +
+                " JOIN cuestionario_estado cuest_estado on (idCuestionario = Cuestionario_idCuestionario) " +
+                " JOIN `puesto evaluado` puesto_ev on (`idPuesto Evaluado` =`Puesto Evaluado_idPuesto Evaluado`)" +
+                " WHERE puesto_ev.codigo =  '" + codigo_ev + "' AND fecha = '" + fecha_formateada + "');";
+
+            //llamamos al metodo "iniciar conexion"
+            conexionExitosa = iniciarConexion();
+
+            //Evaluamos si la conexion se realizo con exito
+            if (!conexionExitosa)
+            {
+                MessageBox.Show("Fallo la conexion con la base de datos");
+                terminarConexion();
+                return -1;
+            }
+
+            //Creamos un adaptador llamado "comando" para realizar la consultaSql que definimos mas arriba
+            MySql.Data.MySqlClient.MySqlCommand comando;
+            comando = ObjConexion.CreateCommand();
+            comando.CommandText = consultaSql;//En el adaptador comando hacemos un asignacion en su atributo CommandText de la consultaSql
+
+            //Se hace la ejecucion del comando con el metodo ExecuterReader 
+            //y se lo asigna a una variable reader que contendra los resultados de la busqueda en la base de datos
+            MySqlDataReader reader = comando.ExecuteReader();
+
+            if (!reader.HasRows)
+            {
+                //si el reader esta vacio, es que no se encontraron datos para la consulta realizada
+                MessageBox.Show("No existen preguntas asociadas a esta competencia de esta evaluacion[Imposible!]");
+                terminarConexion();
+                return -1;
+            }
+
+            while (reader.Read())
+            {
+                cantidad_preguntas = Int32.Parse(reader["COUNT(*)"].ToString());
+
+            }
+
+            terminarConexion();
+            return cantidad_preguntas;
 
         }
 
@@ -2256,7 +2633,7 @@ namespace Gestores
             while (reader2.Read())
             {
                 string pond = reader2["ponderacion"].ToString();*/
-
-    }
-
+           
+        
+        }
 }

@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             this.SeleccionDeAcceso = new System.Windows.Forms.GroupBox();
-            this.button1 = new System.Windows.Forms.Button();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.Buscar = new System.Windows.Forms.Button();
+            this.nombreEmpresa = new System.Windows.Forms.TextBox();
+            this.nombrePuesto = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.TituloEmpresa = new System.Windows.Forms.Label();
@@ -44,6 +44,7 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.Atras = new System.Windows.Forms.Button();
             this.Siguiente = new System.Windows.Forms.Button();
+            this.CaracteristicasDel_puesto = new System.Windows.Forms.GroupBox();
             this.SeleccionDeAcceso.SuspendLayout();
             this.PanelInferior.SuspendLayout();
             this.PanelSuperior.SuspendLayout();
@@ -52,9 +53,9 @@
             // SeleccionDeAcceso
             // 
             this.SeleccionDeAcceso.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.SeleccionDeAcceso.Controls.Add(this.button1);
-            this.SeleccionDeAcceso.Controls.Add(this.textBox2);
-            this.SeleccionDeAcceso.Controls.Add(this.textBox1);
+            this.SeleccionDeAcceso.Controls.Add(this.Buscar);
+            this.SeleccionDeAcceso.Controls.Add(this.nombreEmpresa);
+            this.SeleccionDeAcceso.Controls.Add(this.nombrePuesto);
             this.SeleccionDeAcceso.Controls.Add(this.label2);
             this.SeleccionDeAcceso.Controls.Add(this.label1);
             this.SeleccionDeAcceso.ForeColor = System.Drawing.SystemColors.HotTrack;
@@ -66,31 +67,32 @@
             this.SeleccionDeAcceso.Text = "Seleccione el puesto y nombre de la empresa para los que desee evaluar los candid" +
                 "atos";
             // 
-            // button1
+            // Buscar
             // 
-            this.button1.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.button1.Location = new System.Drawing.Point(206, 130);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 4;
-            this.button1.Text = "Buscar";
-            this.button1.UseVisualStyleBackColor = true;
+            this.Buscar.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.Buscar.Location = new System.Drawing.Point(270, 130);
+            this.Buscar.Name = "Buscar";
+            this.Buscar.Size = new System.Drawing.Size(75, 23);
+            this.Buscar.TabIndex = 4;
+            this.Buscar.Text = "Buscar";
+            this.Buscar.UseVisualStyleBackColor = true;
+            this.Buscar.Click += new System.EventHandler(this.Buscar_Click);
             // 
-            // textBox2
+            // nombreEmpresa
             // 
-            this.textBox2.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.textBox2.Location = new System.Drawing.Point(138, 92);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(100, 20);
-            this.textBox2.TabIndex = 3;
+            this.nombreEmpresa.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.nombreEmpresa.Location = new System.Drawing.Point(138, 92);
+            this.nombreEmpresa.Name = "nombreEmpresa";
+            this.nombreEmpresa.Size = new System.Drawing.Size(143, 20);
+            this.nombreEmpresa.TabIndex = 3;
             // 
-            // textBox1
+            // nombrePuesto
             // 
-            this.textBox1.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.textBox1.Location = new System.Drawing.Point(138, 41);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 20);
-            this.textBox1.TabIndex = 2;
+            this.nombrePuesto.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.nombrePuesto.Location = new System.Drawing.Point(138, 41);
+            this.nombrePuesto.Name = "nombrePuesto";
+            this.nombrePuesto.Size = new System.Drawing.Size(143, 20);
+            this.nombrePuesto.TabIndex = 2;
             // 
             // label2
             // 
@@ -201,17 +203,18 @@
             // Atras
             // 
             this.Atras.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.Atras.Location = new System.Drawing.Point(218, 404);
+            this.Atras.Location = new System.Drawing.Point(217, 428);
             this.Atras.Name = "Atras";
             this.Atras.Size = new System.Drawing.Size(75, 23);
             this.Atras.TabIndex = 10;
             this.Atras.Text = "<< Atrás";
             this.Atras.UseVisualStyleBackColor = true;
+            this.Atras.Click += new System.EventHandler(this.Atras_Click);
             // 
             // Siguiente
             // 
             this.Siguiente.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.Siguiente.Location = new System.Drawing.Point(382, 404);
+            this.Siguiente.Location = new System.Drawing.Point(382, 428);
             this.Siguiente.Name = "Siguiente";
             this.Siguiente.Size = new System.Drawing.Size(75, 23);
             this.Siguiente.TabIndex = 11;
@@ -219,12 +222,26 @@
             this.Siguiente.UseVisualStyleBackColor = true;
             this.Siguiente.Click += new System.EventHandler(this.Siguiente_Click);
             // 
+            // CaracteristicasDel_puesto
+            // 
+            this.CaracteristicasDel_puesto.AutoSize = true;
+            this.CaracteristicasDel_puesto.ForeColor = System.Drawing.SystemColors.HotTrack;
+            this.CaracteristicasDel_puesto.Location = new System.Drawing.Point(112, 293);
+            this.CaracteristicasDel_puesto.Name = "CaracteristicasDel_puesto";
+            this.CaracteristicasDel_puesto.Size = new System.Drawing.Size(486, 111);
+            this.CaracteristicasDel_puesto.TabIndex = 12;
+            this.CaracteristicasDel_puesto.TabStop = false;
+            this.CaracteristicasDel_puesto.Text = "Competencias asociadas al puesto: ";
+            this.CaracteristicasDel_puesto.Visible = false;
+            // 
             // Evaluar_Candidatos___Ventana_2
             // 
+            this.AcceptButton = this.Buscar;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(679, 552);
+            this.Controls.Add(this.CaracteristicasDel_puesto);
             this.Controls.Add(this.Siguiente);
             this.Controls.Add(this.Atras);
             this.Controls.Add(this.SeleccionDeAcceso);
@@ -241,15 +258,16 @@
             this.PanelSuperior.ResumeLayout(false);
             this.PanelSuperior.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
 
         private System.Windows.Forms.GroupBox SeleccionDeAcceso;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Button Buscar;
+        private System.Windows.Forms.TextBox nombreEmpresa;
+        private System.Windows.Forms.TextBox nombrePuesto;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label TituloEmpresa;
@@ -262,5 +280,6 @@
         private System.Windows.Forms.LinkLabel CerrarSesion;
         private System.Windows.Forms.Button Atras;
         private System.Windows.Forms.Button Siguiente;
+        private System.Windows.Forms.GroupBox CaracteristicasDel_puesto;
     }
 }

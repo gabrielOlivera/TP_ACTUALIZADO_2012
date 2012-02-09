@@ -34,10 +34,10 @@
             this.Fecha = new System.Windows.Forms.LinkLabel();
             this.SeleccionDeAcceso = new System.Windows.Forms.GroupBox();
             this.Buscar = new System.Windows.Forms.Button();
-            this.textBox4 = new System.Windows.Forms.TextBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.nroCandidato = new System.Windows.Forms.TextBox();
+            this.nroEmpleado = new System.Windows.Forms.TextBox();
+            this.nombre = new System.Windows.Forms.TextBox();
+            this.apellido = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -83,7 +83,7 @@
             this.PanelInferior.BackColor = System.Drawing.Color.Gainsboro;
             this.PanelInferior.Controls.Add(this.Fecha);
             this.PanelInferior.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.PanelInferior.Location = new System.Drawing.Point(0, 707);
+            this.PanelInferior.Location = new System.Drawing.Point(0, 701);
             this.PanelInferior.Name = "PanelInferior";
             this.PanelInferior.Size = new System.Drawing.Size(872, 58);
             this.PanelInferior.TabIndex = 5;
@@ -108,16 +108,16 @@
             // 
             this.SeleccionDeAcceso.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.SeleccionDeAcceso.Controls.Add(this.Buscar);
-            this.SeleccionDeAcceso.Controls.Add(this.textBox4);
-            this.SeleccionDeAcceso.Controls.Add(this.textBox3);
-            this.SeleccionDeAcceso.Controls.Add(this.textBox2);
-            this.SeleccionDeAcceso.Controls.Add(this.textBox1);
+            this.SeleccionDeAcceso.Controls.Add(this.nroCandidato);
+            this.SeleccionDeAcceso.Controls.Add(this.nroEmpleado);
+            this.SeleccionDeAcceso.Controls.Add(this.nombre);
+            this.SeleccionDeAcceso.Controls.Add(this.apellido);
             this.SeleccionDeAcceso.Controls.Add(this.label4);
             this.SeleccionDeAcceso.Controls.Add(this.label3);
             this.SeleccionDeAcceso.Controls.Add(this.label2);
             this.SeleccionDeAcceso.Controls.Add(this.label1);
             this.SeleccionDeAcceso.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.SeleccionDeAcceso.Location = new System.Drawing.Point(142, 104);
+            this.SeleccionDeAcceso.Location = new System.Drawing.Point(126, 109);
             this.SeleccionDeAcceso.Name = "SeleccionDeAcceso";
             this.SeleccionDeAcceso.Size = new System.Drawing.Size(517, 183);
             this.SeleccionDeAcceso.TabIndex = 9;
@@ -135,37 +135,37 @@
             this.Buscar.UseVisualStyleBackColor = true;
             this.Buscar.Click += new System.EventHandler(this.Buscar_Click);
             // 
-            // textBox4
+            // nroCandidato
             // 
-            this.textBox4.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.textBox4.Location = new System.Drawing.Point(359, 97);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(100, 20);
-            this.textBox4.TabIndex = 7;
+            this.nroCandidato.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.nroCandidato.Location = new System.Drawing.Point(359, 97);
+            this.nroCandidato.Name = "nroCandidato";
+            this.nroCandidato.Size = new System.Drawing.Size(100, 20);
+            this.nroCandidato.TabIndex = 7;
             // 
-            // textBox3
+            // nroEmpleado
             // 
-            this.textBox3.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.textBox3.Location = new System.Drawing.Point(118, 90);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(100, 20);
-            this.textBox3.TabIndex = 6;
+            this.nroEmpleado.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.nroEmpleado.Location = new System.Drawing.Point(118, 90);
+            this.nroEmpleado.Name = "nroEmpleado";
+            this.nroEmpleado.Size = new System.Drawing.Size(100, 20);
+            this.nroEmpleado.TabIndex = 6;
             // 
-            // textBox2
+            // nombre
             // 
-            this.textBox2.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.textBox2.Location = new System.Drawing.Point(359, 44);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(100, 20);
-            this.textBox2.TabIndex = 5;
+            this.nombre.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.nombre.Location = new System.Drawing.Point(359, 44);
+            this.nombre.Name = "nombre";
+            this.nombre.Size = new System.Drawing.Size(100, 20);
+            this.nombre.TabIndex = 5;
             // 
-            // textBox1
+            // apellido
             // 
-            this.textBox1.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.textBox1.Location = new System.Drawing.Point(118, 44);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 20);
-            this.textBox1.TabIndex = 4;
+            this.apellido.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.apellido.Location = new System.Drawing.Point(118, 44);
+            this.apellido.Name = "apellido";
+            this.apellido.Size = new System.Drawing.Size(100, 20);
+            this.apellido.TabIndex = 4;
             // 
             // label4
             // 
@@ -265,7 +265,7 @@
             this.groupBox1.Controls.Add(this.Agregar);
             this.groupBox1.Controls.Add(this.resultadosDeBusqueda);
             this.groupBox1.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.groupBox1.Location = new System.Drawing.Point(142, 304);
+            this.groupBox1.Location = new System.Drawing.Point(126, 309);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(587, 285);
             this.groupBox1.TabIndex = 10;
@@ -292,6 +292,7 @@
             this.Agregar.TabIndex = 1;
             this.Agregar.Text = "Agregar";
             this.Agregar.UseVisualStyleBackColor = true;
+            this.Agregar.Click += new System.EventHandler(this.Agregar_Click);
             // 
             // resultadosDeBusqueda
             // 
@@ -309,7 +310,7 @@
             // Siguiente
             // 
             this.Siguiente.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.Siguiente.Location = new System.Drawing.Point(615, 612);
+            this.Siguiente.Location = new System.Drawing.Point(599, 617);
             this.Siguiente.Name = "Siguiente";
             this.Siguiente.Size = new System.Drawing.Size(85, 23);
             this.Siguiente.TabIndex = 11;
@@ -319,10 +320,11 @@
             // 
             // Evaluar_Candidato
             // 
+            this.AcceptButton = this.Buscar;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(872, 765);
+            this.ClientSize = new System.Drawing.Size(889, 750);
             this.Controls.Add(this.Siguiente);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.panel2);
@@ -357,10 +359,10 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel PanelSuperior;
-        private System.Windows.Forms.TextBox textBox4;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox nroCandidato;
+        private System.Windows.Forms.TextBox nroEmpleado;
+        private System.Windows.Forms.TextBox nombre;
+        private System.Windows.Forms.TextBox apellido;
         private System.Windows.Forms.Button Buscar;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.DataGridView resultadosDeBusqueda;

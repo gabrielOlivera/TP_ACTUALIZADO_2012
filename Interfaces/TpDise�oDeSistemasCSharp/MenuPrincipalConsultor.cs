@@ -12,21 +12,28 @@ namespace TpDiseñoCSharp
 {
     public partial class MenuPrincipalConsultor : Form
     {
+        private Form pantalla_Principal;
 
-        public MenuPrincipalConsultor(string User)
+        public MenuPrincipalConsultor(string User, Form pantallaPricipal_parametro, Form pantallaAnterior)
         {
             InitializeComponent();
-            this.Consultor.Text = User;  
+            pantalla_Principal = pantallaPricipal_parametro;
+            pantallaAnterior.Close();
+            this.Consultor.Text = User;
+            FormClosing += CerrarVentana;
         }
 
         private void EmitirOrdenDeMerito_Click(object sender, EventArgs e)
         {
             Emitir_Orden_de_Mérito ordenDeMerito = new Emitir_Orden_de_Mérito(this.Consultor.Text);
+            this.Visible = false;
             ordenDeMerito.ShowDialog();
         }
+
         private void EvaluarCandidatos_Click(object sender, EventArgs e)
         {
-            Evaluar_Candidato evCandidato = new Evaluar_Candidato(this.Consultor.Text);
+            Evaluar_Candidato evCandidato = new Evaluar_Candidato(this.Consultor.Text, pantalla_Principal, this);
+            this.Visible = false;
             evCandidato.ShowDialog();
 
         }
@@ -37,8 +44,10 @@ namespace TpDiseñoCSharp
             gestPuesto.ShowDialog();
         }
 
-
-
+        private void CerrarVentana(object sender, EventArgs e)
+        {
+            pantalla_Principal.Visible = true;
+        }
 
         /*=====================================================
           ESTAS FUNCIONALIDADES NO SON IMPLEMENTADAS EN EL TP

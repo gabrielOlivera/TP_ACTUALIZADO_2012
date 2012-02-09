@@ -92,6 +92,7 @@
             // 
             // Cancelar
             // 
+            this.Cancelar.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.Cancelar.ForeColor = System.Drawing.SystemColors.ControlText;
             resources.ApplyResources(this.Cancelar, "Cancelar");
             this.Cancelar.Name = "Cancelar";
@@ -138,8 +139,10 @@
             // 
             // LoginConsultor
             // 
+            this.AcceptButton = this.Entrar;
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.Cancelar;
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.PanelInferior);
             this.Controls.Add(this.SeleccionDeAcceso);

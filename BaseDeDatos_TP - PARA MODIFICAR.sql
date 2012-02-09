@@ -1,4 +1,4 @@
--- MySQL dump 10.13  Distrib 5.5.15, for Win32 (x86)
+﻿-- MySQL dump 10.13  Distrib 5.5.15, for Win32 (x86)
 --
 -- Host: localhost    Database: tp base de datos
 -- ------------------------------------------------------
@@ -39,7 +39,7 @@ CREATE TABLE `bloque` (
   UNIQUE KEY `idBloque_UNIQUE` (`idBloque`),
   KEY `fk_idCuestionario` (`Cuestionario_idCuestrionario`),
   CONSTRAINT `fk_idCuestionario` FOREIGN KEY (`Cuestionario_idCuestrionario`) REFERENCES `cuestionario` (`idCuestionario`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -195,7 +195,7 @@ CREATE TABLE `cuestionario` (
   KEY `fk_Cuestionario_Candidato1` (`Candidato_idCandidato`),
   CONSTRAINT `fk_Cuestionario_Candidato1` FOREIGN KEY (`Candidato_idCandidato`) REFERENCES `candidato` (`idCandidato`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_Cuestionario_Puesto Evaluado1` FOREIGN KEY (`Puesto Evaluado_idPuesto Evaluado`) REFERENCES `puesto evaluado` (`idPuesto Evaluado`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -204,7 +204,7 @@ CREATE TABLE `cuestionario` (
 
 LOCK TABLES `cuestionario` WRITE;
 /*!40000 ALTER TABLE `cuestionario` DISABLE KEYS */;
-INSERT INTO `cuestionario` VALUES (1,'JPM056P1',0,1,1,1),(2,'ACF698P1',0,1,3,1),(3,'ECM684P3',0,4,8,1),(4,'MMF125P2',0,2,4,NULL),(5,'WDM158P2',0,2,10,NULL),(6,'MPF126P2',0,2,13,NULL),(8,'MNF425P3',4,3,1,4);
+INSERT INTO `cuestionario` VALUES (1,'JPM056P1',0,1,1,1),(2,'ACF698P1',0,1,3,1),(3,'ECM684P3',0,4,8,1),(4,'MMF125P2',0,2,4,NULL),(5,'WDM158P2',0,2,10,NULL),(6,'MPF126P2',0,5,13,NULL),(8,'MNF425P3',4,3,1,4),(9,'NBM666P2',4,5,2,4);
 /*!40000 ALTER TABLE `cuestionario` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -219,7 +219,7 @@ CREATE TABLE `cuestionario_estado` (
   `Cuestionario_idCuestionario` int(11) NOT NULL,
   `Estado_idEstado` int(11) NOT NULL,
   `fecha` datetime NOT NULL,
-  PRIMARY KEY (`Cuestionario_idCuestionario`,`Estado_idEstado`),
+  PRIMARY KEY (`Cuestionario_idCuestionario`,`Estado_idEstado`,`fecha`),
   KEY `fk_Cuestionario_has_Estado_Estado1` (`Estado_idEstado`),
   KEY `fk_Cuestionario_has_Estado_Cuestionario1` (`Cuestionario_idCuestionario`),
   CONSTRAINT `fk_Cuestionario_has_Estado_Cuestionario1` FOREIGN KEY (`Cuestionario_idCuestionario`) REFERENCES `cuestionario` (`idCuestionario`) ON DELETE NO ACTION ON UPDATE NO ACTION,
@@ -233,7 +233,7 @@ CREATE TABLE `cuestionario_estado` (
 
 LOCK TABLES `cuestionario_estado` WRITE;
 /*!40000 ALTER TABLE `cuestionario_estado` DISABLE KEYS */;
-INSERT INTO `cuestionario_estado` VALUES (1,1,'2011-12-13 09:10:12'),(1,2,'2011-12-14 16:32:21'),(2,1,'2011-12-13 09:10:12'),(2,2,'2011-12-13 18:25:30'),(3,1,'2011-12-12 09:05:33'),(3,2,'2011-12-14 10:15:00'),(4,1,'2011-12-12 09:05:33'),(5,1,'2011-12-12 09:05:33'),(6,1,'2011-12-12 09:05:33'),(8,1,'2011-08-10 10:05:32'),(8,3,'2011-08-15 16:02:14');
+INSERT INTO `cuestionario_estado` VALUES (1,1,'2011-12-30 09:10:12'),(2,1,'2011-12-30 09:10:12'),(3,1,'2011-12-31 09:05:33'),(4,1,'2011-12-31 09:05:33'),(5,1,'2011-12-31 09:05:33'),(6,1,'2011-12-31 09:05:33'),(8,1,'2011-08-10 10:05:32'),(1,2,'2012-01-02 16:32:21'),(2,2,'2012-01-01 18:25:30'),(3,2,'2012-01-02 10:15:00'),(8,3,'2011-08-15 16:02:14'),(9,5,'2006-08-23 09:02:14');
 /*!40000 ALTER TABLE `cuestionario_estado` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -381,7 +381,7 @@ CREATE TABLE `item_bloque` (
 
 LOCK TABLES `item_bloque` WRITE;
 /*!40000 ALTER TABLE `item_bloque` DISABLE KEYS */;
-INSERT INTO `item_bloque` VALUES (1,1,22,NULL),(2,1,28,NULL),(3,1,33,NULL),(4,1,23,NULL),(5,1,29,NULL),(6,2,34,NULL),(7,2,25,NULL),(8,2,30,NULL),(9,2,35,NULL),(10,2,26,NULL),(11,3,31,NULL),(12,3,36,NULL),(13,3,27,NULL),(14,3,32,NULL),(15,3,37,NULL),(16,4,27,NULL),(17,4,32,NULL),(18,4,37,NULL),(19,4,26,NULL),(20,4,31,NULL),(21,5,36,NULL),(22,5,25,NULL),(23,5,30,NULL),(24,5,35,NULL),(25,5,22,NULL),(26,6,28,NULL),(27,6,34,NULL),(28,6,23,NULL),(29,6,29,NULL),(30,6,33,NULL),(31,7,1,NULL),(32,7,12,NULL),(33,7,17,NULL),(34,7,18,NULL),(35,7,6,NULL),(36,8,28,NULL),(37,8,22,NULL),(38,8,2,NULL),(39,8,3,NULL),(40,8,13,NULL),(41,9,8,NULL),(42,9,29,NULL),(43,9,24,NULL),(44,9,4,NULL),(45,9,14,NULL),(46,10,19,NULL),(47,10,9,NULL),(48,10,30,NULL),(49,10,25,NULL),(50,10,5,NULL),(51,11,15,NULL),(52,11,20,NULL),(53,11,11,NULL),(54,11,31,NULL),(55,11,26,NULL),(56,12,16,NULL),(57,12,21,NULL),(58,12,7,NULL),(59,12,32,NULL),(60,12,27,NULL);
+INSERT INTO `item_bloque` VALUES (1,1,22,24),(2,1,28,45),(3,1,33,17),(4,1,23,30),(5,1,29,44),(6,2,34,2),(7,2,25,37),(8,2,30,2),(9,2,35,1),(10,2,26,40),(11,3,31,1),(12,3,36,47),(13,3,27,11),(14,3,32,2),(15,3,37,43),(16,4,27,NULL),(17,4,32,NULL),(18,4,37,NULL),(19,4,26,NULL),(20,4,31,NULL),(21,5,36,NULL),(22,5,25,NULL),(23,5,30,NULL),(24,5,35,NULL),(25,5,22,NULL),(26,6,28,NULL),(27,6,34,NULL),(28,6,23,NULL),(29,6,29,NULL),(30,6,33,NULL),(31,7,1,NULL),(32,7,12,NULL),(33,7,17,NULL),(34,7,18,NULL),(35,7,6,NULL),(36,8,28,NULL),(37,8,22,NULL),(38,8,2,NULL),(39,8,3,NULL),(40,8,13,NULL),(41,9,8,NULL),(42,9,29,NULL),(43,9,24,NULL),(44,9,4,NULL),(45,9,14,NULL),(46,10,19,NULL),(47,10,9,NULL),(48,10,30,NULL),(49,10,25,NULL),(50,10,5,NULL),(51,11,15,NULL),(52,11,20,NULL),(53,11,11,NULL),(54,11,31,NULL),(55,11,26,NULL),(56,12,16,NULL),(57,12,21,NULL),(58,12,7,NULL),(59,12,32,NULL),(60,12,27,NULL);
 /*!40000 ALTER TABLE `item_bloque` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -522,7 +522,7 @@ CREATE TABLE `opcion evaluada` (
 
 LOCK TABLES `opcion evaluada` WRITE;
 /*!40000 ALTER TABLE `opcion evaluada` DISABLE KEYS */;
-INSERT INTO `opcion evaluada` VALUES (4,'1'),(13,'10'),(5,'2'),(6,'3'),(7,'4'),(8,'5'),(9,'6'),(10,'7'),(11,'8'),(12,'9'),(16,'A VECES'),(34,'are'),(45,'C #'),(44,'C ++'),(29,'come '),(14,'DEPENDE'),(31,'did'),(43,'JAVA'),(49,'LINUX'),(48,'MAC OS'),(18,'MAS'),(19,'NINGUNA ANTERIORES'),(2,'NO'),(23,'NO COMIENZA HASTA QUE COMIENCE LA OTRA'),(20,'NO COMIENZA HASTA QUE LA OTRA TERMINE'),(21,'NO FINALIZA HASTA A FINALIZA OTRA'),(22,'NO FINALIZA HASTA QUE COMIENCE LA OTRA'),(26,'No, there are any'),(25,'No, there aren?t no people'),(3,'NS/NC'),(15,'NUNCA'),(39,'phone'),(40,'phoned'),(41,'phones'),(42,'phoning'),(1,'SI'),(17,'SIEMPRE'),(46,'SMALTAKL'),(28,'To come'),(32,'was'),(33,'were'),(35,'Where did you find that money'),(36,'Where did you find those keys?'),(38,'Where did you found those tickets?'),(37,'Where were you found them?'),(30,'will come'),(47,'WINDOWS 7'),(24,'Yes, there are any'),(27,'Yes, there are some');
+INSERT INTO `opcion evaluada` VALUES (4,'1'),(13,'10'),(5,'2'),(6,'3'),(7,'4'),(8,'5'),(9,'6'),(10,'7'),(11,'8'),(12,'9'),(16,'A VECES'),(34,'are'),(45,'C #'),(44,'C ++'),(29,'come '),(14,'DEPENDE'),(31,'did'),(43,'JAVA'),(49,'LINUX'),(48,'MAC OS'),(18,'MAS'),(19,'NINGUNA ANTERIORES'),(2,'NO'),(23,'NO COMIENZA HASTA QUE COMIENCE LA OTRA'),(20,'NO COMIENZA HASTA QUE LA OTRA TERMINE'),(21,'NO FINALIZA HASTA A FINALIZA OTRA'),(22,'NO FINALIZA HASTA QUE COMIENCE LA OTRA'),(26,'No, there are any'),(25,'No, there aren`t no people'),(3,'NS/NC'),(15,'NUNCA'),(39,'phone'),(40,'phoned'),(41,'phones'),(42,'phoning'),(1,'SI'),(17,'SIEMPRE'),(46,'SMALTAKL'),(28,'To come'),(32,'was'),(33,'were'),(35,'Where did you find that money'),(36,'Where did you find those keys?'),(38,'Where did you found those tickets?'),(37,'Where were you found them?'),(30,'will come'),(47,'WINDOWS 7'),(24,'Yes, there are any'),(27,'Yes, there are some');
 /*!40000 ALTER TABLE `opcion evaluada` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -620,7 +620,7 @@ CREATE TABLE `pregunta evaluada` (
 
 LOCK TABLES `pregunta evaluada` WRITE;
 /*!40000 ALTER TABLE `pregunta evaluada` DISABLE KEYS */;
-INSERT INTO `pregunta evaluada` VALUES (1,'PR11','PREGUNTA 1','GENERICA PARA EL FACTOR GESTION DE TIEMPO',NULL,NULL,1,5),(2,'PR12','PREGUNTA 2','?Aceleraria los tiempos de entrega de un proyecto cuando se cumplen con exito cada etapa?',NULL,NULL,1,2),(3,'PR13','PREGUNTA 3','?Aceleraria los tiempos de entrega de un proyecto cuando se cumplen con exito cada etapa?',NULL,NULL,1,1),(4,'PR20','PREGUNTA 4','En el cronograma de un proyecto, ?Que significa que una actividad sea del tipo \"fin a comienzo\"?',NULL,NULL,1,10),(5,'PR21','PREGUNTA 5','?La metodolog?a de \"Valor Ganado\" permite predecir cu?nto dinero se gastar? en un proyecto seg?n los avances que el mismo tenga a la fecha?',NULL,NULL,1,1),(6,'PR24','PREGUNTA 1','En la etapa de dise?o ?Cuando realizaria un diagrama de estados?',NULL,NULL,5,3),(7,'PR25','PREGUNTA 2','En una propuesta de sistema ?Se debe incluir el resumen ejecutivo?',NULL,NULL,5,1),(8,'PR26','PREGUNTA 3','?Una prueba se consedera exitosa si no encuentra ning?n error en el sistema?',NULL,NULL,5,2),(9,'PR27','PREGUNTA 4','La ELICITACION DE REQUERIMIENTOS ?Tiene por objetivo eliminar las ambiguedades del lenguaje coloquial? ',NULL,NULL,5,2),(10,'PR28','PREGUNTA 5','?Las salidas del sistema se consideran exitosas si llegan en tiempo y forma a donde estan destinada?',NULL,NULL,5,5),(11,'PR29','PREGUNTA 6','En una PRUEBA A CAJA BLANCA ?SOLO se conocen las especificaciones funcionales de las clases?',NULL,NULL,5,1),(12,'PR30','PREGUNTA 1','El modelo de dise?o, ?Es particular y dependiente de las herramientas que se van a utilizar en el desarrollo del programa?',NULL,NULL,2,5),(13,'PR31','PREGUNTA 2','En el modelo de dise?o, ?se contemplan interacciones con el usuario?',NULL,NULL,2,2),(14,'PR32','PREGUNTA 3','?El dise?o de salidas consedera los factores de alcance, tiempo, costo y calidad?',NULL,NULL,2,1),(15,'PR33','PREGUNTA 4','?El modelo de analisis es considerado como una abstraccion del sistema dado que solo brinda un bosquejo del sistema?',NULL,NULL,2,1),(16,'PR34','PREGUNTA 5','A su criterio ?Cual seria la cantidad MINIMA de CAPAS en un proyecto que cuenta con interacciones con el usuario y transacciones de con una base de datos?',NULL,NULL,2,9),(17,'PR35','PREGUNTA 1','?En el modelo de despliege, los procesadores son elementos con capacidad de procesamiento y estan representados por cubo?',NULL,NULL,4,1),(18,'PR36','PREGUNTA 2','En el modelo de clases, ?Las asociaciones establecen roles y navegabilidades?',NULL,NULL,4,2),(19,'PR37','PREGUNTA 3','En el modelo de clases, ?Las clases de dise?o son una abstraccion del sistema?',NULL,NULL,4,2),(20,'PR38','PREGUNTA 4','En el modelo se ciclo de vida del software, ?es correcta la siguiente secuencia? ANALISIS REQUERIMIENTOS - DISE?O - DESARROLLO - IMPLEMENTACION - MANTENIMIENTO',NULL,NULL,4,1),(21,'PR39','PREGUNTA 5','En el modelo de casos de uso, ?Se muestran los requerimientos funcionales del sistema?',NULL,NULL,4,1),(22,'PR40','PREGUNTA 1','Are here any people in the bank?',NULL,NULL,3,11),(23,'PR41','PREGUNTA 2','Henry _______ next week.',NULL,NULL,3,12),(24,'PR42','PREGUNTA 3','What ___ you do last week? ',NULL,NULL,3,13),(25,'PR43','PREGUNTA 4','I found them in the street',NULL,NULL,3,14),(26,'PR44','PREGUNTA 5','What was she doing when he _____?',NULL,NULL,3,15),(27,'PR45','PREGUNTA 6','Si tuviera que puntuar su conocimiento de INGLES, ?Cuanto te pondrias?',NULL,NULL,3,4),(28,'PR48','PREGUNTA 1','?Cual de los siguientes lenguajes de programacion soporta esquemas de herencia multiple?',NULL,NULL,6,7),(29,'PR49','PREGUNTA 2','?Cual de los siguiente lenguajes fue el primero en implementar la teoria de objetos?',NULL,NULL,6,6),(30,'PR50','PREGUNTA 3','?Una clase puede tener como nombre un n?mero o su nombre empezar por un n?mero?',NULL,NULL,6,1),(31,'PR51','PREGUNTA 4','?Este c?digo compila? private class MiClase1 { }',NULL,NULL,6,1),(32,'PR52','PREGUNTA 5','?Se puede realizar la siguente declaracion de metodos? int metodo1(char a); int metodo1(char a, char b);',NULL,NULL,6,1),(33,'PR55','PREGUNTA 1','PREGUNTA GENERICA PARA ESTE FACTOR',NULL,NULL,7,3),(34,'PR56','PREGUNTA 2','?Un pseudocodigo representa la solucion aun algoritmo un problema de logica una situacion cotidiana un software de programar?',NULL,NULL,7,1),(35,'PR57','PREGUNTA 3','?Un funci?n FORK() crea un nuevo proceso hijo del proceso actual con la misma imagen que el proceso actual?',NULL,NULL,7,2),(36,'PR58','PREGUNTA 4','?En que sistema operativo est? la funci?n CreateProcess?',NULL,NULL,7,8),(37,'PR59','PREGUNTA 5','?Eclipse se conoce como un IDE de que plataforma de programaci?n?',NULL,NULL,7,7);
+INSERT INTO `pregunta evaluada` VALUES (1,'PR11','PREGUNTA 1','GENERICA PARA EL FACTOR GESTION DE TIEMPO',NULL,NULL,1,5),(2,'PR12','PREGUNTA 2','¿Aceleraria los tiempos de entrega de un proyecto cuando se cumplen con exito cada etapa?',NULL,NULL,1,2),(3,'PR13','PREGUNTA 3','¿Aceleraria los tiempos de entrega de un proyecto cuando se cumplen con exito cada etapa?',NULL,NULL,1,1),(4,'PR20','PREGUNTA 4','En el cronograma de un proyecto, ¿Que significa que una actividad sea del tipo \"fin a comienzo\"?',NULL,NULL,1,10),(5,'PR21','PREGUNTA 5','¿La metodología de \"Valor Ganado\" permite predecir cuánto dinero se gastar? en un proyecto según los avances que el mismo tenga a la fecha?',NULL,NULL,1,1),(6,'PR24','PREGUNTA 1','En la etapa de diseño ¿Cuando realizaria un diagrama de estados?',NULL,NULL,5,3),(7,'PR25','PREGUNTA 2','En una propuesta de sistema ¿Se debe incluir el resumen ejecutivo?',NULL,NULL,5,1),(8,'PR26','PREGUNTA 3','?Una prueba se consedera exitosa si no encuentra ningún error en el sistema?',NULL,NULL,5,2),(9,'PR27','PREGUNTA 4','La ELICITACION DE REQUERIMIENTOS ¿Tiene por objetivo eliminar las ambiguedades del lenguaje coloquial? ',NULL,NULL,5,2),(10,'PR28','PREGUNTA 5','¿Las salidas del sistema se consideran exitosas si llegan en tiempo y forma a donde estan destinada?',NULL,NULL,5,5),(11,'PR29','PREGUNTA 6','En una PRUEBA A CAJA BLANCA ¿SOLO se conocen las especificaciones funcionales de las clases?',NULL,NULL,5,1),(12,'PR30','PREGUNTA 1','El modelo de diseño, ¿Es particular y dependiente de las herramientas que se van a utilizar en el desarrollo del programa?',NULL,NULL,2,5),(13,'PR31','PREGUNTA 2','En el modelo de diseño, ¿se contemplan interacciones con el usuario?',NULL,NULL,2,2),(14,'PR32','PREGUNTA 3','¿El diseño de salidas consedera los factores de alcance, tiempo, costo y calidad?',NULL,NULL,2,1),(15,'PR33','PREGUNTA 4','¿El modelo de analisis es considerado como una abstraccion del sistema dado que solo brinda un bosquejo del sistema?',NULL,NULL,2,1),(16,'PR34','PREGUNTA 5','A su criterio ¿Cual seria la cantidad MINIMA de CAPAS en un proyecto que cuenta con interacciones con el usuario y transacciones de con una base de datos?',NULL,NULL,2,9),(17,'PR35','PREGUNTA 1','?En el modelo de despliege, los procesadores son elementos con capacidad de procesamiento y estan representados por cubo?',NULL,NULL,4,1),(18,'PR36','PREGUNTA 2','En el modelo de clases, ¿Las asociaciones establecen roles y navegabilidades?',NULL,NULL,4,2),(19,'PR37','PREGUNTA 3','En el modelo de clases, ¿Las clases de diseño son una abstraccion del sistema?',NULL,NULL,4,2),(20,'PR38','PREGUNTA 4','En el modelo se ciclo de vida del software, ¿es correcta la siguiente secuencia? ANALISIS REQUERIMIENTOS - DISEÑO - DESARROLLO - IMPLEMENTACION - MANTENIMIENTO',NULL,NULL,4,1),(21,'PR39','PREGUNTA 5','En el modelo de casos de uso, ¿Se muestran los requerimientos funcionales del sistema?',NULL,NULL,4,1),(22,'PR40','PREGUNTA 1','Are here any people in the bank?',NULL,NULL,3,11),(23,'PR41','PREGUNTA 2','Henry _______ next week.',NULL,NULL,3,12),(24,'PR42','PREGUNTA 3','What ___ you do last week? ',NULL,NULL,3,13),(25,'PR43','PREGUNTA 4','I found them in the street',NULL,NULL,3,14),(26,'PR44','PREGUNTA 5','What was she doing when he _____?',NULL,NULL,3,15),(27,'PR45','PREGUNTA 6','Si tuviera que puntuar su conocimiento de INGLES, ¿Cuanto te pondrias?',NULL,NULL,3,4),(28,'PR48','PREGUNTA 1','¿Cual de los siguientes lenguajes de programacion soporta esquemas de herencia multiple?',NULL,NULL,6,7),(29,'PR49','PREGUNTA 2','¿Cual de los siguiente lenguajes fue el primero en implementar la teoria de objetos?',NULL,NULL,6,6),(30,'PR50','PREGUNTA 3','¿Una clase puede tener como nombre un número o su nombre empezar por un número?',NULL,NULL,6,1),(31,'PR51','PREGUNTA 4','¿Este código compila? private class MiClase1 { }',NULL,NULL,6,1),(32,'PR52','PREGUNTA 5','¿Se puede realizar la siguente declaracion de metodos? int metodo1(char a); int metodo1(char a, char b);',NULL,NULL,6,1),(33,'PR55','PREGUNTA 1','PREGUNTA GENERICA PARA ESTE FACTOR',NULL,NULL,7,3),(34,'PR56','PREGUNTA 2','¿Un pseudocodigo representa la solucion aun algoritmo un problema de logica una situacion cotidiana un software de programar?',NULL,NULL,7,1),(35,'PR57','PREGUNTA 3','¿Un función FORK() crea un nuevo proceso hijo del proceso actual con la misma imagen que el proceso actual?',NULL,NULL,7,2),(36,'PR58','PREGUNTA 4','¿En que sistema operativo está la función CreateProcess?',NULL,NULL,7,8),(37,'PR59','PREGUNTA 5','¿Eclipse se conoce como un IDE de que plataforma de programación?',NULL,NULL,7,7);
 /*!40000 ALTER TABLE `pregunta evaluada` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -730,7 +730,7 @@ CREATE TABLE `puesto evaluado` (
   `empresa` varchar(20) NOT NULL,
   PRIMARY KEY (`idPuesto Evaluado`),
   UNIQUE KEY `idPuesto Evaluado_UNIQUE` (`idPuesto Evaluado`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -739,7 +739,7 @@ CREATE TABLE `puesto evaluado` (
 
 LOCK TABLES `puesto evaluado` WRITE;
 /*!40000 ALTER TABLE `puesto evaluado` DISABLE KEYS */;
-INSERT INTO `puesto evaluado` VALUES (1,'P01','DESARROLLADOR JAVA',NULL,NULL,'MILENIO'),(2,'P02','DISE?ADOR SISTEMAS',NULL,NULL,'SIMS'),(3,'P03','PROGRAMADOR C++',NULL,1,'MILENIO'),(4,'P03','PROGRAMADOR C++',NULL,NULL,'MILENIO');
+INSERT INTO `puesto evaluado` VALUES (1,'P01','DESARROLLADOR JAVA',NULL,NULL,'MILENIO'),(2,'P02','DISEÑADOR SISTEMAS',NULL,NULL,'SIMS'),(3,'P03','PROGRAMADOR C++',NULL,1,'MILENIO'),(4,'P03','PROGRAMADOR C++',NULL,NULL,'MILENIO'),(5,'P02','DISEÑADOR SISTEMAS',NULL,1,'SIMS');
 /*!40000 ALTER TABLE `puesto evaluado` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -768,7 +768,7 @@ CREATE TABLE `puesto evaluado_competencia evaluada` (
 
 LOCK TABLES `puesto evaluado_competencia evaluada` WRITE;
 /*!40000 ALTER TABLE `puesto evaluado_competencia evaluada` DISABLE KEYS */;
-INSERT INTO `puesto evaluado_competencia evaluada` VALUES (1,3,5),(1,4,2),(1,5,3),(2,1,1),(2,2,5),(2,3,3),(2,4,1);
+INSERT INTO `puesto evaluado_competencia evaluada` VALUES (1,3,5),(1,4,2),(1,5,3),(2,1,1),(2,2,5),(2,3,3),(2,4,1),(5,1,4),(5,2,3),(5,3,3),(5,4,2);
 /*!40000 ALTER TABLE `puesto evaluado_competencia evaluada` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -810,4 +810,5 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-01-23 18:41:32
+-- Dump completed on 2012-01-27 16:31:52
+

@@ -14,12 +14,15 @@ namespace TpDiseñoCSharp
     public partial class Completar_Cuestionario : Form
     {
         private Bloque bloque_A_mostrar;
+        private Form pantallaInicial;
         private List<Caracteristica> opciones_A_preguntas;
 
-        public Completar_Cuestionario(Bloque bloqueAsociado, Form pantalla_Anterior)
+        public Completar_Cuestionario(Bloque bloqueAsociado, Form pantalla_Anterior, Form pantallaPrincipal)
         {
             InitializeComponent();
-            this.Fecha.Text = DateTime.Now.DayOfWeek.ToString();
+            string nombreCandidato = bloqueAsociado.CuestAsociado.CandidatoAsociado.Nombre + " " + bloqueAsociado.CuestAsociado.CandidatoAsociado.Apellido;
+
+            this.Fecha.Text = DateTime.Now.ToLongDateString();
             this.mostrarPreguntas(bloqueAsociado);
             this.bloque_A_mostrar = bloqueAsociado;
 
@@ -30,6 +33,12 @@ namespace TpDiseñoCSharp
             Candidato.Location = new Point(ubicacionCerrarSesion - largoTextoConsultor - 2, CerrarSesion.Top);
 
             pantalla_Anterior.Close();
+
+            pantalla_Anterior.Visible = false;
+            pantallaInicial = pantallaPrincipal;
+
+            this.FormClosing += Cancelar_Click;
+
         }
 
         /*
@@ -119,7 +128,8 @@ namespace TpDiseñoCSharp
                         {
                             ordenVisualizacion--;
                             checkPregunta.Text = opcion;
-                            checkPregunta.Location = new Point((espacioPreguntas.Height + distanciaMaxima) + 180, (ordenVisualizacion * 20));
+                            checkPregunta.AutoSize = true;
+                            checkPregunta.Location = new Point((espacioPreguntas.Height + distanciaMaxima) + 250, (ordenVisualizacion * 20));
 
                             espacioPreguntas.Controls.Add(checkPregunta);
                         }
@@ -127,6 +137,7 @@ namespace TpDiseñoCSharp
                     case false://Ubicacion mas a la izquierda
                         {
                             checkPregunta.Text = opcion;
+                            checkPregunta.AutoSize = true;
                             checkPregunta.Location = new Point(espacioPreguntas.Height, (ordenVisualizacion * 20));
 
                             espacioPreguntas.Controls.Add(checkPregunta);
@@ -192,7 +203,8 @@ namespace TpDiseñoCSharp
                     {
                         //UNA VEZ RESGURDADAS LAS RESPUESTAS
                         Bloque proximoBloque = gestorCuestionario.proximoBloque(this.bloque_A_mostrar);
-                        Completar_Cuestionario siguienteBloque = new Completar_Cuestionario(proximoBloque, this);
+                        bloque_A_mostrar.CuestAsociado.UltimoBloque = proximoBloque;
+                        Completar_Cuestionario siguienteBloque = new Completar_Cuestionario(proximoBloque, this, pantallaInicial);
 
                         if (proximoBloque.EsUltimoNloque == true)
                             siguienteBloque.Siguiente.Text = "Finalizar";
@@ -203,25 +215,27 @@ namespace TpDiseñoCSharp
                         MessageBox.Show("! OCURRIO UN ERROR AL RESGUARDAR SUS RESPUESTA\n\n\tPor favor reinicie su sesión");
 
                 }
+
                 else
                 {
                     if (resguardoRealizado == true)
                     {
                         gestorCuestionario.cambiarEstado("COMPLETO", bloque_A_mostrar.CuestAsociado);
-                        MessageBox.Show("TERMINO LA EVALUACION");
+                        MessageBox.Show("**** ----- TERMINO LA EVALUACION ----- ****");
                     }
                     else
-                        MessageBox.Show("! OCURRIO UN ERROR AL RESGUARDAR SUS RESPUESTA\n\n\tPor favor reinicie su sesión");
-
+                        MessageBox.Show("! OCURRIO UN ERROR AL RESGUARDAR SUS RESPUESTA\n\n\tPresione 'Aceptar' para reiniciar su sesión");
                     this.Close();
                 }
             }
         }
-
+        
         private void Cancelar_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Cerrando su evaluacion.\n\nLos datos de sus respuesta actuales no serán guardados\n\nPresione 'Cancelar' y 'Siguiente' para guardarlos datos\n\nDe lo contrario presiones 'Aceptar'");
-            this.Close();
+                GestorCuestionario gestorCuestionario = new GestorCuestionario();
+                MessageBox.Show("Cerrando su sesión...\n\n\tSe estan guardando sus datos");
+                gestorCuestionario.resguardarCuestionario(bloque_A_mostrar.CuestAsociado);
+                pantallaInicial.Visible = true;
         }
     }
 }

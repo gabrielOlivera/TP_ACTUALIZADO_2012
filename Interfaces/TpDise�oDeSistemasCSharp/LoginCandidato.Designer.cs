@@ -109,6 +109,7 @@
             // 
             // Cancelar
             // 
+            this.Cancelar.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.Cancelar.ForeColor = System.Drawing.SystemColors.ControlText;
             this.Cancelar.Location = new System.Drawing.Point(248, 184);
             this.Cancelar.Name = "Cancelar";
@@ -131,6 +132,7 @@
             // 
             // Clave
             // 
+            this.Clave.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.Clave.Location = new System.Drawing.Point(105, 131);
             this.Clave.MaxLength = 20;
             this.Clave.Name = "Clave";
@@ -228,9 +230,11 @@
             // 
             // LoginCandidato
             // 
+            this.AcceptButton = this.Entrar;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
+            this.CancelButton = this.Cancelar;
             this.ClientSize = new System.Drawing.Size(698, 487);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.PanelInferior);
