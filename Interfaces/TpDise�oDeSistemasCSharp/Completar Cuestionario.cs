@@ -23,6 +23,12 @@ namespace TpDiseñoCSharp
             this.mostrarPreguntas(bloqueAsociado);
             this.bloque_A_mostrar = bloqueAsociado;
 
+
+            this.Candidato.Text = "USER";
+            int largoTextoConsultor = Candidato.Width;
+            int ubicacionCerrarSesion = CerrarSesion.Location.X;
+            Candidato.Location = new Point(ubicacionCerrarSesion - largoTextoConsultor - 2, CerrarSesion.Top);
+
             pantalla_Anterior.Close();
         }
 

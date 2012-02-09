@@ -176,3 +176,4 @@ C:\Users\usuario\Desktop\TP 2012 Repositorio Online\Interfaces\TpDiseñoDeSistem
 C:\Users\usuario\Desktop\TP 2012 Repositorio Online\Interfaces\TpDiseñoDeSistemasCSharp\obj\x86\Debug\VentanaGeneralTpDiseño.pdb
 D:\UTN\Diseño de Sistemas\TP 2012 repositorio\Interfaces\TpDiseñoDeSistemasCSharp\obj\x86\Debug\TpDiseñoCSharp.Seleccion_de_evaluaciones.resources
 C:\Users\GRACIANA\Desktop\TP_disenio2012\Interfaces\TpDiseñoDeSistemasCSharp\obj\x86\Debug\TpDiseñoCSharp.Seleccion_de_evaluaciones.resources
+C:\Users\usuario\Desktop\TP 2012 Repositorio Online\Interfaces\TpDiseñoDeSistemasCSharp\obj\x86\Debug\TpDiseñoCSharp.Seleccion_de_evaluaciones.resources

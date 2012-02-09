@@ -34,7 +34,7 @@
             this.Fecha = new System.Windows.Forms.LinkLabel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.PanelSuperior = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
+            this.Candidato = new System.Windows.Forms.Label();
             this.CerrarSesion = new System.Windows.Forms.LinkLabel();
             this.Siguiente = new System.Windows.Forms.Button();
             this.panel_pregunta = new System.Windows.Forms.Panel();
@@ -97,7 +97,7 @@
             // PanelSuperior
             // 
             this.PanelSuperior.BackColor = System.Drawing.Color.DarkGray;
-            this.PanelSuperior.Controls.Add(this.label1);
+            this.PanelSuperior.Controls.Add(this.Candidato);
             this.PanelSuperior.Controls.Add(this.CerrarSesion);
             this.PanelSuperior.Controls.Add(this.TituloEmpresa);
             this.PanelSuperior.Dock = System.Windows.Forms.DockStyle.Top;
@@ -107,15 +107,15 @@
             this.PanelSuperior.Size = new System.Drawing.Size(817, 62);
             this.PanelSuperior.TabIndex = 10;
             // 
-            // label1
+            // Candidato
             // 
-            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(655, 39);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(55, 13);
-            this.label1.TabIndex = 15;
-            this.label1.Text = "Candidato";
+            this.Candidato.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.Candidato.AutoSize = true;
+            this.Candidato.Location = new System.Drawing.Point(655, 39);
+            this.Candidato.Name = "Candidato";
+            this.Candidato.Size = new System.Drawing.Size(55, 13);
+            this.Candidato.TabIndex = 15;
+            this.Candidato.Text = "Candidato";
             // 
             // CerrarSesion
             // 
@@ -180,7 +180,7 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel PanelSuperior;
         private System.Windows.Forms.LinkLabel CerrarSesion;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label Candidato;
         private System.Windows.Forms.Button Siguiente;
         private System.Windows.Forms.Panel panel_pregunta;
     }
