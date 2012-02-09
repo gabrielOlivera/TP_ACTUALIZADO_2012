@@ -206,3 +206,5 @@ C:\Documents and Settings\Administrador\Escritorio\TP_disenio2012\Interfaces\TpD
 C:\Documents and Settings\Administrador\Escritorio\TP_disenio2012\Interfaces\TpDiseñoDeSistemasCSharp\obj\x86\Debug\TpDiseñoCSharp.Seleccion_de_evaluaciones.resources
 C:\Documents and Settings\Administrador\Escritorio\TP_disenio2012\Interfaces\TpDiseñoDeSistemasCSharp\obj\x86\Debug\GenerateResource.read.1.tlog
 C:\Documents and Settings\Administrador\Escritorio\TP_disenio2012\Interfaces\TpDiseñoDeSistemasCSharp\obj\x86\Debug\GenerateResource.write.1.tlog
+J:\TP_disenio2012\Interfaces\TpDiseñoDeSistemasCSharp\obj\x86\Debug\VentanaGeneralTpDiseño.exe
+J:\TP_disenio2012\Interfaces\TpDiseñoDeSistemasCSharp\obj\x86\Debug\VentanaGeneralTpDiseño.pdb
