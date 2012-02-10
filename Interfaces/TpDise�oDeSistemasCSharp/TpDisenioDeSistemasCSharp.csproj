@@ -218,6 +218,8 @@
     <EmbeddedResource Include="Seleccion de evaluaciones.resx">
       <DependentUpon>Seleccion de evaluaciones.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="Properties\DataSources\Entidades.Candidato.datasource" />
+    <None Include="Properties\DataSources\Entidades.Cuestionario.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
