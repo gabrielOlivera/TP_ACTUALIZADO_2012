@@ -29,6 +29,11 @@ namespace TpDiseñoCSharp
             FormClosing += CerrarVentana;
         }
 
+        /*
+        * ==========================================================
+        * ESTE BOTON NOS LLEVA A LA PANTALLA EMITIR ORDEN DE MERITO
+        * ==========================================================
+        */
         private void EmitirOrdenDeMerito_Click(object sender, EventArgs e)
         {
             Emitir_Orden_de_Mérito ordenDeMerito = new Emitir_Orden_de_Mérito(this.Consultor.Text);
@@ -36,24 +41,36 @@ namespace TpDiseñoCSharp
             ordenDeMerito.ShowDialog();
         }
 
+        /*
+        * ======================================================
+        * ESTE BOTON NOS LLEVA A LA PANTALLA EVALUAR CANDIDATOS 
+        * ======================================================
+        */
         private void EvaluarCandidatos_Click(object sender, EventArgs e)
         {
             Evaluar_Candidato evCandidato = new Evaluar_Candidato(this.Consultor.Text, pantalla_Principal, this);
             this.Visible = false;
             evCandidato.ShowDialog();
-
         }
 
+        /*
+         * ================================================================
+         * ESTE BOTON NOS LLEVA A LA PANTALLA GESTIONAR PUESTOS O FUNCIONES 
+         * ================================================================
+         */
         private void PuestoFunciones_Click(object sender, EventArgs e)
         {
             Gestionar_Puestos gestPuesto = new Gestionar_Puestos(this.Consultor.Text);
             gestPuesto.ShowDialog();
         }
 
+        //CUANDO SE PRESIONA EL BOTON CERRAR SE CIERRA LA PANTALLA Y SE VUELVE A LA PRINCIPAL
         private void CerrarVentana(object sender, EventArgs e)
         {
             pantalla_Principal.Visible = true;
         }
+
+
 
         /*=====================================================
           ESTAS FUNCIONALIDADES NO SON IMPLEMENTADAS EN EL TP

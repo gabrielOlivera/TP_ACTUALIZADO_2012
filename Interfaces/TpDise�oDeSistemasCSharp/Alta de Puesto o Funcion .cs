@@ -78,12 +78,13 @@ namespace TpDiseñoCSharp
 
             for (int j = 0; j <= 10; j++)
             {
+                //Agrega numeros del 0-10 en el combo box para poder elegir la ponderacion de cada competencia
                 Pond.Items.Add(j);
             }
 
             for (int k = 0; k < listaDeCompetencias.Count; k++)
             {
-
+                //Agrega a los combo box las competencias
                 Comp.Items.Add(listaDeCompetencias[k]);
 
 
@@ -93,26 +94,28 @@ namespace TpDiseñoCSharp
                 }
 
             }
+            //Este valor es para darle el tamaño al check box de el nombre de la competencia mas larga
             Comp.Width = (mayor) * 8;
 
             check.Text = "";
-            //Inicializa cada miembro de elemento con el text box correspondiente
+
+            //Inicializa cada miembro de elemento con el combo box correspondiente
             Elemento.dato1 = Comp;
             Elemento.dato2 = Pond;
 
 
-            //Agrega elemente a la "lista CaracPuesto"
+            //Agrega "Elemento" a la lista "CaractPuesto" y agrega los check box en una lista para luego saber cual fue seleccionado
             CaractPuesto.Add(Elemento);
             listaDeCheckBox.Add(check);
 
-            //Inicializa las propiedades de los text boxes para ser mostrados de manera alineada
+            //Inicializa las propiedades de los combo boxes y los check box para ser mostrados de manera alineada
             Comp.Location = new Point((labelComp.Location.X) - (labelComp.Size.Width / 2), (i * 30));
             Pond.Location = new Point((labelPond.Location.X) - (labelPond.Size.Width / 2), Comp.Top);
             check.Location = new Point((labelComp.Location.X) - (labelComp.Size.Width), Comp.Top);
             Comp.DropDownStyle = ComboBoxStyle.DropDownList;
             Pond.DropDownStyle = ComboBoxStyle.DropDownList;
 
-            //Agrega los text boxes al panel que se encuentra en "Alta de Puesto o Funcion"
+            //Agrega los combo boxes y los check boxes al panel que se encuentra en "Alta de Puesto o Funcion"
             panelCaracteristicas.Controls.Add((ComboBox)Elemento.dato1);
             panelCaracteristicas.Controls.Add((ComboBox)Elemento.dato2);
             panelCaracteristicas.Controls.Add(check);
@@ -401,12 +404,14 @@ namespace TpDiseñoCSharp
             {
                 if (controlDeFormulario is GroupBox)
                 {
+                    //Si el control del formulario es un GruopBox recorre el mismo para encontral los text boxs
                     foreach (Control controlBox in controlDeFormulario.Controls)
                     {
                         if (controlBox is TextBox)
                         {
                             if (controlBox.Text == "")
                             {
+                                //Si se encuentra un text box vacio se agrega a una lista para poder informar cual tiene el error
                                 error.Name = "error" + controlBox.Name;
                                 listaDeErrores.Add(error.Name);
                             }
@@ -414,6 +419,7 @@ namespace TpDiseñoCSharp
                         }
                         else if (controlBox is Panel)
                         {
+                            //Si es un panel, se recorre dentro para ver los combo box que están vacios e informar del error
                             foreach (Control controlComboBox in controlBox.Controls)
                             {
                                 if (controlComboBox is ComboBox)

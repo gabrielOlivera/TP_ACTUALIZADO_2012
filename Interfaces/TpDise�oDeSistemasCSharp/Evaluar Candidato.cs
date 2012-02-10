@@ -75,11 +75,13 @@ namespace TpDiseñoCSharp
 
         private void Buscar_Click(object sender, EventArgs e)
         {
-            if ((FuncionesVarias.validarCamposAlfanum(apellido.Text)) || (FuncionesVarias.validarCamposAlfanum(nombre.Text))
-                    || (FuncionesVarias.validarCamposAlfanum(nroEmpleado.Text)) || (FuncionesVarias.validarCamposAlfanum(nroCandidato.Text)))
+            if ((FuncionesVarias.validarCamposAlfa(apellido.Text)) || (FuncionesVarias.validarCamposAlfa(nombre.Text)))
             {
-                MessageBox.Show("Los campos solo aceptan letras y/o números");
-
+                MessageBox.Show("Los campos Nombre y Apellido sólo aceptan letras");
+            }
+            else if ((FuncionesVarias.validarCamposNumericos(nroEmpleado.Text)) || (FuncionesVarias.validarCamposNumericos(nroCandidato.Text)))
+            {
+                MessageBox.Show("Los campos N° de Empleado y N° de Candidato sólo aceptan números");
             }
             else
             {
