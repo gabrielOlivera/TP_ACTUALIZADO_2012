@@ -82,11 +82,6 @@ namespace TpDiseñoCSharp
                             + " " + incompletos[r].Nro_Accesos + " " + incompletos[r].Fecha_Inicio + " " + incompletos[r].Fecha_Fin);
                     }
                 }
-                //******************************************************************
-                //******************************************************************
-                // ACTUALIZADO
-                //******************************************************************
-                //******************************************************************
                 
                 List<Candidato_Vista_impresion> completos = new List<Candidato_Vista_impresion>();
                 //listamos los "completos" estado 5                
