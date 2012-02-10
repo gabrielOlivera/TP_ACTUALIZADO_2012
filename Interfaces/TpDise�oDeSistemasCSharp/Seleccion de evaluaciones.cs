@@ -35,12 +35,6 @@ namespace TpDiseñoCSharp
         {
             AdministradorBD AdminBD = new AdministradorBD();
 
-            // Para mostrar los candidatos SIN_CONTESTAR alcanza con la lista definida mas abajo como "sinContestar" 
-            // solo se necesitan los datos que ya se tienen en esa lista: nombre apellido tipo y nro de doc
-
-
-            //List<Object> incompletos_visualizar = new List<object>(); //Accesos | ape, nom, tipo y nroDoc | fecha inicio | ultimo acceso
-            
             //por cada evaluacion (p_ev segun fecha) seleccionada
             for (int i = 0; i < selecciondatagridW.SelectedRows.Count ; i++)
             {
@@ -56,25 +50,20 @@ namespace TpDiseñoCSharp
                     " tomada para la empresa: " + empresa + " el: " + fecha;
 	        
                 //listamos los "sin contestar" estado 3
-                List<Object> sinContestar = new List<object>();
+                List<Candidato_Vista_impresion> sinContestar = new List<Candidato_Vista_impresion>();
+                
                 sinContestar = AdminBD.listarCandidatosPorEvaluacion(fecha, codigo_puesto_evaluado, 3);
+                
                 if (sinContestar != null)
                 {
-                    List<Candidato> listaCandidatos_SinContestar = (List<Candidato>)sinContestar[0];
-                    List<int> listaAccesos_SinContestar = (List<int>)sinContestar[1];
-
                     MessageBox.Show("Lista de SIN CONTESTAR");
-                    for (int r = 0; r < listaCandidatos_SinContestar.Count; r++)
+                    for (int r = 0; r < sinContestar.Count; r++)
                     {
-                        MessageBox.Show(listaCandidatos_SinContestar[r].Nombre.ToString() + " " + listaAccesos_SinContestar[r].ToString());
+                        MessageBox.Show(sinContestar[r].Nombre + " " + sinContestar[r].Apellido +" "+sinContestar[r].TipoDoc +" "+ sinContestar[r].NroDoc);
                     }
                  }
 
-                // TIENE LISTAS EN ESTE ORDEN (lista de candidatos | lista de nro de Accesos | lista de fecha inicio | lista de ultimo acceso)
-                List<Object> incompletos = new List<object>(); 
-
-                List<DateTime> primeros_accesos_inc = new List<DateTime>();
-                List<DateTime> ultimos_accesos_inc = new List<DateTime>();
+                List<Candidato_Vista_impresion> incompletos = new List<Candidato_Vista_impresion>(); 
 
                 //listamos los "Incompletos" estado 4                
                 
@@ -83,24 +72,23 @@ namespace TpDiseñoCSharp
 
                 if (incompletos != null)
                 {
-                    List<Candidato> listaCandidatos_Incompletos = (List<Candidato>)incompletos[0];
-                    List<int> listaAccesos_Incompletos = (List<int>)incompletos[1];
-                    
                     MessageBox.Show("Lista de INCOMPLETOS");
-                    for (int r = 0; r < listaCandidatos_Incompletos.Count; r++)
+                    for (int r = 0; r < incompletos.Count; r++)
                     {
-                        MessageBox.Show(listaCandidatos_Incompletos[r].Nombre.ToString() + " " + listaAccesos_Incompletos[r].ToString());
-                        primeros_accesos_inc.Add( AdminBD.primer_acceso(listaCandidatos_Incompletos[r].NroDoc, fecha, codigo_puesto_evaluado));
-                        ultimos_accesos_inc.Add(AdminBD.ultimo_acceso(listaCandidatos_Incompletos[r].NroDoc, fecha, codigo_puesto_evaluado));
+                        incompletos[r].Fecha_Inicio = AdminBD.primer_acceso(incompletos[r].NroDoc, fecha, codigo_puesto_evaluado);
+                        incompletos[r].Fecha_Fin = AdminBD.ultimo_acceso(incompletos[r].NroDoc, fecha, codigo_puesto_evaluado);
+
+                        MessageBox.Show(incompletos[r].Nombre + " " + incompletos[r].Apellido + " " + incompletos[r].TipoDoc + " " + incompletos[r].NroDoc 
+                            + " " + incompletos[r].Nro_Accesos + " " + incompletos[r].Fecha_Inicio + " " + incompletos[r].Fecha_Fin);
                     }
-                    incompletos.Add(primeros_accesos_inc);
-                    incompletos.Add(ultimos_accesos_inc);
                 }
-
+                //******************************************************************
+                //******************************************************************
+                // ACTUALIZADO
+                //******************************************************************
+                //******************************************************************
                 
-                
-
-                List<Object> completos = new List<object>();
+                List<Candidato_Vista_impresion> completos = new List<Candidato_Vista_impresion>();
                 //listamos los "completos" estado 5                
 
                 completos = AdminBD.listarCandidatosPorEvaluacion(fecha, codigo_puesto_evaluado, 5);
@@ -109,36 +97,24 @@ namespace TpDiseñoCSharp
                 
                 if (completos != null)
                 {
-                    List<Candidato> listaCandidatos_completos = (List<Candidato>)completos[0];
-                    List<int> listaAccesos_completos = (List<int>)completos[1];
                     
-
-                    // lista de candidatos | lista de nro de Accesos | lista de fecha inicio | lista de fecha fin | puntuacion
-                    List<Object> listaCandidatos_No_Alcanzo_Minimos = new List<Object>();
-
-                    List<Candidato> cand_NO = new List<Candidato>();
-                    List<int> acces_NO = new List<int>();
-                    List<DateTime> fecha_inicio_NO = new List<DateTime>();
-                    List<DateTime> fecha_fin_NO = new List<DateTime>();
-                    List<int> puntuacion_total_NO = new List<int>();
-
-                    // lista de candidatos | lista de nro de Accesos | lista de fecha inicio | lista de fecha fin | puntuacion
-                    List<Object> listaCandidatos_Si_Alcanzo_Minimos = new List<Object>();
+                    List<Candidato_Vista_impresion> listaCandidatos_No_Alcanzo_Minimos = new List<Candidato_Vista_impresion>();
+                    List<Candidato_Vista_impresion> listaCandidatos_Si_Alcanzo_Minimos = new List<Candidato_Vista_impresion>();
                     
-                    List<Candidato> cand_SI = new List<Candidato>();
-                    List<int> acces_SI = new List<int>();
-                    List<DateTime> fecha_inicio_SI = new List<DateTime>();
-                    List<DateTime> fecha_fin_SI = new List<DateTime>();
-                    List<int> puntuacion_total_SI = new List<int>();
-
-
                     MessageBox.Show("Lista de COMPLETOS");
 
                     competenciasPorPuesto = AdminBD.competencias_segun_puesto(fecha, codigo_puesto_evaluado);
                     
-                    for (int r = 0; r < listaCandidatos_completos.Count; r++)
+                    for (int r = 0; r < completos.Count; r++)
                     {
-                        MessageBox.Show(listaCandidatos_completos[r].Nombre.ToString() + " puntuacion_total: " + AdminBD.obtener_puntuacion(listaCandidatos_completos[r].NroDoc.ToString(), fecha, codigo_puesto_evaluado).ToString() );
+                        completos[r].Puntuacion = AdminBD.obtener_puntuacion(completos[r].NroDoc, fecha, codigo_puesto_evaluado);
+                        completos[r].Fecha_Inicio = AdminBD.primer_acceso(completos[r].NroDoc, fecha, codigo_puesto_evaluado);
+                        completos[r].Fecha_Fin = AdminBD.fecha_fin(completos[r].NroDoc, fecha, codigo_puesto_evaluado);
+
+
+                        MessageBox.Show(completos[r].Nombre + " " + completos[r].Apellido + " " + completos[r].TipoDoc + " " + completos[r].NroDoc
+                            + " " + completos[r].Nro_Accesos + " " + completos[r].Fecha_Inicio + " " + completos[r].Fecha_Fin);
+                        
                         for (int a = 0; a < competenciasPorPuesto.Count; a++)
                         {
                             cantidad_de_preguntas_por_competencia = AdminBD.cantidad_De_Preguntas_Por_Competencia(competenciasPorPuesto[a].Codigo, fecha, codigo_puesto_evaluado);
@@ -149,25 +125,17 @@ namespace TpDiseñoCSharp
 
                             if (porcentaje_obtenido < minimo * 100) //si no llega con uno de los minimos
                             {
-                                cand_NO.Add(listaCandidatos_completos[r]);
-                                acces_NO.Add(listaAccesos_completos[r]);
+                                listaCandidatos_No_Alcanzo_Minimos.Add(completos[r]);
                                 break; //deja de ver el resto de las competencias y sigue con el siguiente candidato
                             }
                         }
 
-                        cand_SI.Add(listaCandidatos_completos[r]);
-                        acces_SI.Add(listaAccesos_completos[r]);
-                    
-                        //Falta llenar las listas de las fechas y las puntuaciones.
+                        listaCandidatos_Si_Alcanzo_Minimos.Add(completos[r]);
+                        
+                        //Falta llenar las puntuaciones.
                     
                     
                     }
-
-                    listaCandidatos_No_Alcanzo_Minimos.Add(cand_NO);
-                    listaCandidatos_No_Alcanzo_Minimos.Add(acces_NO);
-                    listaCandidatos_Si_Alcanzo_Minimos.Add(cand_SI);
-                    listaCandidatos_Si_Alcanzo_Minimos.Add(acces_SI);
-
                 }
 
                 //{

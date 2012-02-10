@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Entidades
 {
-    class Candidato_Vista_impresion
+    public class Candidato_Vista_impresion
     {
         private string nroDoc, nombre, apellido, tipoDoc;
         private DateTime fecha_Inicio, fecha_Fin;
@@ -63,6 +63,27 @@ namespace Entidades
             set { nro_Accesos = value; }
         }
 
-     
+        //el cero indica que puede ser nulo el valor recibido
+        public Candidato_Vista_impresion(string nom, string apell, string tipo, string nro, DateTime f_Inicio, DateTime f_fin, int puntuac = 0, int nroAcces = 0 )
+        {
+            nombre = nom;
+            apellido = apell;
+            tipoDoc = tipo;
+            nroDoc = nro;
+            fecha_Fin = f_fin;
+            fecha_Inicio = f_Inicio;
+            nro_Accesos = nroAcces;
+            puntuacion = puntuac; 
+        
+        }
+        //para los sin contestar
+        public Candidato_Vista_impresion(string nom, string apell, string tipo, string nro)
+        {
+            nombre = nom;
+            apellido = apell;
+            tipoDoc = tipo;
+            nroDoc = nro;
+        }
+
     }
 }
