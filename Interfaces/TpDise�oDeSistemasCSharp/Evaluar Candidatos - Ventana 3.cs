@@ -15,17 +15,18 @@ namespace TpDiseñoCSharp
     {
         private Puesto puestoSeleccionado;
         private List<Candidato> candidatoSeleccionados;
-        private Form pantallaPrincipal;
+        private Form ventanaMenuPrincipal, ventanaAnterior;
         SaveFileDialog guardar;
 
-        public Evaluar_Candidatos___Ventana_3(string user, Puesto puestoSelec_paramentro, List<Candidato> listaSeleccionados_parametro, Form principal, Form anterior)
+        public Evaluar_Candidatos___Ventana_3(string user, Puesto puestoSelec_paramentro, 
+            List<Candidato> listaSeleccionados_parametro, Form principal, Form anterior)
         {
             InitializeComponent();
 
             puestoSeleccionado = puestoSelec_paramentro;
             candidatoSeleccionados = listaSeleccionados_parametro;
-            pantallaPrincipal = principal;
-            anterior.Close();
+            ventanaMenuPrincipal = principal;
+            ventanaAnterior=anterior;
             this.Fecha.Text = DateTime.Now.ToLongDateString();
             this.GenerarClave(candidatoSeleccionados);
 
@@ -79,7 +80,15 @@ namespace TpDiseñoCSharp
 
         private void Atras_Click(object sender, EventArgs e)
         {
+            ventanaAnterior.Visible = true;
+            Close();
+        }
 
+        private void menuConsultor_Click(object sender, EventArgs e)
+        {
+            ventanaMenuPrincipal.Visible = true;
+            ventanaAnterior.Close();
+            Close();
         }
     }
 }

@@ -14,7 +14,7 @@ namespace TpDiseñoCSharp
 {
     public partial class Evaluar_Candidatos___Ventana_2 : Form
     {
-        private Form pantallaPrincipal_;
+        private Form ventanaMenuPrincipal, ventanaEvCandidatos;
         private List<Candidato> listaCandidatos_A_Evaluar;
         private Puesto puestoSeleccionado;
 
@@ -24,8 +24,9 @@ namespace TpDiseñoCSharp
         public Evaluar_Candidatos___Ventana_2(string user, List<Candidato> listaCandidatos, Form ventanaAnterior, Form pantallaPrincipal_parametro)
         {
             InitializeComponent();
-            ventanaAnterior.Close();
-            pantallaPrincipal_ = pantallaPrincipal_parametro;
+            ventanaEvCandidatos=ventanaAnterior;
+           
+            ventanaMenuPrincipal = pantallaPrincipal_parametro;
             listaCandidatos_A_Evaluar = listaCandidatos;
             this.Fecha.Text = DateTime.Now.ToLongDateString();
  
@@ -38,14 +39,17 @@ namespace TpDiseñoCSharp
 
         private void Siguiente_Click(object sender, EventArgs e)
         {
-            Evaluar_Candidatos___Ventana_3 evCandidatos3 = new Evaluar_Candidatos___Ventana_3(this.Consultor.Text, puestoSeleccionado, listaCandidatos_A_Evaluar, pantallaPrincipal_, this);
+            Evaluar_Candidatos___Ventana_3 evCandidatos3 = new Evaluar_Candidatos___Ventana_3(this.Consultor.Text, puestoSeleccionado
+                , listaCandidatos_A_Evaluar, ventanaMenuPrincipal, this);
+            this.Visible = false;
             evCandidatos3.ShowDialog();
         }
 
         private void Atras_Click(object sender, EventArgs e)
         {
-            Evaluar_Candidato evaluar_Candidato_1 = new Evaluar_Candidato(this.Consultor.Text, pantallaPrincipal_, this);
-            evaluar_Candidato_1.Show();
+            Evaluar_Candidato evaluar_Candidato_1 = new Evaluar_Candidato(this.Consultor.Text, ventanaMenuPrincipal, this);
+            ventanaEvCandidatos.Visible = true;
+            Close();
         }
 
         private void Buscar_Click(object sender, EventArgs e)
@@ -216,6 +220,13 @@ namespace TpDiseñoCSharp
 
             }
             return checkPregunta;
+        }
+
+        private void menuConsultor_Click(object sender, EventArgs e)
+        {
+            ventanaMenuPrincipal.Visible = true;
+            ventanaEvCandidatos.Close();
+            Close();
         }
     }
 }

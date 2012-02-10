@@ -362,6 +362,7 @@
             this.menuConsultor.TabIndex = 15;
             this.menuConsultor.Text = "Volver al menú principal";
             this.menuConsultor.UseVisualStyleBackColor = true;
+            this.menuConsultor.Click += new System.EventHandler(this.menuConsultor_Click);
             // 
             // Consultor
             // 

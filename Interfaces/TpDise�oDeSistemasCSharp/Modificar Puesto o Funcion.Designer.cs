@@ -57,6 +57,7 @@
             this.PanelSuperior = new System.Windows.Forms.Panel();
             this.Consultor = new System.Windows.Forms.Label();
             this.CerrarSesion = new System.Windows.Forms.LinkLabel();
+            this.menuConsultor = new System.Windows.Forms.Button();
             this.PanelInferior.SuspendLayout();
             this.SeleccionDeAcceso.SuspendLayout();
             this.PanelSuperior.SuspendLayout();
@@ -157,7 +158,7 @@
             this.SeleccionDeAcceso.TabIndex = 16;
             this.SeleccionDeAcceso.TabStop = false;
             this.SeleccionDeAcceso.Text = "Realice las modificaciones a los campos y luego presione aceptar para guardar los" +
-                " cambios";
+    " cambios";
             // 
             // errorDescripcion
             // 
@@ -353,11 +354,11 @@
             // PanelSuperior
             // 
             this.PanelSuperior.BackColor = System.Drawing.Color.DarkGray;
+            this.PanelSuperior.Controls.Add(this.menuConsultor);
             this.PanelSuperior.Controls.Add(this.Consultor);
             this.PanelSuperior.Controls.Add(this.CerrarSesion);
             this.PanelSuperior.Controls.Add(this.TituloEmpresa);
             this.PanelSuperior.Dock = System.Windows.Forms.DockStyle.Top;
-            this.PanelSuperior.Enabled = false;
             this.PanelSuperior.Location = new System.Drawing.Point(0, 0);
             this.PanelSuperior.Name = "PanelSuperior";
             this.PanelSuperior.Size = new System.Drawing.Size(877, 62);
@@ -383,6 +384,16 @@
             this.CerrarSesion.TabIndex = 13;
             this.CerrarSesion.TabStop = true;
             this.CerrarSesion.Text = "Cerrar Sesión";
+            // 
+            // menuConsultor
+            // 
+            this.menuConsultor.Location = new System.Drawing.Point(12, 34);
+            this.menuConsultor.Name = "menuConsultor";
+            this.menuConsultor.Size = new System.Drawing.Size(128, 23);
+            this.menuConsultor.TabIndex = 15;
+            this.menuConsultor.Text = "Volver al menú principal";
+            this.menuConsultor.UseVisualStyleBackColor = true;
+            this.menuConsultor.Click += new System.EventHandler(this.menuConsultor_Click);
             // 
             // Modificar_Puesto_o_Funcion
             // 
@@ -440,5 +451,6 @@
         private System.Windows.Forms.Label errorDescripcion;
         private System.Windows.Forms.Label errorpanelCaracteristicas;
         private System.Windows.Forms.Label errorEmpresa;
+        private System.Windows.Forms.Button menuConsultor;
     }
 }

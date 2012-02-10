@@ -14,10 +14,11 @@ namespace TpDiseñoCSharp
 {
     public partial class Emitir_Orden_de_Mérito : Form
     {
-        public Emitir_Orden_de_Mérito(string user)
+        Form ventanaMenuPrincipal;
+        public Emitir_Orden_de_Mérito(Form menuPrincipalConsultor, string user)
         {
             InitializeComponent();
-
+            ventanaMenuPrincipal = menuPrincipalConsultor;
             //Este codigo se utiliza para setear el nombre del usuario conectado y su ubicacion
             this.Consultor.Text = user;
             int largoTextoConsultor = Consultor.Width;
@@ -27,6 +28,7 @@ namespace TpDiseñoCSharp
 
         private void Cancelar_Click(object sender, EventArgs e)
         {
+            ventanaMenuPrincipal.Visible = true;
             Close();
         }
 
@@ -75,6 +77,12 @@ namespace TpDiseñoCSharp
             
             Seleccion_de_evaluaciones SelEvaluaciones = new Seleccion_de_evaluaciones(Lista_puestos_ev);
             SelEvaluaciones.ShowDialog();
+        }
+
+        private void menuConsultor_Click(object sender, EventArgs e)
+        {
+            ventanaMenuPrincipal.Visible = true;
+            Close();
         }
 
     }

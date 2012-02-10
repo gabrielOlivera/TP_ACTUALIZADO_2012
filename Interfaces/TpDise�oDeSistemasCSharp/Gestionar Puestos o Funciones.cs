@@ -13,9 +13,13 @@ namespace TpDiseñoCSharp
 {
     public partial class Gestionar_Puestos : Form
     {
-        public Gestionar_Puestos(string user)
+        Form ventanaMenuConsultor;
+
+        public Gestionar_Puestos(Form ventana_Anterior,string user)
         {
             InitializeComponent();
+
+            ventanaMenuConsultor = ventana_Anterior;
 
             //Este codigo se utiliza para setear el nombre del usuario conectado y su ubicacion
             this.Consultor.Text = user;
@@ -31,8 +35,9 @@ namespace TpDiseñoCSharp
         */
         private void Nuevo_Click(object sender, EventArgs e)
         {
-            Alta_De_Puesto altaPuesto = new Alta_De_Puesto(this.Consultor.Text, this);
+            Alta_De_Puesto altaPuesto = new Alta_De_Puesto(this.Consultor.Text, ventanaMenuConsultor ,this);
             altaPuesto.ShowDialog();
+            this.Visible = false;
         }
 
         /*
@@ -80,7 +85,7 @@ namespace TpDiseñoCSharp
         private void Modificar_Click(object sender, EventArgs e)
         {
             string codigo = (string)listaDePuesto.CurrentRow.Cells["Codigo"].Value;
-            Modificar_Puesto_o_Funcion modificarPuesto = new Modificar_Puesto_o_Funcion(this.Consultor.Text, this, codigo);
+            Modificar_Puesto_o_Funcion modificarPuesto = new Modificar_Puesto_o_Funcion(this.Consultor.Text, ventanaMenuConsultor, this, codigo);
             modificarPuesto.ShowDialog();
         }
 
@@ -125,6 +130,12 @@ namespace TpDiseñoCSharp
             else
                 MessageBox.Show("El puesto " + nomPuesto + " está siendo usado en la base de datos y no puede eliminarse", "Advertencia",
                 MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+        }
+        
+        private void menuConsultor_Click(object sender, EventArgs e)
+        {
+            ventanaMenuConsultor.Visible = true;
+            this.Close();
         }
         
     }

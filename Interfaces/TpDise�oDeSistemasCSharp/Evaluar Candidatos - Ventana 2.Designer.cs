@@ -45,6 +45,7 @@
             this.Atras = new System.Windows.Forms.Button();
             this.Siguiente = new System.Windows.Forms.Button();
             this.CaracteristicasDel_puesto = new System.Windows.Forms.GroupBox();
+            this.menuConsultor = new System.Windows.Forms.Button();
             this.SeleccionDeAcceso.SuspendLayout();
             this.PanelInferior.SuspendLayout();
             this.PanelSuperior.SuspendLayout();
@@ -65,7 +66,7 @@
             this.SeleccionDeAcceso.TabIndex = 9;
             this.SeleccionDeAcceso.TabStop = false;
             this.SeleccionDeAcceso.Text = "Seleccione el puesto y nombre de la empresa para los que desee evaluar los candid" +
-                "atos";
+    "atos";
             // 
             // Buscar
             // 
@@ -162,11 +163,11 @@
             // PanelSuperior
             // 
             this.PanelSuperior.BackColor = System.Drawing.Color.DarkGray;
+            this.PanelSuperior.Controls.Add(this.menuConsultor);
             this.PanelSuperior.Controls.Add(this.Consultor);
             this.PanelSuperior.Controls.Add(this.CerrarSesion);
             this.PanelSuperior.Controls.Add(this.TituloEmpresa);
             this.PanelSuperior.Dock = System.Windows.Forms.DockStyle.Top;
-            this.PanelSuperior.Enabled = false;
             this.PanelSuperior.Location = new System.Drawing.Point(0, 0);
             this.PanelSuperior.Name = "PanelSuperior";
             this.PanelSuperior.Size = new System.Drawing.Size(679, 62);
@@ -232,6 +233,16 @@
             this.CaracteristicasDel_puesto.TabStop = false;
             this.CaracteristicasDel_puesto.Visible = false;
             // 
+            // menuConsultor
+            // 
+            this.menuConsultor.Location = new System.Drawing.Point(12, 34);
+            this.menuConsultor.Name = "menuConsultor";
+            this.menuConsultor.Size = new System.Drawing.Size(128, 23);
+            this.menuConsultor.TabIndex = 17;
+            this.menuConsultor.Text = "Volver al menú principal";
+            this.menuConsultor.UseVisualStyleBackColor = true;
+            this.menuConsultor.Click += new System.EventHandler(this.menuConsultor_Click);
+            // 
             // Evaluar_Candidatos___Ventana_2
             // 
             this.AcceptButton = this.Buscar;
@@ -279,5 +290,6 @@
         private System.Windows.Forms.Button Atras;
         private System.Windows.Forms.Button Siguiente;
         private System.Windows.Forms.GroupBox CaracteristicasDel_puesto;
+        private System.Windows.Forms.Button menuConsultor;
     }
 }

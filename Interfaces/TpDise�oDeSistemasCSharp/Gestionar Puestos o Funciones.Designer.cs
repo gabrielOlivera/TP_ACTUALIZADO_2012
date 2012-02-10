@@ -109,7 +109,7 @@
             this.SeleccionDeAcceso.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.SeleccionDeAcceso.Controls.Add(this.Nuevo);
             this.SeleccionDeAcceso.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.SeleccionDeAcceso.Location = new System.Drawing.Point(161, 294);
+            this.SeleccionDeAcceso.Location = new System.Drawing.Point(156, 90);
             this.SeleccionDeAcceso.Name = "SeleccionDeAcceso";
             this.SeleccionDeAcceso.Size = new System.Drawing.Size(430, 56);
             this.SeleccionDeAcceso.TabIndex = 9;
@@ -142,7 +142,6 @@
             this.PanelSuperior.Controls.Add(this.CerrarSesion);
             this.PanelSuperior.Controls.Add(this.TituloEmpresa);
             this.PanelSuperior.Dock = System.Windows.Forms.DockStyle.Top;
-            this.PanelSuperior.Enabled = false;
             this.PanelSuperior.Location = new System.Drawing.Point(0, 0);
             this.PanelSuperior.Name = "PanelSuperior";
             this.PanelSuperior.Size = new System.Drawing.Size(795, 62);
@@ -150,12 +149,13 @@
             // 
             // menuConsultor
             // 
-            this.menuConsultor.Location = new System.Drawing.Point(13, 28);
+            this.menuConsultor.Location = new System.Drawing.Point(12, 33);
             this.menuConsultor.Name = "menuConsultor";
             this.menuConsultor.Size = new System.Drawing.Size(128, 23);
             this.menuConsultor.TabIndex = 13;
             this.menuConsultor.Text = "Volver al menú principal";
             this.menuConsultor.UseVisualStyleBackColor = true;
+            this.menuConsultor.Click += new System.EventHandler(this.menuConsultor_Click);
             // 
             // Consultor
             // 
@@ -189,7 +189,7 @@
             this.DatosParaBusqueda.Controls.Add(this.label2);
             this.DatosParaBusqueda.Controls.Add(this.label1);
             this.DatosParaBusqueda.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.DatosParaBusqueda.Location = new System.Drawing.Point(161, 356);
+            this.DatosParaBusqueda.Location = new System.Drawing.Point(156, 152);
             this.DatosParaBusqueda.Name = "DatosParaBusqueda";
             this.DatosParaBusqueda.Size = new System.Drawing.Size(430, 206);
             this.DatosParaBusqueda.TabIndex = 10;
@@ -272,7 +272,7 @@
             this.groupBox1.Controls.Add(this.Modificar);
             this.groupBox1.Controls.Add(this.listaDePuesto);
             this.groupBox1.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.groupBox1.Location = new System.Drawing.Point(161, 579);
+            this.groupBox1.Location = new System.Drawing.Point(156, 364);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(540, 340);
             this.groupBox1.TabIndex = 11;
