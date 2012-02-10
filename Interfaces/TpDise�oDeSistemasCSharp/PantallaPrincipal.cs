@@ -20,6 +20,11 @@ namespace TpDiseñoCSharp
             this.Fecha.Text = DateTime.Now.ToLongDateString();
         }
 
+        /*
+        * ==========================================================
+        * ESTE BOTON NOS LLEVA A LA PANTALLA DE LOGIN DEL CONSULTOR
+        * ==========================================================
+        */
         private void LoginConsultor_Click(object sender, EventArgs e)
         {
             LoginConsultor logCons= new LoginConsultor(this);
@@ -27,6 +32,12 @@ namespace TpDiseñoCSharp
 
         }
 
+
+        /*
+        * ==========================================================
+        * ESTE BOTON NOS LLEVA A LA PANTALLA LOGIN DE CANDIDATO
+        * ==========================================================
+        */
         private void LoginCandidato_Click(object sender, EventArgs e)
         {
             LoginCandidato logCand = new LoginCandidato(this);

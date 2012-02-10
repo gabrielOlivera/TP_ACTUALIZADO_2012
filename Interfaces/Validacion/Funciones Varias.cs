@@ -16,6 +16,11 @@ namespace Validacion
                     (c >= '0' && c <= '9') ||
                     (c >= 'A' && c <= 'Z'));
         }
+        public static bool isAlpha(char c)
+        {
+            return ((c >= 'a' && c <= 'z') ||
+                    (c >= 'A' && c <= 'Z'));
+        }
 
         public static bool isNumeric(char c)
         {
@@ -34,6 +39,24 @@ namespace Validacion
             for (i = 0; i < longitud && !bandera; i++)
             {
                 if (!(isAlphanum(campo[i])))
+                {
+                    bandera = true;
+                }
+            }
+            return bandera;
+        }
+
+        public static bool validarCamposAlfa(object sender)
+        {
+            string campo;
+            int longitud, i;
+            bool bandera = false;
+            campo = sender.ToString();
+            longitud = campo.Length;
+
+            for (i = 0; i < longitud && !bandera; i++)
+            {
+                if (!(isAlpha(campo[i])))
                 {
                     bandera = true;
                 }
@@ -90,35 +113,6 @@ namespace Validacion
                 }
             }
         }
-
-        
-
-        public static bool contienePalabra(string fuente, string contenida)
-        {
-            int j = 0;
-            for (int i = 0; i < fuente.Length && j < contenida.Length; i++)
-            {
-                if (fuente[i] == contenida[j])
-                {
-                    j++;
-                }
-            }
-            MessageBox.Show("J es igual a:" + j.ToString() + "Contenida.Length es igual a:" + contenida.Length.ToString()); 
-            if (j == contenida.Length)
-            {
-                Console.WriteLine("Entro al if");
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-      
-
-
-
 
 
     }

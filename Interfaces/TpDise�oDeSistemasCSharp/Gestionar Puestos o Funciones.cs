@@ -24,27 +24,40 @@ namespace TpDiseñoCSharp
             Consultor.Location = new Point(ubicacionCerrarSesion - largoTextoConsultor - 2, CerrarSesion.Top);
         }
 
+        /*
+        * ===================================================================
+        * ESTE BOTON CUANDO ES APRETADO LLAMA A LA PANTALLA DE ALTA DE PUESTO
+        * ===================================================================
+        */
         private void Nuevo_Click(object sender, EventArgs e)
         {
             Alta_De_Puesto altaPuesto = new Alta_De_Puesto(this.Consultor.Text, this);
             altaPuesto.ShowDialog();
         }
 
+        /*
+        * ==============================================================================
+        * CUANDO SE PRESIONA ESTE BOTON, PRIMERO SE VALIDAN QUE SE HAYAN  
+        * INGRESADO AL MENOS UN CAMPO Y QUE NO CONTENGAN DATOS NO DESEADOS
+        * SI TODO ESTA BIEN SE LISTAN LOS PUESTOS DE ACUERDO A LOS FILTROS ESPECIFICADOS
+        * ==============================================================================
+        */
         private void BuscarPuestos_Click (object sender, EventArgs e)
         {
             //Verifica que al menos uno de los campos contenga datos a buscar
             if ((Codigo.Text != "") || (NombreDePuesto.Text != "") || (Empresa.Text != ""))
             {
-                /*BUSCA LOS PUESTOS O FUNCIONES DE ACUERDO A LOS FILTROS ESPECIFICADOS PARA PODER MODIFICARLOS Y/O ELIMINAR
-                Y LOS MUESTRA EN UNA TABLA*/
+                //Comprueba que no se ingresen datos no deseados en los text boxes
                 if ((FuncionesVarias.validarCamposAlfanum(Codigo.Text)) || (FuncionesVarias.validarCamposAlfanum(NombreDePuesto.Text))
                     || (FuncionesVarias.validarCamposAlfanum(Empresa.Text)))
                 {
-                    MessageBox.Show("Los campos solo aceptan letras y/o números");
+                    MessageBox.Show("Los campos solo aceptan letras y/o números","ERROR",MessageBoxButtons.OK,MessageBoxIcon.Error);
                     
                 }
                 else
                 {
+                    /*BUSCA LOS PUESTOS O FUNCIONES DE ACUERDO A LOS FILTROS ESPECIFICADOS PARA PODER MODIFICARLOS Y/O ELIMINAR
+                    Y LOS MUESTRA EN UNA TABLA*/
                     GestorPuesto gestorPuesto = new GestorPuesto();
                     listaDePuesto.DataSource = gestorPuesto.listarPuestos(Codigo.Text, NombreDePuesto.Text, Empresa.Text);
                     listaDePuesto.Visible = true;
@@ -58,12 +71,25 @@ namespace TpDiseñoCSharp
             }
         }
 
+        /*
+        * ===================================================================
+        * SE ENCARGA DE LLAMAR A MODIFICAR PUESTO, CON EL PUESTO QUE FUE 
+        * SELECCIONADO
+        * ===================================================================
+        */
         private void Modificar_Click(object sender, EventArgs e)
         {
             string codigo = (string)listaDePuesto.CurrentRow.Cells["Codigo"].Value;
             Modificar_Puesto_o_Funcion modificarPuesto = new Modificar_Puesto_o_Funcion(this.Consultor.Text, this, codigo);
             modificarPuesto.ShowDialog();
         }
+
+        /*
+        * ===================================================================
+        * VERIFICA QUE EL PUESTO NO ESTE SIENDO USADO, PARA LUEGO PROCEDER 
+        * A ELIMINARLO LOGICAMENTE DE LA BASE DE DATOS
+        * ===================================================================
+        */
 
         private void Eliminar_Click(object sender, EventArgs e)
         {

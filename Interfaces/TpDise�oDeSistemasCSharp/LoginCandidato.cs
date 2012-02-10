@@ -27,10 +27,17 @@ namespace TpDiseñoCSharp
             pantallaAnterior = pantalla_Anterior;
         }
 
+        /*
+        * ======================================================================
+        * FUNCION QUE SE ENCARGA DE VERIFICAR QUE LOS DATOS INGRESADOS SEAN  
+        * CORRECTOS, Y LUEGO SE FIJA SI POSEE UN CUESTIONARIO ACTIVO, EN PROCESO
+        * O SI YA FINALIZO EL CUESTIONARIO Y MUESTRA LA PANTALLA CORRESPONDIENTE
+        * ======================================================================
+        */
         private void Entrar_Click(object sender, EventArgs e)
         {
-            /*Hacer la validación primero de si son correctos los datos ingresados como caracteres alfanumericos, etc
-             y luego mandar a validar al gestor*/
+            /*Hace la validación primero de si son correctos los datos ingresados como caracteres alfanumericos, etc
+             y luego manda a validar al gestor*/
             switch(Tipo.Text)
             {
                 case "PP":
@@ -141,11 +148,5 @@ namespace TpDiseñoCSharp
         {
             this.Close();
         }
-
-        private void LoginCandidato_Load(object sender, EventArgs e)
-        {
-
-        }
-
     }
 }
