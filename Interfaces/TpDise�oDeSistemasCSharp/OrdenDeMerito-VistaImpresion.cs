@@ -21,7 +21,7 @@ namespace TpDiseñoCSharp
             
             this.reportViewer1.RefreshReport();
             this.reportViewer1.RefreshReport();
-            this.reportViewer2.RefreshReport();
+           
         }
 
         private void reportViewer1_Load(object sender, EventArgs e)

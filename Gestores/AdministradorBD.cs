@@ -2395,11 +2395,131 @@ namespace Gestores
                 //El retorno del metodo del gestor es introducido en la lista de candidatos
                 listaCandidatos.Add(objCandidato);
             }
+
             listaRetorno.Add(listaCandidatos);
             listaRetorno.Add(listaAccesos);
+            
             terminarConexion();
             return listaRetorno;
         }
+
+        public DateTime ultimo_acceso(string nroDoc, DateTime fecha_ev, string codigo_ev)
+        {
+            bool conexionExitosa;
+            string fecha_formateada = this.formatear_fecha(fecha_ev);
+
+            string consultaSql = "SELECT MAX(fecha) "+
+                                 "FROM `tp base de datos`.cuestionario_estado "+
+                                 "WHERE Estado_idEstado = 2 AND Cuestionario_idCuestionario = ( "+
+                                 "SELECT DISTINCT idCuestionario "+
+                                 "FROM `tp base de datos`.cuestionario "+
+                                 "JOIN `tp base de datos`.cuestionario_estado ON (idCuestionario = Cuestionario_idCuestionario) "+
+                                 "JOIN `tp base de datos`.candidato ON (idCandidato = Candidato_idCandidato) "+
+                                 "JOIN `tp base de datos`.`puesto evaluado` ON (`idPuesto Evaluado` = `Puesto Evaluado_idPuesto Evaluado`) "+
+                                 "WHERE Estado_idEstado = 4 AND `nro documento`= '"+ nroDoc +"' "+
+                                 "AND `idPuesto Evaluado` = (SELECT DISTINCT `idPuesto Evaluado` "+
+                                                            "FROM candidato cand " +
+                                                            "JOIN cuestionario cuest on (idCandidato = Candidato_idCandidato) "+
+                                                            "JOIN cuestionario_estado cuest_estado on (idCuestionario = Cuestionario_idCuestionario) "+
+                                                            "JOIN `puesto evaluado` puesto_ev on (`idPuesto Evaluado` =`Puesto Evaluado_idPuesto Evaluado`) "+
+                                                            "WHERE puesto_ev.codigo =  '"+ codigo_ev +"' AND fecha = '"+ fecha_formateada +"'));";
+
+            //llamamos al metodo "iniciar conexion"
+            conexionExitosa = iniciarConexion();
+
+            //Evaluamos si la conexion se realizo con exito
+            if (!conexionExitosa)
+            {
+                MessageBox.Show("Fallo la conexion con la base de datos");
+                terminarConexion();
+                return DateTime.Now;
+            }
+
+            //Creamos un adaptador llamado "comando" para realizar la consultaSql que definimos mas arriba
+            MySql.Data.MySqlClient.MySqlCommand comando;
+            comando = ObjConexion.CreateCommand();
+            comando.CommandText = consultaSql;//En el adaptador comando hacemos un asignacion en su atributo CommandText de la consultaSql
+
+            //Se hace la ejecucion del comando con el metodo ExecuterReader 
+            //y se lo asigna a una variable reader que contendra los resultados de la busqueda en la base de datos
+            MySqlDataReader reader = comando.ExecuteReader();
+
+            if (!reader.HasRows)
+            {
+                //si el reader esta vacio, es que no se encontraron datos para la consulta realizada
+                terminarConexion();
+                return DateTime.Now;
+            }
+
+            DateTime ultimo_acceso = new DateTime();
+            while (reader.Read())
+            {
+                ultimo_acceso = DateTime.Parse(reader["MAX(fecha)"].ToString());
+            }
+            
+            terminarConexion();
+            return ultimo_acceso;
+        }
+
+        public DateTime primer_acceso(string nroDoc, DateTime fecha_ev, string codigo_ev)
+        {
+            bool conexionExitosa;
+            string fecha_formateada = this.formatear_fecha(fecha_ev);
+
+            string consultaSql = "SELECT MIN(fecha) " +
+                                 "FROM `tp base de datos`.cuestionario_estado " +
+                                 "WHERE Estado_idEstado = 2 AND Cuestionario_idCuestionario = ( " +
+                                 "SELECT DISTINCT idCuestionario " +
+                                 "FROM `tp base de datos`.cuestionario " +
+                                 "JOIN `tp base de datos`.cuestionario_estado ON (idCuestionario = Cuestionario_idCuestionario) " +
+                                 "JOIN `tp base de datos`.candidato ON (idCandidato = Candidato_idCandidato) " +
+                                 "JOIN `tp base de datos`.`puesto evaluado` ON (`idPuesto Evaluado` = `Puesto Evaluado_idPuesto Evaluado`) " +
+                                 "WHERE `nro documento`= '" + nroDoc + "' " +
+                                 "AND `idPuesto Evaluado` = (SELECT DISTINCT `idPuesto Evaluado` " +
+                                                            "FROM candidato cand " +
+                                                            "JOIN cuestionario cuest on (idCandidato = Candidato_idCandidato) " +
+                                                            "JOIN cuestionario_estado cuest_estado on (idCuestionario = Cuestionario_idCuestionario) " +
+                                                            "JOIN `puesto evaluado` puesto_ev on (`idPuesto Evaluado` =`Puesto Evaluado_idPuesto Evaluado`) " +
+                                                            "WHERE puesto_ev.codigo =  '" + codigo_ev + "' AND fecha = '" + fecha_formateada + "'));";
+
+            //llamamos al metodo "iniciar conexion"
+            conexionExitosa = iniciarConexion();
+
+            //Evaluamos si la conexion se realizo con exito
+            if (!conexionExitosa)
+            {
+                MessageBox.Show("Fallo la conexion con la base de datos");
+                terminarConexion();
+                return DateTime.Now;
+            }
+
+            //Creamos un adaptador llamado "comando" para realizar la consultaSql que definimos mas arriba
+            MySql.Data.MySqlClient.MySqlCommand comando;
+            comando = ObjConexion.CreateCommand();
+            comando.CommandText = consultaSql;//En el adaptador comando hacemos un asignacion en su atributo CommandText de la consultaSql
+
+            //Se hace la ejecucion del comando con el metodo ExecuterReader 
+            //y se lo asigna a una variable reader que contendra los resultados de la busqueda en la base de datos
+            MySqlDataReader reader = comando.ExecuteReader();
+
+            if (!reader.HasRows)
+            {
+                //si el reader esta vacio, es que no se encontraron datos para la consulta realizada
+                terminarConexion();
+                return DateTime.Now;
+            }
+
+            DateTime primer_acceso = new DateTime();
+            while (reader.Read())
+            {
+                primer_acceso = DateTime.Parse(reader["MIN(fecha)"].ToString());
+            }
+
+            terminarConexion();
+            return primer_acceso;
+        }
+
+
         // -1 si la consulta no devuelve nada. -2 si no se puede realizar la conexion
         public int obtener_puntuacion(string dni_candidato, DateTime fecha_ev, string codigo_ev) 
         {
@@ -2504,7 +2624,7 @@ namespace Gestores
             string consultaSql = "SELECT ponderacion , codigo, nombre " +
                     " FROM `puesto evaluado_competencia evaluada` pe_ce " +
                     " JOIN `competencia evaluada` comp_ev on (`idCompetencia Evaluada` = `Competencia Evaluada_idCompetencia Evaluada`) " +
-                    " WHERE `Puesto Evaluado_idPuesto Evaluado` = (SELECT `idPuesto Evaluado` " +
+                    " WHERE `Puesto Evaluado_idPuesto Evaluado` = (SELECT DISTINCT `idPuesto Evaluado` " +
                     " FROM candidato cand " +
                     " JOIN cuestionario cuest on (idCandidato = Candidato_idCandidato) " +
                     " JOIN cuestionario_estado cuest_estado on (idCuestionario = Cuestionario_idCuestionario) " +
@@ -2569,16 +2689,16 @@ namespace Gestores
             string consultaSql = "SELECT COUNT(*) " +
                 " FROM `factor evaluado` fa " +
                 " JOIN `pregunta evaluada` pe on( `Factor Evaluado_idFactor Evaluado` = `idFactor Evaluado`) " +
-                " WHERE `Competencia Evaluada_idCompetencia Evaluada` = (SELECT `idCompetencia Evaluada` " +
+                " WHERE `Competencia Evaluada_idCompetencia Evaluada` = (SELECT DISTINCT `idCompetencia Evaluada` " +
                 " FROM `puesto evaluado_competencia evaluada` pe_ce " +
                 " JOIN `competencia evaluada` comp_ev on (codigo = '" + codigo_de_competencia + 
                 "' AND `Competencia Evaluada_idCompetencia Evaluada` = `idCompetencia Evaluada`) " +
-                " WHERE `Puesto Evaluado_idPuesto Evaluado` = (SELECT `idPuesto Evaluado` " +
+                " WHERE `Puesto Evaluado_idPuesto Evaluado` = (SELECT DISTINCT `idPuesto Evaluado` " +
                 " FROM candidato cand " +
                 " JOIN cuestionario cuest on (idCandidato = Candidato_idCandidato) " +
                 " JOIN cuestionario_estado cuest_estado on (idCuestionario = Cuestionario_idCuestionario) " +
                 " JOIN `puesto evaluado` puesto_ev on (`idPuesto Evaluado` =`Puesto Evaluado_idPuesto Evaluado`)" +
-                " WHERE puesto_ev.codigo =  '" + codigo_ev + "' AND fecha = '" + fecha_formateada + "');";
+                " WHERE puesto_ev.codigo =  '" + codigo_ev + "' AND fecha = '" + fecha_formateada + "'));";
 
             //llamamos al metodo "iniciar conexion"
             conexionExitosa = iniciarConexion();
