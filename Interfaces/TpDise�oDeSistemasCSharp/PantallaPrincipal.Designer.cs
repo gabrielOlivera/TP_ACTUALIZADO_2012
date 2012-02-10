@@ -41,6 +41,7 @@ namespace TpDiseñoCSharp
             this.SeleccionDeAcceso = new System.Windows.Forms.GroupBox();
             this.LoginCandidato = new System.Windows.Forms.Button();
             this.LoginConsultor = new System.Windows.Forms.Button();
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.PanelSuperior.SuspendLayout();
             this.PanelInferior.SuspendLayout();
             this.SeleccionDeAcceso.SuspendLayout();
@@ -53,7 +54,6 @@ namespace TpDiseñoCSharp
             this.Fecha.DisabledLinkColor = System.Drawing.Color.Black;
             this.Fecha.Name = "Fecha";
             this.Fecha.TabStop = true;
-
             // 
             // TituloEmpresa
             // 
@@ -66,7 +66,6 @@ namespace TpDiseñoCSharp
             this.PanelSuperior.Controls.Add(this.TituloEmpresa);
             resources.ApplyResources(this.PanelSuperior, "PanelSuperior");
             this.PanelSuperior.Name = "PanelSuperior";
-
             // 
             // PanelInferior
             // 
@@ -74,19 +73,16 @@ namespace TpDiseñoCSharp
             this.PanelInferior.Controls.Add(this.Fecha);
             resources.ApplyResources(this.PanelInferior, "PanelInferior");
             this.PanelInferior.Name = "PanelInferior";
-      
             // 
             // panel1
             // 
             resources.ApplyResources(this.panel1, "panel1");
             this.panel1.Name = "panel1";
-  
             // 
             // panel2
             // 
             resources.ApplyResources(this.panel2, "panel2");
             this.panel2.Name = "panel2";
- 
             // 
             // SeleccionDeAcceso
             // 
@@ -96,7 +92,6 @@ namespace TpDiseñoCSharp
             this.SeleccionDeAcceso.ForeColor = System.Drawing.SystemColors.HotTrack;
             this.SeleccionDeAcceso.Name = "SeleccionDeAcceso";
             this.SeleccionDeAcceso.TabStop = false;
-
             // 
             // LoginCandidato
             // 
@@ -125,7 +120,6 @@ namespace TpDiseñoCSharp
             this.Controls.Add(this.PanelInferior);
             this.Controls.Add(this.PanelSuperior);
             this.Name = "PantallaPrincipal";
-
             this.PanelSuperior.ResumeLayout(false);
             this.PanelSuperior.PerformLayout();
             this.PanelInferior.ResumeLayout(false);
@@ -146,6 +140,7 @@ namespace TpDiseñoCSharp
         private GroupBox SeleccionDeAcceso;
         private Button LoginCandidato;
         private Button LoginConsultor;
+        private SaveFileDialog saveFileDialog1;
     }
 
 }

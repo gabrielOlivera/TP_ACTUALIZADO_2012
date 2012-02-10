@@ -124,8 +124,8 @@ namespace TpDiseñoCSharp
         private void Seleccion_de_evaluaciones_Load(object sender, EventArgs e)
         {
 
-            this.reportViewer1.RefreshReport();
-            this.reportViewer1.RefreshReport();
+            /*this.reportViewer1.RefreshReport();
+            this.reportViewer1.RefreshReport();*/
         }
 
        
