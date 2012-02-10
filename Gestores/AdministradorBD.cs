@@ -3189,5 +3189,161 @@ namespace Gestores
 
             return listaDeOpciones;
         }
+
+        public bool guardar_Evaluacion(Puesto puestoAsociado, List<Candidato> listaCandidatos_aEvaluar)
+        {
+            MySql.Data.MySqlClient.MySqlTransaction transaccion;
+
+            bool conexionExitosa;
+            int cantDeFilasAfectadas = 0;
+
+            conexionExitosa = iniciarConexion();
+
+            string consultaSql1 = "INSERT INTO `puesto evaluado`(codigo,nombre,descripcion,empresa) " +
+                "VALUES ('" + puestoAsociado.Codigo + "','" + puestoAsociado.Nombre + "','" + puestoAsociado.Descripcion + "','" + puestoAsociado.Empresa + "');";
+
+            MySql.Data.MySqlClient.MySqlCommand comando1 = new MySqlCommand(), comando2 = new MySqlCommand(), comando3 = new MySqlCommand(), comando4 = new MySqlCommand();
+            MySql.Data.MySqlClient.MySqlCommand comando5 = new MySqlCommand(), comando6 = new MySqlCommand(), comando7 = new MySqlCommand(), comando8 = new MySqlCommand();
+
+            comando1.Connection = ObjConexion; comando1.CommandType = CommandType.Text;
+            comando1.CommandTimeout = 0; comando1.CommandText = consultaSql1;
+
+            comando2.Connection = ObjConexion; comando2.CommandType = CommandType.Text;
+            comando2.CommandTimeout = 0;
+
+            comando3.Connection = ObjConexion; comando3.CommandType = CommandType.Text;
+            comando3.CommandTimeout = 0;
+
+            comando4.Connection = ObjConexion; comando4.CommandType = CommandType.Text;
+            comando4.CommandTimeout = 0;
+
+            comando5.Connection = ObjConexion; comando5.CommandType = CommandType.Text;
+            comando5.CommandTimeout = 0;
+
+            comando6.Connection = ObjConexion; comando6.CommandType = CommandType.Text;
+            comando6.CommandTimeout = 0; 
+
+            comando7.Connection = ObjConexion; comando7.CommandType = CommandType.Text;
+            comando7.CommandTimeout = 0;
+
+            comando8.Connection = ObjConexion; comando8.CommandType = CommandType.Text;
+            comando8.CommandTimeout = 0;
+
+            transaccion = ObjConexion.BeginTransaction();
+
+            try
+            {
+                if (!conexionExitosa)
+                    return false;
+
+                comando1.Transaction = transaccion; comando2.Transaction = transaccion;
+                comando3.Transaction = transaccion; comando4.Transaction = transaccion;
+                comando5.Transaction = transaccion; comando6.Transaction = transaccion; 
+                comando7.Transaction = transaccion; comando8.Transaction = transaccion;
+
+                cantDeFilasAfectadas += comando1.ExecuteNonQuery();
+
+                for (int i = 0; i < listaCandidatos_aEvaluar.Count; i++)
+                {
+                    string fecha_estado_activo = formatear_fecha(DateTime.Now);
+
+                    string consultaSql2 = "INSERT INTO cuestionario(clave,nroAccesos,`Puesto Evaluado_idPuesto Evaluado`,Candidato_idCandidato) " +
+                        "VALUES ('" + listaCandidatos_aEvaluar[i].Clave + "',0,(SELECT DISTINCT `idPuesto Evaluado` FROM `puesto evaluado` WHERE `idPuesto Evaluado` = (SELECT MAX(`idPuesto Evaluado`) FROM `puesto evaluado`),(SELECT DISTINCT idCandidato FROM candidato WHERE `nro documento` = '" 
+                        + listaCandidatos_aEvaluar[i].NroDoc + "'));";
+
+                    comando2.CommandText = consultaSql2;
+                    cantDeFilasAfectadas += comando2.ExecuteNonQuery();
+
+                    string consultaSql3 = "INSERT INTO cuestionario_estado(Cuestionario_idCuestionario,Estado_idEstado,fecha) " +
+                        "VALUES ((SELECT idCuestionario FROM cuestionario WHERE clave = '" + listaCandidatos_aEvaluar[i].Clave + "'),1,'" + fecha_estado_activo + "');";
+
+                    comando3.CommandText = consultaSql3;
+                    cantDeFilasAfectadas += comando3.ExecuteNonQuery();
+                }
+
+                for (int i = 0; i < puestoAsociado.Caracteristicas.Count; i++)
+                {
+                    Competencia competencia1 = (Competencia)puestoAsociado.Caracteristicas[i].dato1;
+                    string consultaSql4 = "INSERT INTO `competencia evaluada`(codigo,nombre,descripcion) " +
+                        "VALUES ('" + competencia1.Codigo + "','" + competencia1.Nombre + "','" + competencia1.Descripcion + "');";
+
+                    comando4.CommandText = consultaSql4;
+                    cantDeFilasAfectadas += comando4.ExecuteNonQuery();
+
+                    Ponderacion ponderacion1 = (Ponderacion)puestoAsociado.Caracteristicas[i].dato2;
+
+                    string consultaSql5 = "INSERT INTO `puesto evaluado_competencia evaluada` (`Puesto Evaluado_idPuesto Evaluado`,`Competencia Evaluada_idCompetencia Evaluada`,ponderacion) " +
+                       "VALUES ((SELECT DISTINCT `idPuesto Evaluado` FROM `puesto evaluado` WHERE `idPuesto Evaluado` = (SELECT MAX(`idPuesto Evaluado`) FROM `puesto evaluado`)),(SELECT DISTINCT `idCompetencia Evaluada` FROM `competencia evaluada` WHERE codigo = '"
+                       + competencia1.Codigo + "'),'" + ponderacion1.Valor + "');";
+
+                    comando5.CommandText = consultaSql5;
+                    cantDeFilasAfectadas += comando5.ExecuteNonQuery();
+
+                    for (int j = 0; j < competencia1.ListaFactores.Count; j++)
+                    {
+                        Factor factor_Asociado = competencia1.ListaFactores[j];
+                        string consultaSql6 = "INSERT INTO `factor evaluado`(codigo,nombre,nroOrden,descripcion,`Competencia Evaluada_idCompetencia Evaluada`) " +
+                            "VALUES ('" + factor_Asociado.Codigo + "','" + factor_Asociado.Nombre + "','" + factor_Asociado.Nro_orden + "','" + factor_Asociado.Descripcion + "',(SELECT DISTINCT `idCompetencia Evaluada` FROM `competencia evaluada` WHERE codigo = '" + competencia1.Codigo + "'));";
+
+                        comando6.CommandText = consultaSql6;
+                        cantDeFilasAfectadas += comando6.ExecuteNonQuery();
+
+                        for (int p = 0; p < factor_Asociado.ListaPreguntas.Count; p++)
+                        {
+                            Pregunta preg_Asociada = factor_Asociado.ListaPreguntas[p];
+
+                            string consultaSql7 = "INSERT INTO `pregunta evaluada`(codigo,nombre,pregunta,descripcion,`Factor Evaluado_idFactor Evaluado`,`Opcion de Respuesta Evaluada_idOpcion de Respuesta Evaluada`,`Opcion de Respuesta Evaluada_idOpcion de Respuesta Evaluada`) " +
+                            "VALUES ((SELECT DISTINCT codigo FROM pregunta WHERE Factor_codigo = '" + factor_Asociado.Codigo + "'),'" + preg_Asociada.Nombre + "','" + 
+                            preg_Asociada.Preg_aRealizar + "','" + preg_Asociada.Descripcion + "',(SELECT DISTINCT `idFactor Evaluado` FROM `factor evaluado` WHERE `Competencia Evaluada_idCompetencia Evaluada` = (SELECT DISTINCT `idCompetencia Evaluada` FROM `competencia evaluada` WHERE nombre = '" + competencia1.Codigo + "')),(SELECT DISTINCT `idOpcion de Respuesta Evaluada` FROM `opcion de respuesta evaluada` WHERE codigo = '" + preg_Asociada.OpcionRespuesta_Asociada.Nombre + "'));";
+
+                            comando7.CommandText = consultaSql7;
+                            cantDeFilasAfectadas += comando7.ExecuteNonQuery();
+
+                            for (int op = 0; op < preg_Asociada.OpcionRespuesta_Asociada.ListaOpciones.Count; op++)
+                            {
+                                Opciones opciones_Asociadas = preg_Asociada.OpcionRespuesta_Asociada.ListaOpciones[op];
+
+                                string consultaSql8 = "INSERT INTO `pregunta evaluada_opcion evaluada`(`Opcion Evaluada_idOpcion`,`Pregunta Evaluada_idPregunta Evaluada`,ponderacion) " +
+                                    "VALUES ((SELECT DISTINCT idOpcion FROM `opcion evaluada` WHERE nombre = '" + opciones_Asociadas.Nombre + 
+                                    "'),(SELECT DISTINCT `idPregunta Evaluada` FROM `pregunta evaluada` WHERE `Factor Evaluado_idFactor Evaluado` = (SELECT DISTINCT `idFactor Evaluado` FROM `factor evaluado` WHERE codigo = '" + factor_Asociado.Codigo + "')));";
+
+                                comando8.CommandText = consultaSql8;
+                                cantDeFilasAfectadas += comando8.ExecuteNonQuery();
+                            }
+
+                        }
+                    }
+                }
+
+                transaccion.Commit();
+                terminarConexion();
+
+            }
+
+            catch (MySqlException MysqlEx)
+            {
+                // si algo fallo deshacemos todo
+                transaccion.Rollback();
+                // mostramos el mensaje del error
+                MessageBox.Show("La transaccion no se pudo realizar: " + MysqlEx.Message);
+            }
+            catch (DataException Ex)
+            {
+                // si algo fallo deshacemos todo
+                transaccion.Rollback();
+                // mostramos el mensaje del error
+                MessageBox.Show("La transaccion no se pudo realizar: " + Ex.Message);
+
+            }
+
+            if (cantDeFilasAfectadas >= 2)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }

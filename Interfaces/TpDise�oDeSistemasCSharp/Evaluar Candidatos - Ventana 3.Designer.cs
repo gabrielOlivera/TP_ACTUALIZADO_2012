@@ -50,17 +50,19 @@
             // 
             this.Consultor.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.Consultor.AutoSize = true;
-            this.Consultor.Location = new System.Drawing.Point(558, 39);
+            this.Consultor.Location = new System.Drawing.Point(744, 48);
+            this.Consultor.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.Consultor.Name = "Consultor";
-            this.Consultor.Size = new System.Drawing.Size(51, 13);
+            this.Consultor.Size = new System.Drawing.Size(68, 17);
             this.Consultor.TabIndex = 2;
             this.Consultor.Text = "Consultor";
             // 
             // panel2
             // 
-            this.panel2.Location = new System.Drawing.Point(0, 500);
+            this.panel2.Location = new System.Drawing.Point(0, 615);
+            this.panel2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(25, 37);
+            this.panel2.Size = new System.Drawing.Size(33, 46);
             this.panel2.TabIndex = 16;
             // 
             // PanelInferior
@@ -68,9 +70,10 @@
             this.PanelInferior.BackColor = System.Drawing.Color.Gainsboro;
             this.PanelInferior.Controls.Add(this.Fecha);
             this.PanelInferior.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.PanelInferior.Location = new System.Drawing.Point(0, 543);
+            this.PanelInferior.Location = new System.Drawing.Point(0, 669);
+            this.PanelInferior.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.PanelInferior.Name = "PanelInferior";
-            this.PanelInferior.Size = new System.Drawing.Size(720, 58);
+            this.PanelInferior.Size = new System.Drawing.Size(960, 71);
             this.PanelInferior.TabIndex = 13;
             // 
             // Fecha
@@ -81,9 +84,10 @@
             this.Fecha.DisabledLinkColor = System.Drawing.Color.Black;
             this.Fecha.Enabled = false;
             this.Fecha.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.Fecha.Location = new System.Drawing.Point(558, 24);
+            this.Fecha.Location = new System.Drawing.Point(744, 30);
+            this.Fecha.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.Fecha.Name = "Fecha";
-            this.Fecha.Size = new System.Drawing.Size(151, 13);
+            this.Fecha.Size = new System.Drawing.Size(201, 17);
             this.Fecha.TabIndex = 0;
             this.Fecha.TabStop = true;
             this.Fecha.Text = "Thursday, November 24, 2011";
@@ -98,17 +102,19 @@
             this.PanelSuperior.Dock = System.Windows.Forms.DockStyle.Top;
             this.PanelSuperior.Enabled = false;
             this.PanelSuperior.Location = new System.Drawing.Point(0, 0);
+            this.PanelSuperior.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.PanelSuperior.Name = "PanelSuperior";
-            this.PanelSuperior.Size = new System.Drawing.Size(720, 62);
+            this.PanelSuperior.Size = new System.Drawing.Size(960, 76);
             this.PanelSuperior.TabIndex = 14;
             // 
             // CerrarSesion
             // 
             this.CerrarSesion.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.CerrarSesion.AutoSize = true;
-            this.CerrarSesion.Location = new System.Drawing.Point(645, 38);
+            this.CerrarSesion.Location = new System.Drawing.Point(860, 47);
+            this.CerrarSesion.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.CerrarSesion.Name = "CerrarSesion";
-            this.CerrarSesion.Size = new System.Drawing.Size(70, 13);
+            this.CerrarSesion.Size = new System.Drawing.Size(95, 17);
             this.CerrarSesion.TabIndex = 1;
             this.CerrarSesion.TabStop = true;
             this.CerrarSesion.Text = "Cerrar Sesión";
@@ -119,26 +125,30 @@
             this.TituloEmpresa.AutoSize = true;
             this.TituloEmpresa.Font = new System.Drawing.Font("Viner Hand ITC", 15.75F, System.Drawing.FontStyle.Bold);
             this.TituloEmpresa.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.TituloEmpresa.Location = new System.Drawing.Point(269, 18);
+            this.TituloEmpresa.Location = new System.Drawing.Point(359, 22);
+            this.TituloEmpresa.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.TituloEmpresa.Name = "TituloEmpresa";
-            this.TituloEmpresa.Size = new System.Drawing.Size(157, 34);
+            this.TituloEmpresa.Size = new System.Drawing.Size(199, 44);
             this.TituloEmpresa.TabIndex = 0;
             this.TituloEmpresa.Text = "Human TIC\'s";
             // 
             // panel1
             // 
-            this.panel1.Location = new System.Drawing.Point(0, 62);
+            this.panel1.Location = new System.Drawing.Point(0, 76);
+            this.panel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(636, 22);
+            this.panel1.Size = new System.Drawing.Size(848, 27);
             this.panel1.TabIndex = 15;
             // 
             // groupBox1
             // 
             this.groupBox1.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.groupBox1.Controls.Add(this.candidatos_claves);
-            this.groupBox1.Location = new System.Drawing.Point(100, 105);
+            this.groupBox1.Location = new System.Drawing.Point(133, 129);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(509, 323);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox1.Size = new System.Drawing.Size(679, 398);
             this.groupBox1.TabIndex = 17;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Presione finalizar para resguardar los datos de la busqueda";
@@ -148,19 +158,22 @@
             this.candidatos_claves.AllowUserToAddRows = false;
             this.candidatos_claves.AllowUserToDeleteRows = false;
             this.candidatos_claves.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.candidatos_claves.Location = new System.Drawing.Point(6, 30);
+            this.candidatos_claves.Location = new System.Drawing.Point(8, 37);
+            this.candidatos_claves.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.candidatos_claves.Name = "candidatos_claves";
             this.candidatos_claves.ReadOnly = true;
+            this.candidatos_claves.RowTemplate.Height = 24;
             this.candidatos_claves.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.candidatos_claves.Size = new System.Drawing.Size(497, 277);
+            this.candidatos_claves.Size = new System.Drawing.Size(663, 341);
             this.candidatos_claves.TabIndex = 0;
             // 
             // Atras
             // 
             this.Atras.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.Atras.Location = new System.Drawing.Point(236, 458);
+            this.Atras.Location = new System.Drawing.Point(315, 564);
+            this.Atras.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Atras.Name = "Atras";
-            this.Atras.Size = new System.Drawing.Size(75, 23);
+            this.Atras.Size = new System.Drawing.Size(100, 28);
             this.Atras.TabIndex = 18;
             this.Atras.Text = "<< Atrás";
             this.Atras.UseVisualStyleBackColor = true;
@@ -169,9 +182,10 @@
             // Finalizar
             // 
             this.Finalizar.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.Finalizar.Location = new System.Drawing.Point(385, 458);
+            this.Finalizar.Location = new System.Drawing.Point(513, 564);
+            this.Finalizar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Finalizar.Name = "Finalizar";
-            this.Finalizar.Size = new System.Drawing.Size(75, 23);
+            this.Finalizar.Size = new System.Drawing.Size(100, 28);
             this.Finalizar.TabIndex = 19;
             this.Finalizar.Text = "Finalizar";
             this.Finalizar.UseVisualStyleBackColor = true;
@@ -179,10 +193,10 @@
             // 
             // Evaluar_Candidatos___Ventana_3
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(720, 601);
+            this.ClientSize = new System.Drawing.Size(960, 740);
             this.Controls.Add(this.Finalizar);
             this.Controls.Add(this.Atras);
             this.Controls.Add(this.groupBox1);
@@ -190,6 +204,7 @@
             this.Controls.Add(this.PanelInferior);
             this.Controls.Add(this.PanelSuperior);
             this.Controls.Add(this.panel1);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "Evaluar_Candidatos___Ventana_3";
             this.Text = "Evaluar Candidatos";
             this.PanelInferior.ResumeLayout(false);

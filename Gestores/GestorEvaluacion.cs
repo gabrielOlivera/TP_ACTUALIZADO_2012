@@ -7,7 +7,7 @@ using Entidades;
 
 namespace Gestores
 {
-    class GestorEvaluacion
+    public class GestorEvaluacion
     {
         /*
          * La mision que justifica la existencia de los gestores es hacer de "intermediario" entre las ENTIDADES y el resto del sistema
@@ -170,6 +170,19 @@ namespace Gestores
         public DateTime obtenerFechaEvaluacion(PuestoEvaluado puestoEv)
         {
             return puestoEv.Fecha_Comienzo;
+        }
+
+        public bool duplicar_Esquema_Para_Evaluacion(Puesto puestoAsociado, List<Candidato> cand_Seleccionados)
+        {
+            AdministradorBD admBD = new AdministradorBD();
+
+            bool realizado = admBD.guardar_Evaluacion(puestoAsociado, cand_Seleccionados);
+
+            if (realizado)
+                return true;
+            else
+                return false;
+
         }
     }
 
