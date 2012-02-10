@@ -94,7 +94,6 @@
             this.Controls.Add(this.todos);
             this.Name = "Seleccion_de_evaluaciones";
             this.Text = "Elija las evaluaciones para las que desea emitir un Reporte de Meritos";
-            this.Load += new System.EventHandler(this.Seleccion_de_evaluaciones_Load);
             ((System.ComponentModel.ISupportInitialize)(this.selecciondatagridW)).EndInit();
             this.ResumeLayout(false);
 
