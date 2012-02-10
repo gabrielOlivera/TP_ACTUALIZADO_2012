@@ -27,10 +27,17 @@ namespace TpDiseñoCSharp
             pantallaAnterior = pantalla_Anterior;
         }
 
+        /*
+        * ======================================================================
+        * FUNCION QUE SE ENCARGA DE VERIFICAR QUE LOS DATOS INGRESADOS SEAN  
+        * CORRECTOS, Y LUEGO SE FIJA SI POSEE UN CUESTIONARIO ACTIVO, EN PROCESO
+        * O SI YA FINALIZO EL CUESTIONARIO Y MUESTRA LA PANTALLA CORRESPONDIENTE
+        * ======================================================================
+        */
         private void Entrar_Click(object sender, EventArgs e)
         {
-            /*Hacer la validación primero de si son correctos los datos ingresados como caracteres alfanumericos, etc
-             y luego mandar a validar al gestor*/
+            /*Hace la validación primero de si son correctos los datos ingresados como caracteres alfanumericos, etc
+             y luego manda a validar al gestor*/
             switch(Tipo.Text)
             {
                 case "PP":
@@ -40,22 +47,26 @@ namespace TpDiseñoCSharp
                         {
                             //Nos Fijamos si los datos ingresados pertenecen a un candidato existente en la base de datos y si posee un cuestionario para ser evaluado
                             object esValido = gestorCandidatos.validarCandidato(Tipo.Text.ToString(), NroDoc.Text.ToString(), Clave.Text.ToString());
-
+                            Cuestionario c = (Cuestionario)esValido;
+                            string candidato = c.CandidatoAsociado.Nombre + " " + c.CandidatoAsociado.Apellido;
+                                
                             if ((esValido is Cuestionario) == true)
                             {
+                                
                                 //Con el CUESTIONARIO instanciado, decidimos que acción corresponde tomar (Iniciar el cuestionario, recuperar el cuestionario o finalizar el cuestionario)
                                 ArrayList evento_ = gestorCuestionario.crearCuestionario((Cuestionario)esValido);
                                 if (evento_.Count != 0)
                                 {
                                     if ((evento_[0] is Bloque) == true)//Si se retorno el bloque -> recuperamos el cuestionario
                                     {
-                                        Completar_Cuestionario cuest_bloques = new Completar_Cuestionario((Bloque)evento_[0], this, pantallaAnterior);
+                                        Completar_Cuestionario cuest_bloques = new Completar_Cuestionario(candidato,(Bloque)evento_[0], this, pantallaAnterior);
                                         pantallaAnterior.Visible = false;
                                         cuest_bloques.Show();
+                                        
                                     }
                                     else if (Equals(evento_[0], "instrucciones") == true)//Si retorno intrucciones -> inicializar el cuestionario
                                     {
-                                        Cuestionario_Instrucciones cuestInstruc = new Cuestionario_Instrucciones(pantallaAnterior, this, (Cuestionario)esValido);
+                                        Cuestionario_Instrucciones cuestInstruc = new Cuestionario_Instrucciones(candidato,pantallaAnterior, this, (Cuestionario)esValido);
                                         pantallaAnterior.Visible = false;
                                         cuestInstruc.Show();
                                     }
@@ -90,7 +101,9 @@ namespace TpDiseñoCSharp
                         {
                             //Nos Fijamos si los datos ingresados pertenecen a un candidato existente en la base de datos y si posee un cuestionario para ser evaluado
                             object esValido = gestorCandidatos.validarCandidato(Tipo.Text.ToString(), NroDoc.Text.ToString(), Clave.Text.ToString());
-
+                            Cuestionario c = (Cuestionario)esValido;
+                            string candidato = c.CandidatoAsociado.Nombre + " " + c.CandidatoAsociado.Apellido;
+                                
                             if ((esValido is Cuestionario) == true)
                             {
                                 //Con el CUESTIONARIO instanciado, decidimos que acción corresponde tomar (Iniciar el cuestionario, recuperar el cuestionario o finalizar el cuestionario)
@@ -99,13 +112,13 @@ namespace TpDiseñoCSharp
                                 {
                                     if ((evento_[0] is Bloque) == true)//Si se retorno el bloque -> recuperamos el cuestionario
                                     {
-                                        Completar_Cuestionario cuest_bloques = new Completar_Cuestionario((Bloque)evento_[0], this, pantallaAnterior);
+                                        Completar_Cuestionario cuest_bloques = new Completar_Cuestionario(candidato,(Bloque)evento_[0], this, pantallaAnterior);
                                         pantallaAnterior.Visible = false;
                                         cuest_bloques.Show();
                                     }
                                     else if (Equals(evento_[0], "instrucciones") == true)//Si retorno intrucciones -> inicializar el cuestionario
                                     {
-                                        Cuestionario_Instrucciones cuestInstruc = new Cuestionario_Instrucciones(pantallaAnterior, this, (Cuestionario)esValido);
+                                        Cuestionario_Instrucciones cuestInstruc = new Cuestionario_Instrucciones(candidato,pantallaAnterior, this, (Cuestionario)esValido);
                                         pantallaAnterior.Visible = false;
                                         cuestInstruc.Show();
                                     }
@@ -135,11 +148,5 @@ namespace TpDiseñoCSharp
         {
             this.Close();
         }
-
-        private void LoginCandidato_Load(object sender, EventArgs e)
-        {
-
-        }
-
     }
 }

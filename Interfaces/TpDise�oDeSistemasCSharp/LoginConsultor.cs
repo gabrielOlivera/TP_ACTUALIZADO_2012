@@ -21,6 +21,12 @@ namespace TpDiseñoCSharp
             pantanllaPrincipal = pantallaPrincipal_parametro;
         }
 
+        /*
+        * ==========================================================================
+        * SE ENCARGA DE VALIDAR EL CONSULTOR, TANTO QUE INGRESE DATOS VALIDOS 
+        * Y DE SER CORRECTA LA VALIDACION MUESTRA LA PANTALLA PRINCIPAL DE CONSULTOR
+        * ==========================================================================
+        */
         private void Entrar_Click(object sender, EventArgs e)
         {
             if (!FuncionesVarias.validarCamposAlfanum(Usuario.Text))

@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using Gestores;
 using Entidades;
+using Validacion;
 
 namespace TpDiseñoCSharp
 {
@@ -16,7 +17,12 @@ namespace TpDiseñoCSharp
         public Emitir_Orden_de_Mérito(string user)
         {
             InitializeComponent();
+
+            //Este codigo se utiliza para setear el nombre del usuario conectado y su ubicacion
             this.Consultor.Text = user;
+            int largoTextoConsultor = Consultor.Width;
+            int ubicacionCerrarSesion = CerrarSesion.Location.X;
+            Consultor.Location = new Point(ubicacionCerrarSesion - largoTextoConsultor - 2, CerrarSesion.Top);
         }
 
         private void Cancelar_Click(object sender, EventArgs e)
@@ -26,15 +32,24 @@ namespace TpDiseñoCSharp
 
         private void Buscar_Click(object sender, EventArgs e)
         {
-            AdministradorBD AdminBD = new AdministradorBD();
-            
-            List<Puesto> Lista_de_puestos;
+            if ((FuncionesVarias.validarCamposAlfanum(Codigo.Text)) || (FuncionesVarias.validarCamposAlfanum(NombreDePuesto.Text))
+                    || (FuncionesVarias.validarCamposAlfanum(Empresa.Text)))
+            {
+                MessageBox.Show("Los campos solo aceptan letras y/o números");
 
-            Lista_de_puestos = AdminBD.recuperarPuestos(this.codigo.Text.ToString(), this.nombre.Text.ToString(), this.empresa.Text.ToString());
+            }
+            else
+            {
+                AdministradorBD AdminBD = new AdministradorBD();
 
-            ResultadosDeBusqueda.DataSource = Lista_de_puestos;
+                List<Puesto> Lista_de_puestos;
 
-            ResultadosDeBusqueda.Visible = true;
+                Lista_de_puestos = AdminBD.recuperarPuestos(this.Codigo.Text.ToString(), this.NombreDePuesto.Text.ToString(), this.Empresa.Text.ToString());
+
+                ResultadosDeBusqueda.DataSource = Lista_de_puestos;
+
+                ResultadosDeBusqueda.Visible = true;
+            }
         }
 
         private void EmitirOrdenDeMerito_Click(object sender, EventArgs e)

@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using Gestores;
 using Entidades;
+using Validacion;
 
 namespace TpDiseñoCSharp
 {
@@ -27,7 +28,12 @@ namespace TpDiseñoCSharp
             pantallaPrincipal_ = pantallaPrincipal_parametro;
             listaCandidatos_A_Evaluar = listaCandidatos;
             this.Fecha.Text = DateTime.Now.ToLongDateString();
+ 
+            //Este codigo se utiliza para setear el nombre del usuario conectado y su ubicacion
             this.Consultor.Text = user;
+            int largoTextoConsultor = Consultor.Width;
+            int ubicacionCerrarSesion = CerrarSesion.Location.X;
+            Consultor.Location = new Point(ubicacionCerrarSesion - largoTextoConsultor - 2, CerrarSesion.Top);
         }
 
         private void Siguiente_Click(object sender, EventArgs e)
@@ -44,77 +50,91 @@ namespace TpDiseñoCSharp
 
         private void Buscar_Click(object sender, EventArgs e)
         {
+
             CaracteristicasDel_puesto.Visible = false;
             Siguiente.Visible = false;
             puestoSeleccionado = null;
 
             GestorPuesto gestorPuesto = new GestorPuesto();
 
-            List<Puesto> listaPuesto = gestorPuesto.listarPuestos(null, this.nombrePuesto.Text.ToString(), this.nombreEmpresa.Text.ToString());
 
-            if (listaPuesto != null)
+
+            if ((FuncionesVarias.validarCamposAlfanum(nombrePuesto.Text))
+                   || (FuncionesVarias.validarCamposAlfanum(nombreEmpresa.Text)))
             {
-                GroupBox paraSeleccion = mostrarPuestos(listaPuesto);
-                mensajePuesto = new Form();
+                MessageBox.Show("Los campos solo aceptan letras y/o números");
 
-                Button Aceptar = new Button();
-                Aceptar.Text = "Aceptar";
-                Aceptar.Location = new Point(paraSeleccion.Right - 40, paraSeleccion.Height + 90);
-                Aceptar.Click += Aceptar_click;
-
-                mensajePuesto.Controls.Add(paraSeleccion);
-                mensajePuesto.Controls.Add(Aceptar);
-                mensajePuesto.Text = "Evaluar Candidato";
-                mensajePuesto.AutoSize = true;
-
-                mensajePuesto.ShowDialog();
-            }
-
-            if (Equals(puestoSeleccionado.Caracteristicas[0].dato1.GetType(), "stringEJEMPLO".GetType()) == false)
-            {
-                int cadenaMasLarga = 0;
-                for (int i = 0; i < puestoSeleccionado.Caracteristicas.Count; i++)
-                {
-                    Competencia comp_ = (Competencia)puestoSeleccionado.Caracteristicas[i].dato1;
-                    if (cadenaMasLarga < comp_.Nombre.Count())
-                        cadenaMasLarga = comp_.Nombre.Count();
-                }
-
-                Label label_competencia = new Label();
-                Label label_ponderacion = new Label();
-                label_competencia.Text = "Competencias"; label_competencia.AutoSize = true;
-                label_competencia.Location = new Point(50, 30);
-
-                label_ponderacion.Text = "Ponderación"; label_ponderacion.AutoSize = true;
-                label_ponderacion.Location = new Point(label_competencia.Right + (cadenaMasLarga * 6), 30);
-
-                CaracteristicasDel_puesto.Controls.Add(label_competencia);
-                CaracteristicasDel_puesto.Controls.Add(label_ponderacion);
-
-                for (int i = 0; i < puestoSeleccionado.Caracteristicas.Count; i++)
-                {
-                    Competencia comp_ = (Competencia)puestoSeleccionado.Caracteristicas[i].dato1;
-                    Ponderacion pond_ = (Ponderacion)puestoSeleccionado.Caracteristicas[i].dato2;
-
-                    Label label_comp_ = new Label();
-                    Label label_pond_ = new Label();
-
-                    label_comp_.Text = comp_.Nombre; label_comp_.AutoSize = true;
-                    label_comp_.Location = new Point(50, label_competencia.Bottom + (i * 20));
-
-                    label_pond_.Text = pond_.Valor.ToString(); label_pond_.AutoSize = true;
-                    label_pond_.Location = new Point(label_comp_.Right + (cadenaMasLarga * 6), label_ponderacion.Bottom + (i * 20));
-
-                    CaracteristicasDel_puesto.Controls.Add(label_comp_);
-                    CaracteristicasDel_puesto.Controls.Add(label_pond_);
-                }
-
-                CaracteristicasDel_puesto.Text = "Competencias asociadas al puesto: " + puestoSeleccionado.Nombre;
-                CaracteristicasDel_puesto.Visible = true;
-                Siguiente.Visible = true;
             }
             else
-                MessageBox.Show(puestoSeleccionado.Caracteristicas[0].dato1.ToString());
+            {
+                List<Puesto> listaPuesto = gestorPuesto.listarPuestos(null, this.nombrePuesto.Text.ToString(), this.nombreEmpresa.Text.ToString());
+
+                if (listaPuesto != null)
+                {
+                    GroupBox paraSeleccion = mostrarPuestos(listaPuesto);
+                    mensajePuesto = new Form();
+
+                    Button Aceptar = new Button();
+                    Aceptar.Text = "Aceptar";
+                    Aceptar.Location = new Point(paraSeleccion.Right - 40, paraSeleccion.Height + 90);
+                    Aceptar.Click += Aceptar_click;
+
+                    mensajePuesto.Controls.Add(paraSeleccion);
+                    mensajePuesto.Controls.Add(Aceptar);
+                    mensajePuesto.Text = "Evaluar Candidato";
+                    mensajePuesto.AutoSize = true;
+
+                    mensajePuesto.ShowDialog();
+                }
+
+
+                if (Equals(puestoSeleccionado.Caracteristicas[0].dato1.GetType(), "stringEJEMPLO".GetType()) == false)
+                {
+                    int cadenaMasLarga = 0;
+                    for (int i = 0; i < puestoSeleccionado.Caracteristicas.Count; i++)
+                    {
+                        Competencia comp_ = (Competencia)puestoSeleccionado.Caracteristicas[i].dato1;
+                        if (cadenaMasLarga < comp_.Nombre.Count())
+                            cadenaMasLarga = comp_.Nombre.Count();
+                    }
+
+                    Label label_competencia = new Label();
+                    Label label_ponderacion = new Label();
+                    label_competencia.Text = "Competencias"; label_competencia.AutoSize = true;
+                    label_competencia.Location = new Point(50, 30);
+
+                    label_ponderacion.Text = "Ponderación"; label_ponderacion.AutoSize = true;
+                    label_ponderacion.Location = new Point(label_competencia.Right + (cadenaMasLarga * 6), 30);
+
+                    CaracteristicasDel_puesto.Controls.Add(label_competencia);
+                    CaracteristicasDel_puesto.Controls.Add(label_ponderacion);
+
+                    for (int i = 0; i < puestoSeleccionado.Caracteristicas.Count; i++)
+                    {
+                        Competencia comp_ = (Competencia)puestoSeleccionado.Caracteristicas[i].dato1;
+                        Ponderacion pond_ = (Ponderacion)puestoSeleccionado.Caracteristicas[i].dato2;
+
+                        Label label_comp_ = new Label();
+                        Label label_pond_ = new Label();
+
+                        label_comp_.Text = comp_.Nombre; label_comp_.AutoSize = true;
+                        label_comp_.Location = new Point(50, label_competencia.Bottom + (i * 20));
+
+                        label_pond_.Text = pond_.Valor.ToString(); label_pond_.AutoSize = true;
+                        label_pond_.Location = new Point(label_comp_.Right + (cadenaMasLarga * 6), label_ponderacion.Bottom + (i * 20));
+
+                        CaracteristicasDel_puesto.Controls.Add(label_comp_);
+                        CaracteristicasDel_puesto.Controls.Add(label_pond_);
+                    }
+
+                    CaracteristicasDel_puesto.Text = "Competencias asociadas al puesto: " + puestoSeleccionado.Nombre;
+                    CaracteristicasDel_puesto.Visible = true;
+                    Siguiente.Visible = true;
+                }
+                else
+                    MessageBox.Show(puestoSeleccionado.Caracteristicas[0].dato1.ToString());
+            }
+
         }
 
         public void Aceptar_click(object sender, EventArgs e)

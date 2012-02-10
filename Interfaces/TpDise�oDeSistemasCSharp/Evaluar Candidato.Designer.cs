@@ -117,7 +117,7 @@
             this.SeleccionDeAcceso.Controls.Add(this.label2);
             this.SeleccionDeAcceso.Controls.Add(this.label1);
             this.SeleccionDeAcceso.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.SeleccionDeAcceso.Location = new System.Drawing.Point(126, 109);
+            this.SeleccionDeAcceso.Location = new System.Drawing.Point(102, 121);
             this.SeleccionDeAcceso.Name = "SeleccionDeAcceso";
             this.SeleccionDeAcceso.Size = new System.Drawing.Size(517, 183);
             this.SeleccionDeAcceso.TabIndex = 9;
@@ -265,7 +265,7 @@
             this.groupBox1.Controls.Add(this.Agregar);
             this.groupBox1.Controls.Add(this.resultadosDeBusqueda);
             this.groupBox1.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.groupBox1.Location = new System.Drawing.Point(126, 309);
+            this.groupBox1.Location = new System.Drawing.Point(102, 321);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(587, 285);
             this.groupBox1.TabIndex = 10;
@@ -310,7 +310,7 @@
             // Siguiente
             // 
             this.Siguiente.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.Siguiente.Location = new System.Drawing.Point(599, 617);
+            this.Siguiente.Location = new System.Drawing.Point(575, 629);
             this.Siguiente.Name = "Siguiente";
             this.Siguiente.Size = new System.Drawing.Size(85, 23);
             this.Siguiente.TabIndex = 11;

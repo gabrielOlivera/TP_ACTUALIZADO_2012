@@ -21,6 +21,7 @@ namespace TpDiseñoCSharp
         public Evaluar_Candidatos___Ventana_3(string user, Puesto puestoSelec_paramentro, List<Candidato> listaSeleccionados_parametro, Form principal, Form anterior)
         {
             InitializeComponent();
+
             puestoSeleccionado = puestoSelec_paramentro;
             candidatoSeleccionados = listaSeleccionados_parametro;
             pantallaPrincipal = principal;
@@ -29,8 +30,12 @@ namespace TpDiseñoCSharp
             this.GenerarClave(candidatoSeleccionados);
 
             candidatos_claves.DataSource = candidatoSeleccionados;
-            
+
+            //Este codigo se utiliza para setear el nombre del usuario conectado y su ubicacion
             this.Consultor.Text = user;
+            int largoTextoConsultor = Consultor.Width;
+            int ubicacionCerrarSesion = CerrarSesion.Location.X;
+            Consultor.Location = new Point(ubicacionCerrarSesion - largoTextoConsultor - 2, CerrarSesion.Top);
         }
 
         private bool GenerarClave(List<Candidato> list_cand_Asociados)

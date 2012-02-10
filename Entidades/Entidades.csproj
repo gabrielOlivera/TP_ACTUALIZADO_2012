@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="Bloque.cs" />
     <Compile Include="Candidato.cs" />
+    <Compile Include="Candidato_Vista_impresion.cs" />
     <Compile Include="Competencia.cs" />
     <Compile Include="CompetenciaEvaluada.cs" />
     <Compile Include="Cuestionario.cs" />

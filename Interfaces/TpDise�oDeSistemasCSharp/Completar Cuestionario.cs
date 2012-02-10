@@ -17,7 +17,7 @@ namespace TpDiseñoCSharp
         private Form pantallaInicial;
         private List<Caracteristica> opciones_A_preguntas;
 
-        public Completar_Cuestionario(Bloque bloqueAsociado, Form pantalla_Anterior, Form pantallaPrincipal)
+        public Completar_Cuestionario(string candidato,Bloque bloqueAsociado, Form pantalla_Anterior, Form pantallaPrincipal)
         {
             InitializeComponent();
             string nombreCandidato = bloqueAsociado.CuestAsociado.CandidatoAsociado.Nombre + " " + bloqueAsociado.CuestAsociado.CandidatoAsociado.Apellido;
@@ -26,13 +26,10 @@ namespace TpDiseñoCSharp
             this.mostrarPreguntas(bloqueAsociado);
             this.bloque_A_mostrar = bloqueAsociado;
 
-
-            this.Candidato.Text = "USER";
+            this.Candidato.Text = candidato;
             int largoTextoConsultor = Candidato.Width;
             int ubicacionCerrarSesion = CerrarSesion.Location.X;
             Candidato.Location = new Point(ubicacionCerrarSesion - largoTextoConsultor - 2, CerrarSesion.Top);
-
-            pantalla_Anterior.Close();
 
             pantalla_Anterior.Visible = false;
             pantallaInicial = pantallaPrincipal;
@@ -49,7 +46,7 @@ namespace TpDiseñoCSharp
             int cadena_pregunta_mas_larga = 0;
             int cadena_opcion_mas_larga = 0;
             int tamanio_especioPregunta_anterior = 0;
-            CheckBox checks_mas_opciones = new CheckBox();
+            RadioButton checks_mas_opciones = new RadioButton();
             this.opciones_A_preguntas = new List<Caracteristica>();
             
             for (int k = 0; k < bloqueAsociado.ListaPreguntasEv.Count; k++)
@@ -114,9 +111,9 @@ namespace TpDiseñoCSharp
          * que agruparan las opciones de respuestas posibles para una pregunta, añadiendoles un checkBox para señalar la respuesta
          * seleccionada por el usuario o candidato
          */
-        private CheckBox ubicarOpcion(GroupBox espacioPreguntas, string opcion, int ordenVisualizacion, int distanciaMaxima)
+        private RadioButton ubicarOpcion(GroupBox espacioPreguntas, string opcion, int ordenVisualizacion, int distanciaMaxima)
         {
-            CheckBox checkPregunta = new CheckBox();
+            RadioButton checkPregunta = new RadioButton();
 
             if (opcion != "")
             {
@@ -162,7 +159,7 @@ namespace TpDiseñoCSharp
 
             for (int i = 0; i < this.opciones_A_preguntas.Count; i++)
             {
-                CheckBox checks_Mas_opciones = (CheckBox)this.opciones_A_preguntas[i].dato2;
+                RadioButton checks_Mas_opciones = (RadioButton)this.opciones_A_preguntas[i].dato2;
                 if (Equals(checks_Mas_opciones.Checked, true) == true)
                 {
                     bloque_completo++;
@@ -204,7 +201,7 @@ namespace TpDiseñoCSharp
                         //UNA VEZ RESGURDADAS LAS RESPUESTAS
                         Bloque proximoBloque = gestorCuestionario.proximoBloque(this.bloque_A_mostrar);
                         bloque_A_mostrar.CuestAsociado.UltimoBloque = proximoBloque;
-                        Completar_Cuestionario siguienteBloque = new Completar_Cuestionario(proximoBloque, this, pantallaInicial);
+                        Completar_Cuestionario siguienteBloque = new Completar_Cuestionario(Candidato.Text,proximoBloque, this, pantallaInicial);
 
                         if (proximoBloque.EsUltimoNloque == true)
                             siguienteBloque.Siguiente.Text = "Finalizar";
