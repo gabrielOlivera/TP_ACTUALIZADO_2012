@@ -16,7 +16,7 @@ namespace TpDiseñoCSharp
     public partial class Modificar_Puesto_o_Funcion : Form
     {
         //Enlace a la ventana anterior
-        private Gestionar_Puestos ventanaAnterior;
+        Form ventanaAnterior, ventanaMenuConsultor;
 
 
         public int i = 0;/*Variable global a la pantalla de Alta 
@@ -47,9 +47,10 @@ namespace TpDiseñoCSharp
          * INICIALIZA LA PANTALLA DE MODIFICAR PUESTO O FUNCION
          * ====================================================
          */        
-        public Modificar_Puesto_o_Funcion(string User, Gestionar_Puestos gestPuesto,string codigo)
+        public Modificar_Puesto_o_Funcion(string User,Form menuConsultor , Form gestPuesto,string codigo)
         {
             ventanaAnterior = gestPuesto;
+            ventanaMenuConsultor = menuConsultor;
             InitializeComponent();
 
             //Este codigo se utiliza para setear el nombre del usuario conectado y su ubicacion
@@ -424,7 +425,7 @@ namespace TpDiseñoCSharp
        */
         private void Cancelar_Click(object sender, EventArgs e)
         {
-
+            ventanaMenuConsultor.Visible = true;
             /*Segun especificacion al cerrarse la ventana alta puesto, 
              * se tiene que cerrar la ventana de gestion de puesto y
              * volver al menu principal del consultor*/
@@ -567,6 +568,13 @@ namespace TpDiseñoCSharp
                     }
                 }
             }
+        }
+
+        private void menuConsultor_Click(object sender, EventArgs e)
+        {
+            ventanaMenuConsultor.Visible = true;
+            ventanaAnterior.Close();
+            Close();
         }
 
 

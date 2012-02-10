@@ -15,13 +15,13 @@ namespace TpDiseñoCSharp
     public partial class Evaluar_Candidato : Form
     {
         private List<Candidato> listaCandidatos_agregados;
-        private Form pantallaPrincipal;
+        Form pantallaPrincipal, ventanaMenuPrincipal;
 
         public Evaluar_Candidato(string user, Form pantallaPrincipal_parametro, Form pantallaAnterior)
         {
             InitializeComponent();
             pantallaPrincipal = pantallaPrincipal_parametro;
-            pantallaAnterior.Close();
+            ventanaMenuPrincipal = pantallaAnterior;
             listaCandidatos_agregados = new List<Candidato>();
 
             this.Fecha.Text = DateTime.Now.ToLongDateString();
@@ -71,8 +71,11 @@ namespace TpDiseñoCSharp
             }
             else
             {
-                Evaluar_Candidatos___Ventana_2 evCandidatos2 = new Evaluar_Candidatos___Ventana_2(this.Consultor.Text, listaCandidatos_agregados, this, pantallaPrincipal);
+                Evaluar_Candidatos___Ventana_2 evCandidatos2 = new Evaluar_Candidatos___Ventana_2(this.Consultor.Text, 
+                    listaCandidatos_agregados, this, ventanaMenuPrincipal);
+                this.Visible = false;
                 evCandidatos2.ShowDialog();
+               
             }
         }
 
@@ -105,6 +108,9 @@ namespace TpDiseñoCSharp
                 List<Candidato> listaCandidatos = gestorCandidatos.listarCandidatos(apellido.Text.ToString(), nombre.Text.ToString(), nroDeEmpleado, nroDeCandidato);
                 resultadosDeBusqueda.Visible = true;
                 resultadosDeBusqueda.DataSource = listaCandidatos;
+                resultadosDeBusqueda.Columns.Remove("Clave");
+                resultadosDeBusqueda.Columns.Remove("TipoDoc");
+                resultadosDeBusqueda.Columns.Remove("NroDoc");
             }
         }
 
@@ -123,6 +129,12 @@ namespace TpDiseñoCSharp
             if(noAgregado == true)
                 listaCandidatos_agregados.Add(lista_cand_[fila_seleccionada]);
 
+        }
+
+        private void menuConsultor_Click(object sender, EventArgs e)
+        {
+            ventanaMenuPrincipal.Visible = true;
+            Close();
         }
     }
 }

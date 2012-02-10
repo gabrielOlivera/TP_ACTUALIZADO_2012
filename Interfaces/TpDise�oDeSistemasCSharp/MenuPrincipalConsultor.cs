@@ -36,7 +36,7 @@ namespace TpDiseñoCSharp
         */
         private void EmitirOrdenDeMerito_Click(object sender, EventArgs e)
         {
-            Emitir_Orden_de_Mérito ordenDeMerito = new Emitir_Orden_de_Mérito(this.Consultor.Text);
+            Emitir_Orden_de_Mérito ordenDeMerito = new Emitir_Orden_de_Mérito(this, this.Consultor.Text);
             this.Visible = false;
             ordenDeMerito.ShowDialog();
         }
@@ -60,7 +60,8 @@ namespace TpDiseñoCSharp
          */
         private void PuestoFunciones_Click(object sender, EventArgs e)
         {
-            Gestionar_Puestos gestPuesto = new Gestionar_Puestos(this.Consultor.Text);
+            Gestionar_Puestos gestPuesto = new Gestionar_Puestos(this,this.Consultor.Text);
+            this.Visible = false;
             gestPuesto.ShowDialog();
         }
 

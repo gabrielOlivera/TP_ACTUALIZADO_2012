@@ -19,18 +19,24 @@ namespace TpDiseñoCSharp
         private Form pantallaPrincipal;
         SaveFileDialog ventana_guardar;
 
-        public Evaluar_Candidatos___Ventana_3(string user, Puesto puestoSelec_paramentro, List<Candidato> listaSeleccionados_parametro, Form principal, Form anterior)
+        private Form ventanaMenuPrincipal, ventanaAnterior;
+        SaveFileDialog guardar;
+
+        public Evaluar_Candidatos___Ventana_3(string user, Puesto puestoSelec_paramentro, 
+            List<Candidato> listaSeleccionados_parametro, Form principal, Form anterior)
         {
             InitializeComponent();
 
             puestoSeleccionado = puestoSelec_paramentro;
             candidatoSeleccionados = listaSeleccionados_parametro;
-            pantallaPrincipal = principal;
-            anterior.Close();
+            ventanaMenuPrincipal = principal;
+            ventanaAnterior=anterior;
             this.Fecha.Text = DateTime.Now.ToLongDateString();
             this.GenerarClave(candidatoSeleccionados);
 
             candidatos_claves.DataSource = candidatoSeleccionados;
+            candidatos_claves.Columns.Remove("NroEmpleado");
+            candidatos_claves.Columns.Remove("NroCandidato");
 
             //Este codigo se utiliza para setear el nombre del usuario conectado y su ubicacion
             this.Consultor.Text = user;
@@ -114,7 +120,15 @@ namespace TpDiseñoCSharp
 
         private void Atras_Click(object sender, EventArgs e)
         {
+            ventanaAnterior.Visible = true;
+            Close();
+        }
 
+        private void menuConsultor_Click(object sender, EventArgs e)
+        {
+            ventanaMenuPrincipal.Visible = true;
+            ventanaAnterior.Close();
+            Close();
         }
     }
 }

@@ -34,6 +34,11 @@ namespace TpDiseñoCSharp
         private void aceptar_Click(object sender, EventArgs e)
         {
             AdministradorBD AdminBD = new AdministradorBD();
+            List<Candidato_Vista_impresion> listaCandidatos_No_Alcanzo_Minimos  = new List<Candidato_Vista_impresion>();
+            List<Candidato_Vista_impresion> listaCandidatos_Si_Alcanzo_Minimos = new List<Candidato_Vista_impresion>();
+            List<Candidato_Vista_impresion> sinContestar = new List<Candidato_Vista_impresion>();
+            List<Candidato_Vista_impresion> incompletos = new List<Candidato_Vista_impresion>();
+            List<Candidato_Vista_impresion> completos = new List<Candidato_Vista_impresion>();
 
             //por cada evaluacion (p_ev segun fecha) seleccionada
             for (int i = 0; i < selecciondatagridW.SelectedRows.Count ; i++)
@@ -50,10 +55,10 @@ namespace TpDiseñoCSharp
                     " tomada para la empresa: " + empresa + " el: " + fecha;
 	        
                 //listamos los "sin contestar" estado 3
-                List<Candidato_Vista_impresion> sinContestar = new List<Candidato_Vista_impresion>();
+                
                 
                 sinContestar = AdminBD.listarCandidatosPorEvaluacion(fecha, codigo_puesto_evaluado, 3);
-                
+                /*
                 if (sinContestar != null)
                 {
                     MessageBox.Show("Lista de SIN CONTESTAR");
@@ -62,8 +67,8 @@ namespace TpDiseñoCSharp
                         MessageBox.Show(sinContestar[r].Nombre + " " + sinContestar[r].Apellido +" "+sinContestar[r].TipoDoc +" "+ sinContestar[r].NroDoc);
                     }
                  }
-
-                List<Candidato_Vista_impresion> incompletos = new List<Candidato_Vista_impresion>(); 
+                */
+                 
 
                 //listamos los "Incompletos" estado 4                
                 
@@ -72,18 +77,18 @@ namespace TpDiseñoCSharp
 
                 if (incompletos != null)
                 {
-                    MessageBox.Show("Lista de INCOMPLETOS");
+                   // MessageBox.Show("Lista de INCOMPLETOS");
                     for (int r = 0; r < incompletos.Count; r++)
                     {
                         incompletos[r].Fecha_Inicio = AdminBD.primer_acceso(incompletos[r].NroDoc, fecha, codigo_puesto_evaluado);
                         incompletos[r].Fecha_Fin = AdminBD.ultimo_acceso(incompletos[r].NroDoc, fecha, codigo_puesto_evaluado);
 
-                        MessageBox.Show(incompletos[r].Nombre + " " + incompletos[r].Apellido + " " + incompletos[r].TipoDoc + " " + incompletos[r].NroDoc 
-                            + " " + incompletos[r].Nro_Accesos + " " + incompletos[r].Fecha_Inicio + " " + incompletos[r].Fecha_Fin);
+                       // MessageBox.Show(incompletos[r].Nombre + " " + incompletos[r].Apellido + " " + incompletos[r].TipoDoc + " " + incompletos[r].NroDoc 
+                       //     + " " + incompletos[r].Nro_Accesos + " " + incompletos[r].Fecha_Inicio + " " + incompletos[r].Fecha_Fin);
                     }
                 }
                 
-                List<Candidato_Vista_impresion> completos = new List<Candidato_Vista_impresion>();
+                
                 //listamos los "completos" estado 5                
 
                 completos = AdminBD.listarCandidatosPorEvaluacion(fecha, codigo_puesto_evaluado, 5);
@@ -92,11 +97,7 @@ namespace TpDiseñoCSharp
                 
                 if (completos != null)
                 {
-                    
-                    List<Candidato_Vista_impresion> listaCandidatos_No_Alcanzo_Minimos = new List<Candidato_Vista_impresion>();
-                    List<Candidato_Vista_impresion> listaCandidatos_Si_Alcanzo_Minimos = new List<Candidato_Vista_impresion>();
-                    
-                    MessageBox.Show("Lista de COMPLETOS");
+                    //MessageBox.Show("Lista de COMPLETOS");
 
                     competenciasPorPuesto = AdminBD.competencias_segun_puesto(fecha, codigo_puesto_evaluado);
                     
@@ -107,8 +108,8 @@ namespace TpDiseñoCSharp
                         completos[r].Fecha_Fin = AdminBD.fecha_fin(completos[r].NroDoc, fecha, codigo_puesto_evaluado);
 
 
-                        MessageBox.Show(completos[r].Nombre + " " + completos[r].Apellido + " " + completos[r].TipoDoc + " " + completos[r].NroDoc
-                            + " " + completos[r].Nro_Accesos + " " + completos[r].Fecha_Inicio + " " + completos[r].Fecha_Fin);
+                        //MessageBox.Show(completos[r].Nombre + " " + completos[r].Apellido + " " + completos[r].TipoDoc + " " + completos[r].NroDoc
+                        //    + " " + completos[r].Nro_Accesos + " " + completos[r].Fecha_Inicio + " " + completos[r].Fecha_Fin);
                         
                         for (int a = 0; a < competenciasPorPuesto.Count; a++)
                         {
@@ -126,38 +127,13 @@ namespace TpDiseñoCSharp
                         }
 
                         listaCandidatos_Si_Alcanzo_Minimos.Add(completos[r]);
-                        
-                        //Falta llenar las puntuaciones.
-                    
-                    
+
                     }
-                }
-
-                //{
-	            /*    completo la evaluacion? NO: a lista de "incompletos" y BREAK
-	
-    	                obtener puntuacion
-	
-	                cumple los minimos? NO: a lista de "No Aprobados"
- 	                                    SI: Meter en lista "Aprobados" 
-
-	                Ordenar listas "Aprobados" y "No Aprobados" por puntuacion
-
-
-	            }
-	            Mostrar lista "Aprobados"
-
-	            Mostrar lista "No Aprobados"
-
-	            Mostrar lista "Incompletos"
-
-	            Poner "corte de control" 
+                    
                 }
             }
-             */
-        
-            }
-
+            Orden_de_merito orden = new Orden_de_merito(sinContestar, incompletos, listaCandidatos_No_Alcanzo_Minimos, listaCandidatos_Si_Alcanzo_Minimos);
+            orden.ShowDialog();
         }
     }
 }

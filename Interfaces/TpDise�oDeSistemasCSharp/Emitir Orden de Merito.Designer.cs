@@ -48,6 +48,7 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.ResultadosDeBusqueda = new System.Windows.Forms.DataGridView();
             this.EmitirOrdenDeMerito = new System.Windows.Forms.Button();
+            this.menuConsultor = new System.Windows.Forms.Button();
             this.PanelInferior.SuspendLayout();
             this.PanelSuperior.SuspendLayout();
             this.SeleccionDeAcceso.SuspendLayout();
@@ -110,11 +111,11 @@
             // PanelSuperior
             // 
             this.PanelSuperior.BackColor = System.Drawing.Color.DarkGray;
+            this.PanelSuperior.Controls.Add(this.menuConsultor);
             this.PanelSuperior.Controls.Add(this.Consultor);
             this.PanelSuperior.Controls.Add(this.CerrarSesion);
             this.PanelSuperior.Controls.Add(this.TituloEmpresa);
             this.PanelSuperior.Dock = System.Windows.Forms.DockStyle.Top;
-            this.PanelSuperior.Enabled = false;
             this.PanelSuperior.Location = new System.Drawing.Point(0, 0);
             this.PanelSuperior.Name = "PanelSuperior";
             this.PanelSuperior.Size = new System.Drawing.Size(697, 62);
@@ -157,7 +158,7 @@
             this.SeleccionDeAcceso.ForeColor = System.Drawing.SystemColors.HotTrack;
             this.SeleccionDeAcceso.Location = new System.Drawing.Point(157, 90);
             this.SeleccionDeAcceso.Name = "SeleccionDeAcceso";
-            this.SeleccionDeAcceso.Size = new System.Drawing.Size(404, 448);
+            this.SeleccionDeAcceso.Size = new System.Drawing.Size(387, 496);
             this.SeleccionDeAcceso.TabIndex = 8;
             this.SeleccionDeAcceso.TabStop = false;
             this.SeleccionDeAcceso.Text = "Ingrese los datos para realizar su búsqueda";
@@ -194,7 +195,7 @@
             // NombreDePuesto
             // 
             this.NombreDePuesto.Location = new System.Drawing.Point(179, 86);
-            this.NombreDePuesto.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.NombreDePuesto.Margin = new System.Windows.Forms.Padding(2);
             this.NombreDePuesto.Name = "NombreDePuesto";
             this.NombreDePuesto.Size = new System.Drawing.Size(100, 20);
             this.NombreDePuesto.TabIndex = 9;
@@ -245,7 +246,7 @@
             this.groupBox1.ForeColor = System.Drawing.SystemColors.HotTrack;
             this.groupBox1.Location = new System.Drawing.Point(157, 337);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(404, 323);
+            this.groupBox1.Size = new System.Drawing.Size(387, 371);
             this.groupBox1.TabIndex = 9;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Resúltados de la búsqueda";
@@ -273,11 +274,21 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.EmitirOrdenDeMerito.Location = new System.Drawing.Point(315, 618);
             this.EmitirOrdenDeMerito.Name = "EmitirOrdenDeMerito";
-            this.EmitirOrdenDeMerito.Size = new System.Drawing.Size(90, 100);
+            this.EmitirOrdenDeMerito.Size = new System.Drawing.Size(73, 148);
             this.EmitirOrdenDeMerito.TabIndex = 10;
             this.EmitirOrdenDeMerito.Text = "Emitir orden de mérito";
             this.EmitirOrdenDeMerito.UseVisualStyleBackColor = true;
             this.EmitirOrdenDeMerito.Click += new System.EventHandler(this.EmitirOrdenDeMerito_Click);
+            // 
+            // menuConsultor
+            // 
+            this.menuConsultor.Location = new System.Drawing.Point(12, 33);
+            this.menuConsultor.Name = "menuConsultor";
+            this.menuConsultor.Size = new System.Drawing.Size(128, 23);
+            this.menuConsultor.TabIndex = 16;
+            this.menuConsultor.Text = "Volver al menú principal";
+            this.menuConsultor.UseVisualStyleBackColor = true;
+            this.menuConsultor.Click += new System.EventHandler(this.menuConsultor_Click);
             // 
             // Emitir_Orden_de_Mérito
             // 
@@ -329,5 +340,6 @@
         private System.Windows.Forms.Button EmitirOrdenDeMerito;
         private System.Windows.Forms.Label Consultor;
         private System.Windows.Forms.LinkLabel CerrarSesion;
+        private System.Windows.Forms.Button menuConsultor;
     }
 }

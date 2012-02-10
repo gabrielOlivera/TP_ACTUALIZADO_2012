@@ -237,3 +237,5 @@ C:\Documents and Settings\Administrador\Escritorio\TP 2012 repositorio\Interface
 C:\Documents and Settings\Administrador\Escritorio\TP 2012 repositorio\Interfaces\TpDiseñoDeSistemasCSharp\obj\x86\Debug\TpDiseñoCSharp.Seleccion_de_evaluaciones.resources
 C:\Documents and Settings\Administrador\Escritorio\TP 2012 repositorio\Interfaces\TpDiseñoDeSistemasCSharp\obj\x86\Debug\GenerateResource.read.1.tlog
 C:\Documents and Settings\Administrador\Escritorio\TP 2012 repositorio\Interfaces\TpDiseñoDeSistemasCSharp\obj\x86\Debug\GenerateResource.write.1.tlog
+C:\Users\usuario\Desktop\TP 2012 Repositorio Online\Interfaces\TpDiseñoDeSistemasCSharp\obj\x86\Debug\TpDiseñoCSharp.Orden_de_merito.resources
+D:\UTN\Diseño de Sistemas\TP 2012 repositorio\Interfaces\TpDiseñoDeSistemasCSharp\obj\x86\Debug\TpDiseñoCSharp.Orden_de_merito.resources
