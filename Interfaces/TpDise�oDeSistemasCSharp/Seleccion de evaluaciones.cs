@@ -159,8 +159,5 @@ namespace TpDiseñoCSharp
             }
 
         }
-
-   
-        
     }
 }

@@ -218,7 +218,6 @@
     <EmbeddedResource Include="Seleccion de evaluaciones.resx">
       <DependentUpon>Seleccion de evaluaciones.cs</DependentUpon>
     </EmbeddedResource>
-    <None Include="CrystalReport1.mht" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
