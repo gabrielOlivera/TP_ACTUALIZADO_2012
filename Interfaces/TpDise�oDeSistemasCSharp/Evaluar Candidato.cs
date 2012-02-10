@@ -105,6 +105,9 @@ namespace TpDiseñoCSharp
                 List<Candidato> listaCandidatos = gestorCandidatos.listarCandidatos(apellido.Text.ToString(), nombre.Text.ToString(), nroDeEmpleado, nroDeCandidato);
                 resultadosDeBusqueda.Visible = true;
                 resultadosDeBusqueda.DataSource = listaCandidatos;
+                resultadosDeBusqueda.Columns.Remove("Clave");
+                resultadosDeBusqueda.Columns.Remove("TipoDoc");
+                resultadosDeBusqueda.Columns.Remove("NroDoc");
             }
         }
 

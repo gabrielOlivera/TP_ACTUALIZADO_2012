@@ -30,6 +30,8 @@ namespace TpDiseñoCSharp
             this.GenerarClave(candidatoSeleccionados);
 
             candidatos_claves.DataSource = candidatoSeleccionados;
+            candidatos_claves.Columns.Remove("NroEmpleado");
+            candidatos_claves.Columns.Remove("NroCandidato");
 
             //Este codigo se utiliza para setear el nombre del usuario conectado y su ubicacion
             this.Consultor.Text = user;

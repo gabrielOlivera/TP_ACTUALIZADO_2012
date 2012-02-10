@@ -86,6 +86,12 @@
     <Compile Include="Modificar Puesto o Funcion.Designer.cs">
       <DependentUpon>Modificar Puesto o Funcion.cs</DependentUpon>
     </Compile>
+    <Compile Include="Orden de merito.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Orden de merito.Designer.cs">
+      <DependentUpon>Orden de merito.cs</DependentUpon>
+    </Compile>
     <Compile Include="OrdenDeMerito-VistaImpresion.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -171,6 +177,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Modificar Puesto o Funcion.resx">
       <DependentUpon>Modificar Puesto o Funcion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Orden de merito.resx">
+      <DependentUpon>Orden de merito.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="OrdenDeMerito-VistaImpresion.resx">
       <DependentUpon>OrdenDeMerito-VistaImpresion.cs</DependentUpon>

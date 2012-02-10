@@ -117,7 +117,7 @@
             this.SeleccionDeAcceso.Controls.Add(this.label2);
             this.SeleccionDeAcceso.Controls.Add(this.label1);
             this.SeleccionDeAcceso.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.SeleccionDeAcceso.Location = new System.Drawing.Point(102, 121);
+            this.SeleccionDeAcceso.Location = new System.Drawing.Point(94, 125);
             this.SeleccionDeAcceso.Name = "SeleccionDeAcceso";
             this.SeleccionDeAcceso.Size = new System.Drawing.Size(517, 183);
             this.SeleccionDeAcceso.TabIndex = 9;
@@ -265,7 +265,7 @@
             this.groupBox1.Controls.Add(this.Agregar);
             this.groupBox1.Controls.Add(this.resultadosDeBusqueda);
             this.groupBox1.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.groupBox1.Location = new System.Drawing.Point(102, 321);
+            this.groupBox1.Location = new System.Drawing.Point(94, 325);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(587, 285);
             this.groupBox1.TabIndex = 10;
@@ -299,18 +299,18 @@
             this.resultadosDeBusqueda.AllowUserToAddRows = false;
             this.resultadosDeBusqueda.AllowUserToDeleteRows = false;
             this.resultadosDeBusqueda.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.resultadosDeBusqueda.Location = new System.Drawing.Point(70, 23);
+            this.resultadosDeBusqueda.Location = new System.Drawing.Point(6, 23);
             this.resultadosDeBusqueda.Name = "resultadosDeBusqueda";
             this.resultadosDeBusqueda.ReadOnly = true;
             this.resultadosDeBusqueda.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.resultadosDeBusqueda.Size = new System.Drawing.Size(357, 256);
+            this.resultadosDeBusqueda.Size = new System.Drawing.Size(421, 256);
             this.resultadosDeBusqueda.TabIndex = 0;
             this.resultadosDeBusqueda.Visible = false;
             // 
             // Siguiente
             // 
             this.Siguiente.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.Siguiente.Location = new System.Drawing.Point(575, 629);
+            this.Siguiente.Location = new System.Drawing.Point(567, 633);
             this.Siguiente.Name = "Siguiente";
             this.Siguiente.Size = new System.Drawing.Size(85, 23);
             this.Siguiente.TabIndex = 11;
