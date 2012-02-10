@@ -2457,7 +2457,8 @@ namespace Gestores
             int puntuacion = 0;
             while (reader.Read())
             {
-                puntuacion = Int32.Parse(reader["SUM(ponderacion)"].ToString());
+                if (reader["SUM(ponderacion)"].ToString() != "")
+                    puntuacion = Int32.Parse(reader["SUM(ponderacion)"].ToString());
             }
             
             terminarConexion();
@@ -2493,7 +2494,7 @@ namespace Gestores
             
             return fecha_formateada;
         }
-        public List<CompetenciaEvaluada> competencias_segun_puesto(DateTime fecha_ev, string codigo_ev, int estado)
+        public List<CompetenciaEvaluada> competencias_segun_puesto(DateTime fecha_ev, string codigo_ev)
         {
             bool conexionExitosa;
             GestorEvaluacion gestor_de_Evaluacion = new GestorEvaluacion();
@@ -2557,7 +2558,7 @@ namespace Gestores
 
         }
 
-        public int cantidad_De_Preguntas_Por_Competencia(string codigo_de_competencia, DateTime fecha_ev, string codigo_ev, int estado)
+        public int cantidad_De_Preguntas_Por_Competencia(string codigo_de_competencia, DateTime fecha_ev, string codigo_ev)
         {
             bool conexionExitosa;
             GestorEvaluacion gestor_de_Evaluacion = new GestorEvaluacion();
@@ -2617,9 +2618,7 @@ namespace Gestores
             return cantidad_preguntas;
 
         }
-
-
-         /*
+        /*
          * - RecuperarCompetenciasEvaludas tiene la misión de recuperar una competencia evaluada según su ID
          *   que corresponde a la BASE DE DATOS
          */
