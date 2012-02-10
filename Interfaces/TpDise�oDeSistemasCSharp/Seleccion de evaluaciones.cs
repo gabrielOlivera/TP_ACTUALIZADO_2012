@@ -13,6 +13,8 @@ namespace TpDiseñoCSharp
 {
     public partial class Seleccion_de_evaluaciones : Form
     {
+        
+
         public Seleccion_de_evaluaciones(List<PuestoEvaluado> Lista_puestos_ev)
         {
             InitializeComponent();
@@ -156,7 +158,7 @@ namespace TpDiseñoCSharp
                         cand_SI.Add(listaCandidatos_completos[r]);
                         acces_SI.Add(listaAccesos_completos[r]);
                     
-                        //dalta llenar las listas de las fechas y las puntuaciones.
+                        //Falta llenar las listas de las fechas y las puntuaciones.
                     
                     
                     }
