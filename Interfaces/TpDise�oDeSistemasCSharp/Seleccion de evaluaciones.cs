@@ -96,6 +96,7 @@ namespace TpDiseñoCSharp
                 }
 
                 
+                
 
                 List<Object> completos = new List<object>();
                 //listamos los "completos" estado 5                
@@ -155,7 +156,7 @@ namespace TpDiseñoCSharp
                         cand_SI.Add(listaCandidatos_completos[r]);
                         acces_SI.Add(listaAccesos_completos[r]);
                     
-
+                        //dalta llenar las listas de las fechas y las puntuaciones.
                     
                     
                     }
