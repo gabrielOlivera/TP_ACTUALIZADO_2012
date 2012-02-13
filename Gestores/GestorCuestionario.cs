@@ -431,7 +431,7 @@ namespace Gestores
         {
             AdministradorBD admBD = new AdministradorBD();
 
-            bool seGuardaronAtrubutos = admBD.guardarAtrubutosCuestionario(cuest_);
+            bool seGuardaronAtrubutos = admBD.guardarAtributosCuestionario(cuest_);
 
             if (seGuardaronAtrubutos == true)
                 return true;

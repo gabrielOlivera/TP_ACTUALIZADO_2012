@@ -39,7 +39,9 @@ namespace TpDiseñoCSharp
             List<Candidato_Vista_impresion> sinContestar = new List<Candidato_Vista_impresion>();
             List<Candidato_Vista_impresion> incompletos = new List<Candidato_Vista_impresion>();
             List<Candidato_Vista_impresion> completos = new List<Candidato_Vista_impresion>();
-
+            
+            string info_evaluacion= "Info_ev";
+            
             //por cada evaluacion (p_ev segun fecha) seleccionada
             for (int i = 0; i < selecciondatagridW.SelectedRows.Count ; i++)
             {
@@ -47,29 +49,17 @@ namespace TpDiseñoCSharp
 
                 List<CompetenciaEvaluada> competenciasPorPuesto = new List<CompetenciaEvaluada>();
                 DateTime fecha = (DateTime) selecciondatagridW[0, fila_seleccionada].Value;
+
                 string codigo_puesto_evaluado = selecciondatagridW[1, fila_seleccionada].Value.ToString();
                 string empresa = selecciondatagridW[2, fila_seleccionada].Value.ToString();
                 string nombre_puesto = selecciondatagridW[3, fila_seleccionada].Value.ToString();
                 
-                string info_evaluacion = "Orden de merito para la evaluacion del puesto: "+ nombre_puesto + 
-                    " tomada para la empresa: " + empresa + " el: " + fecha;
-	        
-                //listamos los "sin contestar" estado 3
-                
-                
-                sinContestar = AdminBD.listarCandidatosPorEvaluacion(fecha, codigo_puesto_evaluado, 3);
-                /*
-                if (sinContestar != null)
-                {
-                    MessageBox.Show("Lista de SIN CONTESTAR");
-                    for (int r = 0; r < sinContestar.Count; r++)
-                    {
-                        MessageBox.Show(sinContestar[r].Nombre + " " + sinContestar[r].Apellido +" "+sinContestar[r].TipoDoc +" "+ sinContestar[r].NroDoc);
-                    }
-                 }
-                */
-                 
+                info_evaluacion = "Orden de merito para la evaluacion del puesto "+ nombre_puesto + 
+                    " tomada para la empresa " + empresa;
 
+                //listamos los "Sin Contestar" estado 3
+                sinContestar = AdminBD.listarCandidatosPorEvaluacion(fecha, codigo_puesto_evaluado, 3);
+                
                 //listamos los "Incompletos" estado 4                
                 
                 incompletos = AdminBD.listarCandidatosPorEvaluacion(fecha, codigo_puesto_evaluado, 4);
@@ -132,7 +122,7 @@ namespace TpDiseñoCSharp
                     
                 }
             }
-            Orden_de_merito orden = new Orden_de_merito(sinContestar, incompletos, listaCandidatos_No_Alcanzo_Minimos, listaCandidatos_Si_Alcanzo_Minimos);
+            Orden_de_merito orden = new Orden_de_merito(info_evaluacion, sinContestar, incompletos, listaCandidatos_No_Alcanzo_Minimos, listaCandidatos_Si_Alcanzo_Minimos);
             orden.ShowDialog();
         }
     }

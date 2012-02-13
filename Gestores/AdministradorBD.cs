@@ -16,8 +16,8 @@ namespace Gestores
         /*
          * - El ADMINISTRADOR DE BASE DE DATOS para nosotros en una interfaz entre los que es el Sistema y la Base de Datos.
          * - La mayoria de los metodos van a retornar un lista de objetos (List<ClaseOjetoRetorno>);
-         *      pero si bien, desde aqui, vamos a tener conocimiento de las clases ENTIDAD, 
-         *      quienes van a estar acargo instanciar dichas clases 
+         *      pero si bien, desde aqui, vamos a tener conocimiento de las clases ENTIDAD,
+         *      quienes van a estar acargo instanciar dichas clases
          *      son los GESTORES con el metodo correspondiente para ello.
          */
 
@@ -41,13 +41,12 @@ namespace Gestores
         {
             try
             {
-                //connectionString establece la IP del servidor, la base de datos a la que se va a conectar 
+                //connectionString establece la IP del servidor, la base de datos a la que se va a conectar
                 //y el usuario y password de la cuenta
                 connectionString = "Server=127.0.0.1; Database=tp base de datos; Uid=root; Pwd=root;";
                 //El ObjConexion.ConnectionString almacena la directiva anterior para luego en el OPEN hacer el enlace
                 ObjConexion.ConnectionString = connectionString;
 
-                
                 ObjConexion.Open();
                 //Si la llamada anterior es exitosa retornara "true"
                 return true;
@@ -56,7 +55,7 @@ namespace Gestores
 
             catch
             {
-                //Si en la llamada ObjConexion.Open() sucede un error se retorna "false" 
+                //Si en la llamada ObjConexion.Open() sucede un error se retorna "false"
                 return false;
 
             }
@@ -134,7 +133,7 @@ namespace Gestores
             //En el adaptador comando hacemos un asignacion en su atributo CommandText de la consultaSql
             comando.CommandText = consultaSql;
 
-            //Se hace la ejecucion del comando con el metodo ExecuterReader 
+            //Se hace la ejecucion del comando con el metodo ExecuterReader
             //y se lo asigna a una variable reader que contendra los resultados de la busqueda en la base de datos
             MySqlDataReader reader = comando.ExecuteReader();
 
@@ -244,7 +243,7 @@ namespace Gestores
             comando = ObjConexion.CreateCommand();
             comando.CommandText = consultaSql;//En el adaptador comando hacemos un asignacion en su atributo CommandText de la consultaSql
 
-            //Se hace la ejecucion del comando con el metodo ExecuterReader 
+            //Se hace la ejecucion del comando con el metodo ExecuterReader
             //y se lo asigna a una variable reader que contendra los resultados de la busqueda en la base de datos
             MySqlDataReader reader = comando.ExecuteReader();
 
@@ -319,7 +318,7 @@ namespace Gestores
                 consultaSql = "SELECT * FROM candidato";
                 comando.CommandText = consultaSql;//En el adaptador comando le hacemos un asignacion en su atributo CommandText de la consultaSql
 
-                //Se hace la ejecucion del comando con el metodo ExecuterReader 
+                //Se hace la ejecucion del comando con el metodo ExecuterReader
                 //y se lo asigna a una variable reader que contendra los resultados de la busqueda en la base de datos
                 MySqlDataReader reader = comando.ExecuteReader();
 
@@ -390,7 +389,7 @@ namespace Gestores
 
                 comando.CommandText = consultaSql;  //asignamos la consulta recien creada a el atributo CommandText (donde se guarda la consulta de un obj de tipo comando)
 
-                //Se hace la ejecucion del comando con el metodo ExecuterReader 
+                //Se hace la ejecucion del comando con el metodo ExecuterReader
                 //y se lo asigna a una variable reader que contendra los resultados de la busqueda en la base de datos
                 MySqlDataReader reader = comando.ExecuteReader();
 
@@ -445,7 +444,7 @@ namespace Gestores
             //Declaramos una lista de cuestionarios auxiliar para obtener el historial de cuestionarios del candidato
             List<Cuestionario> preSeleccionCuestionarios = new List<Cuestionario>();
 
-            //Declaramos una lista auxiliar de enteros para almacenar los ID de PUESTOS EVALUADOS 
+            //Declaramos una lista auxiliar de enteros para almacenar los ID de PUESTOS EVALUADOS
             //con el fin de reconstruir las relaciones minimas en la instanciacion del cuestionario
             List<int> listaIdPuestos = new List<int>();
 
@@ -476,7 +475,7 @@ namespace Gestores
             //En el adaptador comando hacemos un asignacion en su atributo CommandText de la consultaSql
             comando.CommandText = consultaSql;
 
-            //Se hace la ejecucion del comando con el metodo ExecuterReader 
+            //Se hace la ejecucion del comando con el metodo ExecuterReader
             //y se lo asigna a una variable reader que contendra los resultados de la busqueda en la base de datos
             MySqlDataReader reader = comando.ExecuteReader();
 
@@ -587,7 +586,7 @@ namespace Gestores
             //En el adaptador comando hacemos un asignacion en su atributo CommandText de la consultaSql
             comando.CommandText = consultaSql;
 
-            //Se hace la ejecucion del comando con el metodo ExecuterReader 
+            //Se hace la ejecucion del comando con el metodo ExecuterReader
             //y se lo asigna a una variable reader que contendra los resultados de la busqueda en la base de datos
             MySqlDataReader reader = comando.ExecuteReader();
 
@@ -599,7 +598,7 @@ namespace Gestores
                 return null;
             }
 
-            //Lista de caracteristicas auxiliar para contener la fecha y el ID ESTADO del estado que luego seran utilizados para 
+            //Lista de caracteristicas auxiliar para contener la fecha y el ID ESTADO del estado que luego seran utilizados para
             //definir el ultimo estado del cuestionario
             List<Caracteristica> lista_fechaYid_Estado = new List<Caracteristica>();
 
@@ -681,7 +680,7 @@ namespace Gestores
         }
 
         /*
-         * - RecuperarPuestoEvaluado tiene la misión de recuperar un puesto evaluado puntual 
+         * - RecuperarPuestoEvaluado tiene la misión de recuperar un puesto evaluado puntual
          *   según su id de la tabla de la base de datos
          */
         public PuestoEvaluado recuperarPuestoEvaluado(int idPuestoEv)
@@ -774,7 +773,7 @@ namespace Gestores
             //En el adaptador comando hacemos un asignacion en su atributo CommandText de la consultaSql
             comando.CommandText = consultaSql;
 
-            //Se hace la ejecucion del comando con el metodo ExecuterReader 
+            //Se hace la ejecucion del comando con el metodo ExecuterReader
             //y se lo asigna a una variable reader que contendra los resultados de la busqueda en la base de datos
             MySqlDataReader reader = comando.ExecuteReader();
 
@@ -874,7 +873,7 @@ namespace Gestores
 
         /*
          * =======================================
-         * FUNCION QUE SE ENCARGA DE RECUPERAR LAS   
+         * FUNCION QUE SE ENCARGA DE RECUPERAR LAS  
          * CARACTERISTICAS ASOCIADAS A UN PUESTO
          * =======================================
          */
@@ -971,7 +970,7 @@ namespace Gestores
             //En el adaptador comando hacemos un asignacion en su atributo CommandText de la consultaSql
             comando.CommandText = consultaSql;
 
-            //Se hace la ejecucion del comando con el metodo ExecuterReader 
+            //Se hace la ejecucion del comando con el metodo ExecuterReader
             //y se lo asigna a una variable reader que contendra los resultados de la busqueda en la base de datos
             MySqlDataReader reader = comando.ExecuteReader();
 
@@ -985,7 +984,7 @@ namespace Gestores
 
             while (reader.Read())
             {
-                //Se recuperan los ID's de las competencias y los números correspondientes a las ponderaciones 
+                //Se recuperan los ID's de las competencias y los números correspondientes a las ponderaciones
                 int idCompetenciaEv = Int32.Parse(reader["Competencia Evaluada_idCompetencia Evaluada"].ToString());
                 int ponderacion = Int32.Parse(reader["ponderacion"].ToString());
 
@@ -1079,7 +1078,7 @@ namespace Gestores
 
                 for (int j = 0; j < factoresList.Count; j++)
                 {
-                    //Para la competencia Evaluada que esta resguardada en la posición i 
+                    //Para la competencia Evaluada que esta resguardada en la posición i
                     //le agregamos a su lista de factores, el factor evaluado que se encentre en la posición j
                     listaDeCompetencias[i].addFactor(factoresList[j]);
                 }
@@ -1130,7 +1129,7 @@ namespace Gestores
                 string cod = reader["codigo"].ToString();
                 string nomFactor = reader["nombre"].ToString();
                 int nrOrden = Int32.Parse(reader["nroOrden"].ToString());
-                //Ahora vamos a crear una instancia del objeto factor, a través del gestor de factores 
+                //Ahora vamos a crear una instancia del objeto factor, a través del gestor de factores
                 FactorEvaluado factorEv = gestorEvaluacion.instanciarFactorEvaluado(cod, nomFactor, competenciaAsociada, nrOrden);
                 listaDeFactores.Add(factorEv);
             }
@@ -1235,7 +1234,7 @@ namespace Gestores
         {
             bool conexionExitosa;
             GestorEvaluacion gestionEvaluacion = new GestorEvaluacion();
-            List<OpcionesEvaluadas> listaDeOpciones = new List<OpcionesEvaluadas>();//Para el retorno de datos 
+            List<OpcionesEvaluadas> listaDeOpciones = new List<OpcionesEvaluadas>();//Para el retorno de datos
 
             string consultaSql = "SELECT op.nombre, pr_op.ponderacion, opr_op.ordenDeVisualizacion "
             + "FROM `tp base de datos`.`pregunta evaluada_opcion evaluada` pr_op "
@@ -1359,7 +1358,7 @@ namespace Gestores
                 + "JOIN `pregunta evaluada` pEv on (pEv.`idPregunta Evaluada` = it_Bloq.PreguntaEvaluada_idPreguntaEv) "
                 //CON UN SEGUNDO JOIN pido que me busque los datos del bloque que condice con el "nroBloque"
                 + "JOIN bloque bq on (bq.nroBloque = " + nroBloque + ") "
-                //TERCER JOIN pido que me busque entre los cuestionarios los datos del que coincida con el cuestionario que le paso como parametro 
+                //TERCER JOIN pido que me busque entre los cuestionarios los datos del que coincida con el cuestionario que le paso como parametro
                 + "JOIN cuestionario cuest on (cuest.clave = '" + cuestAsociado.Clave + "') "
                 //Con el WHERE restrinjo que de los datos obtenidos:
                 //El id del bloque que se encuentra en la tabla `item_bloque` sea el mismo al del bloque seleccionado en el JOIN
@@ -1462,7 +1461,7 @@ namespace Gestores
 
         /*
          * ====================
-         * METODOS DE RESGUARDO 
+         * METODOS DE RESGUARDO
          * ====================
          *      - Tiene la finalidad de guardar los datos de una entidad
          */
@@ -1645,7 +1644,7 @@ namespace Gestores
 
         /*
          * ====================================================
-         * FUNCION QUE SE ENCARGA DE VERIFICAR SI EL PUESTO QUE     
+         * FUNCION QUE SE ENCARGA DE VERIFICAR SI EL PUESTO QUE    
          * SE QUIERE ELIMINAR TIENE EVALUACIONES ASOCIADAS
          * ====================================================
          */
@@ -1840,7 +1839,7 @@ namespace Gestores
                 else
                 {
                     string fecha = nuevoEstado_.Fecha_hora.Year + "-" + nuevoEstado_.Fecha_hora.Month + "-" + nuevoEstado_.Fecha_hora.Day + " " + nuevoEstado_.Fecha_hora.Hour + ":" + nuevoEstado_.Fecha_hora.Minute + ":" + nuevoEstado_.Fecha_hora.Second;
-                    //CONSULTA QUE ACTUALIZA LA TABLA CUESTIONARIO_ESTADO PARA RESGUARDAR EL ESTADO 
+                    //CONSULTA QUE ACTUALIZA LA TABLA CUESTIONARIO_ESTADO PARA RESGUARDAR EL ESTADO
                     string consultaSql = "INSERT INTO cuestionario_estado (Cuestionario_idCuestionario,Estado_idEstado,fecha) "
                         + "VALUES ((SELECT idCuestionario FROM cuestionario WHERE clave = '" + nuevoEstado_.Cuestionario.Clave + "'),"
                         + "(SELECT idEstado FROM estado WHERE estado = '" + nuevoEstado_.Estado_ + "'), "
@@ -2043,7 +2042,7 @@ namespace Gestores
 
         /*
          * ====================================
-         * METODOS DE RETORNO DE DATOS PUNTALES 
+         * METODOS DE RETORNO DE DATOS PUNTALES
          * ====================================
          *      - Tiene la finalidad de BUSCAR y RETORNAR datos de la fuente según algun criterio
          */
@@ -2334,7 +2333,7 @@ namespace Gestores
             comando = ObjConexion.CreateCommand();
             comando.CommandText = consultaSql;//En el adaptador comando hacemos un asignacion en su atributo CommandText de la consultaSql
 
-            //Se hace la ejecucion del comando con el metodo ExecuterReader 
+            //Se hace la ejecucion del comando con el metodo ExecuterReader
             //y se lo asigna a una variable reader que contendra los resultados de la busqueda en la base de datos
             MySqlDataReader reader = comando.ExecuteReader();
 
@@ -2366,7 +2365,7 @@ namespace Gestores
 
                 Candidato_Vista_impresion Candidato_imp = new Candidato_Vista_impresion(nombre, apellido, tipoDoc, nroDoc);
                 Candidato_imp.Nro_Accesos = nroAccesos;
-                
+
                 listaCandidatos_imp.Add(Candidato_imp);
             }
 
@@ -2379,21 +2378,21 @@ namespace Gestores
             bool conexionExitosa;
             string fecha_formateada = this.formatear_fecha(fecha_ev);
 
-            string consultaSql = "SELECT MAX(fecha) "+
-                                 "FROM `tp base de datos`.cuestionario_estado "+
-                                 "WHERE Estado_idEstado = 2 AND Cuestionario_idCuestionario = ( "+
-                                 "SELECT DISTINCT idCuestionario "+
-                                 "FROM `tp base de datos`.cuestionario "+
-                                 "JOIN `tp base de datos`.cuestionario_estado ON (idCuestionario = Cuestionario_idCuestionario) "+
-                                 "JOIN `tp base de datos`.candidato ON (idCandidato = Candidato_idCandidato) "+
-                                 "JOIN `tp base de datos`.`puesto evaluado` ON (`idPuesto Evaluado` = `Puesto Evaluado_idPuesto Evaluado`) "+
-                                 "WHERE Estado_idEstado = 4 AND `nro documento`= '"+ nroDoc +"' "+
-                                 "AND `idPuesto Evaluado` = (SELECT DISTINCT `idPuesto Evaluado` "+
+            string consultaSql = "SELECT MAX(fecha) " +
+                                 "FROM `tp base de datos`.cuestionario_estado " +
+                                 "WHERE Estado_idEstado = 2 AND Cuestionario_idCuestionario = ( " +
+                                 "SELECT DISTINCT idCuestionario " +
+                                 "FROM `tp base de datos`.cuestionario " +
+                                 "JOIN `tp base de datos`.cuestionario_estado ON (idCuestionario = Cuestionario_idCuestionario) " +
+                                 "JOIN `tp base de datos`.candidato ON (idCandidato = Candidato_idCandidato) " +
+                                 "JOIN `tp base de datos`.`puesto evaluado` ON (`idPuesto Evaluado` = `Puesto Evaluado_idPuesto Evaluado`) " +
+                                 "WHERE Estado_idEstado = 4 AND `nro documento`= '" + nroDoc + "' " +
+                                 "AND `idPuesto Evaluado` = (SELECT DISTINCT `idPuesto Evaluado` " +
                                                             "FROM candidato cand " +
-                                                            "JOIN cuestionario cuest on (idCandidato = Candidato_idCandidato) "+
-                                                            "JOIN cuestionario_estado cuest_estado on (idCuestionario = Cuestionario_idCuestionario) "+
-                                                            "JOIN `puesto evaluado` puesto_ev on (`idPuesto Evaluado` =`Puesto Evaluado_idPuesto Evaluado`) "+
-                                                            "WHERE puesto_ev.codigo =  '"+ codigo_ev +"' AND fecha = '"+ fecha_formateada +"'));";
+                                                            "JOIN cuestionario cuest on (idCandidato = Candidato_idCandidato) " +
+                                                            "JOIN cuestionario_estado cuest_estado on (idCuestionario = Cuestionario_idCuestionario) " +
+                                                            "JOIN `puesto evaluado` puesto_ev on (`idPuesto Evaluado` =`Puesto Evaluado_idPuesto Evaluado`) " +
+                                                            "WHERE puesto_ev.codigo =  '" + codigo_ev + "' AND fecha = '" + fecha_formateada + "'));";
 
             //llamamos al metodo "iniciar conexion"
             conexionExitosa = iniciarConexion();
@@ -2411,7 +2410,7 @@ namespace Gestores
             comando = ObjConexion.CreateCommand();
             comando.CommandText = consultaSql;//En el adaptador comando hacemos un asignacion en su atributo CommandText de la consultaSql
 
-            //Se hace la ejecucion del comando con el metodo ExecuterReader 
+            //Se hace la ejecucion del comando con el metodo ExecuterReader
             //y se lo asigna a una variable reader que contendra los resultados de la busqueda en la base de datos
             MySqlDataReader reader = comando.ExecuteReader();
 
@@ -2427,7 +2426,7 @@ namespace Gestores
             {
                 //ultimo_acceso = DateTime.Parse(reader["MAX(fecha)"].ToString());
             }
-            
+
             terminarConexion();
             return ultimo_acceso;
         }
@@ -2437,18 +2436,18 @@ namespace Gestores
             bool conexionExitosa;
             string fecha_formateada = this.formatear_fecha(fecha_ev);
 
-            string consultaSql = "SELECT DISTINCT fecha "+
-                                " FROM `tp base de datos`.cuestionario_estado "+
-                                " JOIN `tp base de datos`.cuestionario ON (idCuestionario = Cuestionario_idCuestionario) "+
-                                " JOIN `tp base de datos`.`puesto evaluado` ON (`idPuesto Evaluado` = `Puesto Evaluado_idPuesto Evaluado`) "+
-                                " JOIN `tp base de datos`.candidato ON (Candidato_idCandidato = idCandidato) "+
-                                " WHERE Estado_idEstado = 5 AND `nro documento` = '"+ nroDoc +"' "+
-                                " AND `idPuesto Evaluado` = (SELECT DISTINCT `idPuesto Evaluado` "+ 
-                                                            "FROM candidato cand "+
-                                                            "JOIN cuestionario cuest on (idCandidato = Candidato_idCandidato) "+
-                                                            "JOIN cuestionario_estado cuest_estado on (idCuestionario = Cuestionario_idCuestionario) "+
-                                                            "JOIN `puesto evaluado` puesto_ev on (`idPuesto Evaluado` =`Puesto Evaluado_idPuesto Evaluado`) "+
-                                                            "WHERE puesto_ev.codigo =  '"+ codigo_ev +"' AND fecha = '"+fecha_formateada+"')";
+            string consultaSql = "SELECT DISTINCT fecha " +
+                                " FROM `tp base de datos`.cuestionario_estado " +
+                                " JOIN `tp base de datos`.cuestionario ON (idCuestionario = Cuestionario_idCuestionario) " +
+                                " JOIN `tp base de datos`.`puesto evaluado` ON (`idPuesto Evaluado` = `Puesto Evaluado_idPuesto Evaluado`) " +
+                                " JOIN `tp base de datos`.candidato ON (Candidato_idCandidato = idCandidato) " +
+                                " WHERE Estado_idEstado = 5 AND `nro documento` = '" + nroDoc + "' " +
+                                " AND `idPuesto Evaluado` = (SELECT DISTINCT `idPuesto Evaluado` " +
+                                                            "FROM candidato cand " +
+                                                            "JOIN cuestionario cuest on (idCandidato = Candidato_idCandidato) " +
+                                                            "JOIN cuestionario_estado cuest_estado on (idCuestionario = Cuestionario_idCuestionario) " +
+                                                            "JOIN `puesto evaluado` puesto_ev on (`idPuesto Evaluado` =`Puesto Evaluado_idPuesto Evaluado`) " +
+                                                            "WHERE puesto_ev.codigo =  '" + codigo_ev + "' AND fecha = '" + fecha_formateada + "')";
 
             //llamamos al metodo "iniciar conexion"
             conexionExitosa = iniciarConexion();
@@ -2466,7 +2465,7 @@ namespace Gestores
             comando = ObjConexion.CreateCommand();
             comando.CommandText = consultaSql;//En el adaptador comando hacemos un asignacion en su atributo CommandText de la consultaSql
 
-            //Se hace la ejecucion del comando con el metodo ExecuterReader 
+            //Se hace la ejecucion del comando con el metodo ExecuterReader
             //y se lo asigna a una variable reader que contendra los resultados de la busqueda en la base de datos
             MySqlDataReader reader = comando.ExecuteReader();
 
@@ -2524,7 +2523,7 @@ namespace Gestores
             comando = ObjConexion.CreateCommand();
             comando.CommandText = consultaSql;//En el adaptador comando hacemos un asignacion en su atributo CommandText de la consultaSql
 
-            //Se hace la ejecucion del comando con el metodo ExecuterReader 
+            //Se hace la ejecucion del comando con el metodo ExecuterReader
             //y se lo asigna a una variable reader que contendra los resultados de la busqueda en la base de datos
             MySqlDataReader reader = comando.ExecuteReader();
 
@@ -2547,30 +2546,30 @@ namespace Gestores
 
 
         // -1 si la consulta no devuelve nada. -2 si no se puede realizar la conexion
-        public int obtener_puntuacion(string dni_candidato, DateTime fecha_ev, string codigo_ev) 
+        public int obtener_puntuacion(string dni_candidato, DateTime fecha_ev, string codigo_ev)
         {
             bool conexionExitosa;
-            
+
             string fecha_formateada = this.formatear_fecha(fecha_ev);
 
             string consultaSql = "SELECT SUM(ponderacion) " +
-                    " FROM `tp base de datos`.`pregunta evaluada_opcion evaluada` AS pr_oEV "+
+                    " FROM `tp base de datos`.`pregunta evaluada_opcion evaluada` AS pr_oEV " +
                     " JOIN `tp base de datos`.item_bloque AS itbloq " +
                     " ON (itbloq.`Opcion Evaluada_idOpcion_seleccionada` = pr_oEV.`Opcion Evaluada_idOpcion` " +
                     " AND itbloq.PreguntaEvaluada_idPreguntaEv = pr_oEV.`Pregunta Evaluada_idPregunta Evaluada`) " +
                     " WHERE itbloq.Bloque_idBloque IN ( " +
                     " SELECT idBloque " +
                     " FROM `tp base de datos`.bloque AS b " +
-                    " JOIN `tp base de datos`.cuestionario AS c ON (c.idCuestionario = b.Cuestionario_idCuestrionario) " + 
+                    " JOIN `tp base de datos`.cuestionario AS c ON (c.idCuestionario = b.Cuestionario_idCuestrionario) " +
                     " JOIN `tp base de datos`.`puesto evaluado` AS p_ev ON (`idPuesto Evaluado` = `Puesto Evaluado_idPuesto Evaluado`) " +
                     " JOIN `tp base de datos`.candidato AS cand ON ( idCandidato = Candidato_idCandidato) " +
-                    " WHERE `nro documento` = '"+ dni_candidato +"' AND `idPuesto Evaluado` = ( " +
+                    " WHERE `nro documento` = '" + dni_candidato + "' AND `idPuesto Evaluado` = ( " +
                     " SELECT DISTINCT `idPuesto Evaluado` " +
                     " FROM candidato cand " +
                     " JOIN cuestionario cuest on (idCandidato = Candidato_idCandidato) " +
                     " JOIN cuestionario_estado cuest_estado on (idCuestionario = Cuestionario_idCuestionario) " +
                     " JOIN `puesto evaluado` puesto_ev on (`idPuesto Evaluado` =`Puesto Evaluado_idPuesto Evaluado`) " +
-                    " WHERE puesto_ev.codigo =  '"+ codigo_ev +"' AND fecha = '"+ fecha_formateada +"'))";
+                    " WHERE puesto_ev.codigo =  '" + codigo_ev + "' AND fecha = '" + fecha_formateada + "'))";
 
             //llamamos al metodo "iniciar conexion"
             conexionExitosa = iniciarConexion();
@@ -2588,7 +2587,7 @@ namespace Gestores
             comando = ObjConexion.CreateCommand();
             comando.CommandText = consultaSql;//En el adaptador comando hacemos un asignacion en su atributo CommandText de la consultaSql
 
-            //Se hace la ejecucion del comando con el metodo ExecuterReader 
+            //Se hace la ejecucion del comando con el metodo ExecuterReader
             //y se lo asigna a una variable reader que contendra los resultados de la busqueda en la base de datos
             MySqlDataReader reader = comando.ExecuteReader();
 
@@ -2606,7 +2605,7 @@ namespace Gestores
                 if (reader["SUM(ponderacion)"].ToString() != "")
                     puntuacion = Int32.Parse(reader["SUM(ponderacion)"].ToString());
             }
-            
+
             terminarConexion();
             return puntuacion;
         }
@@ -2673,7 +2672,7 @@ namespace Gestores
             comando = ObjConexion.CreateCommand();
             comando.CommandText = consultaSql;//En el adaptador comando hacemos un asignacion en su atributo CommandText de la consultaSql
 
-            //Se hace la ejecucion del comando con el metodo ExecuterReader 
+            //Se hace la ejecucion del comando con el metodo ExecuterReader
             //y se lo asigna a una variable reader que contendra los resultados de la busqueda en la base de datos
             MySqlDataReader reader = comando.ExecuteReader();
 
@@ -2742,7 +2741,7 @@ namespace Gestores
             comando = ObjConexion.CreateCommand();
             comando.CommandText = consultaSql;//En el adaptador comando hacemos un asignacion en su atributo CommandText de la consultaSql
 
-            //Se hace la ejecucion del comando con el metodo ExecuterReader 
+            //Se hace la ejecucion del comando con el metodo ExecuterReader
             //y se lo asigna a una variable reader que contendra los resultados de la busqueda en la base de datos
             MySqlDataReader reader = comando.ExecuteReader();
 
@@ -2767,13 +2766,13 @@ namespace Gestores
 
         /*
          * *****************************************************************
-         * Se reconstruyen o se trae a memoria el arbol de clases asociadas 
+         * Se reconstruyen o se trae a memoria el arbol de clases asociadas
          * que corresponden a un puesto puntual
          ******************************************************************
-         
+             
          * - RecuperarCaracteristicasPuesto tiene la misión de recuperar todas las competencias que estan activas (no eliminadas)
          *   y ponederaciones asociades a un puesto puntual de la base de datos
-
+     
          */
         public List<Caracteristica> reconstruir_CaracteristicasPuesto(Puesto puestoAsociado)
         {
@@ -2808,7 +2807,7 @@ namespace Gestores
             //En el adaptador comando hacemos un asignacion en su atributo CommandText de la consultaSql
             comando.CommandText = consultaSql;
 
-            //Se hace la ejecucion del comando con el metodo ExecuterReader 
+            //Se hace la ejecucion del comando con el metodo ExecuterReader
             //y se lo asigna a una variable reader que contendra los resultados de la busqueda en la base de datos
             MySqlDataReader reader = comando.ExecuteReader();
 
@@ -2822,7 +2821,7 @@ namespace Gestores
 
             while (reader.Read())
             {
-                //Se recuperan los ID's de las competencias y los números correspondientes a las ponderaciones 
+                //Se recuperan los ID's de las competencias y los números correspondientes a las ponderaciones
                 string idCompetencia = reader["Competencia_codigo"].ToString();
                 int ponderacion = Int32.Parse(reader["ponderacion"].ToString());
 
@@ -2931,8 +2930,8 @@ namespace Gestores
             {
                 if (factoresList[j].ListaPreguntas != null)
                 {
-                        //Para la competencia le agregamos a su lista de factores, el factor evaluado que se encentre en la posición j
-                        competencia_obtenida.addFactor(factoresList[j]);
+                    //Para la competencia le agregamos a su lista de factores, el factor evaluado que se encentre en la posición j
+                    competencia_obtenida.addFactor(factoresList[j]);
                 }
 
                 else if (factoresList[j].Codigo == "INSUFICIENTES PREG")
@@ -2985,7 +2984,7 @@ namespace Gestores
                 string nomFactor = reader["nombre"].ToString();
                 int nrOrden = Int32.Parse(reader["nroOrden"].ToString());
 
-                //Ahora vamos a crear una instancia del objeto factor, a través del gestor de factores 
+                //Ahora vamos a crear una instancia del objeto factor, a través del gestor de factores
                 Factor factorEv = gestorFactores.instanciarFactor(cod, nomFactor, competenciaAsociada, null, nrOrden);
                 listaDeFactores.Add(factorEv);
             }
@@ -3138,7 +3137,7 @@ namespace Gestores
         {
             bool conexionExitosa;
             GestorOpRespuesta gestionOpciones = new GestorOpRespuesta();
-            List<Opciones> listaDeOpciones = new List<Opciones>();//Para el retorno de datos 
+            List<Opciones> listaDeOpciones = new List<Opciones>();//Para el retorno de datos
 
             string consultaSql = "SELECT op.nombre, pr_op.ponderacion, opr_op.ordenDeVisualizacion "
             + "FROM `pregunta_opciones` AS pr_op "
@@ -3217,7 +3216,7 @@ namespace Gestores
             comando5.CommandTimeout = 0;
 
             comando6.Connection = ObjConexion; comando6.CommandType = CommandType.Text;
-            comando6.CommandTimeout = 0; 
+            comando6.CommandTimeout = 0;
 
             comando7.Connection = ObjConexion; comando7.CommandType = CommandType.Text;
             comando7.CommandTimeout = 0;
@@ -3234,7 +3233,7 @@ namespace Gestores
 
                 comando1.Transaction = transaccion; comando2.Transaction = transaccion;
                 comando3.Transaction = transaccion; comando4.Transaction = transaccion;
-                comando5.Transaction = transaccion; comando6.Transaction = transaccion; 
+                comando5.Transaction = transaccion; comando6.Transaction = transaccion;
                 comando7.Transaction = transaccion; comando8.Transaction = transaccion;
 
                 cantDeFilasAfectadas += comando1.ExecuteNonQuery();
@@ -3261,7 +3260,7 @@ namespace Gestores
                 for (int i = 0; i < puestoAsociado.Caracteristicas.Count; i++)
                 {
                     Competencia competencia1 = (Competencia)puestoAsociado.Caracteristicas[i].dato1;
-                    
+
                     if (!existeCompetenciaEv(competencia1.Codigo))
                     {
                         string consultaSql4 = "INSERT INTO `competencia evaluada`(codigo,nombre,descripcion) " +
@@ -3274,11 +3273,11 @@ namespace Gestores
                         {
                             Factor factor_Asociado = competencia1.ListaFactores[j];
 
-                            if (existeFactorEv(factor_Asociado.Codigo))
+                            if (!existeFactorEv(factor_Asociado.Codigo))
                             {
                                 string consultaSql5 = "INSERT INTO `factor evaluado`(codigo,nombre,nroOrden,descripcion,`Competencia Evaluada_idCompetencia Evaluada`) " +
                                     "VALUES ('" + factor_Asociado.Codigo + "','" + factor_Asociado.Nombre + "','" + factor_Asociado.Nro_orden + "','" + factor_Asociado.Descripcion + "',"
-                                    +"(SELECT DISTINCT `idCompetencia Evaluada` FROM `competencia evaluada` WHERE codigo = '" + competencia1.Codigo + "'));";
+                                    + "(SELECT DISTINCT `idCompetencia Evaluada` FROM `competencia evaluada` WHERE codigo = '" + competencia1.Codigo + "'));";
 
                                 comando5.CommandText = consultaSql5;
                                 cantDeFilasAfectadas += comando5.ExecuteNonQuery();
@@ -3367,7 +3366,7 @@ namespace Gestores
             comando.CommandText = consultaSql;
 
             MySqlDataReader reader = comando.ExecuteReader();
-            
+
             if (!reader.HasRows)
             { //si el reader esta vacio, es qe no encontro a esa Competencia
                 reader.Close();
@@ -3386,7 +3385,7 @@ namespace Gestores
 
         public bool existeFactorEv(string codigo)
         {
-            
+
             bool existeElFactor = true;
 
             string consultaSql = "SELECT * FROM `factor evaluado` WHERE `codigo` = '" + codigo + "';";

@@ -63,6 +63,9 @@ namespace TpDiseñoCSharp
             if (!terminado)
             {
                 MessageBox.Show("No se guardaron los datos correctamente");
+                ventanaMenuPrincipal.Visible = true;
+                ventanaAnterior.Close();
+                Close();
             }
             else
             {
@@ -84,10 +87,18 @@ namespace TpDiseñoCSharp
                     ventana_guardar.Dispose();
                     ventana_guardar = null;
                     ExcelApp.Quit();
+
+                    ventanaMenuPrincipal.Visible = true;
+                    ventanaAnterior.Close();
+                    Close();
                 }
                 else
                 {
                     MessageBox.Show("No se pudo guardar Datos .. ");
+
+                    ventanaMenuPrincipal.Visible = true;
+                    ventanaAnterior.Close();
+                    Close();
                 }
             }
         }

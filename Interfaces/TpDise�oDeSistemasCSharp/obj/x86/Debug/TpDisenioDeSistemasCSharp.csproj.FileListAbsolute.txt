@@ -94,7 +94,6 @@ D:\UTN\Diseño de Sistemas\TP 2012 repositorio\Interfaces\TpDiseñoDeSistemasCSh
 D:\UTN\Diseño de Sistemas\TP 2012 repositorio\Interfaces\TpDiseñoDeSistemasCSharp\obj\x86\Debug\TpDiseñoCSharp.Completar_Cuestionario.resources
 D:\UTN\Diseño de Sistemas\TP 2012 repositorio\Interfaces\TpDiseñoDeSistemasCSharp\obj\x86\Debug\TpDiseñoCSharp.Evaluar_Candidatos___Ventana_3.resources
 D:\UTN\Diseño de Sistemas\TP 2012 repositorio\Interfaces\TpDiseñoDeSistemasCSharp\obj\x86\Debug\TpDiseñoCSharp.Modificar_Puesto_o_Funcion.resources
-D:\UTN\Diseño de Sistemas\TP 2012 repositorio\Interfaces\TpDiseñoDeSistemasCSharp\obj\x86\Debug\TpDiseñoCSharp.OrdenDeMerito_VistaImpresion.resources
 D:\UTN\Diseño de Sistemas\TP 2012 repositorio\Interfaces\TpDiseñoDeSistemasCSharp\obj\x86\Debug\TpDiseñoCSharp.PantallaPrincipal.resources
 D:\UTN\Diseño de Sistemas\TP 2012 repositorio\Interfaces\TpDiseñoDeSistemasCSharp\obj\x86\Debug\TpDiseñoCSharp.Cuestionario_Instrucciones.resources
 D:\UTN\Diseño de Sistemas\TP 2012 repositorio\Interfaces\TpDiseñoDeSistemasCSharp\obj\x86\Debug\TpDiseñoCSharp.Emitir_Orden_de_Mérito.resources
@@ -158,7 +157,6 @@ C:\Users\usuario\Desktop\TP 2012 Repositorio Online\Interfaces\TpDiseñoDeSistem
 C:\Users\usuario\Desktop\TP 2012 Repositorio Online\Interfaces\TpDiseñoDeSistemasCSharp\obj\x86\Debug\TpDiseñoCSharp.Completar_Cuestionario.resources
 C:\Users\usuario\Desktop\TP 2012 Repositorio Online\Interfaces\TpDiseñoDeSistemasCSharp\obj\x86\Debug\TpDiseñoCSharp.Evaluar_Candidatos___Ventana_3.resources
 C:\Users\usuario\Desktop\TP 2012 Repositorio Online\Interfaces\TpDiseñoDeSistemasCSharp\obj\x86\Debug\TpDiseñoCSharp.Modificar_Puesto_o_Funcion.resources
-C:\Users\usuario\Desktop\TP 2012 Repositorio Online\Interfaces\TpDiseñoDeSistemasCSharp\obj\x86\Debug\TpDiseñoCSharp.OrdenDeMerito_VistaImpresion.resources
 C:\Users\usuario\Desktop\TP 2012 Repositorio Online\Interfaces\TpDiseñoDeSistemasCSharp\obj\x86\Debug\TpDiseñoCSharp.PantallaPrincipal.resources
 C:\Users\usuario\Desktop\TP 2012 Repositorio Online\Interfaces\TpDiseñoDeSistemasCSharp\obj\x86\Debug\TpDiseñoCSharp.Cuestionario_Instrucciones.resources
 C:\Users\usuario\Desktop\TP 2012 Repositorio Online\Interfaces\TpDiseñoDeSistemasCSharp\obj\x86\Debug\TpDiseñoCSharp.Emitir_Orden_de_Mérito.resources
