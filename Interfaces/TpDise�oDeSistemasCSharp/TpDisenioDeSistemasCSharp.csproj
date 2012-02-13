@@ -95,12 +95,6 @@
     <Compile Include="Orden de merito.Designer.cs">
       <DependentUpon>Orden de merito.cs</DependentUpon>
     </Compile>
-    <Compile Include="OrdenDeMerito-VistaImpresion.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="OrdenDeMerito-VistaImpresion.Designer.cs">
-      <DependentUpon>OrdenDeMerito-VistaImpresion.cs</DependentUpon>
-    </Compile>
     <Compile Include="PantallaPrincipal.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -183,9 +177,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Orden de merito.resx">
       <DependentUpon>Orden de merito.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="OrdenDeMerito-VistaImpresion.resx">
-      <DependentUpon>OrdenDeMerito-VistaImpresion.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PantallaPrincipal.resx">
       <DependentUpon>PantallaPrincipal.cs</DependentUpon>
