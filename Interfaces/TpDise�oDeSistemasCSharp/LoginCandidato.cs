@@ -47,12 +47,12 @@ namespace TpDiseñoCSharp
                         {
                             //Nos Fijamos si los datos ingresados pertenecen a un candidato existente en la base de datos y si posee un cuestionario para ser evaluado
                             object esValido = gestorCandidatos.validarCandidato(Tipo.Text.ToString(), NroDoc.Text.ToString(), Clave.Text.ToString());
-                            Cuestionario c = (Cuestionario)esValido;
-                            string candidato = c.CandidatoAsociado.Nombre + " " + c.CandidatoAsociado.Apellido;
+                            
                                 
                             if ((esValido is Cuestionario) == true)
                             {
-                                
+                                Cuestionario c = (Cuestionario)esValido;
+                                string candidato = c.CandidatoAsociado.Nombre + " " + c.CandidatoAsociado.Apellido;
                                 //Con el CUESTIONARIO instanciado, decidimos que acción corresponde tomar (Iniciar el cuestionario, recuperar el cuestionario o finalizar el cuestionario)
                                 ArrayList evento_ = gestorCuestionario.crearCuestionario((Cuestionario)esValido);
                                 if (evento_.Count != 0)
@@ -101,11 +101,12 @@ namespace TpDiseñoCSharp
                         {
                             //Nos Fijamos si los datos ingresados pertenecen a un candidato existente en la base de datos y si posee un cuestionario para ser evaluado
                             object esValido = gestorCandidatos.validarCandidato(Tipo.Text.ToString(), NroDoc.Text.ToString(), Clave.Text.ToString());
-                            Cuestionario c = (Cuestionario)esValido;
-                            string candidato = c.CandidatoAsociado.Nombre + " " + c.CandidatoAsociado.Apellido;
+                           
                                 
                             if ((esValido is Cuestionario) == true)
                             {
+                                Cuestionario c = (Cuestionario)esValido;
+                                string candidato = c.CandidatoAsociado.Nombre + " " + c.CandidatoAsociado.Apellido;
                                 //Con el CUESTIONARIO instanciado, decidimos que acción corresponde tomar (Iniciar el cuestionario, recuperar el cuestionario o finalizar el cuestionario)
                                 ArrayList evento_ = gestorCuestionario.crearCuestionario((Cuestionario)esValido);
                                 if (evento_.Count != 0)

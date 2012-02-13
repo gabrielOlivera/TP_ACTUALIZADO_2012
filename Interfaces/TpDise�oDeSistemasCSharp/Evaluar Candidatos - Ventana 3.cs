@@ -16,11 +16,9 @@ namespace TpDiseñoCSharp
     {
         private Puesto puestoSeleccionado;
         private List<Candidato> candidatoSeleccionados;
-        private Form pantallaPrincipal;
         SaveFileDialog ventana_guardar;
 
         private Form ventanaMenuPrincipal, ventanaAnterior;
-        SaveFileDialog guardar;
 
         public Evaluar_Candidatos___Ventana_3(string user, Puesto puestoSelec_paramentro, 
             List<Candidato> listaSeleccionados_parametro, Form principal, Form anterior)
@@ -60,33 +58,37 @@ namespace TpDiseñoCSharp
                 }
             }
 
-            // ---------- cuadro de dialogo para Guardar
-            ventana_guardar = new SaveFileDialog();
-            ventana_guardar.DefaultExt = "xls";
-            ventana_guardar.Filter = "Archivo Excel | *.xls";
-            ventana_guardar.AddExtension = true;
-            ventana_guardar.RestoreDirectory = true;
-            ventana_guardar.Title = "Exportar Resultados";
-            ventana_guardar.InitialDirectory = @"c:\";
-            string nombre_archivo = DateTime.Now.Year.ToString() + "-" + DateTime.Now.Month.ToString() + "-" + DateTime.Now.Day.ToString() + "-" + DateTime.Now.Hour.ToString() + "-" + DateTime.Now.Minute.ToString() + "-" + puestoSeleccionado.Nombre;
-            ventana_guardar.FileName = nombre_archivo;
+            bool terminado = guardar_Candidatos();
 
-            if (ventana_guardar.ShowDialog() == DialogResult.OK)
+            if (!terminado)
             {
-                ExcelApp.ActiveWorkbook.SaveCopyAs(ventana_guardar.FileName);
-                ExcelApp.ActiveWorkbook.Saved = true;
-                ventana_guardar.Dispose();
-                ventana_guardar = null;
-                ExcelApp.Quit();
-
-                bool terminado = guardar_Candidatos();
-
-                if (!terminado)
-                    MessageBox.Show("No se guardaron los datos correctamente");
+                MessageBox.Show("No se guardaron los datos correctamente");
             }
             else
             {
-                MessageBox.Show("No se pudo guardar Datos .. ");
+                // ---------- cuadro de dialogo para Guardar
+                ventana_guardar = new SaveFileDialog();
+                ventana_guardar.DefaultExt = "xls";
+                ventana_guardar.Filter = "Archivo Excel | *.xls";
+                ventana_guardar.AddExtension = true;
+                ventana_guardar.RestoreDirectory = true;
+                ventana_guardar.Title = "Exportar Resultados";
+                ventana_guardar.InitialDirectory = @"c:\";
+                string nombre_archivo = DateTime.Now.Year.ToString() + "-" + DateTime.Now.Month.ToString() + "-" + DateTime.Now.Day.ToString() + "-" + DateTime.Now.Hour.ToString() + "-" + DateTime.Now.Minute.ToString() + "-" + puestoSeleccionado.Nombre;
+                ventana_guardar.FileName = nombre_archivo;
+
+                if (ventana_guardar.ShowDialog() == DialogResult.OK)
+                {
+                    ExcelApp.ActiveWorkbook.SaveCopyAs(ventana_guardar.FileName);
+                    ExcelApp.ActiveWorkbook.Saved = true;
+                    ventana_guardar.Dispose();
+                    ventana_guardar = null;
+                    ExcelApp.Quit();
+                }
+                else
+                {
+                    MessageBox.Show("No se pudo guardar Datos .. ");
+                }
             }
         }
 

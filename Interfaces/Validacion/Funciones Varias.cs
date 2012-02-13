@@ -14,12 +14,14 @@ namespace Validacion
         {
             return ((c >= 'a' && c <= 'z') ||
                     (c >= '0' && c <= '9') ||
-                    (c >= 'A' && c <= 'Z'));
+                    (c >= 'A' && c <= 'Z') ||
+                    (c==' '));
         }
         public static bool isAlpha(char c)
         {
             return ((c >= 'a' && c <= 'z') ||
-                    (c >= 'A' && c <= 'Z'));
+                    (c >= 'A' && c <= 'Z') ||
+                    (c==' '));
         }
 
         public static bool isNumeric(char c)

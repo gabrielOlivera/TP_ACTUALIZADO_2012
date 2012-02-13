@@ -69,14 +69,11 @@ namespace TpDiseñoCSharp
                 MessageBox.Show("Los siguientes candidatos estan siendo evaluados:" + mensaje_ + "\n\nNO PUEDEN SER NUEVAMENTE EVALUADOS");
                 resultadosDeBusqueda.Visible = false;
             }
-            else
-            {
-                Evaluar_Candidatos___Ventana_2 evCandidatos2 = new Evaluar_Candidatos___Ventana_2(this.Consultor.Text, 
-                    listaCandidatos_agregados, this, ventanaMenuPrincipal);
-                this.Visible = false;
-                evCandidatos2.ShowDialog();
-               
-            }
+
+            Evaluar_Candidatos___Ventana_2 evCandidatos2 = new Evaluar_Candidatos___Ventana_2(this.Consultor.Text,
+                listaCandidatos_agregados, this, ventanaMenuPrincipal);
+            this.Visible = false;
+            evCandidatos2.ShowDialog();
         }
 
         private void Buscar_Click(object sender, EventArgs e)
@@ -106,11 +103,16 @@ namespace TpDiseñoCSharp
                     nroDeEmpleado = Int32.Parse(this.nroCandidato.Text.ToString());//Se lo transforma a un numero entero
 
                 List<Candidato> listaCandidatos = gestorCandidatos.listarCandidatos(apellido.Text.ToString(), nombre.Text.ToString(), nroDeEmpleado, nroDeCandidato);
-                resultadosDeBusqueda.Visible = true;
-                resultadosDeBusqueda.DataSource = listaCandidatos;
-                resultadosDeBusqueda.Columns.Remove("Clave");
-                resultadosDeBusqueda.Columns.Remove("TipoDoc");
-                resultadosDeBusqueda.Columns.Remove("NroDoc");
+                if (listaCandidatos != null)
+                {
+                    resultadosDeBusqueda.Visible = true;
+                    resultadosDeBusqueda.DataSource = listaCandidatos;
+                    resultadosDeBusqueda.Columns.Remove("Clave");
+                    resultadosDeBusqueda.Columns.Remove("TipoDoc");
+                    resultadosDeBusqueda.Columns.Remove("NroDoc");
+                }
+                else
+                    Close();
             }
         }
 
