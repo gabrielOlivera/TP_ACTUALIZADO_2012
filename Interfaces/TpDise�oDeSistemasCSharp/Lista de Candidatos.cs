@@ -14,36 +14,42 @@ namespace TpDiseñoCSharp
     public partial class Lista_de_Candidatos : Form
     {
         private List<Candidato> listaCandidatoAgregados;
+        private List<Candidato> listaCandidatoEliminados;
 
         public Lista_de_Candidatos(List<Candidato> listaParametro)
         {
             InitializeComponent();
+            listaCandidatoEliminados = new List<Candidato>();
             listaCandidatoAgregados = listaParametro;
             dataGridView1.DataSource = listaCandidatoAgregados;
         }
 
-        private void Quitar_Click(object sender, EventArgs e)
+        private void Quitar_Click_1(object sender, EventArgs e)
         {
-
-            int fila_seleccionada = dataGridView1.CurrentRow.Index;
-
-            List<Candidato> lista_cand_ = (List<Candidato>)dataGridView1.DataSource;
-            //MessageBox.Show("candidato seleccionado " + lista_cand_[fila_seleccionada].Apellido +" "+ lista_cand_[fila_seleccionada].Nombre);
-            
-            try
+            if (listaCandidatoAgregados.Count > 0)
             {
+                int fila_seleccionada = dataGridView1.CurrentRow.Index;
+
+                List<Candidato> lista_cand_ = (List<Candidato>)dataGridView1.DataSource;
+
+                listaCandidatoEliminados.Add(lista_cand_[fila_seleccionada]);
                 listaCandidatoAgregados.Remove(lista_cand_[fila_seleccionada]);
-                //dataGridView1.Refresh();
-            }
-            catch (DataException) 
-            {
-                MessageBox.Show("paso un error");
+                dataGridView1.DataSource = "";
+                dataGridView1.DataSource = listaCandidatoAgregados;
+                dataGridView1.Refresh();
             }
         }
 
-        private void Cancelar_Click(object sender, EventArgs e)
+        private void Cancelar_Click_1(object sender, EventArgs e)
         {
-            Close();
+            if (listaCandidatoEliminados.Count > 0)
+            {
+                listaCandidatoAgregados.Add(listaCandidatoEliminados.Last());
+                listaCandidatoEliminados.Remove(listaCandidatoEliminados.Last());
+                dataGridView1.DataSource = "";
+                dataGridView1.DataSource = listaCandidatoAgregados;
+                dataGridView1.Refresh();
+            }
         }
     }
 }

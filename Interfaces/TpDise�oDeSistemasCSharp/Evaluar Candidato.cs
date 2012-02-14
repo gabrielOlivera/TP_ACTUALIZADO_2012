@@ -32,6 +32,8 @@ namespace TpDiseñoCSharp
             int largoTextoConsultor = Consultor.Width;
             int ubicacionCerrarSesion = CerrarSesion.Location.X;
             Consultor.Location = new Point(ubicacionCerrarSesion - largoTextoConsultor - 2, CerrarSesion.Top);
+
+            FormClosed += menuConsultor_Click;
         }
 
         private void VerAgregados_Click(object sender, EventArgs e)
@@ -63,17 +65,19 @@ namespace TpDiseñoCSharp
                 string mensaje_ = "";
                 for (int i = 0; i < lista_Candidatos_EnEvaluaciones.Count; i++)
                 {
-                    mensaje_ += "\n\t " + lista_Candidatos_EnEvaluaciones[i].TipoDoc + " " + lista_Candidatos_EnEvaluaciones[i].NroDoc + " " + lista_Candidatos_EnEvaluaciones[i].Apellido + " " + lista_Candidatos_EnEvaluaciones[i].Nombre;
+                    mensaje_ += "\n\n\t " + lista_Candidatos_EnEvaluaciones[i].TipoDoc + " " + lista_Candidatos_EnEvaluaciones[i].NroDoc + " " + lista_Candidatos_EnEvaluaciones[i].Apellido + " " + lista_Candidatos_EnEvaluaciones[i].Nombre;
                 }
 
                 MessageBox.Show("Los siguientes candidatos estan siendo evaluados:" + mensaje_ + "\n\nNO PUEDEN SER NUEVAMENTE EVALUADOS");
                 resultadosDeBusqueda.Visible = false;
             }
-
-            Evaluar_Candidatos___Ventana_2 evCandidatos2 = new Evaluar_Candidatos___Ventana_2(this.Consultor.Text,
-                listaCandidatos_agregados, this, ventanaMenuPrincipal);
-            this.Visible = false;
-            evCandidatos2.ShowDialog();
+            if(listaCandidatos_agregados.Count != 0)
+            {
+                Evaluar_Candidatos___Ventana_2 evCandidatos2 = new Evaluar_Candidatos___Ventana_2(this.Consultor.Text,
+                    listaCandidatos_agregados, this, ventanaMenuPrincipal);
+                this.Visible = false;
+                evCandidatos2.ShowDialog();
+            }
         }
 
         private void Buscar_Click(object sender, EventArgs e)
@@ -111,8 +115,6 @@ namespace TpDiseñoCSharp
                     resultadosDeBusqueda.Columns.Remove("TipoDoc");
                     resultadosDeBusqueda.Columns.Remove("NroDoc");
                 }
-                else
-                    Close();
             }
         }
 
