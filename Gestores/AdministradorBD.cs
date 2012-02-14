@@ -2777,12 +2777,12 @@ namespace Gestores
         public List<Caracteristica> reconstruir_CaracteristicasPuesto(Puesto puestoAsociado)
         {
             bool conexionExitosa;
+            bool encontrado;
             //Lista que se retornara con los datos finales de la busqueda
             List<Caracteristica> listaCaracteristicas = new List<Caracteristica>();
             //Lista de caracteristicas auxiliar para realizar la busqueda (almacena los ID de las competencias y ponderaciones)
             List<Caracteristica> listaRetornoBD = new List<Caracteristica>();
-            string errorCompetenciaNoEvaluable="La Competencia ";
-            string errorFactorNoEvaluable = "El Factor ";
+            string errorCompetenciaNoEvaluable = "";
             Caracteristica elementoLista = new Caracteristica();
 
             //La consulta selecciona las competencias asociadas al puesto pasado como parametro con su correspondiente ponderacion
@@ -2835,6 +2835,7 @@ namespace Gestores
 
             for (int i = 0; i < listaRetornoBD.Count; i++)
             {
+                encontrado = false;
                 //Realizamos la busqueda de las competencias evaluadas por su ID (QUE ES UNICO)
                 Competencia competenciaAs = recuperarCompetencias((string)listaRetornoBD[i].dato1);
                 if (competenciaAs != null)
@@ -2848,23 +2849,20 @@ namespace Gestores
                         elementoLista.dato2 = pondeAs;
                         listaCaracteristicas.Add(elementoLista);//Agregamos el elemento a la lista de caracteristicas del puesto evaluado
 
-                        /*ESTO HAY QUE REVEERLO*/
-                        errorCompetenciaNoEvaluable += competenciaAs.Nombre;
                         for (int j = 0; j < competenciaAs.ListaFactores.Count; j++)
                         {
-                            if (competenciaAs.ListaFactores[j].Codigo == "INSUFICIENTES PREG")
+                            if (competenciaAs.ListaFactores[j].Codigo != "INSUFICIENTES PREG")
                             {
-                                errorFactorNoEvaluable += "\n" + competenciaAs.ListaFactores[j].Nombre;
+                                encontrado = true;
                             }
                         }
-                        errorCompetenciaNoEvaluable += errorFactorNoEvaluable;
-                        /*FIN DE REEVER*/
+                        if (!encontrado)
+                            errorCompetenciaNoEvaluable += "\n" + competenciaAs.Nombre;
                     }
                 }
             }
-
-            //REVEER JUNTO
-            MessageBox.Show(errorCompetenciaNoEvaluable+"no pueden ser evaluados");
+            if(!(errorCompetenciaNoEvaluable == ""))
+                MessageBox.Show("La(s) Competencia(s) "+ errorCompetenciaNoEvaluable + "\nno pueden ser evaluada(s)","INFORMACION",MessageBoxButtons.OK,MessageBoxIcon.Information);
 
             return listaCaracteristicas;
         }
