@@ -25,6 +25,7 @@ namespace TpDiseñoCSharp
             if(Incompletos != null){
                 incompletos_dgv.DataSource = Incompletos;
                 incompletos_dgv.Columns.Remove("Puntuacion");
+                sin_completar_dgv.Refresh();
             }
 
             if (sin_contestar != null)
@@ -34,6 +35,7 @@ namespace TpDiseñoCSharp
                 sin_completar_dgv.Columns.Remove("Nro_Accesos");
                 sin_completar_dgv.Columns.Remove("Fecha_Inicio");
                 sin_completar_dgv.Columns.Remove("Fecha_Fin");
+                sin_completar_dgv.Refresh();
             }
             
             ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -171,6 +173,7 @@ namespace TpDiseñoCSharp
                 filas_ya_ocupadas_excel += sin_completar_dgv.Rows.Count;
             }
 
+            ExcelApp.Cells[filas_ya_ocupadas_excel + 2, 1] = info_Ev;
             // ---------- cuadro de dialogo para Guardar
             ventana_guardar = new SaveFileDialog();
             ventana_guardar.DefaultExt = "xls";
