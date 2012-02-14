@@ -59,7 +59,7 @@ namespace TpDiseñoCSharp
 
                 //listamos los "Sin Contestar" estado 3
                 sinContestar = AdminBD.listarCandidatosPorEvaluacion(fecha, codigo_puesto_evaluado, 3);
-                
+    
                 //listamos los "Incompletos" estado 4                
                 
                 incompletos = AdminBD.listarCandidatosPorEvaluacion(fecha, codigo_puesto_evaluado, 4);

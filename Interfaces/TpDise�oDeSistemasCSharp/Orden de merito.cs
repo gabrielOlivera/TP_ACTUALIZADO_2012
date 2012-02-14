@@ -21,9 +21,21 @@ namespace TpDiseñoCSharp
             
             completosCON_minimos_dgv.DataSource = completos_con_minimos;
             completosSIN_minimos_dgv.DataSource = completos_sin_minimos;
-            incompletos_dgv.DataSource = Incompletos;
-            sin_completar_dgv.DataSource = sin_contestar;
+            
+            if(Incompletos != null){
+                incompletos_dgv.DataSource = Incompletos;
+                incompletos_dgv.Columns.Remove("Puntuacion");
+            }
 
+            if (sin_contestar != null)
+            {
+                sin_completar_dgv.DataSource = sin_contestar;
+                sin_completar_dgv.Columns.Remove("Puntuacion");
+                sin_completar_dgv.Columns.Remove("Nro_Accesos");
+                sin_completar_dgv.Columns.Remove("Fecha_Inicio");
+                sin_completar_dgv.Columns.Remove("Fecha_Fin");
+            }
+            
             ////////////////////////////////////////////////////////////////////////////////////////////////////
             ////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -38,10 +50,20 @@ namespace TpDiseñoCSharp
             //------------------------------------------------------------------------
             if (completosCON_minimos_dgv.Rows.Count != 0)
             {
-                ExcelApp.Cells[1, 1] = "Completos CON minimos";
+                ExcelApp.Cells[1, 1] = "Candidatos que aprobaron su cuestionario ";
+                filas_ya_ocupadas_excel++;
+                
+                ExcelApp.Cells[filas_ya_ocupadas_excel + 1, 1] = "Documento";
+                ExcelApp.Cells[filas_ya_ocupadas_excel + 1, 2] = "Nombre";
+                ExcelApp.Cells[filas_ya_ocupadas_excel + 1, 3] = "Apellido";
+                ExcelApp.Cells[filas_ya_ocupadas_excel + 1, 4] = "Tipo de Documento";
+                ExcelApp.Cells[filas_ya_ocupadas_excel + 1, 5] = "Inicio del cuestionario";
+                ExcelApp.Cells[filas_ya_ocupadas_excel + 1, 6] = "Fin del Cuestionario";
+                ExcelApp.Cells[filas_ya_ocupadas_excel + 1, 7] = "Puntuacion";
+                ExcelApp.Cells[filas_ya_ocupadas_excel + 1, 8] = "Cantidad de accesos";
 
                 filas_ya_ocupadas_excel++;
-
+                
                 for (int i = filas_ya_ocupadas_excel; i < completosCON_minimos_dgv.Rows.Count + filas_ya_ocupadas_excel; i++)
                 {
                     DataGridViewRow Fila = completosCON_minimos_dgv.Rows[i - filas_ya_ocupadas_excel];
@@ -59,10 +81,18 @@ namespace TpDiseñoCSharp
             //------------------------------------------------------------------------
             if (completosSIN_minimos_dgv.Rows.Count != 0)
             {
-                ExcelApp.Cells[filas_ya_ocupadas_excel + 1, 1] = "Completos SIN minimos";
-
+                ExcelApp.Cells[filas_ya_ocupadas_excel + 1, 1] = "Candidatos que finalizaron su cuestionario, pero no lo aprobaron ";
                 filas_ya_ocupadas_excel++;
 
+                ExcelApp.Cells[filas_ya_ocupadas_excel + 1, 1] = "Documento";
+                ExcelApp.Cells[filas_ya_ocupadas_excel + 1, 2] = "Nombre";
+                ExcelApp.Cells[filas_ya_ocupadas_excel + 1, 3] = "Apellido";
+                ExcelApp.Cells[filas_ya_ocupadas_excel + 1, 4] = "Tipo de Documento";
+                ExcelApp.Cells[filas_ya_ocupadas_excel + 1, 5] = "Inicio del cuestionario";
+                ExcelApp.Cells[filas_ya_ocupadas_excel + 1, 6] = "Fin del Cuestionario";
+                ExcelApp.Cells[filas_ya_ocupadas_excel + 1, 7] = "Cantidad de accesos";
+
+                filas_ya_ocupadas_excel++;
 
                 for (int i = filas_ya_ocupadas_excel; i < completosSIN_minimos_dgv.Rows.Count + filas_ya_ocupadas_excel; i++)
                 {
@@ -83,10 +113,20 @@ namespace TpDiseñoCSharp
             if (incompletos_dgv.Rows.Count != 0)
             {
 
-                ExcelApp.Cells[filas_ya_ocupadas_excel + 1, 1] = "Incompletos";
+                ExcelApp.Cells[filas_ya_ocupadas_excel + 1, 1] = "Candidatos que dejaron su cuestionario incompleto";
 
                 filas_ya_ocupadas_excel++;
 
+                ExcelApp.Cells[filas_ya_ocupadas_excel + 1, 1] = "Documento";
+                ExcelApp.Cells[filas_ya_ocupadas_excel + 1, 2] = "Nombre";
+                ExcelApp.Cells[filas_ya_ocupadas_excel + 1, 3] = "Apellido";
+                ExcelApp.Cells[filas_ya_ocupadas_excel + 1, 4] = "Tipo de Documento";
+                ExcelApp.Cells[filas_ya_ocupadas_excel + 1, 5] = "Inicio del cuestionario";
+                ExcelApp.Cells[filas_ya_ocupadas_excel + 1, 6] = "Ultimo acceso";
+                ExcelApp.Cells[filas_ya_ocupadas_excel + 1, 7] = "Cantidad de accesos";
+                
+
+                filas_ya_ocupadas_excel++;
 
                 for (int i = filas_ya_ocupadas_excel; i < incompletos_dgv.Rows.Count + filas_ya_ocupadas_excel; i++)
                 {
@@ -108,10 +148,15 @@ namespace TpDiseñoCSharp
             if (sin_completar_dgv.Rows.Count != 0)
             {
 
-                ExcelApp.Cells[filas_ya_ocupadas_excel + 1, 1] = "Sin Contestar";
-
+                ExcelApp.Cells[filas_ya_ocupadas_excel + 1, 1] = "Candidatos que dejaron su cuestionario sin contestar";
                 filas_ya_ocupadas_excel++;
 
+                ExcelApp.Cells[filas_ya_ocupadas_excel + 1, 1] = "Documento";
+                ExcelApp.Cells[filas_ya_ocupadas_excel + 1, 2] = "Nombre";
+                ExcelApp.Cells[filas_ya_ocupadas_excel + 1, 3] = "Apellido";
+                ExcelApp.Cells[filas_ya_ocupadas_excel + 1, 4] = "Tipo de Documento";
+                
+                filas_ya_ocupadas_excel++;
 
                 for (int i = filas_ya_ocupadas_excel; i < sin_completar_dgv.Rows.Count + filas_ya_ocupadas_excel; i++)
                 {
