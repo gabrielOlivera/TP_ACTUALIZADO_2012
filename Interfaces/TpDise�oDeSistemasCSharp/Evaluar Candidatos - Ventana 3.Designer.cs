@@ -106,7 +106,7 @@
             // menuConsultor
             // 
             this.menuConsultor.Location = new System.Drawing.Point(9, 28);
-            this.menuConsultor.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.menuConsultor.Margin = new System.Windows.Forms.Padding(2);
             this.menuConsultor.Name = "menuConsultor";
             this.menuConsultor.Size = new System.Drawing.Size(96, 19);
             this.menuConsultor.TabIndex = 20;
@@ -124,6 +124,7 @@
             this.CerrarSesion.TabIndex = 1;
             this.CerrarSesion.TabStop = true;
             this.CerrarSesion.Text = "Cerrar Sesión";
+            this.CerrarSesion.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.CerrarSesion_LinkClicked);
             // 
             // TituloEmpresa
             // 

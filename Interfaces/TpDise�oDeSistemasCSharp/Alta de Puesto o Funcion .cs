@@ -56,6 +56,7 @@ namespace TpDiseñoCSharp
             //Se llena una lista con todas las competencias que se encuentran creadas en la BD
             listaDeCompetencias = gestorCompetencias.listarCompetencias();
 
+            FormClosed += menuConsultor_Click;
         }
 
 
@@ -522,9 +523,20 @@ namespace TpDiseñoCSharp
 
         private void menuConsultor_Click(object sender, EventArgs e)
         {
-
+            ventanaMenuConsultor.Visible = true;
+            ventanaAnterior.Close();
+            Close();
         }
 
+        private void CerrarSesion_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            if (MessageBox.Show("¿Esta seguro que desea CerrarSesion?", "PREGUNTA", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                ventanaAnterior.Close();
+                ventanaMenuConsultor.Close();
+                Close();
+            }
+        }
 
     }
 }

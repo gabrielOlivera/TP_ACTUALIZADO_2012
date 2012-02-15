@@ -77,6 +77,8 @@ namespace TpDiseñoCSharp
 
             //Se llama a la funcion para que agregue los combo boxes con las caracteristicas asociadas al puesto
             agregarCaracteristicasPuesto(listaDeCaracteristica);
+
+            FormClosed += menuConsultor_Click;
         }
 
 
@@ -577,13 +579,15 @@ namespace TpDiseñoCSharp
             Close();
         }
 
-
-      
-        
-
-
-       
-        
+        private void CerrarSesion_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            if (MessageBox.Show("¿Esta seguro que desea CerrarSesion?", "PREGUNTA", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                ventanaAnterior.Close();
+                ventanaMenuConsultor.Close();
+                Close();
+            }
+        } 
 
     }
 }

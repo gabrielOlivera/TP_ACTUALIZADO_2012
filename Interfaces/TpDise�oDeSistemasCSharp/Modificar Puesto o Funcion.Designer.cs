@@ -394,6 +394,7 @@
             this.CerrarSesion.TabIndex = 13;
             this.CerrarSesion.TabStop = true;
             this.CerrarSesion.Text = "Cerrar Sesión";
+            this.CerrarSesion.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.CerrarSesion_LinkClicked);
             // 
             // Modificar_Puesto_o_Funcion
             // 

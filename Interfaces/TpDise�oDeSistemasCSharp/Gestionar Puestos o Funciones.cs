@@ -27,6 +27,7 @@ namespace TpDiseñoCSharp
             int largoTextoConsultor = Consultor.Width;
             int ubicacionCerrarSesion = CerrarSesion.Location.X;
             Consultor.Location = new Point(ubicacionCerrarSesion - largoTextoConsultor - 2, CerrarSesion.Top);
+            FormClosed += menuConsultor_Click;
         }
 
         /*
@@ -137,6 +138,15 @@ namespace TpDiseñoCSharp
         {
             ventanaMenuConsultor.Visible = true;
             this.Close();
+        }
+
+        private void CerrarSesion_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            if (MessageBox.Show("¿Esta seguro que desea CerrarSesion?", "PREGUNTA", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                ventanaMenuConsultor.Close();
+                Close();
+            }
         }
         
     }

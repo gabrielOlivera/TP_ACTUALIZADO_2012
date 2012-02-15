@@ -47,8 +47,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.ResultadosDeBusqueda = new System.Windows.Forms.DataGridView();
             this.EmitirOrdenDeMerito = new System.Windows.Forms.Button();
+            this.ResultadosDeBusqueda = new System.Windows.Forms.DataGridView();
             this.PanelInferior.SuspendLayout();
             this.PanelSuperior.SuspendLayout();
             this.SeleccionDeAcceso.SuspendLayout();
@@ -151,6 +151,7 @@
             this.CerrarSesion.TabIndex = 11;
             this.CerrarSesion.TabStop = true;
             this.CerrarSesion.Text = "Cerrar Sesión";
+            this.CerrarSesion.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.CerrarSesion_LinkClicked);
             // 
             // SeleccionDeAcceso
             // 
@@ -168,7 +169,7 @@
             this.SeleccionDeAcceso.ForeColor = System.Drawing.SystemColors.HotTrack;
             this.SeleccionDeAcceso.Location = new System.Drawing.Point(157, 90);
             this.SeleccionDeAcceso.Name = "SeleccionDeAcceso";
-            this.SeleccionDeAcceso.Size = new System.Drawing.Size(354, 592);
+            this.SeleccionDeAcceso.Size = new System.Drawing.Size(428, 279);
             this.SeleccionDeAcceso.TabIndex = 8;
             this.SeleccionDeAcceso.TabStop = false;
             this.SeleccionDeAcceso.Text = "Ingrese los datos para realizar su búsqueda";
@@ -205,7 +206,7 @@
             // NombreDePuesto
             // 
             this.NombreDePuesto.Location = new System.Drawing.Point(179, 86);
-            this.NombreDePuesto.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.NombreDePuesto.Margin = new System.Windows.Forms.Padding(2);
             this.NombreDePuesto.Name = "NombreDePuesto";
             this.NombreDePuesto.Size = new System.Drawing.Size(100, 20);
             this.NombreDePuesto.TabIndex = 9;
@@ -252,14 +253,29 @@
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Controls.Add(this.EmitirOrdenDeMerito);
             this.groupBox1.Controls.Add(this.ResultadosDeBusqueda);
             this.groupBox1.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.groupBox1.Location = new System.Drawing.Point(157, 337);
+            this.groupBox1.Location = new System.Drawing.Point(157, 327);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(354, 467);
+            this.groupBox1.Size = new System.Drawing.Size(428, 394);
             this.groupBox1.TabIndex = 9;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Resúltados de la búsqueda";
+            // 
+            // EmitirOrdenDeMerito
+            // 
+            this.EmitirOrdenDeMerito.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.EmitirOrdenDeMerito.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.EmitirOrdenDeMerito.Location = new System.Drawing.Point(191, 267);
+            this.EmitirOrdenDeMerito.Name = "EmitirOrdenDeMerito";
+            this.EmitirOrdenDeMerito.Size = new System.Drawing.Size(63, 111);
+            this.EmitirOrdenDeMerito.TabIndex = 10;
+            this.EmitirOrdenDeMerito.Text = "Emitir orden de mérito";
+            this.EmitirOrdenDeMerito.UseVisualStyleBackColor = true;
+            this.EmitirOrdenDeMerito.Click += new System.EventHandler(this.EmitirOrdenDeMerito_Click);
             // 
             // ResultadosDeBusqueda
             // 
@@ -273,22 +289,9 @@
             this.ResultadosDeBusqueda.ReadOnly = true;
             this.ResultadosDeBusqueda.RowTemplate.Height = 24;
             this.ResultadosDeBusqueda.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.ResultadosDeBusqueda.Size = new System.Drawing.Size(390, 232);
+            this.ResultadosDeBusqueda.Size = new System.Drawing.Size(412, 232);
             this.ResultadosDeBusqueda.TabIndex = 0;
             this.ResultadosDeBusqueda.Visible = false;
-            // 
-            // EmitirOrdenDeMerito
-            // 
-            this.EmitirOrdenDeMerito.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.EmitirOrdenDeMerito.Location = new System.Drawing.Point(315, 618);
-            this.EmitirOrdenDeMerito.Name = "EmitirOrdenDeMerito";
-            this.EmitirOrdenDeMerito.Size = new System.Drawing.Size(40, 244);
-            this.EmitirOrdenDeMerito.TabIndex = 10;
-            this.EmitirOrdenDeMerito.Text = "Emitir orden de mérito";
-            this.EmitirOrdenDeMerito.UseVisualStyleBackColor = true;
-            this.EmitirOrdenDeMerito.Click += new System.EventHandler(this.EmitirOrdenDeMerito_Click);
             // 
             // Emitir_Orden_de_Mérito
             // 
@@ -297,7 +300,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(714, 717);
-            this.Controls.Add(this.EmitirOrdenDeMerito);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.SeleccionDeAcceso);
             this.Controls.Add(this.panel2);
