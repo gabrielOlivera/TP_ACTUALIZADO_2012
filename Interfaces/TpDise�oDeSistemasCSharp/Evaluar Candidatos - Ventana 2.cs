@@ -51,7 +51,7 @@ namespace TpDiseñoCSharp
         {
             Evaluar_Candidato evaluar_Candidato_1 = new Evaluar_Candidato(this.Consultor.Text, ventanaMenuPrincipal, this);
             ventanaEvCandidatos.Visible = true;
-            Close();
+            this.Visible = false;
         }
 
         private void Buscar_Click(object sender, EventArgs e)
@@ -232,9 +232,12 @@ namespace TpDiseñoCSharp
 
         private void menuConsultor_Click(object sender, EventArgs e)
         {
-            ventanaMenuPrincipal.Visible = true;
-            ventanaEvCandidatos.Close();
-            Close();
+            if (ventanaMenuPrincipal.Created)
+            {
+                ventanaMenuPrincipal.Visible = true;
+                ventanaEvCandidatos.Close();
+                Close();
+            }
         }
 
         private void CerrarSesion_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

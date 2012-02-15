@@ -58,7 +58,7 @@
             // 
             // panel2
             // 
-            this.panel2.Location = new System.Drawing.Point(3, 686);
+            this.panel2.Location = new System.Drawing.Point(0, 706);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(16, 21);
             this.panel2.TabIndex = 11;
@@ -75,9 +75,9 @@
             this.PanelInferior.BackColor = System.Drawing.Color.Gainsboro;
             this.PanelInferior.Controls.Add(this.Fecha);
             this.PanelInferior.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.PanelInferior.Location = new System.Drawing.Point(0, 707);
+            this.PanelInferior.Location = new System.Drawing.Point(0, 733);
             this.PanelInferior.Name = "PanelInferior";
-            this.PanelInferior.Size = new System.Drawing.Size(697, 58);
+            this.PanelInferior.Size = new System.Drawing.Size(742, 58);
             this.PanelInferior.TabIndex = 4;
             // 
             // Fecha
@@ -88,7 +88,7 @@
             this.Fecha.DisabledLinkColor = System.Drawing.Color.Black;
             this.Fecha.Enabled = false;
             this.Fecha.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.Fecha.Location = new System.Drawing.Point(535, 24);
+            this.Fecha.Location = new System.Drawing.Point(580, 24);
             this.Fecha.Name = "Fecha";
             this.Fecha.Size = new System.Drawing.Size(151, 13);
             this.Fecha.TabIndex = 0;
@@ -102,7 +102,7 @@
             this.TituloEmpresa.AutoSize = true;
             this.TituloEmpresa.Font = new System.Drawing.Font("Viner Hand ITC", 15.75F, System.Drawing.FontStyle.Bold);
             this.TituloEmpresa.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.TituloEmpresa.Location = new System.Drawing.Point(255, 18);
+            this.TituloEmpresa.Location = new System.Drawing.Point(278, 18);
             this.TituloEmpresa.Name = "TituloEmpresa";
             this.TituloEmpresa.Size = new System.Drawing.Size(157, 34);
             this.TituloEmpresa.TabIndex = 0;
@@ -118,7 +118,7 @@
             this.PanelSuperior.Dock = System.Windows.Forms.DockStyle.Top;
             this.PanelSuperior.Location = new System.Drawing.Point(0, 0);
             this.PanelSuperior.Name = "PanelSuperior";
-            this.PanelSuperior.Size = new System.Drawing.Size(697, 62);
+            this.PanelSuperior.Size = new System.Drawing.Size(742, 62);
             this.PanelSuperior.TabIndex = 5;
             // 
             // menuConsultor
@@ -135,7 +135,7 @@
             // 
             this.Consultor.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.Consultor.AutoSize = true;
-            this.Consultor.Location = new System.Drawing.Point(535, 39);
+            this.Consultor.Location = new System.Drawing.Point(580, 39);
             this.Consultor.Name = "Consultor";
             this.Consultor.Size = new System.Drawing.Size(51, 13);
             this.Consultor.TabIndex = 12;
@@ -145,7 +145,7 @@
             // 
             this.CerrarSesion.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.CerrarSesion.AutoSize = true;
-            this.CerrarSesion.Location = new System.Drawing.Point(622, 38);
+            this.CerrarSesion.Location = new System.Drawing.Point(667, 38);
             this.CerrarSesion.Name = "CerrarSesion";
             this.CerrarSesion.Size = new System.Drawing.Size(70, 13);
             this.CerrarSesion.TabIndex = 11;
@@ -169,7 +169,7 @@
             this.SeleccionDeAcceso.ForeColor = System.Drawing.SystemColors.HotTrack;
             this.SeleccionDeAcceso.Location = new System.Drawing.Point(157, 90);
             this.SeleccionDeAcceso.Name = "SeleccionDeAcceso";
-            this.SeleccionDeAcceso.Size = new System.Drawing.Size(428, 279);
+            this.SeleccionDeAcceso.Size = new System.Drawing.Size(405, 233);
             this.SeleccionDeAcceso.TabIndex = 8;
             this.SeleccionDeAcceso.TabStop = false;
             this.SeleccionDeAcceso.Text = "Ingrese los datos para realizar su búsqueda";
@@ -256,9 +256,9 @@
             this.groupBox1.Controls.Add(this.EmitirOrdenDeMerito);
             this.groupBox1.Controls.Add(this.ResultadosDeBusqueda);
             this.groupBox1.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.groupBox1.Location = new System.Drawing.Point(157, 327);
+            this.groupBox1.Location = new System.Drawing.Point(157, 329);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(428, 394);
+            this.groupBox1.Size = new System.Drawing.Size(443, 346);
             this.groupBox1.TabIndex = 9;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Resúltados de la búsqueda";
@@ -269,9 +269,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.EmitirOrdenDeMerito.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.EmitirOrdenDeMerito.Location = new System.Drawing.Point(191, 267);
+            this.EmitirOrdenDeMerito.Location = new System.Drawing.Point(179, 267);
             this.EmitirOrdenDeMerito.Name = "EmitirOrdenDeMerito";
-            this.EmitirOrdenDeMerito.Size = new System.Drawing.Size(63, 111);
+            this.EmitirOrdenDeMerito.Size = new System.Drawing.Size(79, 58);
             this.EmitirOrdenDeMerito.TabIndex = 10;
             this.EmitirOrdenDeMerito.Text = "Emitir orden de mérito";
             this.EmitirOrdenDeMerito.UseVisualStyleBackColor = true;
@@ -299,7 +299,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(714, 717);
+            this.ClientSize = new System.Drawing.Size(742, 791);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.SeleccionDeAcceso);
             this.Controls.Add(this.panel2);

@@ -136,14 +136,17 @@ namespace TpDiseñoCSharp
         private void Atras_Click(object sender, EventArgs e)
         {
             ventanaAnterior.Visible = true;
-            Close();
+            this.Visible = false;
         }
 
         private void menuConsultor_Click(object sender, EventArgs e)
         {
-            ventanaMenuPrincipal.Visible = true;
-            ventanaAnterior.Close();
-            Close();
+            if (ventanaMenuPrincipal.Created)
+            {
+                ventanaMenuPrincipal.Visible = true;
+                ventanaAnterior.Close();
+                Close();
+            }
         }
 
         private void CerrarSesion_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
