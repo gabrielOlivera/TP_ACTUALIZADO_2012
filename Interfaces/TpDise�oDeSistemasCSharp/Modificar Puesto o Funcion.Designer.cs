@@ -55,9 +55,9 @@
             this.label1 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.PanelSuperior = new System.Windows.Forms.Panel();
+            this.menuConsultor = new System.Windows.Forms.Button();
             this.Consultor = new System.Windows.Forms.Label();
             this.CerrarSesion = new System.Windows.Forms.LinkLabel();
-            this.menuConsultor = new System.Windows.Forms.Button();
             this.PanelInferior.SuspendLayout();
             this.SeleccionDeAcceso.SuspendLayout();
             this.PanelSuperior.SuspendLayout();
@@ -242,7 +242,7 @@
             // 
             this.labelPond.AutoSize = true;
             this.labelPond.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.labelPond.Location = new System.Drawing.Point(340, 371);
+            this.labelPond.Location = new System.Drawing.Point(364, 371);
             this.labelPond.Name = "labelPond";
             this.labelPond.Size = new System.Drawing.Size(67, 13);
             this.labelPond.TabIndex = 13;
@@ -252,7 +252,7 @@
             // 
             this.labelComp.AutoSize = true;
             this.labelComp.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.labelComp.Location = new System.Drawing.Point(97, 371);
+            this.labelComp.Location = new System.Drawing.Point(71, 371);
             this.labelComp.Name = "labelComp";
             this.labelComp.Size = new System.Drawing.Size(69, 13);
             this.labelComp.TabIndex = 12;
@@ -261,9 +261,9 @@
             // panelCaracteristicas
             // 
             this.panelCaracteristicas.AutoScroll = true;
-            this.panelCaracteristicas.Location = new System.Drawing.Point(38, 387);
+            this.panelCaracteristicas.Location = new System.Drawing.Point(9, 387);
             this.panelCaracteristicas.Name = "panelCaracteristicas";
-            this.panelCaracteristicas.Size = new System.Drawing.Size(446, 88);
+            this.panelCaracteristicas.Size = new System.Drawing.Size(485, 88);
             this.panelCaracteristicas.TabIndex = 9;
             // 
             // label5
@@ -364,6 +364,16 @@
             this.PanelSuperior.Size = new System.Drawing.Size(877, 62);
             this.PanelSuperior.TabIndex = 13;
             // 
+            // menuConsultor
+            // 
+            this.menuConsultor.Location = new System.Drawing.Point(12, 34);
+            this.menuConsultor.Name = "menuConsultor";
+            this.menuConsultor.Size = new System.Drawing.Size(128, 23);
+            this.menuConsultor.TabIndex = 15;
+            this.menuConsultor.Text = "Volver al menú principal";
+            this.menuConsultor.UseVisualStyleBackColor = true;
+            this.menuConsultor.Click += new System.EventHandler(this.menuConsultor_Click);
+            // 
             // Consultor
             // 
             this.Consultor.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -384,16 +394,6 @@
             this.CerrarSesion.TabIndex = 13;
             this.CerrarSesion.TabStop = true;
             this.CerrarSesion.Text = "Cerrar Sesión";
-            // 
-            // menuConsultor
-            // 
-            this.menuConsultor.Location = new System.Drawing.Point(12, 34);
-            this.menuConsultor.Name = "menuConsultor";
-            this.menuConsultor.Size = new System.Drawing.Size(128, 23);
-            this.menuConsultor.TabIndex = 15;
-            this.menuConsultor.Text = "Volver al menú principal";
-            this.menuConsultor.UseVisualStyleBackColor = true;
-            this.menuConsultor.Click += new System.EventHandler(this.menuConsultor_Click);
             // 
             // Modificar_Puesto_o_Funcion
             // 

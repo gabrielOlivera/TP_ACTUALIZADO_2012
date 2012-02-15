@@ -75,8 +75,12 @@ namespace TpDiseñoCSharp
 
                 if (listaPuesto != null)
                 {
-                    GroupBox paraSeleccion = mostrarPuestos(listaPuesto);
+                    Panel paraSeleccion = mostrarPuestos(listaPuesto);
+                    paraSeleccion.AutoScroll = true;
                     mensajePuesto = new Form();
+                    mensajePuesto.MaximizeBox = false;
+                    mensajePuesto.MinimizeBox = false;
+                    mensajePuesto.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
 
                     Button Aceptar = new Button();
                     Aceptar.Text = "Aceptar";
@@ -91,52 +95,54 @@ namespace TpDiseñoCSharp
                     mensajePuesto.ShowDialog();
                 }
 
-
-                if (Equals(puestoSeleccionado.Caracteristicas[0].dato1.GetType(), "stringEJEMPLO".GetType()) == false)
+                if (puestoSeleccionado != null)
                 {
-                    int cadenaMasLarga = 0;
-                    for (int i = 0; i < puestoSeleccionado.Caracteristicas.Count; i++)
+                    if (Equals(puestoSeleccionado.Caracteristicas[0].dato1.GetType(), "stringEJEMPLO".GetType()) == false)
                     {
-                        Competencia comp_ = (Competencia)puestoSeleccionado.Caracteristicas[i].dato1;
-                        if (cadenaMasLarga < comp_.Nombre.Count())
-                            cadenaMasLarga = comp_.Nombre.Count();
+                        int cadenaMasLarga = 0;
+                        for (int i = 0; i < puestoSeleccionado.Caracteristicas.Count; i++)
+                        {
+                            Competencia comp_ = (Competencia)puestoSeleccionado.Caracteristicas[i].dato1;
+                            if (cadenaMasLarga < comp_.Nombre.Count())
+                                cadenaMasLarga = comp_.Nombre.Count();
+                        }
+
+                        Label label_competencia = new Label();
+                        Label label_ponderacion = new Label();
+                        label_competencia.Text = "Competencias"; label_competencia.AutoSize = true;
+                        label_competencia.Location = new Point(50, 30);
+
+                        label_ponderacion.Text = "Ponderación"; label_ponderacion.AutoSize = true;
+                        label_ponderacion.Location = new Point(label_competencia.Right + (cadenaMasLarga * 6), 30);
+
+                        CaracteristicasDel_puesto.Controls.Add(label_competencia);
+                        CaracteristicasDel_puesto.Controls.Add(label_ponderacion);
+
+                        for (int i = 0; i < puestoSeleccionado.Caracteristicas.Count; i++)
+                        {
+                            Competencia comp_ = (Competencia)puestoSeleccionado.Caracteristicas[i].dato1;
+                            Ponderacion pond_ = (Ponderacion)puestoSeleccionado.Caracteristicas[i].dato2;
+
+                            Label label_comp_ = new Label();
+                            Label label_pond_ = new Label();
+
+                            label_comp_.Text = comp_.Nombre; label_comp_.AutoSize = true;
+                            label_comp_.Location = new Point(50, label_competencia.Bottom + (i * 20));
+
+                            label_pond_.Text = pond_.Valor.ToString(); label_pond_.AutoSize = true;
+                            label_pond_.Location = new Point(label_comp_.Right + (cadenaMasLarga * 6), label_ponderacion.Bottom + (i * 20));
+
+                            CaracteristicasDel_puesto.Controls.Add(label_comp_);
+                            CaracteristicasDel_puesto.Controls.Add(label_pond_);
+                        }
+
+                        CaracteristicasDel_puesto.Text = "Competencias asociadas al puesto: " + puestoSeleccionado.Nombre;
+                        CaracteristicasDel_puesto.Visible = true;
+                        Siguiente.Visible = true;
                     }
-
-                    Label label_competencia = new Label();
-                    Label label_ponderacion = new Label();
-                    label_competencia.Text = "Competencias"; label_competencia.AutoSize = true;
-                    label_competencia.Location = new Point(50, 30);
-
-                    label_ponderacion.Text = "Ponderación"; label_ponderacion.AutoSize = true;
-                    label_ponderacion.Location = new Point(label_competencia.Right + (cadenaMasLarga * 6), 30);
-
-                    CaracteristicasDel_puesto.Controls.Add(label_competencia);
-                    CaracteristicasDel_puesto.Controls.Add(label_ponderacion);
-
-                    for (int i = 0; i < puestoSeleccionado.Caracteristicas.Count; i++)
-                    {
-                        Competencia comp_ = (Competencia)puestoSeleccionado.Caracteristicas[i].dato1;
-                        Ponderacion pond_ = (Ponderacion)puestoSeleccionado.Caracteristicas[i].dato2;
-
-                        Label label_comp_ = new Label();
-                        Label label_pond_ = new Label();
-
-                        label_comp_.Text = comp_.Nombre; label_comp_.AutoSize = true;
-                        label_comp_.Location = new Point(50, label_competencia.Bottom + (i * 20));
-
-                        label_pond_.Text = pond_.Valor.ToString(); label_pond_.AutoSize = true;
-                        label_pond_.Location = new Point(label_comp_.Right + (cadenaMasLarga * 6), label_ponderacion.Bottom + (i * 20));
-
-                        CaracteristicasDel_puesto.Controls.Add(label_comp_);
-                        CaracteristicasDel_puesto.Controls.Add(label_pond_);
-                    }
-
-                    CaracteristicasDel_puesto.Text = "Competencias asociadas al puesto: " + puestoSeleccionado.Nombre;
-                    CaracteristicasDel_puesto.Visible = true;
-                    Siguiente.Visible = true;
+                    else
+                        MessageBox.Show(puestoSeleccionado.Caracteristicas[0].dato1.ToString());
                 }
-                else
-                    MessageBox.Show(puestoSeleccionado.Caracteristicas[0].dato1.ToString());
             }
 
         }
@@ -170,10 +176,10 @@ namespace TpDiseñoCSharp
         /*
        * El metodo mostrarPreguntas hace la construccion en pantalla del bloque con las preguntas que se deberan responder
        */
-        public GroupBox mostrarPuestos(List<Puesto> listPuestos)
+        public Panel mostrarPuestos(List<Puesto> listPuestos)
         {
             Seleccion_puesto_check = new List<Caracteristica>();
-            GroupBox espacioDe_Puestos = new GroupBox();
+            Panel espacioDe_Puestos = new Panel();
             espacioDe_Puestos.Text = "Elija un puesto para evaluar a los candidatos";
             espacioDe_Puestos.Width = espacioDe_Puestos.Text.Length * 10;
             espacioDe_Puestos.Location = new Point(50, 20);
@@ -206,7 +212,7 @@ namespace TpDiseñoCSharp
          * que agruparan las opciones de respuestas posibles para una pregunta, añadiendoles un checkBox para señalar la respuesta
          * seleccionada por el usuario o candidato
          */
-        private RadioButton ubicarOpcion(GroupBox espacioPuestos, string opcion, int distanciaMaxima)
+        private RadioButton ubicarOpcion(Panel espacioPuestos, string opcion, int distanciaMaxima)
         {
             RadioButton checkPregunta = new RadioButton();
 

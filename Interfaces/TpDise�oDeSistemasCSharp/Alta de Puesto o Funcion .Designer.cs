@@ -198,7 +198,7 @@
             // 
             this.labelPond.AutoSize = true;
             this.labelPond.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.labelPond.Location = new System.Drawing.Point(340, 371);
+            this.labelPond.Location = new System.Drawing.Point(364, 371);
             this.labelPond.Name = "labelPond";
             this.labelPond.Size = new System.Drawing.Size(67, 13);
             this.labelPond.TabIndex = 13;
@@ -208,7 +208,7 @@
             // 
             this.labelComp.AutoSize = true;
             this.labelComp.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.labelComp.Location = new System.Drawing.Point(97, 371);
+            this.labelComp.Location = new System.Drawing.Point(71, 371);
             this.labelComp.Name = "labelComp";
             this.labelComp.Size = new System.Drawing.Size(69, 13);
             this.labelComp.TabIndex = 12;
@@ -241,9 +241,9 @@
             // panelCaracteristicas
             // 
             this.panelCaracteristicas.AutoScroll = true;
-            this.panelCaracteristicas.Location = new System.Drawing.Point(38, 387);
+            this.panelCaracteristicas.Location = new System.Drawing.Point(9, 387);
             this.panelCaracteristicas.Name = "panelCaracteristicas";
-            this.panelCaracteristicas.Size = new System.Drawing.Size(436, 88);
+            this.panelCaracteristicas.Size = new System.Drawing.Size(485, 88);
             this.panelCaracteristicas.TabIndex = 9;
             // 
             // label5

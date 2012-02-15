@@ -19,6 +19,7 @@ namespace TpDiseñoCSharp
         public Lista_de_Candidatos(List<Candidato> listaParametro)
         {
             InitializeComponent();
+            this.Fecha.Text = DateTime.Now.ToLongDateString();
             listaCandidatoEliminados = new List<Candidato>();
             listaCandidatoAgregados = listaParametro;
             dataGridView1.DataSource = listaCandidatoAgregados;

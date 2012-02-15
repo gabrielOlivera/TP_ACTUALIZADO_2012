@@ -45,6 +45,7 @@ namespace TpDiseñoCSharp
             ventanaAnterior= gestPuesto;
             ventanaMenuConsultor = ventanaConsultor;
             InitializeComponent();
+            this.Fecha.Text = DateTime.Now.ToLongDateString();
 
             //Este codigo se utiliza para setear el nombre del usuario conectado y su ubicacion
             this.Consultor.Text = User;

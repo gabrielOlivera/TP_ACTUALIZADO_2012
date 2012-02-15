@@ -18,6 +18,7 @@ namespace TpDiseñoCSharp
         public LoginConsultor(Form pantallaPrincipal_parametro)
         {
             InitializeComponent();
+            this.Fecha.Text = DateTime.Now.ToLongDateString();
             pantanllaPrincipal = pantallaPrincipal_parametro;
         }
 

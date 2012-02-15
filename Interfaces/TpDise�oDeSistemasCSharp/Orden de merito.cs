@@ -17,7 +17,7 @@ namespace TpDiseñoCSharp
         public Orden_de_merito(String info_Ev, List<Candidato_Vista_impresion> sin_contestar, List<Candidato_Vista_impresion> Incompletos, List<Candidato_Vista_impresion> completos_sin_minimos, List<Candidato_Vista_impresion> completos_con_minimos )
         {
             InitializeComponent();
- 
+            
             
             completosCON_minimos_dgv.DataSource = completos_con_minimos;
             completosSIN_minimos_dgv.DataSource = completos_sin_minimos;

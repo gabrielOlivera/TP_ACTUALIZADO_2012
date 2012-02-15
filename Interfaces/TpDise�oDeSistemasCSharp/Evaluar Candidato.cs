@@ -120,18 +120,21 @@ namespace TpDiseñoCSharp
 
         private void Agregar_Click(object sender, EventArgs e)
         {
-            int fila_seleccionada = resultadosDeBusqueda.CurrentRow.Index;
-            bool noAgregado = true;
+            if (resultadosDeBusqueda.DataSource != null)
+            {
+                int fila_seleccionada = resultadosDeBusqueda.CurrentRow.Index;
+                bool noAgregado = true;
 
-            List<Candidato> lista_cand_ = (List<Candidato>)resultadosDeBusqueda.DataSource;
-            //MessageBox.Show("candidato seleccionado " + lista_cand_[fila_seleccionada].Apellido +" "+ lista_cand_[fila_seleccionada].Nombre);
+                List<Candidato> lista_cand_ = (List<Candidato>)resultadosDeBusqueda.DataSource;
+                //MessageBox.Show("candidato seleccionado " + lista_cand_[fila_seleccionada].Apellido +" "+ lista_cand_[fila_seleccionada].Nombre);
 
-            if(listaCandidatos_agregados.Exists(delegate(Candidato c) { return c.NroDoc == lista_cand_[fila_seleccionada].NroDoc; }))
-                noAgregado = false;
+                if (listaCandidatos_agregados.Exists(delegate(Candidato c) { return c.NroDoc == lista_cand_[fila_seleccionada].NroDoc; }))
+                    noAgregado = false;
 
-            //MessageBox.Show("NO fue agregado ?? " + noAgregado);
-            if(noAgregado == true)
-                listaCandidatos_agregados.Add(lista_cand_[fila_seleccionada]);
+                //MessageBox.Show("NO fue agregado ?? " + noAgregado);
+                if (noAgregado == true)
+                    listaCandidatos_agregados.Add(lista_cand_[fila_seleccionada]);
+            }
 
         }
 

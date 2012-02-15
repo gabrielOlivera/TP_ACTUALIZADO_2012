@@ -18,6 +18,7 @@ namespace TpDiseñoCSharp
         public Gestionar_Puestos(Form ventana_Anterior,string user)
         {
             InitializeComponent();
+            this.Fecha.Text = DateTime.Now.ToLongDateString();
 
             ventanaMenuConsultor = ventana_Anterior;
 

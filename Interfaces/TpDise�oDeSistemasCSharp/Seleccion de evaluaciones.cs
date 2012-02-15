@@ -18,6 +18,7 @@ namespace TpDiseñoCSharp
         public Seleccion_de_evaluaciones(List<PuestoEvaluado> Lista_puestos_ev)
         {
             InitializeComponent();
+            
             selecciondatagridW.DataSource = Lista_puestos_ev;
         }
 
