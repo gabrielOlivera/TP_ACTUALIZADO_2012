@@ -90,65 +90,68 @@ namespace TpDiseñoCSharp
          */
         private void agregarCaracteristicasPuesto(List<Caracteristica> listaDeCaracteristica)
         {
-            for (int j = 0; j < listaDeCaracteristica.Count; j++)
+            if (listaDeCaracteristica != null)
             {
-                Caracteristica Elemento;
-
-
-                //Crea los CheckBox
-                CheckBox check = new CheckBox();
-
-
-                //Crea los nuevos ComboBox
-                ComboBox Comp = new ComboBox();
-                ComboBox Pond = new ComboBox();
-
-                for (int n = 0; n <= 10; n++)
+                for (int j = 0; j < listaDeCaracteristica.Count; j++)
                 {
-                    Pond.Items.Add(n);
-                }
-                int elementoSeleccionado = Int32.Parse(listaDeCaracteristica[j].dato2.ToString());
-                Pond.SelectedIndex = elementoSeleccionado;
+                    Caracteristica Elemento;
 
-                int indice = 0;
-                for (int k = 0; k < listaDeCompetencias.Count; k++)
-                {
 
-                    Comp.Items.Add(listaDeCompetencias[k]);
-                    if (listaDeCompetencias[k].Nombre.ToString() == listaDeCaracteristica[j].dato1.ToString())
-                        indice = k;
+                    //Crea los CheckBox
+                    CheckBox check = new CheckBox();
 
-                    if (mayor < listaDeCompetencias[k].Nombre.Length)
+
+                    //Crea los nuevos ComboBox
+                    ComboBox Comp = new ComboBox();
+                    ComboBox Pond = new ComboBox();
+
+                    for (int n = 0; n <= 10; n++)
                     {
-                        mayor = listaDeCompetencias[k].Nombre.Length;
+                        Pond.Items.Add(n);
                     }
+                    int elementoSeleccionado = Int32.Parse(listaDeCaracteristica[j].dato2.ToString());
+                    Pond.SelectedIndex = elementoSeleccionado;
 
+                    int indice = 0;
+                    for (int k = 0; k < listaDeCompetencias.Count; k++)
+                    {
+
+                        Comp.Items.Add(listaDeCompetencias[k]);
+                        if (listaDeCompetencias[k].Nombre.ToString() == listaDeCaracteristica[j].dato1.ToString())
+                            indice = k;
+
+                        if (mayor < listaDeCompetencias[k].Nombre.Length)
+                        {
+                            mayor = listaDeCompetencias[k].Nombre.Length;
+                        }
+
+                    }
+                    Comp.SelectedIndex = indice;
+                    Comp.Width = (mayor) * 8;
+
+                    check.Text = "";
+                    //Inicializa cada miembro de elemento con el text box correspondiente
+                    Elemento.dato1 = Comp;
+                    Elemento.dato2 = Pond;
+
+
+                    //Agrega elemente a la "lista CaracPuesto"
+                    CaractPuesto.Add(Elemento);
+                    listaDeCheckBox.Add(check);
+
+                    //Inicializa las propiedades de los text boxes para ser mostrados de manera alineada
+                    Comp.Location = new Point((labelComp.Location.X) - (labelComp.Size.Width / 2), (j * 30));
+                    Pond.Location = new Point((labelPond.Location.X) - (labelPond.Size.Width / 2), Comp.Top);
+                    check.Location = new Point((labelComp.Location.X) - (labelComp.Size.Width), Comp.Top);
+                    Comp.DropDownStyle = ComboBoxStyle.DropDownList;
+                    Pond.DropDownStyle = ComboBoxStyle.DropDownList;
+
+                    //Agrega los text boxes al panel que se encuentra en "Alta de Puesto o Funcion"
+                    panelCaracteristicas.Controls.Add((ComboBox)Elemento.dato1);
+                    panelCaracteristicas.Controls.Add((ComboBox)Elemento.dato2);
+                    panelCaracteristicas.Controls.Add(check);
+                    i++;
                 }
-                Comp.SelectedIndex = indice;
-                Comp.Width = (mayor) * 8;
-
-                check.Text = "";
-                //Inicializa cada miembro de elemento con el text box correspondiente
-                Elemento.dato1 = Comp;
-                Elemento.dato2 = Pond;
-
-
-                //Agrega elemente a la "lista CaracPuesto"
-                CaractPuesto.Add(Elemento);
-                listaDeCheckBox.Add(check);
-
-                //Inicializa las propiedades de los text boxes para ser mostrados de manera alineada
-                Comp.Location = new Point((labelComp.Location.X) - (labelComp.Size.Width / 2), (j * 30));
-                Pond.Location = new Point((labelPond.Location.X) - (labelPond.Size.Width / 2), Comp.Top);
-                check.Location = new Point((labelComp.Location.X) - (labelComp.Size.Width), Comp.Top);
-                Comp.DropDownStyle = ComboBoxStyle.DropDownList;
-                Pond.DropDownStyle = ComboBoxStyle.DropDownList;
-
-                //Agrega los text boxes al panel que se encuentra en "Alta de Puesto o Funcion"
-                panelCaracteristicas.Controls.Add((ComboBox)Elemento.dato1);
-                panelCaracteristicas.Controls.Add((ComboBox)Elemento.dato2);
-                panelCaracteristicas.Controls.Add(check);
-                i++;
             }
             
         }

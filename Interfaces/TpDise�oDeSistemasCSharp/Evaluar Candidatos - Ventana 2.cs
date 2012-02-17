@@ -111,10 +111,10 @@ namespace TpDiseñoCSharp
 
                         Label label_competencia = new Label();
                         Label label_ponderacion = new Label();
-                        label_competencia.Text = "Competencias"; label_competencia.AutoSize = true;
+                        label_competencia.Text = "COMPETENCIAS"; label_competencia.AutoSize = true;
                         label_competencia.Location = new Point(50, 30);
 
-                        label_ponderacion.Text = "Ponderación"; label_ponderacion.AutoSize = true;
+                        label_ponderacion.Text = "PONDERACIÓNES"; label_ponderacion.AutoSize = true;
                         label_ponderacion.Location = new Point(label_competencia.Right + (cadenaMasLarga * 6), 30);
 
                         CaracteristicasDel_puesto.Controls.Add(label_competencia);

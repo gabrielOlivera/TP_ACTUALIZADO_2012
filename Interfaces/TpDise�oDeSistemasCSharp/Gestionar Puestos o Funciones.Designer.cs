@@ -106,7 +106,7 @@
             // 
             // SeleccionDeAcceso
             // 
-            this.SeleccionDeAcceso.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.SeleccionDeAcceso.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.SeleccionDeAcceso.Controls.Add(this.Nuevo);
             this.SeleccionDeAcceso.ForeColor = System.Drawing.SystemColors.HotTrack;
             this.SeleccionDeAcceso.Location = new System.Drawing.Point(185, 90);
@@ -181,7 +181,7 @@
             // 
             // DatosParaBusqueda
             // 
-            this.DatosParaBusqueda.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.DatosParaBusqueda.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.DatosParaBusqueda.Controls.Add(this.BuscarPuestos);
             this.DatosParaBusqueda.Controls.Add(this.Empresa);
             this.DatosParaBusqueda.Controls.Add(this.NombreDePuesto);
@@ -190,7 +190,7 @@
             this.DatosParaBusqueda.Controls.Add(this.label2);
             this.DatosParaBusqueda.Controls.Add(this.label1);
             this.DatosParaBusqueda.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.DatosParaBusqueda.Location = new System.Drawing.Point(185, 152);
+            this.DatosParaBusqueda.Location = new System.Drawing.Point(185, 161);
             this.DatosParaBusqueda.Name = "DatosParaBusqueda";
             this.DatosParaBusqueda.Size = new System.Drawing.Size(430, 206);
             this.DatosParaBusqueda.TabIndex = 10;
@@ -268,12 +268,12 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.groupBox1.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.groupBox1.Controls.Add(this.Eliminar);
             this.groupBox1.Controls.Add(this.Modificar);
             this.groupBox1.Controls.Add(this.listaDePuesto);
             this.groupBox1.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.groupBox1.Location = new System.Drawing.Point(185, 364);
+            this.groupBox1.Location = new System.Drawing.Point(185, 382);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(540, 340);
             this.groupBox1.TabIndex = 11;
