@@ -86,9 +86,17 @@ namespace TpDiseñoCSharp
         */
         private void Modificar_Click(object sender, EventArgs e)
         {
-            string codigo = (string)listaDePuesto.CurrentRow.Cells["Codigo"].Value;
-            Modificar_Puesto_o_Funcion modificarPuesto = new Modificar_Puesto_o_Funcion(this.Consultor.Text, ventanaMenuConsultor, this, codigo);
-            modificarPuesto.ShowDialog();
+            if (listaDePuesto.DataSource != null)
+            {
+                string codigo = (string)listaDePuesto.CurrentRow.Cells["Codigo"].Value;
+                Modificar_Puesto_o_Funcion modificarPuesto = new Modificar_Puesto_o_Funcion(this.Consultor.Text, ventanaMenuConsultor, this, codigo);
+                modificarPuesto.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("Debe realizar una busqueda de datos", "INFORMACIÓN",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
 
         /*
@@ -100,38 +108,46 @@ namespace TpDiseñoCSharp
 
         private void Eliminar_Click(object sender, EventArgs e)
         {
-            string codigo = (string)listaDePuesto.CurrentRow.Cells["Codigo"].Value;
-            string nomPuesto = (string)listaDePuesto.CurrentRow.Cells["Nombre"].Value;
-            GestorPuesto gestorPuesto = new GestorPuesto();
-            bool puestoEvaluado,eliminado;
-
-            //En puestoEvaluado guardamos el retorno del método tieneElPuestoEvaluacionesAsociadas
-            puestoEvaluado = gestorPuesto.tieneElPuestoEvaluacionesAsociadas(codigo);
-
-            if (!puestoEvaluado)
+            if (listaDePuesto.DataSource != null)
             {
-                
-                if (MessageBox.Show("Los datos del puesto " + nomPuesto + " serán eliminados del sistema", "Advertencia",
-                MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.Yes)
+                string codigo = (string)listaDePuesto.CurrentRow.Cells["Codigo"].Value;
+                string nomPuesto = (string)listaDePuesto.CurrentRow.Cells["Nombre"].Value;
+                GestorPuesto gestorPuesto = new GestorPuesto();
+                bool puestoEvaluado, eliminado;
+
+                //En puestoEvaluado guardamos el retorno del método tieneElPuestoEvaluacionesAsociadas
+                puestoEvaluado = gestorPuesto.tieneElPuestoEvaluacionesAsociadas(codigo);
+
+                if (!puestoEvaluado)
                 {
-                    eliminado = gestorPuesto.eliminarPuesto(codigo);
-                    if (eliminado)
+
+                    if (MessageBox.Show("Los datos del puesto " + nomPuesto + " serán eliminados del sistema", "ADVERTENCIA",
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.Yes)
                     {
-                        MessageBox.Show("Los datos del puesto " + nomPuesto + " han sido eliminados del sistema", "Éxito",
-                MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        BuscarPuestos_Click(sender,e);
+                        eliminado = gestorPuesto.eliminarPuesto(codigo);
+                        if (eliminado)
+                        {
+                            MessageBox.Show("Los datos del puesto " + nomPuesto + " han sido eliminados del sistema", "ÉXITO",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            BuscarPuestos_Click(sender, e);
+                        }
+                        else
+                            MessageBox.Show("No se ha podido eliminar el puesto", "ERROR",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+
                     }
                     else
-                        MessageBox.Show("No se ha podido eliminar el puesto", "Error",
-                MessageBoxButtons.OK, MessageBoxIcon.Error);
-
+                        this.Close();
                 }
                 else
-                    this.Close();
+                    MessageBox.Show("El puesto " + nomPuesto + " está siendo usado en la base de datos y no puede eliminarse", "ADVERTENCIA",
+                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
             else
-                MessageBox.Show("El puesto " + nomPuesto + " está siendo usado en la base de datos y no puede eliminarse", "Advertencia",
-                MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            {
+                MessageBox.Show("Debe realizar una busqueda de datos", "INFORMACIÓN",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
         
         private void menuConsultor_Click(object sender, EventArgs e)

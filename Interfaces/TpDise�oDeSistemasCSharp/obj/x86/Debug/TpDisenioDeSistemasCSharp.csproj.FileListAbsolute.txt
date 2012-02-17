@@ -120,7 +120,6 @@ C:\Users\GRACIANA\Desktop\TP_disenio2012\Interfaces\TpDiseñoDeSistemasCSharp\ob
 C:\Users\GRACIANA\Desktop\TP_disenio2012\Interfaces\TpDiseñoDeSistemasCSharp\obj\x86\Debug\TpDiseñoCSharp.Completar_Cuestionario.resources
 C:\Users\GRACIANA\Desktop\TP_disenio2012\Interfaces\TpDiseñoDeSistemasCSharp\obj\x86\Debug\TpDiseñoCSharp.Evaluar_Candidatos___Ventana_3.resources
 C:\Users\GRACIANA\Desktop\TP_disenio2012\Interfaces\TpDiseñoDeSistemasCSharp\obj\x86\Debug\TpDiseñoCSharp.Modificar_Puesto_o_Funcion.resources
-C:\Users\GRACIANA\Desktop\TP_disenio2012\Interfaces\TpDiseñoDeSistemasCSharp\obj\x86\Debug\TpDiseñoCSharp.OrdenDeMerito_VistaImpresion.resources
 C:\Users\GRACIANA\Desktop\TP_disenio2012\Interfaces\TpDiseñoDeSistemasCSharp\obj\x86\Debug\TpDiseñoCSharp.PantallaPrincipal.resources
 C:\Users\GRACIANA\Desktop\TP_disenio2012\Interfaces\TpDiseñoDeSistemasCSharp\obj\x86\Debug\TpDiseñoCSharp.Cuestionario_Instrucciones.resources
 C:\Users\GRACIANA\Desktop\TP_disenio2012\Interfaces\TpDiseñoDeSistemasCSharp\obj\x86\Debug\TpDiseñoCSharp.Emitir_Orden_de_Mérito.resources
@@ -237,3 +236,4 @@ C:\Documents and Settings\Administrador\Escritorio\TP 2012 repositorio\Interface
 C:\Documents and Settings\Administrador\Escritorio\TP 2012 repositorio\Interfaces\TpDiseñoDeSistemasCSharp\obj\x86\Debug\GenerateResource.write.1.tlog
 C:\Users\usuario\Desktop\TP 2012 Repositorio Online\Interfaces\TpDiseñoDeSistemasCSharp\obj\x86\Debug\TpDiseñoCSharp.Orden_de_merito.resources
 D:\UTN\Diseño de Sistemas\TP 2012 repositorio\Interfaces\TpDiseñoDeSistemasCSharp\obj\x86\Debug\TpDiseñoCSharp.Orden_de_merito.resources
+C:\Users\GRACIANA\Desktop\TP_disenio2012\Interfaces\TpDiseñoDeSistemasCSharp\obj\x86\Debug\TpDiseñoCSharp.Orden_de_merito.resources

@@ -66,7 +66,7 @@
             this.SeleccionDeAcceso.TabIndex = 9;
             this.SeleccionDeAcceso.TabStop = false;
             this.SeleccionDeAcceso.Text = "Seleccione el puesto y nombre de la empresa para los que desee evaluar los candid" +
-    "atos";
+                "atos";
             // 
             // Buscar
             // 
@@ -214,6 +214,7 @@
             // 
             // Atras
             // 
+            this.Atras.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.Atras.Location = new System.Drawing.Point(382, 428);
             this.Atras.Name = "Atras";
             this.Atras.Size = new System.Drawing.Size(75, 23);
@@ -224,6 +225,7 @@
             // 
             // Siguiente
             // 
+            this.Siguiente.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.Siguiente.Location = new System.Drawing.Point(483, 428);
             this.Siguiente.Name = "Siguiente";
             this.Siguiente.Size = new System.Drawing.Size(75, 23);
@@ -235,6 +237,7 @@
             // 
             // CaracteristicasDel_puesto
             // 
+            this.CaracteristicasDel_puesto.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.CaracteristicasDel_puesto.AutoSize = true;
             this.CaracteristicasDel_puesto.ForeColor = System.Drawing.SystemColors.HotTrack;
             this.CaracteristicasDel_puesto.Location = new System.Drawing.Point(112, 279);
