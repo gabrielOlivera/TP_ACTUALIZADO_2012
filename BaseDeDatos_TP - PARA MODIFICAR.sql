@@ -195,7 +195,7 @@ CREATE TABLE `cuestionario` (
   KEY `fk_Cuestionario_Candidato1` (`Candidato_idCandidato`),
   CONSTRAINT `fk_Cuestionario_Candidato1` FOREIGN KEY (`Candidato_idCandidato`) REFERENCES `candidato` (`idCandidato`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_Cuestionario_Puesto Evaluado1` FOREIGN KEY (`Puesto Evaluado_idPuesto Evaluado`) REFERENCES `puesto evaluado` (`idPuesto Evaluado`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -204,7 +204,7 @@ CREATE TABLE `cuestionario` (
 
 LOCK TABLES `cuestionario` WRITE;
 /*!40000 ALTER TABLE `cuestionario` DISABLE KEYS */;
-INSERT INTO `cuestionario` VALUES (1,'JPM056P1',2,1,1,3),(2,'ACF698P1',0,1,3,1),(3,'ECM684P3',0,4,8,1),(4,'MMF125P2',1,2,4,3),(5,'WDM158P2',0,2,10,NULL),(6,'MPF126P2',3,5,13,NULL),(8,'MNF425P3',4,3,1,4),(9,'NBM666P2',4,5,2,4);
+INSERT INTO `cuestionario` VALUES (1,'JPM056P1',2,1,1,3),(2,'ACF698P1',0,1,3,1),(3,'ECM684P3',0,4,8,1),(4,'MMF125P2',1,2,4,3),(5,'WDM158P2',0,2,10,NULL),(6,'MPF126P2',3,5,13,NULL),(8,'MNF425P3',4,3,1,4),(9,'NBM666P2',4,5,2,4),(11,'PGS896P0',0,8,6,NULL),(12,'JPS056P0',0,9,1,NULL);
 /*!40000 ALTER TABLE `cuestionario` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -233,7 +233,7 @@ CREATE TABLE `cuestionario_estado` (
 
 LOCK TABLES `cuestionario_estado` WRITE;
 /*!40000 ALTER TABLE `cuestionario_estado` DISABLE KEYS */;
-INSERT INTO `cuestionario_estado` VALUES (1,1,'2011-12-13 09:10:12'),(2,1,'2011-12-13 09:10:12'),(3,1,'2011-12-12 09:05:33'),(4,1,'2011-12-12 09:20:33'),(5,1,'2011-12-12 09:05:33'),(6,1,'2011-11-01 02:05:33'),(8,1,'2011-08-10 10:05:32'),(9,1,'2006-08-15 09:02:14'),(1,2,'2011-12-14 16:32:21'),(1,2,'2012-02-09 21:24:03'),(2,2,'2011-12-13 18:25:30'),(3,2,'2011-12-14 10:15:00'),(4,2,'2012-01-30 20:32:46'),(4,2,'2012-02-05 03:32:46'),(6,2,'2011-11-05 02:05:33'),(9,2,'2006-08-16 09:02:14'),(8,3,'2011-08-15 16:02:14'),(4,4,'2012-02-25 20:32:46'),(1,5,'2012-02-09 21:24:44'),(6,5,'2011-11-12 02:05:33'),(9,5,'2006-08-23 09:02:14');
+INSERT INTO `cuestionario_estado` VALUES (1,1,'2011-12-13 09:10:12'),(2,1,'2011-12-13 09:10:12'),(3,1,'2011-12-12 09:05:33'),(4,1,'2011-12-12 09:20:33'),(5,1,'2011-12-12 09:05:33'),(6,1,'2011-11-01 02:05:33'),(8,1,'2011-08-10 10:05:32'),(9,1,'2006-08-15 09:02:14'),(11,1,'2012-02-13 17:44:44'),(12,1,'2012-02-14 17:27:52'),(1,2,'2011-12-14 16:32:21'),(1,2,'2012-02-09 21:24:03'),(2,2,'2011-12-13 18:25:30'),(3,2,'2011-12-14 10:15:00'),(4,2,'2012-01-30 20:32:46'),(4,2,'2012-02-05 03:32:46'),(6,2,'2011-11-05 02:05:33'),(9,2,'2006-08-16 09:02:14'),(8,3,'2011-08-15 16:02:14'),(4,4,'2012-02-25 20:32:46'),(1,5,'2012-02-09 21:24:44'),(6,5,'2011-11-12 02:05:33'),(9,5,'2006-08-23 09:02:14');
 /*!40000 ALTER TABLE `cuestionario_estado` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -731,7 +731,7 @@ CREATE TABLE `puesto evaluado` (
   `empresa` varchar(20) NOT NULL,
   PRIMARY KEY (`idPuesto Evaluado`),
   UNIQUE KEY `idPuesto Evaluado_UNIQUE` (`idPuesto Evaluado`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -740,7 +740,7 @@ CREATE TABLE `puesto evaluado` (
 
 LOCK TABLES `puesto evaluado` WRITE;
 /*!40000 ALTER TABLE `puesto evaluado` DISABLE KEYS */;
-INSERT INTO `puesto evaluado` VALUES (1,'P01','DESARROLLADOR JAVA',NULL,NULL,'MILENIO'),(2,'P02','DISEÑADOR SISTEMAS',NULL,NULL,'SIMS'),(3,'P03','PROGRAMADOR C++',NULL,1,'MILENIO'),(4,'P03','PROGRAMADOR C++',NULL,NULL,'MILENIO'),(5,'P02','DISEÑADOR SISTEMAS',NULL,1,'SIMS');
+INSERT INTO `puesto evaluado` VALUES (1,'P01','DESARROLLADOR JAVA',NULL,NULL,'MILENIO'),(2,'P02','DISEÑADOR SISTEMAS',NULL,NULL,'SIMS'),(3,'P03','PROGRAMADOR C++',NULL,1,'MILENIO'),(4,'P03','PROGRAMADOR C++',NULL,NULL,'MILENIO'),(5,'P02','DISEÑADOR SISTEMAS',NULL,1,'SIMS'),(8,'P02','DISEÑADOR SITEMAS','',NULL,'SIMS'),(9,'P02','DISEÑADOR SITEMAS','',NULL,'SIMS');
 /*!40000 ALTER TABLE `puesto evaluado` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -769,7 +769,7 @@ CREATE TABLE `puesto evaluado_competencia evaluada` (
 
 LOCK TABLES `puesto evaluado_competencia evaluada` WRITE;
 /*!40000 ALTER TABLE `puesto evaluado_competencia evaluada` DISABLE KEYS */;
-INSERT INTO `puesto evaluado_competencia evaluada` VALUES (1,3,5),(1,4,2),(1,5,3),(2,1,1),(2,2,5),(2,3,3),(2,4,1),(5,1,4),(5,2,3),(5,3,3),(5,4,2);
+INSERT INTO `puesto evaluado_competencia evaluada` VALUES (1,3,5),(1,4,2),(1,5,3),(2,1,1),(2,2,5),(2,3,3),(2,4,1),(5,1,4),(5,2,3),(5,3,3),(5,4,2),(8,1,1),(8,2,5),(8,3,3),(8,4,1),(9,1,1),(9,2,5),(9,3,3),(9,4,1);
 /*!40000 ALTER TABLE `puesto evaluado_competencia evaluada` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -811,4 +811,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-02-10 16:15:11
+-- Dump completed on 2012-02-16 12:22:11
