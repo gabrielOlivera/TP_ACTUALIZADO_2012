@@ -1,0 +1,245 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{FAE5AF2E-8FB2-44E6-8E58-B4FC8E2BDE95}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>TpDiseñoCSharp</RootNamespace>
+    <AssemblyName>VentanaGeneralTpDiseño</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Entidades, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Entidades\bin\Debug\Entidades.dll</HintPath>
+    </Reference>
+    <Reference Include="Gestores, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Gestores\bin\Debug\Gestores.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=12.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.Common, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <Reference Include="Microsoft.ReportViewer.WinForms, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="MySql.Data, Version=6.4.4.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Messaging" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Validacion">
+      <HintPath>..\Validacion\bin\Debug\Validacion.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Alta de Puesto o Funcion .cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Alta de Puesto o Funcion .Designer.cs">
+      <DependentUpon>Alta de Puesto o Funcion .cs</DependentUpon>
+    </Compile>
+    <Compile Include="Completar Cuestionario.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Completar Cuestionario.Designer.cs">
+      <DependentUpon>Completar Cuestionario.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Evaluar Candidatos - Ventana 3.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Evaluar Candidatos - Ventana 3.Designer.cs">
+      <DependentUpon>Evaluar Candidatos - Ventana 3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Modificar Puesto o Funcion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Modificar Puesto o Funcion.Designer.cs">
+      <DependentUpon>Modificar Puesto o Funcion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Orden de merito.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Orden de merito.Designer.cs">
+      <DependentUpon>Orden de merito.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PantallaPrincipal.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PantallaPrincipal.Designer.cs">
+      <DependentUpon>PantallaPrincipal.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Cuestionario Instrucciones.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Cuestionario Instrucciones.Designer.cs">
+      <DependentUpon>Cuestionario Instrucciones.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Emitir Orden de Merito.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Emitir Orden de Merito.Designer.cs">
+      <DependentUpon>Emitir Orden de Merito.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Evaluar Candidato.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Evaluar Candidato.Designer.cs">
+      <DependentUpon>Evaluar Candidato.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Evaluar Candidatos - Ventana 2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Evaluar Candidatos - Ventana 2.Designer.cs">
+      <DependentUpon>Evaluar Candidatos - Ventana 2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Gestionar Puestos o Funciones.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Gestionar Puestos o Funciones.Designer.cs">
+      <DependentUpon>Gestionar Puestos o Funciones.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Lista de Candidatos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Lista de Candidatos.Designer.cs">
+      <DependentUpon>Lista de Candidatos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LoginCandidato.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LoginCandidato.Designer.cs">
+      <DependentUpon>LoginCandidato.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LoginConsultor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LoginConsultor.Designer.cs">
+      <DependentUpon>LoginConsultor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MenuPrincipalConsultor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MenuPrincipalConsultor.Designer.cs">
+      <DependentUpon>MenuPrincipalConsultor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Seleccion de evaluaciones.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Seleccion de evaluaciones.Designer.cs">
+      <DependentUpon>Seleccion de evaluaciones.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Alta de Puesto o Funcion .resx">
+      <DependentUpon>Alta de Puesto o Funcion .cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Completar Cuestionario.resx">
+      <DependentUpon>Completar Cuestionario.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Evaluar Candidatos - Ventana 3.resx">
+      <DependentUpon>Evaluar Candidatos - Ventana 3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modificar Puesto o Funcion.resx">
+      <DependentUpon>Modificar Puesto o Funcion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Orden de merito.resx">
+      <DependentUpon>Orden de merito.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PantallaPrincipal.resx">
+      <DependentUpon>PantallaPrincipal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Cuestionario Instrucciones.resx">
+      <DependentUpon>Cuestionario Instrucciones.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Emitir Orden de Merito.resx">
+      <DependentUpon>Emitir Orden de Merito.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Evaluar Candidato.resx">
+      <DependentUpon>Evaluar Candidato.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Evaluar Candidatos - Ventana 2.resx">
+      <DependentUpon>Evaluar Candidatos - Ventana 2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Gestionar Puestos o Funciones.resx">
+      <DependentUpon>Gestionar Puestos o Funciones.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Lista de Candidatos.resx">
+      <DependentUpon>Lista de Candidatos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LoginCandidato.resx">
+      <DependentUpon>LoginCandidato.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LoginConsultor.resx">
+      <DependentUpon>LoginConsultor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MenuPrincipalConsultor.resx">
+      <DependentUpon>MenuPrincipalConsultor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EmbeddedResource Include="Seleccion de evaluaciones.resx">
+      <DependentUpon>Seleccion de evaluaciones.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\DataSources\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
