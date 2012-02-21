@@ -70,11 +70,11 @@
             // 
             this.TituloEmpresa.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.TituloEmpresa.AutoSize = true;
-            this.TituloEmpresa.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold);
+            this.TituloEmpresa.Font = new System.Drawing.Font("Viner Hand ITC", 15.75F, System.Drawing.FontStyle.Bold);
             this.TituloEmpresa.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.TituloEmpresa.Location = new System.Drawing.Point(306, 18);
             this.TituloEmpresa.Name = "TituloEmpresa";
-            this.TituloEmpresa.Size = new System.Drawing.Size(145, 25);
+            this.TituloEmpresa.Size = new System.Drawing.Size(157, 34);
             this.TituloEmpresa.TabIndex = 0;
             this.TituloEmpresa.Text = "Human TIC\'s";
             // 
@@ -109,7 +109,7 @@
             this.SeleccionDeAcceso.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.SeleccionDeAcceso.Controls.Add(this.Nuevo);
             this.SeleccionDeAcceso.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.SeleccionDeAcceso.Location = new System.Drawing.Point(161, 90);
+            this.SeleccionDeAcceso.Location = new System.Drawing.Point(185, 90);
             this.SeleccionDeAcceso.Name = "SeleccionDeAcceso";
             this.SeleccionDeAcceso.Size = new System.Drawing.Size(430, 56);
             this.SeleccionDeAcceso.TabIndex = 9;
@@ -177,6 +177,7 @@
             this.CerrarSesion.TabIndex = 2;
             this.CerrarSesion.TabStop = true;
             this.CerrarSesion.Text = "Cerrar Sesión";
+            this.CerrarSesion.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.CerrarSesion_LinkClicked);
             // 
             // DatosParaBusqueda
             // 
@@ -189,7 +190,7 @@
             this.DatosParaBusqueda.Controls.Add(this.label2);
             this.DatosParaBusqueda.Controls.Add(this.label1);
             this.DatosParaBusqueda.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.DatosParaBusqueda.Location = new System.Drawing.Point(161, 152);
+            this.DatosParaBusqueda.Location = new System.Drawing.Point(185, 161);
             this.DatosParaBusqueda.Name = "DatosParaBusqueda";
             this.DatosParaBusqueda.Size = new System.Drawing.Size(430, 206);
             this.DatosParaBusqueda.TabIndex = 10;
@@ -272,7 +273,7 @@
             this.groupBox1.Controls.Add(this.Modificar);
             this.groupBox1.Controls.Add(this.listaDePuesto);
             this.groupBox1.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.groupBox1.Location = new System.Drawing.Point(161, 364);
+            this.groupBox1.Location = new System.Drawing.Point(185, 382);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(540, 340);
             this.groupBox1.TabIndex = 11;
@@ -323,7 +324,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(812, 746);
+            this.ClientSize = new System.Drawing.Size(812, 656);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.DatosParaBusqueda);
             this.Controls.Add(this.panel2);

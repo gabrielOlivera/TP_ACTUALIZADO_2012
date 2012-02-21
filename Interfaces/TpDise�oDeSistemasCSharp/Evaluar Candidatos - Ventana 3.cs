@@ -41,6 +41,8 @@ namespace TpDiseñoCSharp
             int largoTextoConsultor = Consultor.Width;
             int ubicacionCerrarSesion = CerrarSesion.Location.X;
             Consultor.Location = new Point(ubicacionCerrarSesion - largoTextoConsultor - 2, CerrarSesion.Top);
+
+            FormClosed += menuConsultor_Click;
         }
 
         private void Finalizar_Click(object sender, EventArgs e)
@@ -121,12 +123,9 @@ namespace TpDiseñoCSharp
             {
                 Candidato cand_Asociado = list_cand_Asociados[i];
 
-                Random nroAleatorio = new Random(DateTime.Now.Millisecond * (Int32.Parse(cand_Asociado.NroDoc)));
-                Random nroDNI_aleatorio = new Random(DateTime.Now.Minute * (Int32.Parse(cand_Asociado.NroDoc)));
-
-                string clave_generada = cand_Asociado.Nombre[0].ToString() + cand_Asociado.NroDoc[nroDNI_aleatorio.Next(0,9)].ToString()
-                    + cand_Asociado.Apellido[0].ToString() + DateTime.Now.Second.ToString()
-                    + nroAleatorio.Next(100, 999).ToString();
+                string clave_generada = cand_Asociado.Nombre[0].ToString() + cand_Asociado.Apellido[0].ToString() + puestoSeleccionado.Empresa[0].ToString()
+                + cand_Asociado.NroDoc[5].ToString() + cand_Asociado.NroDoc[6].ToString() + cand_Asociado.NroDoc[7].ToString()
+                + puestoSeleccionado.Codigo[0].ToString() + puestoSeleccionado.Nombre[0].ToString();
 
                 cand_Asociado.Clave = clave_generada;
             }
@@ -137,14 +136,27 @@ namespace TpDiseñoCSharp
         private void Atras_Click(object sender, EventArgs e)
         {
             ventanaAnterior.Visible = true;
-            Close();
+            this.Visible = false;
         }
 
         private void menuConsultor_Click(object sender, EventArgs e)
         {
-            ventanaMenuPrincipal.Visible = true;
-            ventanaAnterior.Close();
-            Close();
+            if (ventanaMenuPrincipal.Created)
+            {
+                ventanaMenuPrincipal.Visible = true;
+                ventanaAnterior.Close();
+                Close();
+            }
+        }
+
+        private void CerrarSesion_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            if (MessageBox.Show("¿Esta seguro que desea CerrarSesion?", "PREGUNTA", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                ventanaAnterior.Close();
+                ventanaMenuPrincipal.Close();
+                Close();
+            }
         }
     }
 }

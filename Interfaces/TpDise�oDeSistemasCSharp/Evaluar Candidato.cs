@@ -67,14 +67,16 @@ namespace TpDiseñoCSharp
                 {
                     mensaje_ += "\n\n\t " + lista_Candidatos_EnEvaluaciones[i].TipoDoc + " " + lista_Candidatos_EnEvaluaciones[i].NroDoc + " " + lista_Candidatos_EnEvaluaciones[i].Apellido + " " + lista_Candidatos_EnEvaluaciones[i].Nombre;
                 }
-
-                MessageBox.Show("Los siguientes candidatos estan siendo evaluados:" + mensaje_ + "\n\nNO PUEDEN SER NUEVAMENTE EVALUADOS");
+                MessageBox.Show("\tLos siguientes candidatos:" + mensaje_ + "\n\nNO PUEDEN SER NUEVAMENTE EVALUADOS", "INFORMACIÓN", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                resultadosDeBusqueda.DataSource = null;
                 resultadosDeBusqueda.Visible = false;
             }
             if(listaCandidatos_agregados.Count != 0)
             {
                 Evaluar_Candidatos___Ventana_2 evCandidatos2 = new Evaluar_Candidatos___Ventana_2(this.Consultor.Text,
                     listaCandidatos_agregados, this, ventanaMenuPrincipal);
+                resultadosDeBusqueda.DataSource = null;
+                resultadosDeBusqueda.Visible = false;
                 this.Visible = false;
                 evCandidatos2.ShowDialog();
             }
@@ -126,22 +128,34 @@ namespace TpDiseñoCSharp
                 bool noAgregado = true;
 
                 List<Candidato> lista_cand_ = (List<Candidato>)resultadosDeBusqueda.DataSource;
-                //MessageBox.Show("candidato seleccionado " + lista_cand_[fila_seleccionada].Apellido +" "+ lista_cand_[fila_seleccionada].Nombre);
-
+                
                 if (listaCandidatos_agregados.Exists(delegate(Candidato c) { return c.NroDoc == lista_cand_[fila_seleccionada].NroDoc; }))
                     noAgregado = false;
 
-                //MessageBox.Show("NO fue agregado ?? " + noAgregado);
                 if (noAgregado == true)
                     listaCandidatos_agregados.Add(lista_cand_[fila_seleccionada]);
             }
+            else
+                MessageBox.Show("\tSe debe realizar una busqueda y seleccionar un candidato antes de presionar 'AGREGAR'", "INFORMACIÓN", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
         }
 
         private void menuConsultor_Click(object sender, EventArgs e)
         {
-            ventanaMenuPrincipal.Visible = true;
-            Close();
+            if (ventanaMenuPrincipal.Created)
+            {
+                ventanaMenuPrincipal.Visible = true;
+                Close();
+            }
+        }
+
+        private void CerrarSesion_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            if (MessageBox.Show("¿Esta seguro que desea CerrarSesion?", "PREGUNTA", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                ventanaMenuPrincipal.Close();
+                Close();
+            }
         }
     }
 }
