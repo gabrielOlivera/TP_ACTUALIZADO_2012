@@ -35,8 +35,6 @@ namespace TpDiseñoCSharp
             int largoTextoConsultor = Consultor.Width;
             int ubicacionCerrarSesion = CerrarSesion.Location.X;
             Consultor.Location = new Point(ubicacionCerrarSesion - largoTextoConsultor - 2, CerrarSesion.Top);
-
-            FormClosed += menuConsultor_Click;
         }
 
         private void Siguiente_Click(object sender, EventArgs e)
@@ -51,19 +49,17 @@ namespace TpDiseñoCSharp
         {
             Evaluar_Candidato evaluar_Candidato_1 = new Evaluar_Candidato(this.Consultor.Text, ventanaMenuPrincipal, this);
             ventanaEvCandidatos.Visible = true;
-            this.Visible = false;
+            Close();
         }
 
         private void Buscar_Click(object sender, EventArgs e)
         {
-
             CaracteristicasDel_puesto.Visible = false;
+            CaracteristicasDel_puesto.Controls.Clear();
             Siguiente.Visible = false;
             puestoSeleccionado = null;
 
             GestorPuesto gestorPuesto = new GestorPuesto();
-
-
 
             if ((FuncionesVarias.validarCamposAlfanum(nombrePuesto.Text))
                    || (FuncionesVarias.validarCamposAlfanum(nombreEmpresa.Text)))
@@ -111,10 +107,10 @@ namespace TpDiseñoCSharp
 
                         Label label_competencia = new Label();
                         Label label_ponderacion = new Label();
-                        label_competencia.Text = "COMPETENCIAS"; label_competencia.AutoSize = true;
+                        label_competencia.Text = "Competencias"; label_competencia.AutoSize = true;
                         label_competencia.Location = new Point(50, 30);
 
-                        label_ponderacion.Text = "PONDERACIÓNES"; label_ponderacion.AutoSize = true;
+                        label_ponderacion.Text = "Ponderación"; label_ponderacion.AutoSize = true;
                         label_ponderacion.Location = new Point(label_competencia.Right + (cadenaMasLarga * 6), 30);
 
                         CaracteristicasDel_puesto.Controls.Add(label_competencia);
@@ -168,7 +164,14 @@ namespace TpDiseñoCSharp
             if (contador == 1)
             {
                 List<Caracteristica> caracteristicas_del_puesto = admBD.reconstruir_CaracteristicasPuesto(puestoSeleccionado);
-                puestoSeleccionado.Caracteristicas = caracteristicas_del_puesto;
+                if (caracteristicas_del_puesto != null)
+                {
+                    puestoSeleccionado.Caracteristicas = caracteristicas_del_puesto;
+                }
+                else
+                {
+                    puestoSeleccionado = null;
+                }
                 mensajePuesto.Close();
             }
             else
@@ -232,22 +235,9 @@ namespace TpDiseñoCSharp
 
         private void menuConsultor_Click(object sender, EventArgs e)
         {
-            if (ventanaMenuPrincipal.Created)
-            {
-                ventanaMenuPrincipal.Visible = true;
-                ventanaEvCandidatos.Close();
-                Close();
-            }
-        }
-
-        private void CerrarSesion_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            if (MessageBox.Show("¿Esta seguro que desea CerrarSesion?", "PREGUNTA", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-            {
-                ventanaEvCandidatos.Close();
-                ventanaMenuPrincipal.Close();
-                Close();
-            }
+            ventanaMenuPrincipal.Visible = true;
+            ventanaEvCandidatos.Close();
+            Close();
         }
     }
 }

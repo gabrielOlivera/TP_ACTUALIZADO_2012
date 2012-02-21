@@ -61,7 +61,7 @@
             // 
             // panel2
             // 
-            this.panel2.Location = new System.Drawing.Point(0, 649);
+            this.panel2.Location = new System.Drawing.Point(0, 664);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(28, 37);
             this.panel2.TabIndex = 8;
@@ -72,7 +72,7 @@
             this.TituloEmpresa.AutoSize = true;
             this.TituloEmpresa.Font = new System.Drawing.Font("Viner Hand ITC", 15.75F, System.Drawing.FontStyle.Bold);
             this.TituloEmpresa.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.TituloEmpresa.Location = new System.Drawing.Point(304, 18);
+            this.TituloEmpresa.Location = new System.Drawing.Point(345, 18);
             this.TituloEmpresa.Name = "TituloEmpresa";
             this.TituloEmpresa.Size = new System.Drawing.Size(157, 34);
             this.TituloEmpresa.TabIndex = 0;
@@ -83,9 +83,9 @@
             this.PanelInferior.BackColor = System.Drawing.Color.Gainsboro;
             this.PanelInferior.Controls.Add(this.Fecha);
             this.PanelInferior.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.PanelInferior.Location = new System.Drawing.Point(0, 692);
+            this.PanelInferior.Location = new System.Drawing.Point(0, 701);
             this.PanelInferior.Name = "PanelInferior";
-            this.PanelInferior.Size = new System.Drawing.Size(790, 58);
+            this.PanelInferior.Size = new System.Drawing.Size(872, 58);
             this.PanelInferior.TabIndex = 5;
             // 
             // Fecha
@@ -96,7 +96,7 @@
             this.Fecha.DisabledLinkColor = System.Drawing.Color.Black;
             this.Fecha.Enabled = false;
             this.Fecha.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.Fecha.Location = new System.Drawing.Point(628, 24);
+            this.Fecha.Location = new System.Drawing.Point(710, 24);
             this.Fecha.Name = "Fecha";
             this.Fecha.Size = new System.Drawing.Size(151, 13);
             this.Fecha.TabIndex = 0;
@@ -117,7 +117,7 @@
             this.SeleccionDeAcceso.Controls.Add(this.label2);
             this.SeleccionDeAcceso.Controls.Add(this.label1);
             this.SeleccionDeAcceso.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.SeleccionDeAcceso.Location = new System.Drawing.Point(116, 117);
+            this.SeleccionDeAcceso.Location = new System.Drawing.Point(70, 137);
             this.SeleccionDeAcceso.Name = "SeleccionDeAcceso";
             this.SeleccionDeAcceso.Size = new System.Drawing.Size(517, 183);
             this.SeleccionDeAcceso.TabIndex = 9;
@@ -224,7 +224,7 @@
             this.PanelSuperior.Dock = System.Windows.Forms.DockStyle.Top;
             this.PanelSuperior.Location = new System.Drawing.Point(0, 0);
             this.PanelSuperior.Name = "PanelSuperior";
-            this.PanelSuperior.Size = new System.Drawing.Size(790, 62);
+            this.PanelSuperior.Size = new System.Drawing.Size(872, 62);
             this.PanelSuperior.TabIndex = 6;
             // 
             // menuConsultor
@@ -241,7 +241,7 @@
             // 
             this.Consultor.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.Consultor.AutoSize = true;
-            this.Consultor.Location = new System.Drawing.Point(619, 39);
+            this.Consultor.Location = new System.Drawing.Point(701, 39);
             this.Consultor.Name = "Consultor";
             this.Consultor.Size = new System.Drawing.Size(51, 13);
             this.Consultor.TabIndex = 4;
@@ -251,13 +251,12 @@
             // 
             this.CerrarSesion.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.CerrarSesion.AutoSize = true;
-            this.CerrarSesion.Location = new System.Drawing.Point(706, 38);
+            this.CerrarSesion.Location = new System.Drawing.Point(788, 38);
             this.CerrarSesion.Name = "CerrarSesion";
             this.CerrarSesion.Size = new System.Drawing.Size(70, 13);
             this.CerrarSesion.TabIndex = 3;
             this.CerrarSesion.TabStop = true;
             this.CerrarSesion.Text = "Cerrar Sesión";
-            this.CerrarSesion.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.CerrarSesion_LinkClicked);
             // 
             // groupBox1
             // 
@@ -266,7 +265,7 @@
             this.groupBox1.Controls.Add(this.Agregar);
             this.groupBox1.Controls.Add(this.resultadosDeBusqueda);
             this.groupBox1.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.groupBox1.Location = new System.Drawing.Point(73, 306);
+            this.groupBox1.Location = new System.Drawing.Point(70, 337);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(587, 285);
             this.groupBox1.TabIndex = 10;
@@ -289,7 +288,7 @@
             this.Agregar.ForeColor = System.Drawing.SystemColors.ControlText;
             this.Agregar.Location = new System.Drawing.Point(473, 89);
             this.Agregar.Name = "Agregar";
-            this.Agregar.Size = new System.Drawing.Size(87, 23);
+            this.Agregar.Size = new System.Drawing.Size(75, 23);
             this.Agregar.TabIndex = 1;
             this.Agregar.Text = "Agregar";
             this.Agregar.UseVisualStyleBackColor = true;
@@ -311,7 +310,7 @@
             // Siguiente
             // 
             this.Siguiente.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.Siguiente.Location = new System.Drawing.Point(548, 619);
+            this.Siguiente.Location = new System.Drawing.Point(543, 645);
             this.Siguiente.Name = "Siguiente";
             this.Siguiente.Size = new System.Drawing.Size(85, 23);
             this.Siguiente.TabIndex = 11;
@@ -324,7 +323,8 @@
             this.AcceptButton = this.Buscar;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(790, 750);
+            this.AutoScroll = true;
+            this.ClientSize = new System.Drawing.Size(889, 750);
             this.Controls.Add(this.Siguiente);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.panel2);
