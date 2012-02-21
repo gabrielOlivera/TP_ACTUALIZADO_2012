@@ -2861,10 +2861,14 @@ namespace Gestores
                     }
                 }
             }
-            if(!(errorCompetenciaNoEvaluable == ""))
-                MessageBox.Show("La(s) Competencia(s) "+ errorCompetenciaNoEvaluable + "\nno pueden ser evaluada(s)","INFORMACION",MessageBoxButtons.OK,MessageBoxIcon.Information);
 
-            return listaCaracteristicas;
+            if (!(errorCompetenciaNoEvaluable == ""))
+            {
+                MessageBox.Show("La(s) Competencia(s) " + errorCompetenciaNoEvaluable + "\nno pueden ser evaluada(s)", "INFORMACION", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return null;
+            }
+            else
+                return listaCaracteristicas;
         }
 
         /*

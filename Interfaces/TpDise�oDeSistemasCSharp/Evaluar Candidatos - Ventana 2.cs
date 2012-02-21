@@ -54,14 +54,12 @@ namespace TpDiseñoCSharp
 
         private void Buscar_Click(object sender, EventArgs e)
         {
-
             CaracteristicasDel_puesto.Visible = false;
+            CaracteristicasDel_puesto.Controls.Clear();
             Siguiente.Visible = false;
             puestoSeleccionado = null;
 
             GestorPuesto gestorPuesto = new GestorPuesto();
-
-
 
             if ((FuncionesVarias.validarCamposAlfanum(nombrePuesto.Text))
                    || (FuncionesVarias.validarCamposAlfanum(nombreEmpresa.Text)))
@@ -166,7 +164,14 @@ namespace TpDiseñoCSharp
             if (contador == 1)
             {
                 List<Caracteristica> caracteristicas_del_puesto = admBD.reconstruir_CaracteristicasPuesto(puestoSeleccionado);
-                puestoSeleccionado.Caracteristicas = caracteristicas_del_puesto;
+                if (caracteristicas_del_puesto != null)
+                {
+                    puestoSeleccionado.Caracteristicas = caracteristicas_del_puesto;
+                }
+                else
+                {
+                    puestoSeleccionado = null;
+                }
                 mensajePuesto.Close();
             }
             else
