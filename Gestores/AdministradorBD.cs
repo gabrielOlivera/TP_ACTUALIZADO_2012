@@ -2862,10 +2862,13 @@ namespace Gestores
                     }
                 }
             }
-            if(!(errorCompetenciaNoEvaluable == ""))
-                MessageBox.Show("La(s) Competencia(s) "+ errorCompetenciaNoEvaluable + "\nno pueden ser evaluada(s)","INFORMACION",MessageBoxButtons.OK,MessageBoxIcon.Information);
-
-            return listaCaracteristicas;
+            if (!(errorCompetenciaNoEvaluable == ""))
+            {
+                MessageBox.Show("La(s) Competencia(s) " + errorCompetenciaNoEvaluable + "\nno pueden ser evaluada(s)", "INFORMACION", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return null;
+            }
+            else
+                return listaCaracteristicas;
         }
 
         /*
@@ -3138,12 +3141,12 @@ namespace Gestores
             GestorOpRespuesta gestionOpciones = new GestorOpRespuesta();
             List<Opciones> listaDeOpciones = new List<Opciones>();//Para el retorno de datos
 
-            string consultaSql = "SELECT op.nombre, pr_op.ponderacion, opr_op.ordenDeVisualizacion "
+            string consultaSql = "SELECT DISTINCT op.nombre, pr_op.ponderacion, opr_op.ordenDeVisualizacion "
             + "FROM `pregunta_opciones` AS pr_op "
             + "JOIN `pregunta` AS pr on (pr_op.Pregunta_codigo = pr.codigo AND pr.nombre = '" + pregAsociada.Nombre + "' AND pr.pregunta = '" + pregAsociada.Preg_aRealizar + "') "
             + "JOIN `opciones` op on (pr_op.Opciones_idopciones = op.idopciones) "
             + "JOIN `opcion de respuesta_opciones` opr_op on (pr_op.Opciones_idopciones = opr_op.Opciones_idopciones) "
-            + "GROUP BY nombre, ponderacion, ordenDeVisualizacion;";
+            + "GROUP BY nombre;";
 
             //llamamos al metodo "iniciar conexion"
             conexionExitosa = iniciarConexion();
@@ -3195,7 +3198,7 @@ namespace Gestores
 
             string consultaSql1 = "INSERT INTO `puesto evaluado`(codigo,nombre,descripcion,empresa) " +
                 "VALUES ('" + puestoAsociado.Codigo + "','" + puestoAsociado.Nombre + "','" + puestoAsociado.Descripcion + "','" + puestoAsociado.Empresa + "');";
-
+            
             MySql.Data.MySqlClient.MySqlCommand comando1 = new MySqlCommand(), comando2 = new MySqlCommand(), comando3 = new MySqlCommand(), comando4 = new MySqlCommand();
             MySql.Data.MySqlClient.MySqlCommand comando5 = new MySqlCommand(), comando6 = new MySqlCommand(), comando7 = new MySqlCommand(), comando8 = new MySqlCommand();
 
@@ -3243,11 +3246,12 @@ namespace Gestores
 
                     string consultaSql2 = "INSERT INTO cuestionario(clave,nroAccesos,`Puesto Evaluado_idPuesto Evaluado`,Candidato_idCandidato) "
                         + "VALUES ('" + listaCandidatos_aEvaluar[i].Clave + "',0,"
-                        + "(SELECT DISTINCT `idPuesto Evaluado` FROM `puesto evaluado` WHERE `idPuesto Evaluado` = (SELECT MAX(`idPuesto Evaluado`) FROM `puesto evaluado`)),"
+                        + "(SELECT MAX(`idPuesto Evaluado`) FROM `puesto evaluado`),"
                         + "(SELECT DISTINCT idCandidato FROM candidato WHERE `nro documento` = '" + listaCandidatos_aEvaluar[i].NroDoc + "'));";
 
                     comando2.CommandText = consultaSql2;
                     cantDeFilasAfectadas += comando2.ExecuteNonQuery();
+
 
                     string consultaSql3 = "INSERT INTO cuestionario_estado(Cuestionario_idCuestionario,Estado_idEstado,fecha) " +
                         "VALUES ((SELECT idCuestionario FROM cuestionario WHERE clave = '" + listaCandidatos_aEvaluar[i].Clave + "'),1,'" + fecha_estado_activo + "');";
@@ -3267,7 +3271,8 @@ namespace Gestores
 
                         comando4.CommandText = consultaSql4;
                         cantDeFilasAfectadas += comando4.ExecuteNonQuery();
-
+                        
+                        
                         for (int j = 0; j < competencia1.ListaFactores.Count; j++)
                         {
                             Factor factor_Asociado = competencia1.ListaFactores[j];
@@ -3276,29 +3281,39 @@ namespace Gestores
                             {
                                 string consultaSql5 = "INSERT INTO `factor evaluado`(codigo,nombre,nroOrden,descripcion,`Competencia Evaluada_idCompetencia Evaluada`) " +
                                     "VALUES ('" + factor_Asociado.Codigo + "','" + factor_Asociado.Nombre + "','" + factor_Asociado.Nro_orden + "','" + factor_Asociado.Descripcion + "',"
-                                    + "(SELECT DISTINCT `idCompetencia Evaluada` FROM `competencia evaluada` WHERE codigo = '" + competencia1.Codigo + "'));";
+                                    + "(SELECT `idCompetencia Evaluada` FROM `competencia evaluada` WHERE codigo = '" + competencia1.Codigo + "'));";
 
                                 comando5.CommandText = consultaSql5;
                                 cantDeFilasAfectadas += comando5.ExecuteNonQuery();
-
+                                
+                                
                                 for (int p = 0; p < factor_Asociado.ListaPreguntas.Count; p++)
                                 {
                                     Pregunta preg_Asociada = factor_Asociado.ListaPreguntas[p];
 
-                                    string consultaSql6 = "INSERT INTO `pregunta evaluada`(codigo,nombre,pregunta,descripcion,`Factor Evaluado_idFactor Evaluado`,`Opcion de Respuesta Evaluada_idOpcion de Respuesta Evaluada`,`Opcion de Respuesta Evaluada_idOpcion de Respuesta Evaluada`) " +
-                                    "VALUES ((SELECT DISTINCT codigo FROM pregunta WHERE Factor_codigo = '" + factor_Asociado.Codigo + "'),'" + preg_Asociada.Nombre + "','" +
-                                    preg_Asociada.Preg_aRealizar + "','" + preg_Asociada.Descripcion + "',(SELECT DISTINCT `idFactor Evaluado` FROM `factor evaluado` WHERE `Competencia Evaluada_idCompetencia Evaluada` = (SELECT DISTINCT `idCompetencia Evaluada` FROM `competencia evaluada` WHERE nombre = '" + competencia1.Codigo + "')),(SELECT DISTINCT `idOpcion de Respuesta Evaluada` FROM `opcion de respuesta evaluada` WHERE codigo = '" + preg_Asociada.OpcionRespuesta_Asociada.Nombre + "'));";
+                                    string consultaSql6 = "INSERT INTO `pregunta evaluada`(codigo,nombre,pregunta,descripcion,`Factor Evaluado_idFactor Evaluado`,`Opcion de Respuesta Evaluada_idOpcion de Respuesta Evaluada`) " +
+                                    "VALUES ((SELECT p.codigo FROM pregunta AS p "
+                                    + "JOIN factor AS f ON (f.codigo = '" + factor_Asociado.Codigo + "' AND f.codigo = p.Factor_codigo) "
+                                    + "WHERE p.nombre = '" + preg_Asociada.Nombre + "'),"
+                                    + "'" + preg_Asociada.Nombre + "','" + preg_Asociada.Preg_aRealizar + "','" + preg_Asociada.Descripcion + "',"
+                                    + "(SELECT `idFactor Evaluado` FROM `factor evaluado` AS f "
+                                    + "JOIN `competencia evaluada` AS c ON (c.codigo = '" + competencia1.Codigo + "' AND c.`idCompetencia Evaluada` = f.`Competencia Evaluada_idCompetencia Evaluada`) "
+                                    + "WHERE f.codigo = '" + factor_Asociado.Codigo + "'),"
+                                    + "(SELECT `idOpcion de Respuesta Evaluada` FROM `opcion de respuesta evaluada` WHERE nombre = '" + preg_Asociada.OpcionRespuesta_Asociada.Nombre + "'));";
 
                                     comando6.CommandText = consultaSql6;
                                     cantDeFilasAfectadas += comando6.ExecuteNonQuery();
 
+                                    
                                     for (int op = 0; op < preg_Asociada.OpcionRespuesta_Asociada.ListaOpciones.Count; op++)
                                     {
                                         Opciones opciones_Asociadas = preg_Asociada.OpcionRespuesta_Asociada.ListaOpciones[op];
 
-                                        string consultaSql7 = "INSERT INTO `pregunta evaluada_opcion evaluada`(`Opcion Evaluada_idOpcion`,`Pregunta Evaluada_idPregunta Evaluada`,ponderacion) " +
-                                            "VALUES ((SELECT DISTINCT idOpcion FROM `opcion evaluada` WHERE nombre = '" + opciones_Asociadas.Nombre +
-                                            "'),(SELECT DISTINCT `idPregunta Evaluada` FROM `pregunta evaluada` WHERE `Factor Evaluado_idFactor Evaluado` = (SELECT DISTINCT `idFactor Evaluado` FROM `factor evaluado` WHERE codigo = '" + factor_Asociado.Codigo + "')));";
+                                        string consultaSql7 = "INSERT INTO `pregunta evaluada_opcion evaluada`(`Opcion Evaluada_idOpcion`,`Pregunta Evaluada_idPregunta Evaluada`,ponderacion) "
+                                            + "VALUES ((SELECT idOpcion FROM `opcion evaluada` WHERE nombre = '" + opciones_Asociadas.Nombre + "'),"
+                                            + "(SELECT `idPregunta Evaluada` FROM `pregunta evaluada` AS p "
+                                            + "JOIN `factor evaluado` AS f ON (f.codigo = '" + factor_Asociado.Codigo + "' AND f.`idFactor Evaluado` = p.`Factor Evaluado_idFactor Evaluado`) "
+                                            + "WHERE p.nombre = '" + preg_Asociada.Nombre + "')," + opciones_Asociadas.Valor + ");";
 
                                         comando7.CommandText = consultaSql7;
                                         cantDeFilasAfectadas += comando7.ExecuteNonQuery();
@@ -3316,12 +3331,12 @@ namespace Gestores
                     Ponderacion ponderacion1 = (Ponderacion)puestoAsociado.Caracteristicas[i].dato2;
 
                     string consultaSql8 = "INSERT INTO `puesto evaluado_competencia evaluada` (`Puesto Evaluado_idPuesto Evaluado`,`Competencia Evaluada_idCompetencia Evaluada`,ponderacion) "
-                        + "VALUES ((SELECT DISTINCT `idPuesto Evaluado` FROM `puesto evaluado` WHERE `idPuesto Evaluado` = (SELECT MAX(`idPuesto Evaluado`) FROM `puesto evaluado`)),"
-                        + "(SELECT DISTINCT `idCompetencia Evaluada` FROM `competencia evaluada` WHERE codigo = '" + competencia1.Codigo + "'),"
-                        + "" + ponderacion1.Valor + ");";
+                        + "VALUES ((SELECT MAX(`idPuesto Evaluado`) FROM `puesto evaluado`),"
+                        + "(SELECT `idCompetencia Evaluada` FROM `competencia evaluada` WHERE codigo = '" + competencia1.Codigo + "')," + ponderacion1.Valor + ");";
 
                     comando8.CommandText = consultaSql8;
                     cantDeFilasAfectadas += comando8.ExecuteNonQuery();
+                    
                 }//FIN : for (int i = 0; i < puestoAsociado.Caracteristicas.Count; i++)
 
                 transaccion.Commit();
@@ -3329,19 +3344,24 @@ namespace Gestores
 
             }
 
-            catch (MySqlException MysqlEx)
+            catch (MySqlException)
             {
                 // si algo fallo deshacemos todo
                 transaccion.Rollback();
                 // mostramos el mensaje del error
-                MessageBox.Show("La transaccion no se pudo realizar: " + MysqlEx.Message);
+                MessageBox.Show("MYSQL EXCEPTION - La transaccion no se pudo realizar");
+
+                return false;
             }
-            catch (DataException Ex)
+
+            catch (DataException)
             {
                 // si algo fallo deshacemos todo
                 transaccion.Rollback();
                 // mostramos el mensaje del error
-                MessageBox.Show("La transaccion no se pudo realizar: " + Ex.Message);
+                MessageBox.Show("DATA EXCEPTION - La transaccion no se pudo realizar");
+
+                return false;
 
             }
 

@@ -123,9 +123,12 @@ namespace TpDiseñoCSharp
             {
                 Candidato cand_Asociado = list_cand_Asociados[i];
 
-                string clave_generada = cand_Asociado.Nombre[0].ToString() + cand_Asociado.Apellido[0].ToString() + puestoSeleccionado.Empresa[0].ToString()
-                + cand_Asociado.NroDoc[5].ToString() + cand_Asociado.NroDoc[6].ToString() + cand_Asociado.NroDoc[7].ToString()
-                + puestoSeleccionado.Codigo[0].ToString() + puestoSeleccionado.Nombre[0].ToString();
+                int nroDoc_ParaRandom = Int32.Parse((cand_Asociado.NroDoc[2] + cand_Asociado.NroDoc[3] + cand_Asociado.NroDoc[4] + cand_Asociado.NroDoc[5]).ToString()); 
+                Random nroAleatorio = new Random(DateTime.Now.Millisecond * nroDoc_ParaRandom);
+
+                string clave_generada = cand_Asociado.Nombre[0].ToString()
+                    + nroAleatorio.Next(200, 899).ToString() + cand_Asociado.Apellido[0].ToString()
+                    + nroAleatorio.Next(100, 999).ToString();
 
                 cand_Asociado.Clave = clave_generada;
             }
