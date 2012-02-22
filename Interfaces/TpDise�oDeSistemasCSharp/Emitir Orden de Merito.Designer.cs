@@ -155,9 +155,7 @@
             // 
             // SeleccionDeAcceso
             // 
-            this.SeleccionDeAcceso.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.SeleccionDeAcceso.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.SeleccionDeAcceso.Controls.Add(this.Cancelar);
             this.SeleccionDeAcceso.Controls.Add(this.Buscar);
             this.SeleccionDeAcceso.Controls.Add(this.Empresa);
@@ -250,9 +248,7 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.groupBox1.Controls.Add(this.EmitirOrdenDeMerito);
             this.groupBox1.Controls.Add(this.ResultadosDeBusqueda);
             this.groupBox1.ForeColor = System.Drawing.SystemColors.HotTrack;

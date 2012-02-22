@@ -346,18 +346,18 @@ namespace TpDiseñoCSharp
                                     "Exito", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
                                 {
                                     //Si decide crear otro puesto, se pasa a limpiar el formulario y las listas usadas
-                                    FuncionesVarias.limpiarBoxesFormulario(this);
+                                   FuncionesVarias.limpiarBoxesFormulario(this);
                                     while (i > 0)
                                     {
                                         eliminarComboBox();
                                         i--;
                                     }
                                     CaractPuesto.Clear();
-                                    listaDeCompetencias.Clear();
                                     listaDeErrores.Clear();
                                     listaDeCheckBox.Clear();
                                     listaAuxiliarCaracteristicaPuesto.Clear();
                                     listaAuxiliarCompetenciaPonderacion.Clear();
+   
                                 }
                                 //Si no quiere dar de alta otro puesto, se sale de la pantalla "Alta de Puesto o Funcion"
                                 else
@@ -523,9 +523,12 @@ namespace TpDiseñoCSharp
 
         private void menuConsultor_Click(object sender, EventArgs e)
         {
-            ventanaMenuConsultor.Visible = true;
-            ventanaAnterior.Close();
-            Close();
+            if (ventanaMenuConsultor.Created)
+            {
+                ventanaMenuConsultor.Visible = true;
+                ventanaAnterior.Close();
+                Close();
+            }
         }
 
         private void CerrarSesion_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

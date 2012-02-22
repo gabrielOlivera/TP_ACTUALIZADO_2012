@@ -1,4 +1,0 @@
-entrando a Emitir Orden de Merito
-Busco sin ningun filtro y elijo el P02
-Presiono el boton emitir orden de merito
-y me tira 3 filas para seleccionar, al seleccionar la ultima y presionar aceptar salta el Error1 que se ve en la imagen

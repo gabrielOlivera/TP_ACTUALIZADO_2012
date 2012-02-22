@@ -2537,7 +2537,7 @@ namespace Gestores
             DateTime primer_acceso = new DateTime();
             while (reader.Read())
             {
-                MessageBox.Show("LO QUE ESTA EN READER[MIN(FECHA)].TOSTRING() es: " + reader["MIN(fecha)"].ToString());
+               
                 primer_acceso = DateTime.Parse(reader["MIN(fecha)"].ToString());
             }
 

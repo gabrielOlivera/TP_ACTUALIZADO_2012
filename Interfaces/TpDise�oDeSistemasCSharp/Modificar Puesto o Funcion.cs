@@ -577,9 +577,12 @@ namespace TpDiseñoCSharp
 
         private void menuConsultor_Click(object sender, EventArgs e)
         {
-            ventanaMenuConsultor.Visible = true;
-            ventanaAnterior.Close();
-            Close();
+            if (ventanaMenuConsultor.Created)
+            {
+                ventanaMenuConsultor.Visible = true;
+                ventanaAnterior.Close();
+                Close();
+            }
         }
 
         private void CerrarSesion_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

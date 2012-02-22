@@ -82,3 +82,10 @@ C:\Documents and Settings\Administrador\Escritorio\TP 2012 repositorio\Gestores\
 C:\Documents and Settings\Administrador\Escritorio\TP 2012 repositorio\Gestores\obj\Debug\ResolveAssemblyReference.cache
 C:\Documents and Settings\Administrador\Escritorio\TP 2012 repositorio\Gestores\obj\Debug\Gestores.dll
 C:\Documents and Settings\Administrador\Escritorio\TP 2012 repositorio\Gestores\obj\Debug\Gestores.pdb
+C:\Users\usuario\Desktop\TP 2012 Repositorio Online - copia\Gestores\bin\Debug\Gestores.dll
+C:\Users\usuario\Desktop\TP 2012 Repositorio Online - copia\Gestores\bin\Debug\Gestores.pdb
+C:\Users\usuario\Desktop\TP 2012 Repositorio Online - copia\Gestores\bin\Debug\Entidades.dll
+C:\Users\usuario\Desktop\TP 2012 Repositorio Online - copia\Gestores\bin\Debug\Entidades.pdb
+C:\Users\usuario\Desktop\TP 2012 Repositorio Online - copia\Gestores\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\usuario\Desktop\TP 2012 Repositorio Online - copia\Gestores\obj\Debug\Gestores.dll
+C:\Users\usuario\Desktop\TP 2012 Repositorio Online - copia\Gestores\obj\Debug\Gestores.pdb
