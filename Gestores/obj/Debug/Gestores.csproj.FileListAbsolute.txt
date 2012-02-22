@@ -1,4 +1,4 @@
-﻿C:\Documents and Settings\Administrador\Mis documentos\Visual Studio 2010\Projects\TP-Versionado\Gestores\bin\Debug\Gestores.dll
+C:\Documents and Settings\Administrador\Mis documentos\Visual Studio 2010\Projects\TP-Versionado\Gestores\bin\Debug\Gestores.dll
 C:\Documents and Settings\Administrador\Mis documentos\Visual Studio 2010\Projects\TP-Versionado\Gestores\bin\Debug\Gestores.pdb
 C:\Documents and Settings\Administrador\Mis documentos\Visual Studio 2010\Projects\TP-Versionado\Gestores\bin\Debug\Entidades.dll
 C:\Documents and Settings\Administrador\Mis documentos\Visual Studio 2010\Projects\TP-Versionado\Gestores\bin\Debug\Entidades.pdb

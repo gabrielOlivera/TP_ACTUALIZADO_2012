@@ -86,7 +86,7 @@ namespace TpDiseñoCSharp
                         {
                             ordenVisualizacionOpcion = pregunta_A_mostrar.ListaOpcionesEv[indice].OrdenDeVisualizacion;
 
-                            opcion = pregunta_A_mostrar.ListaOpcionesEv[indice].Nombre;
+                            opcion = pregunta_A_mostrar.ListaOpcionesEv[indice].Valor.ToString() + " " + pregunta_A_mostrar.ListaOpcionesEv[indice].Nombre;
                         }
                     }
                     

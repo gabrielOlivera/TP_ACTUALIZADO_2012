@@ -1075,12 +1075,14 @@ namespace Gestores
             {
                 //Recuperamos los factores asociados a la competencia
                 List<FactorEvaluado> factoresList = recuperarFactoresEvaluados(listaDeCompetencias[i]);
-
-                for (int j = 0; j < factoresList.Count; j++)
+                if (factoresList != null)
                 {
-                    //Para la competencia Evaluada que esta resguardada en la posición i
-                    //le agregamos a su lista de factores, el factor evaluado que se encentre en la posición j
-                    listaDeCompetencias[i].addFactor(factoresList[j]);
+                    for (int j = 0; j < factoresList.Count; j++)
+                    {
+                        //Para la competencia Evaluada que esta resguardada en la posición i
+                        //le agregamos a su lista de factores, el factor evaluado que se encentre en la posición j
+                        listaDeCompetencias[i].addFactor(factoresList[j]);
+                    }
                 }
             }
 
@@ -1139,7 +1141,7 @@ namespace Gestores
             for (int i = 0; i < listaDeFactores.Count; i++)
             {
                 List<PreguntaEvaluada> preguntasList = recuperarPreguntasEvaluadas(listaDeFactores[i]);
-                if (preguntasList[i] != null)
+                if (preguntasList != null)
                 {
                     for (int j = 0; j < preguntasList.Count; j++)
                     {
@@ -1210,7 +1212,7 @@ namespace Gestores
             {
                 //Se recuperan la opcion de respuesta de la pregunta
                 List<OpciondeRespuestaEvaluada> opcionesRespuesta = recuperarOpcionRespuestaEvaluada(listaIdOpRespuesta[i]);
-                if (opcionesRespuesta[0] != null)
+                if (opcionesRespuesta != null)
                 {
                     //Recuperamos la opcion que contiene la poneracion para esa pregunta
                     List<OpcionesEvaluadas> opciones = recuperarOpcionesEvaluadas(listaDePreguntas[i]);
@@ -2778,7 +2780,7 @@ namespace Gestores
         public List<Caracteristica> reconstruir_CaracteristicasPuesto(Puesto puestoAsociado)
         {
             bool conexionExitosa;
-            bool encontrado;
+            bool competenciaEsEvaluable;
             //Lista que se retornara con los datos finales de la busqueda
             List<Caracteristica> listaCaracteristicas = new List<Caracteristica>();
             //Lista de caracteristicas auxiliar para realizar la busqueda (almacena los ID de las competencias y ponderaciones)
@@ -2836,32 +2838,44 @@ namespace Gestores
 
             for (int i = 0; i < listaRetornoBD.Count; i++)
             {
-                encontrado = false;
+                competenciaEsEvaluable = false;
                 //Realizamos la busqueda de las competencias evaluadas por su ID (QUE ES UNICO)
                 Competencia competenciaAs = recuperarCompetencias((string)listaRetornoBD[i].dato1);
                 if (competenciaAs != null)
                 {
-                    if (competenciaAs.ListaFactores.Count > 0)
+                    if (competenciaAs.ListaFactores != null)
                     {
-                        //Si hubo algun retorno, instanciamos un objeto del tipo ponderacion
-                        Ponderacion pondeAs = new Ponderacion((int)listaRetornoBD[i].dato2);
-                        //Agregamos la competencia y la poneración a un elemento de la lista
-                        elementoLista.dato1 = competenciaAs;
-                        elementoLista.dato2 = pondeAs;
-                        listaCaracteristicas.Add(elementoLista);//Agregamos el elemento a la lista de caracteristicas del puesto evaluado
-
                         for (int j = 0; j < competenciaAs.ListaFactores.Count; j++)
                         {
-                            if (competenciaAs.ListaFactores[j].Codigo != "INSUFICIENTES PREG")
+                            MessageBox.Show(competenciaAs.ListaFactores[j].Nombre);
+
+                            if (competenciaAs.ListaFactores[j].Codigo == "INSUFICIENTES PREG")
                             {
-                                encontrado = true;
+                                MessageBox.Show("ANTES UN INSUFICIENTES PREG " + competenciaAs.ListaFactores[j].Nombre);
+                                competenciaAs.ListaFactores.Remove(competenciaAs.ListaFactores[j]);
+                                j--;
                             }
+                            else
+                                competenciaEsEvaluable = true;
                         }
-                        if (!encontrado)
+
+                        if (!competenciaEsEvaluable)
                             errorCompetenciaNoEvaluable += "\n" + competenciaAs.Nombre;
+                        else
+                        {
+                            //Si hubo algun retorno, instanciamos un objeto del tipo ponderacion
+                            Ponderacion pondeAs = new Ponderacion((int)listaRetornoBD[i].dato2);
+                            //Agregamos la competencia y la poneración a un elemento de la lista
+                            elementoLista.dato1 = competenciaAs;
+                            elementoLista.dato2 = pondeAs;
+                            listaCaracteristicas.Add(elementoLista);//Agregamos el elemento a la lista de caracteristicas del puesto evaluado
+                        }
                     }
+                    else
+                        errorCompetenciaNoEvaluable += "\n" + competenciaAs.Nombre;
                 }
             }
+
             if (!(errorCompetenciaNoEvaluable == ""))
             {
                 MessageBox.Show("La(s) Competencia(s) " + errorCompetenciaNoEvaluable + "\nno pueden ser evaluada(s)", "INFORMACION", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -2927,20 +2941,9 @@ namespace Gestores
             //Agregamos la lista de Factores para cada una de las competencias encontradas
             //Recuperamos los factores asociados a la competencia
             List<Factor> factoresList = recuperarFactores(competencia_obtenida);
-
-            for (int j = 0; j < factoresList.Count; j++)
-            {
-                if (factoresList[j].ListaPreguntas != null)
-                {
-                    //Para la competencia le agregamos a su lista de factores, el factor evaluado que se encentre en la posición j
-                    competencia_obtenida.addFactor(factoresList[j]);
-                }
-
-                else if (factoresList[j].Codigo == "INSUFICIENTES PREG")
-                    competencia_obtenida.addFactor(factoresList[j]);
-            }
-
-
+            
+            competencia_obtenida.ListaFactores = factoresList;
+            
             return competencia_obtenida;
         }
 

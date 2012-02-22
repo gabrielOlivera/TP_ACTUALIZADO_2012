@@ -9,8 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entidades", "..\Entidades\E
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Validacion", "Validacion\Validacion.csproj", "{91487EFE-0FA0-467E-8F26-40023B1A190C}"
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup1", "Setup1\Setup1.vdproj", "{57F0D7D0-5548-49A0-B352-40B8ACE79ADB}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -61,12 +59,6 @@ Global
 		{91487EFE-0FA0-467E-8F26-40023B1A190C}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{91487EFE-0FA0-467E-8F26-40023B1A190C}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{91487EFE-0FA0-467E-8F26-40023B1A190C}.Release|x86.ActiveCfg = Release|Any CPU
-		{57F0D7D0-5548-49A0-B352-40B8ACE79ADB}.Debug|Any CPU.ActiveCfg = Debug
-		{57F0D7D0-5548-49A0-B352-40B8ACE79ADB}.Debug|Mixed Platforms.ActiveCfg = Debug
-		{57F0D7D0-5548-49A0-B352-40B8ACE79ADB}.Debug|x86.ActiveCfg = Debug
-		{57F0D7D0-5548-49A0-B352-40B8ACE79ADB}.Release|Any CPU.ActiveCfg = Release
-		{57F0D7D0-5548-49A0-B352-40B8ACE79ADB}.Release|Mixed Platforms.ActiveCfg = Release
-		{57F0D7D0-5548-49A0-B352-40B8ACE79ADB}.Release|x86.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -49,7 +49,7 @@ namespace TpDiseñoCSharp
         {
             nmExcel.Application ExcelApp = new nmExcel.Application();
             ExcelApp.Workbooks.Add(Type.Missing);
-            ExcelApp.Columns.ColumnWidth = 7;
+            ExcelApp.Columns.ColumnWidth = 20;
 
             for (int i = 0; i < candidatos_claves.Rows.Count; i++)
             {

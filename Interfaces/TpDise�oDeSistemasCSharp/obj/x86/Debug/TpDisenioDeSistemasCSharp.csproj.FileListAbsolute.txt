@@ -1,4 +1,4 @@
-﻿C:\Users\usuario\Desktop\TpVersionado\TpDiseñoDeSistemasCSharp\bin\Debug\VentanaGeneralTpDiseño.exe
+C:\Users\usuario\Desktop\TpVersionado\TpDiseñoDeSistemasCSharp\bin\Debug\VentanaGeneralTpDiseño.exe
 C:\Users\usuario\Desktop\TpVersionado\TpDiseñoDeSistemasCSharp\bin\Debug\VentanaGeneralTpDiseño.pdb
 C:\Users\usuario\Desktop\TpVersionado\TpDiseñoDeSistemasCSharp\bin\Debug\Entidades.dll
 C:\Users\usuario\Desktop\TpVersionado\TpDiseñoDeSistemasCSharp\bin\Debug\Gestores.dll

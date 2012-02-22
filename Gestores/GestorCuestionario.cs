@@ -358,7 +358,7 @@ namespace Gestores
                 Bloque nuevoBloque = new Bloque(numBloq, cuest);
                 for (int j = 0; j < pregXbloque; j++)
                 {
-                    nuevoBloque.addPreguntaEv(listaPreguntas[i]);
+                    nuevoBloque.addPreguntaEv(listaPreguntas[j]);
                     i++;
                 }
 
