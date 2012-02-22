@@ -106,9 +106,9 @@
             // menuConsultor
             // 
             this.menuConsultor.Location = new System.Drawing.Point(9, 28);
-            this.menuConsultor.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.menuConsultor.Margin = new System.Windows.Forms.Padding(2);
             this.menuConsultor.Name = "menuConsultor";
-            this.menuConsultor.Size = new System.Drawing.Size(96, 19);
+            this.menuConsultor.Size = new System.Drawing.Size(127, 24);
             this.menuConsultor.TabIndex = 20;
             this.menuConsultor.Text = "Volver al menú principal";
             this.menuConsultor.UseVisualStyleBackColor = true;
@@ -124,6 +124,7 @@
             this.CerrarSesion.TabIndex = 1;
             this.CerrarSesion.TabStop = true;
             this.CerrarSesion.Text = "Cerrar Sesión";
+            this.CerrarSesion.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.CerrarSesion_LinkClicked);
             // 
             // TituloEmpresa
             // 
@@ -161,6 +162,7 @@
             this.candidatos_claves.AllowUserToDeleteRows = false;
             this.candidatos_claves.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.candidatos_claves.Location = new System.Drawing.Point(6, 30);
+            this.candidatos_claves.MultiSelect = false;
             this.candidatos_claves.Name = "candidatos_claves";
             this.candidatos_claves.ReadOnly = true;
             this.candidatos_claves.RowTemplate.Height = 24;

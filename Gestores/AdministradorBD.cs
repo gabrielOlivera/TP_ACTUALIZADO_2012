@@ -3290,8 +3290,6 @@ namespace Gestores
                                 {
                                     Pregunta preg_Asociada = factor_Asociado.ListaPreguntas[p];
 
-                                    MessageBox.Show(preg_Asociada.Preg_aRealizar);
-
                                     string consultaSql6 = "INSERT INTO `pregunta evaluada`(codigo,nombre,pregunta,descripcion,`Factor Evaluado_idFactor Evaluado`,`Opcion de Respuesta Evaluada_idOpcion de Respuesta Evaluada`) " +
                                     "VALUES ((SELECT p.codigo FROM pregunta AS p "
                                     + "JOIN factor AS f ON (f.codigo = '" + factor_Asociado.Codigo + "' AND f.codigo = p.Factor_codigo) "
@@ -3309,8 +3307,6 @@ namespace Gestores
                                     for (int op = 0; op < preg_Asociada.OpcionRespuesta_Asociada.ListaOpciones.Count; op++)
                                     {
                                         Opciones opciones_Asociadas = preg_Asociada.OpcionRespuesta_Asociada.ListaOpciones[op];
-                                       // for(int k=0; k<preg_Asociada.OpcionRespuesta_Asociada.ListaOpciones.Count; k++)
-                                            MessageBox.Show(opciones_Asociadas.Nombre);
 
                                         string consultaSql7 = "INSERT INTO `pregunta evaluada_opcion evaluada`(`Opcion Evaluada_idOpcion`,`Pregunta Evaluada_idPregunta Evaluada`,ponderacion) "
                                             + "VALUES ((SELECT idOpcion FROM `opcion evaluada` WHERE nombre = '" + opciones_Asociadas.Nombre + "'),"
@@ -3347,22 +3343,22 @@ namespace Gestores
 
             }
 
-            catch (MySqlException MysqlEx)
+            catch (MySqlException)
             {
                 // si algo fallo deshacemos todo
                 transaccion.Rollback();
                 // mostramos el mensaje del error
-                MessageBox.Show("MYSQL EXCEPTION - La transaccion no se pudo realizar: " + MysqlEx.Message);
+                MessageBox.Show("MYSQL EXCEPTION - La transaccion no se pudo realizar");
 
                 return false;
             }
 
-            catch (DataException Ex)
+            catch (DataException)
             {
                 // si algo fallo deshacemos todo
                 transaccion.Rollback();
                 // mostramos el mensaje del error
-                MessageBox.Show("DATA EXCEPTION - La transaccion no se pudo realizar: " + Ex.Message);
+                MessageBox.Show("DATA EXCEPTION - La transaccion no se pudo realizar");
 
                 return false;
 

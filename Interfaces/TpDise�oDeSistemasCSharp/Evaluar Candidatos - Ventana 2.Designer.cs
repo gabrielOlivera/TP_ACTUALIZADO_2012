@@ -39,13 +39,13 @@
             this.PanelInferior = new System.Windows.Forms.Panel();
             this.Fecha = new System.Windows.Forms.LinkLabel();
             this.PanelSuperior = new System.Windows.Forms.Panel();
+            this.menuConsultor = new System.Windows.Forms.Button();
             this.Consultor = new System.Windows.Forms.Label();
             this.CerrarSesion = new System.Windows.Forms.LinkLabel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.Atras = new System.Windows.Forms.Button();
             this.Siguiente = new System.Windows.Forms.Button();
             this.CaracteristicasDel_puesto = new System.Windows.Forms.GroupBox();
-            this.menuConsultor = new System.Windows.Forms.Button();
             this.SeleccionDeAcceso.SuspendLayout();
             this.PanelInferior.SuspendLayout();
             this.PanelSuperior.SuspendLayout();
@@ -66,7 +66,7 @@
             this.SeleccionDeAcceso.TabIndex = 9;
             this.SeleccionDeAcceso.TabStop = false;
             this.SeleccionDeAcceso.Text = "Seleccione el puesto y nombre de la empresa para los que desee evaluar los candid" +
-    "atos";
+                "atos";
             // 
             // Buscar
             // 
@@ -173,6 +173,16 @@
             this.PanelSuperior.Size = new System.Drawing.Size(679, 62);
             this.PanelSuperior.TabIndex = 6;
             // 
+            // menuConsultor
+            // 
+            this.menuConsultor.Location = new System.Drawing.Point(12, 34);
+            this.menuConsultor.Name = "menuConsultor";
+            this.menuConsultor.Size = new System.Drawing.Size(128, 23);
+            this.menuConsultor.TabIndex = 17;
+            this.menuConsultor.Text = "Volver al menú principal";
+            this.menuConsultor.UseVisualStyleBackColor = true;
+            this.menuConsultor.Click += new System.EventHandler(this.menuConsultor_Click);
+            // 
             // Consultor
             // 
             this.Consultor.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -193,6 +203,7 @@
             this.CerrarSesion.TabIndex = 3;
             this.CerrarSesion.TabStop = true;
             this.CerrarSesion.Text = "Cerrar Sesión";
+            this.CerrarSesion.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.CerrarSesion_LinkClicked);
             // 
             // panel1
             // 
@@ -203,6 +214,7 @@
             // 
             // Atras
             // 
+            this.Atras.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.Atras.Location = new System.Drawing.Point(382, 428);
             this.Atras.Name = "Atras";
             this.Atras.Size = new System.Drawing.Size(75, 23);
@@ -213,6 +225,7 @@
             // 
             // Siguiente
             // 
+            this.Siguiente.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.Siguiente.Location = new System.Drawing.Point(483, 428);
             this.Siguiente.Name = "Siguiente";
             this.Siguiente.Size = new System.Drawing.Size(75, 23);
@@ -224,6 +237,7 @@
             // 
             // CaracteristicasDel_puesto
             // 
+            this.CaracteristicasDel_puesto.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.CaracteristicasDel_puesto.AutoSize = true;
             this.CaracteristicasDel_puesto.ForeColor = System.Drawing.SystemColors.HotTrack;
             this.CaracteristicasDel_puesto.Location = new System.Drawing.Point(112, 279);
@@ -232,16 +246,6 @@
             this.CaracteristicasDel_puesto.TabIndex = 12;
             this.CaracteristicasDel_puesto.TabStop = false;
             this.CaracteristicasDel_puesto.Visible = false;
-            // 
-            // menuConsultor
-            // 
-            this.menuConsultor.Location = new System.Drawing.Point(12, 34);
-            this.menuConsultor.Name = "menuConsultor";
-            this.menuConsultor.Size = new System.Drawing.Size(128, 23);
-            this.menuConsultor.TabIndex = 17;
-            this.menuConsultor.Text = "Volver al menú principal";
-            this.menuConsultor.UseVisualStyleBackColor = true;
-            this.menuConsultor.Click += new System.EventHandler(this.menuConsultor_Click);
             // 
             // Evaluar_Candidatos___Ventana_2
             // 
