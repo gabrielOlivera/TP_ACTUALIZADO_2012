@@ -68,7 +68,7 @@ namespace TpDiseñoCSharp
                 {
                     mensaje_ += "\n\n\t " + lista_Candidatos_EnEvaluaciones[i].TipoDoc + " " + lista_Candidatos_EnEvaluaciones[i].NroDoc + " " + lista_Candidatos_EnEvaluaciones[i].Apellido + " " + lista_Candidatos_EnEvaluaciones[i].Nombre;
                 }
-                MessageBox.Show("\tLos siguientes candidatos:" + mensaje_ + "\n\nNO PUEDEN SER NUEVAMENTE EVALUADOS", "INFORMACIÓN", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("\tLos siguientes candidatos:" + mensaje_ + "\n\nya estan siendo evaluados ", "INFORMACIÓN", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 resultadosDeBusqueda.DataSource = null;
                 resultadosDeBusqueda.Visible = false;
             }

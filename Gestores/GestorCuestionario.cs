@@ -353,7 +353,7 @@ namespace Gestores
             int numBloq = 1, contadorDeBloqueCreados = 0;
             int cantidadBloques = (listaPreguntas.Count / pregXbloque);
 
-            for (int i = 0; i < listaPreguntas.Count; i++)
+            for (int i = 0; i < listaPreguntas.Count; )
             {
                 Bloque nuevoBloque = new Bloque(numBloq, cuest);
                 for (int j = 0; j < pregXbloque; j++)
