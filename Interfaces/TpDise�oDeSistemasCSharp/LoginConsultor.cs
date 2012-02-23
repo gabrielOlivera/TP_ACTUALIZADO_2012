@@ -42,8 +42,8 @@ namespace TpDiseñoCSharp
                     }
                     else
                     {
-                        MessageBox.Show("La contraseña debe ser de 8 caracteres como mínimo", "Atención",
-                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show("El usuario o la contraseña no son válidos", "Error",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
                         FuncionesVarias.limpiarBoxesFormulario(this);
                         
                         this.ActiveControl = Usuario;
@@ -61,7 +61,7 @@ namespace TpDiseñoCSharp
             }
             else
             {
-                MessageBox.Show("El usuario o la contraseña no son válidos", "Mensaje de Error",
+                MessageBox.Show("El usuario o la contraseña no son válidos", "Error",
                 MessageBoxButtons.OK, MessageBoxIcon.Error);
                 FuncionesVarias.limpiarBoxesFormulario(this);
                 this.ActiveControl = Usuario;

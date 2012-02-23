@@ -501,7 +501,7 @@ namespace TpDiseñoCSharp
                     GestorPuesto gestPuesto = new GestorPuesto();
                     objPuesto = gestPuesto.buscarPuesto(Codigo.Text, NombreDePuesto.Text);
                     //Si existe el nombre se informa de ello
-                    if (objPuesto.Nombre == NombreDePuesto.Text)
+                    if (objPuesto.Codigo != Codigo.Text && objPuesto.Nombre == NombreDePuesto.Text)
                     {
                         errorNombreDePuesto.Text = "El nombre ya existe";
                         errorNombreDePuesto.Visible = true;
