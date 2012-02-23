@@ -211,7 +211,7 @@ namespace Gestores
             int maxAccesos = nCuestionario.MaxAccesos;
             string estadoCuestionario = nCuestionario.obtenerEstado();
 
-            switch (accesos <= maxAccesos)
+            switch (accesos < maxAccesos)
             {
                 case true:
                     PuestoEvaluado puestoEv = nCuestionario.PuestoEvaluado;
