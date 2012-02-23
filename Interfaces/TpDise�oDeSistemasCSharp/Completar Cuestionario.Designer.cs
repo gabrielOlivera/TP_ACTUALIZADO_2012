@@ -34,9 +34,7 @@
             this.Fecha = new System.Windows.Forms.LinkLabel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.PanelSuperior = new System.Windows.Forms.Panel();
-
             this.Candidato = new System.Windows.Forms.Label();
-
             this.CerrarSesion = new System.Windows.Forms.LinkLabel();
             this.Siguiente = new System.Windows.Forms.Button();
             this.panel_pregunta = new System.Windows.Forms.Panel();
@@ -99,13 +97,10 @@
             // PanelSuperior
             // 
             this.PanelSuperior.BackColor = System.Drawing.Color.DarkGray;
-
             this.PanelSuperior.Controls.Add(this.Candidato);
-
             this.PanelSuperior.Controls.Add(this.CerrarSesion);
             this.PanelSuperior.Controls.Add(this.TituloEmpresa);
             this.PanelSuperior.Dock = System.Windows.Forms.DockStyle.Top;
-            this.PanelSuperior.Enabled = false;
             this.PanelSuperior.Location = new System.Drawing.Point(0, 0);
             this.PanelSuperior.Name = "PanelSuperior";
             this.PanelSuperior.Size = new System.Drawing.Size(817, 62);
@@ -120,19 +115,19 @@
             this.Candidato.Size = new System.Drawing.Size(55, 13);
             this.Candidato.TabIndex = 15;
             this.Candidato.Text = "Candidato";
-
             // 
             // CerrarSesion
             // 
+            this.CerrarSesion.ActiveLinkColor = System.Drawing.Color.Red;
             this.CerrarSesion.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.CerrarSesion.AutoSize = true;
-            this.CerrarSesion.LinkVisited = true;
             this.CerrarSesion.Location = new System.Drawing.Point(735, 39);
             this.CerrarSesion.Name = "CerrarSesion";
             this.CerrarSesion.Size = new System.Drawing.Size(70, 13);
             this.CerrarSesion.TabIndex = 14;
             this.CerrarSesion.TabStop = true;
             this.CerrarSesion.Text = "Cerrar Sesión";
+            this.CerrarSesion.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.CerrarSesion_LinkClicked);
             // 
             // Siguiente
             // 

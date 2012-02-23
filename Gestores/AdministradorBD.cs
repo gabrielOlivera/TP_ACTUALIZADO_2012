@@ -1833,7 +1833,6 @@ namespace Gestores
 
             transaccion = ObjConexion.BeginTransaction();
 
-
             try
             {
                 if (!conexionExitosa)
@@ -2847,11 +2846,8 @@ namespace Gestores
                     {
                         for (int j = 0; j < competenciaAs.ListaFactores.Count; j++)
                         {
-                            MessageBox.Show(competenciaAs.ListaFactores[j].Nombre);
-
                             if (competenciaAs.ListaFactores[j].Codigo == "INSUFICIENTES PREG")
                             {
-                                MessageBox.Show("ANTES UN INSUFICIENTES PREG " + competenciaAs.ListaFactores[j].Nombre);
                                 competenciaAs.ListaFactores.Remove(competenciaAs.ListaFactores[j]);
                                 j--;
                             }

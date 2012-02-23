@@ -117,7 +117,6 @@ namespace Gestores
                             retorno = true;
                             break;
                         case false:
-                            MessageBox.Show("La clave ingresada no es valida"); //a la interfaz
                             retorno = false;
                             break;
                     }
@@ -129,7 +128,6 @@ namespace Gestores
                             retorno = true;
                             break;
                         case false:
-                            MessageBox.Show("La clave ingresada no es valida");
                             retorno = false;
                             break;
                     }
@@ -286,6 +284,7 @@ namespace Gestores
                         this.cambiarEstado("EN PROCESO", cuestionario);
                         cuestionario.aumentarAcceso();
                         Bloque bloq_ = cuestionario.UltimoBloque;
+                        this.resguardarCuestionario(cuestionario);
                         return bloq_;
                     }
                     else
@@ -303,6 +302,7 @@ namespace Gestores
             cuestionario.aumentarAcceso();
             cuestionario.Estado.Fecha_hora = DateTime.Now;
             admBD.guardarEstado(cuestionario.Estado);
+            this.resguardarCuestionario(cuestionario);
             Bloque bloq_ = cuestionario.UltimoBloque;
             return bloq_;
         }
@@ -358,7 +358,7 @@ namespace Gestores
                 Bloque nuevoBloque = new Bloque(numBloq, cuest);
                 for (int j = 0; j < pregXbloque; j++)
                 {
-                    nuevoBloque.addPreguntaEv(listaPreguntas[j]);
+                    nuevoBloque.addPreguntaEv(listaPreguntas[i]);
                     i++;
                 }
 

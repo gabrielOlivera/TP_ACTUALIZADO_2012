@@ -56,6 +56,7 @@ namespace TpDiseñoCSharp
                     {
                         lista_Candidatos_EnEvaluaciones.Add(listaCandidatos_agregados[i]);
                         listaCandidatos_agregados.Remove(listaCandidatos_agregados[i]);
+                        i--;
                     }
                 }
             }

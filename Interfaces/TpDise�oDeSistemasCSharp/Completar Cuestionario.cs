@@ -79,18 +79,19 @@ namespace TpDiseñoCSharp
                 int ordenVisualizacionOpcion = 1;
                 for (int j = 0; j < pregunta_A_mostrar.ListaOpcionesEv.Count; j++)
                 {
-                    string opcion = "";
+                    string opcion = "", valor = "";
                     for (int indice = 0; indice < pregunta_A_mostrar.ListaOpcionesEv.Count; indice++)
                     {
                         if (ordenVisualizacionOpcion == pregunta_A_mostrar.ListaOpcionesEv[indice].OrdenDeVisualizacion)
                         {
                             ordenVisualizacionOpcion = pregunta_A_mostrar.ListaOpcionesEv[indice].OrdenDeVisualizacion;
 
-                            opcion = pregunta_A_mostrar.ListaOpcionesEv[indice].Valor.ToString() + " " + pregunta_A_mostrar.ListaOpcionesEv[indice].Nombre;
+                            opcion = pregunta_A_mostrar.ListaOpcionesEv[indice].Nombre;
+                            valor = "{ " + pregunta_A_mostrar.ListaOpcionesEv[indice].Valor.ToString() + " }";
                         }
                     }
                     
-                    checks_mas_opciones = this.ubicarOpcion(espacioPregunta, opcion, ordenVisualizacionOpcion, cadena_opcion_mas_larga + 5);
+                    checks_mas_opciones = this.ubicarOpcion(espacioPregunta, opcion, valor, ordenVisualizacionOpcion, cadena_opcion_mas_larga + 5);
                     //Agrego el elemento a la lista de opciones_ para luego evaluar las respuestas
                     Caracteristica elementos = new Caracteristica();
                     elementos.dato1 = pregunta_A_mostrar;
@@ -111,9 +112,10 @@ namespace TpDiseñoCSharp
          * que agruparan las opciones de respuestas posibles para una pregunta, añadiendoles un checkBox para señalar la respuesta
          * seleccionada por el usuario o candidato
          */
-        private RadioButton ubicarOpcion(GroupBox espacioPreguntas, string opcion, int ordenVisualizacion, int distanciaMaxima)
+        private RadioButton ubicarOpcion(GroupBox espacioPreguntas, string opcion, string valor, int ordenVisualizacion, int distanciaMaxima)
         {
             RadioButton checkPregunta = new RadioButton();
+            Label valor_opcion = new Label();
 
             if (opcion != "")
             {
@@ -127,8 +129,11 @@ namespace TpDiseñoCSharp
                             checkPregunta.Text = opcion;
                             checkPregunta.AutoSize = true;
                             checkPregunta.Location = new Point((espacioPreguntas.Height + distanciaMaxima) + 250, (ordenVisualizacion * 20));
-
+                            valor_opcion.Text = valor;
+                            valor_opcion.Location = new Point(checkPregunta.Location.X - 35, checkPregunta.Top);
+                            
                             espacioPreguntas.Controls.Add(checkPregunta);
+                            espacioPreguntas.Controls.Add(valor_opcion);
                         }
                         break;
                     case false://Ubicacion mas a la izquierda
@@ -136,8 +141,11 @@ namespace TpDiseñoCSharp
                             checkPregunta.Text = opcion;
                             checkPregunta.AutoSize = true;
                             checkPregunta.Location = new Point(espacioPreguntas.Height, (ordenVisualizacion * 20));
+                            valor_opcion.Text = valor;
+                            valor_opcion.Location = new Point(checkPregunta.Location.X - 35, checkPregunta.Top);
 
                             espacioPreguntas.Controls.Add(checkPregunta);
+                            espacioPreguntas.Controls.Add(valor_opcion);
                         }
                         break;
                 }
@@ -150,7 +158,6 @@ namespace TpDiseñoCSharp
          */
         private void Siguiente_Click(object sender, EventArgs e)
         {
-            AdministradorBD admiBD = new AdministradorBD();
             GestorCuestionario gestorCuestionario = new GestorCuestionario();
 
             int bloque_completo = 0;
@@ -233,6 +240,14 @@ namespace TpDiseñoCSharp
                 MessageBox.Show("Cerrando su sesión...\n\n\tSe estan guardando sus datos");
                 gestorCuestionario.resguardarCuestionario(bloque_A_mostrar.CuestAsociado);
                 pantallaInicial.Visible = true;
+        }
+
+        private void CerrarSesion_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            if (MessageBox.Show("¿Esta seguro que desea CerrarSesion?", "PREGUNTA", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                Close();
+            }
         }
     }
 }
