@@ -34,7 +34,7 @@ namespace TpDiseñoCSharp
             this.Cuestionario_A_mostrar = cuestionario_Asociado;
             this.Candidato.Text = Cuestionario_A_mostrar.CandidatoAsociado.Nombre + " " + Cuestionario_A_mostrar.CandidatoAsociado.Apellido;
             this.Fecha.Text = DateTime.Now.ToLongDateString();
-            InstruccionesCuestionario.Text = administradorBD.retornarInstruccionesDelcuestionario();
+            InstruccionesCuestionario.Text = administradorBD.retornarInstruccionesDelcuestionario() + " " + cuestionario_Asociado.MaxAccesos.ToString();
             InstruccionesCuestionario.Text = InstruccionesCuestionario.Text.Replace("@", "\n");
 
             this.Candidato.Text = candidato;

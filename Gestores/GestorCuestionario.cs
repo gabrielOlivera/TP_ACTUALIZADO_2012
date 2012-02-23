@@ -53,13 +53,13 @@ namespace Gestores
 
             if (nCuestionario != null)
             {
-                if (nCuestionario[0].Clave != "NO POSEE")
+                if (nCuestionario[nCuestionario.Count - 1].Clave != "NO POSEE")
                 {
-                    if (nCuestionario[0].PuestoEvaluado.Codigo != "ELIMINADO")
+                    if (nCuestionario[nCuestionario.Count - 1].PuestoEvaluado.Codigo != "ELIMINADO")
                     {
-                        if (nCuestionario[0].Estado.Estado_ == "ACTIVO" || nCuestionario[0].Estado.Estado_ == "EN PROCESO")
+                        if (nCuestionario[nCuestionario.Count - 1].Estado.Estado_ == "ACTIVO" || nCuestionario[nCuestionario.Count - 1].Estado.Estado_ == "EN PROCESO")
                         {
-                            nuevoCuest = nCuestionario[0];
+                            nuevoCuest = nCuestionario[nCuestionario.Count - 1];
 
                             if (nuevoCuest.PuestoEvaluado.Caracteristicas == null)
                             {
@@ -75,7 +75,7 @@ namespace Gestores
                         }
                         else
                         {
-                            if (nCuestionario[0].Estado.Estado_ == "COMPLETO")
+                            if (nCuestionario[nCuestionario.Count - 1].Estado.Estado_ == "COMPLETO")
                             {
                                 MessageBox.Show("USTED YA A COMPLETADO SU CUESTIONARIO PARA ESTA EVALUACION");
                                 return null;
@@ -353,7 +353,7 @@ namespace Gestores
             int numBloq = 1, contadorDeBloqueCreados = 0;
             int cantidadBloques = (listaPreguntas.Count / pregXbloque);
 
-            for (int i = 0; i < listaPreguntas.Count; i++)
+            for (int i = 0; i < listaPreguntas.Count; )
             {
                 Bloque nuevoBloque = new Bloque(numBloq, cuest);
                 for (int j = 0; j < pregXbloque; j++)

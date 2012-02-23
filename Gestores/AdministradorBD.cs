@@ -522,7 +522,6 @@ namespace Gestores
             {
                 PuestoEv = this.recuperarPuestoEvaluado(listaIdPuestos[i]);
 
-
                 List<Estado> listEstado = this.recuperarUltimoEstado(preSeleccionCuestionarios[i]);
                 Estado estadoCuest = listEstado[0];
 
@@ -938,7 +937,7 @@ namespace Gestores
          * - RecuperarCaracteristicasPuesto tiene la misión de recuperar todas las competencias que estan activas (no eliminadas)
          *   y ponederaciones asociades a un puesto puntual de la base de datos
          */
-        public List<Caracteristica> recuperarCaracteristicasPuestoEv(PuestoEvaluado puestoEvAsociado)
+        public List<Caracteristica> recuperarCaracteristicasPuestoEv(PuestoEvaluado puestoEvAsociado, Cuestionario cuest_Asociado)
         {
             bool conexionExitosa;
             //Lista que se retornara con los datos finales de la busqueda
@@ -949,10 +948,10 @@ namespace Gestores
             Caracteristica elementoLista = new Caracteristica();
 
             //La consulta selecciona las competencias asociadas al puesto pasado como parametro con su correspondiente ponderacion
-            string consultaSql = "SELECT `Competencia Evaluada_idCompetencia Evaluada`, `ponderacion` ";
-            consultaSql += "FROM `puesto evaluado_competencia evaluada` ponderaciones ";
-            consultaSql += "JOIN `tp base de datos`.`puesto evaluado` p on (p.`codigo` = '" + puestoEvAsociado.Codigo + "') ";
-            consultaSql += "WHERE p.`idPuesto Evaluado` = ponderaciones.`Puesto Evaluado_idPuesto Evaluado`;";
+            string consultaSql = "SELECT `Competencia Evaluada_idCompetencia Evaluada`, `ponderacion` "
+                + "FROM `puesto evaluado_competencia evaluada` ponderaciones "
+                + "JOIN `puesto evaluado` p on (p.`codigo` = '" + puestoEvAsociado.Codigo + "' AND p.`idPuesto Evaluado` = ponderaciones.`Puesto Evaluado_idPuesto Evaluado`) "
+                + "JOIN cuestionario c ON (c.clave = '" + cuest_Asociado.Clave + "' AND c.`Puesto Evaluado_idPuesto Evaluado` = p.`idPuesto Evaluado`)";
 
             conexionExitosa = iniciarConexion();
 
@@ -1165,10 +1164,10 @@ namespace Gestores
             GestorEvaluacion gestorEvaluacion = new GestorEvaluacion();
             List<PreguntaEvaluada> listaDePreguntas = new List<PreguntaEvaluada>();
 
-            string consultaSql = "SELECT `pregunta evaluada`.nombre ,`pregunta evaluada`.codigo, `pregunta evaluada`.pregunta, `pregunta evaluada`.`Opcion de Respuesta Evaluada_idOpcion de Respuesta Evaluada` "
-            + "FROM `pregunta evaluada` "
-            + "JOIN `factor evaluado` fac on (fac.`codigo` = '" + factorAsociado.Codigo + "') "
-            + "WHERE `pregunta evaluada`.`Factor Evaluado_idFactor Evaluado` = fac.`idFactor Evaluado`;";
+            string consultaSql = "SELECT p.nombre , p.codigo, p.pregunta, p.`Opcion de Respuesta Evaluada_idOpcion de Respuesta Evaluada` "
+                + "FROM `pregunta evaluada` AS p "
+                + "JOIN `factor evaluado` AS fac on (p.`Factor Evaluado_idFactor Evaluado` = fac.`idFactor Evaluado`) "
+                + "WHERE  fac.`codigo` = '" + factorAsociado.Codigo + "';";
 
             conexionExitosa = iniciarConexion();
 
@@ -1239,11 +1238,11 @@ namespace Gestores
             List<OpcionesEvaluadas> listaDeOpciones = new List<OpcionesEvaluadas>();//Para el retorno de datos
 
             string consultaSql = "SELECT op.nombre, pr_op.ponderacion, opr_op.ordenDeVisualizacion "
-            + "FROM `tp base de datos`.`pregunta evaluada_opcion evaluada` pr_op "
-            + "JOIN `tp base de datos`.`pregunta evaluada` pr on (pr_op.`Pregunta Evaluada_idPregunta Evaluada` = pr.`idPregunta Evaluada` AND pr.codigo = '" + pregAsociada.Codigo + "') "
-            + "JOIN `tp base de datos`.`opcion evaluada` op on (pr_op.`Opcion Evaluada_idOpcion` = op.idOpcion) "
-            + "JOIN `tp base de datos`.`opcion de respuesta evaluada_opcion evaluada` opr_op on (pr_op.`Opcion Evaluada_idOpcion` = opr_op.`Opcion Evaluada_idOpcion`) "
-            + "GROUP BY nombre, ponderacion, ordenDeVisualizacion;";
+            + "FROM `pregunta evaluada_opcion evaluada` pr_op "
+            + "JOIN `pregunta evaluada` pr on (pr_op.`Pregunta Evaluada_idPregunta Evaluada` = pr.`idPregunta Evaluada` AND pr.codigo = '" + pregAsociada.Codigo + "') "
+            + "JOIN `opcion evaluada` op on (pr_op.`Opcion Evaluada_idOpcion` = op.idOpcion) "
+            + "JOIN `opcion de respuesta evaluada_opcion evaluada` opr_op on (pr_op.`Opcion Evaluada_idOpcion` = opr_op.`Opcion Evaluada_idOpcion`) "
+            + "GROUP BY nombre;";
 
             //llamamos al metodo "iniciar conexion"
             conexionExitosa = iniciarConexion();
@@ -1451,7 +1450,7 @@ namespace Gestores
 
             if (Equals(puestoEvAsociado.Caracteristicas, null) == true)
             {
-                List<Caracteristica> caracteristicasPuesto = recuperarCaracteristicasPuestoEv(puestoEvAsociado);
+                List<Caracteristica> caracteristicasPuesto = recuperarCaracteristicasPuestoEv(puestoEvAsociado, cuestionarioAsociado);
                 puestoEvAsociado.Caracteristicas = caracteristicasPuesto;
                 if (Equals(caracteristicasPuesto[0].dato1.GetType(), "stringEJEMPLO".GetType()) == false)
                     seRealizoConExito = true;
@@ -3022,8 +3021,7 @@ namespace Gestores
 
             string consultaSql = "SELECT p.nombre, p.codigo, p.pregunta, p.`Opcion_de_respuesta` "
             + "FROM `pregunta` AS p "
-            + "JOIN `factor` AS fac on (fac.`codigo` = '" + factorAsociado.Codigo + "') "
-            + "WHERE p.Factor_codigo = fac.codigo;";
+            + "JOIN `factor` AS fac on (fac.`codigo` = '" + factorAsociado.Codigo + "' AND p.Factor_codigo = fac.codigo);";
 
             conexionExitosa = iniciarConexion();
 
@@ -3048,15 +3046,16 @@ namespace Gestores
                 return null;
             }
 
-            string codigo_OpRespuesta = "";
+            List<string> Listacodigo_OpRespuesta = new List<string>();
 
             while (reader.Read())
             {
                 string cod = reader["codigo"].ToString();
                 string nomPreg = reader["nombre"].ToString();
                 string preg = reader["pregunta"].ToString();
-                codigo_OpRespuesta = reader["Opcion_de_respuesta"].ToString();
+                string codigo_OpRespuesta = reader["Opcion_de_respuesta"].ToString();
 
+                Listacodigo_OpRespuesta.Add(codigo_OpRespuesta);
                 Pregunta pregunta = gestorPreguntas.instanciarPregunta(preg, nomPreg, factorAsociado);
                 listaDePreguntas.Add(pregunta);
             }
@@ -3066,19 +3065,20 @@ namespace Gestores
             //Agregamos la listas de Opciones de respuesta y las opciones para cada una de las preguntas encontradas
             for (int i = 0; i < listaDePreguntas.Count; i++)
             {
-                //Se recuperan la opcion de respuesta de la pregunta
-                OpciondeRespuesta opcionesRespuesta = recuperarOpcionRespuesta(codigo_OpRespuesta);
-                if (opcionesRespuesta != null)
-                {
-                    //Recuperamos la opcion que contiene la poneracion para esa pregunta
-                    List<Opciones> opciones = recuperarOpciones(listaDePreguntas[i]);
-                    //Completamos el objeto Opciones_de_respuestas_evaludas con la lista de opciones
-                    opcionesRespuesta.ListaOpciones = opciones;
-
-                    //Realizamos la asignacion de la opcion de respuesta y las opciones corespondientes para la pregunta
-                    listaDePreguntas[i].OpcionRespuesta_Asociada = opcionesRespuesta;
-                    listaDePreguntas[i].ListaOpciones = opciones;
-                }
+                List<Opciones> opciones = new List<Opciones>();
+                
+                    //Se recuperan la opcion de respuesta de la pregunta
+                    OpciondeRespuesta opcionesRespuesta = recuperarOpcionRespuesta(Listacodigo_OpRespuesta[i]);
+                    if (opcionesRespuesta != null)
+                    {
+                        //Recuperamos la opcion que contiene la poneracion para esa pregunta
+                        opciones = recuperarOpciones(listaDePreguntas[i]);
+                        //Completamos el objeto Opciones_de_respuestas_evaludas con la lista de opciones
+                        opcionesRespuesta.ListaOpciones = opciones;
+                        //Realizamos la asignacion de la opcion de respuesta y las opciones corespondientes para la pregunta
+                        listaDePreguntas[i].OpcionRespuesta_Asociada = opcionesRespuesta;
+                        listaDePreguntas[i].ListaOpciones = opciones;
+                    }
             }
 
             return listaDePreguntas;
