@@ -1,10 +1,9 @@
-NICO FIJATE SI PODES ARREGLAR ESTO
+*alta de puesto con el mismo codigo tira error de BD (duplicated PK)
 
+*sacarle los 0 a las comp cuando das de alta un puesto
 
-EN EL ALTA DE PUESTOS
+*cuando no queres dar de alta otro puesto te deberia llevar a la ventana "gestionar puestos o funciones" que es la anterior y no al menuprincipal
 
-Si quiero dar de alta dos puestos consecutivos, no me carga la lista de competencias para agregar.
+*el nombre del puesto (en modificar puesto) no puede quedar igual
 
-Es decir, den de alta un puesto exitosamente y luego intenten dar un nuevo puesto
-
-
+*agregar encabezados al excel de evaluar candidatos
