@@ -68,7 +68,7 @@ namespace Gestores
 
                                 if (re_construido == false)
                                 {
-                                    MessageBox.Show("No se pudo recuperar Todos los datos requeridos");
+                                    MessageBox.Show("\tNo se pudo recuperar TODOS los datos requeridos para mostrar su cuestionario", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                     return null;
                                 }
                             }
@@ -77,25 +77,30 @@ namespace Gestores
                         {
                             if (nCuestionario[nCuestionario.Count - 1].Estado.Estado_ == "COMPLETO")
                             {
-                                MessageBox.Show("USTED YA A COMPLETADO SU CUESTIONARIO PARA ESTA EVALUACION");
+                                MessageBox.Show("\tUSTED YA A COMPLETADO SU CUESTIONARIO PARA ESTA EVALUACION", "INFORMACION", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                return null;
+                            }
+                            else if (nCuestionario[nCuestionario.Count - 1].Estado.Estado_ == "INCOMPLETO")
+                            {
+                                MessageBox.Show("\tSU CUESTIONARIO FUE PASADO AL ESTADO INCOMPLETO PARA ESTA EVALUACIÓN", "INFORMACION", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                 return null;
                             }
                             else
                             {
-                                MessageBox.Show("LOS TIEMPOS VENCIERON PARA REALIZAR LA EVALUACIÓN");
+                                MessageBox.Show("\tSU CUESTIONARIO FUE PASADO AL ESTADO SIN CONTESTAR PARA ESTA EVALUACIÓN", "INFORMACION", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                 return null;
                             }
                         }
                     }
                     else
                     {
-                        MessageBox.Show("EL PUESTO DE EVALUACION FUE ELIMINADO");
+                        MessageBox.Show("EL PUESTO DE EVALUACION FUE ELIMINADO", "INFORMACION", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         return null;
                     }
                 }
                 else
                 {
-                    MessageBox.Show("NO POSEE UN CUESTIONARIO PARA SER EVALUADO");
+                    MessageBox.Show("NO POSEE UN CUESTIONARIO PARA SER EVALUADO", "INFORMACION", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return null;
                 }
             }
@@ -133,7 +138,7 @@ namespace Gestores
                     }
                     break;
                 default:
-                    MessageBox.Show("El candidato no posee un cuestionario 'En proceso' o 'Activo'");
+                    MessageBox.Show("El candidato no posee un cuestionario 'En proceso' o 'Activo'", "INFORMACION", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     retorno = false;
                     break;
             }
@@ -379,7 +384,7 @@ namespace Gestores
                                 operacionRealizadaConExito = true;
                             else
                             {
-                                MessageBox.Show("No se pudieron resguardar los datos de su evaluación\nComuniquese con su evaluador");
+                                MessageBox.Show("\tNo se pudieron resguardar los datos de su evaluación\nComuniquese con su evaluador", "ADVERTENCIA", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                                 operacionRealizadaConExito = false;
                             }
                         }
@@ -391,7 +396,7 @@ namespace Gestores
                                 operacionRealizadaConExito = true;
                             else
                             {
-                                MessageBox.Show("No se pudieron resguardar los datos de su evaluación\nComuniquese con su evaluador");
+                                MessageBox.Show("\tNo se pudieron resguardar los datos de su evaluación\nComuniquese con su evaluador", "ADVERTENCIA", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                                 operacionRealizadaConExito = false;
                             }
                         }
@@ -413,7 +418,7 @@ namespace Gestores
                 return true;
             else
             {
-                MessageBox.Show("No se realizo el cambio de estado de su cuestionario\n\nPor favor reinicie su sesión");
+                MessageBox.Show("\tNo se realizo el cambio de estado de su cuestionario\n\nPor favor reinicie su sesión", "ADVERTENCIA", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return false;
             }
         }

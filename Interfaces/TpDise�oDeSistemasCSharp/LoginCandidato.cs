@@ -77,14 +77,14 @@ namespace TpDiseñoCSharp
                         }
                         else
                         {
-                            MessageBox.Show("El número de caracteres ingresados tiene que ser de 10 digitos", "ADVERTENCIA",
-                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            MessageBox.Show("Los datos ingresados no son válidos", "Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                     }
                     else
                     {
-                        MessageBox.Show("El PP solo acepta caracteres alfanuméricos", "ERROR",
-                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("Los datos ingresados no son válidos", "Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                     break;
 
@@ -130,14 +130,14 @@ namespace TpDiseñoCSharp
                         }
                         else
                         {
-                            MessageBox.Show("El número de caracteres ingresados tiene que ser de 8 digitos", "ADVERTENCIA",
-                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            MessageBox.Show("Los datos ingresados no son válidos", "Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                     }
                     else
                     {
-                        MessageBox.Show("El tipo de Documento: " + Tipo.Text + " solo acepta caracteres numéricos", "ERROR",
-                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("Los datos ingresados no son válidos", "Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                     break;
             }

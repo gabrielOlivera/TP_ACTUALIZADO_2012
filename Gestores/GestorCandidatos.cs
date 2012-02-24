@@ -74,9 +74,6 @@ namespace Gestores
                         esValido = true;
                         return cuestAsociado;
                     }
-
-                    else
-                        MessageBox.Show("La clave ingresada no es valida para este candidato. \n\nIntente nuevamente");
                 }
             }
             return esValido;
