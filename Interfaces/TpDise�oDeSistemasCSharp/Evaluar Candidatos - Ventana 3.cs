@@ -51,9 +51,18 @@ namespace TpDiseñoCSharp
             ExcelApp.Workbooks.Add(Type.Missing);
             ExcelApp.Columns.ColumnWidth = 20;
 
-            for (int i = 0; i < candidatos_claves.Rows.Count; i++)
+            ExcelApp.Cells[1, 1] = "Nro de Empleado";
+            ExcelApp.Cells[1, 2] = "Nro de Candidato";
+            ExcelApp.Cells[1, 3] = "Clave";
+            ExcelApp.Cells[1, 4] = "Nro de Documento";
+            ExcelApp.Cells[1, 5] = "Nombre";
+            ExcelApp.Cells[1, 6] = "Apellido";
+            ExcelApp.Cells[1, 7] = "Tipo de Documento";
+
+            // empieza desde 1 para dejar lugar al encabezado
+            for (int i = 1; i < candidatos_claves.Rows.Count + 1; i++)
             {
-                DataGridViewRow Fila = candidatos_claves.Rows[i];
+                DataGridViewRow Fila = candidatos_claves.Rows[i-1];
                 for (int j = 0; j < Fila.Cells.Count; j++)
                 {
                     ExcelApp.Cells[i + 1, j + 1] = Fila.Cells[j].Value;
