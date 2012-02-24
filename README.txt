@@ -6,4 +6,4 @@
 
 *el nombre del puesto (en modificar puesto) no puede quedar igual
 
-*agregar encabezados al excel de evaluar candidatos
+*agregar encabezados al excel de evaluar candidatos [ARREGLADO]
