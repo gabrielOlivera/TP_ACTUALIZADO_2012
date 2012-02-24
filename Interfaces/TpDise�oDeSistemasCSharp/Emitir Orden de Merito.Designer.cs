@@ -197,6 +197,7 @@
             // Empresa
             // 
             this.Empresa.Location = new System.Drawing.Point(179, 133);
+            this.Empresa.MaxLength = 20;
             this.Empresa.Name = "Empresa";
             this.Empresa.Size = new System.Drawing.Size(100, 20);
             this.Empresa.TabIndex = 5;
@@ -205,6 +206,7 @@
             // 
             this.NombreDePuesto.Location = new System.Drawing.Point(179, 86);
             this.NombreDePuesto.Margin = new System.Windows.Forms.Padding(2);
+            this.NombreDePuesto.MaxLength = 20;
             this.NombreDePuesto.Name = "NombreDePuesto";
             this.NombreDePuesto.Size = new System.Drawing.Size(100, 20);
             this.NombreDePuesto.TabIndex = 9;
@@ -212,6 +214,7 @@
             // Codigo
             // 
             this.Codigo.Location = new System.Drawing.Point(179, 37);
+            this.Codigo.MaxLength = 20;
             this.Codigo.Name = "Codigo";
             this.Codigo.Size = new System.Drawing.Size(100, 20);
             this.Codigo.TabIndex = 3;

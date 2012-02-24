@@ -163,6 +163,12 @@
     <Compile Include="Seleccion de evaluaciones.Designer.cs">
       <DependentUpon>Seleccion de evaluaciones.cs</DependentUpon>
     </Compile>
+    <Compile Include="Seleccion de Puesto.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Seleccion de Puesto.Designer.cs">
+      <DependentUpon>Seleccion de Puesto.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Alta de Puesto o Funcion .resx">
       <DependentUpon>Alta de Puesto o Funcion .cs</DependentUpon>
     </EmbeddedResource>
@@ -220,6 +226,9 @@
     </Compile>
     <EmbeddedResource Include="Seleccion de evaluaciones.resx">
       <DependentUpon>Seleccion de evaluaciones.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Seleccion de Puesto.resx">
+      <DependentUpon>Seleccion de Puesto.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

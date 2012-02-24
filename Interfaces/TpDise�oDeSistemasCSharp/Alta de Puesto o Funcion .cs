@@ -79,7 +79,7 @@ namespace TpDiseñoCSharp
             ComboBox Comp = new ComboBox();
             ComboBox Pond = new ComboBox();
 
-            for (int j = 0; j <= 10; j++)
+            for (int j = 1; j <= 10; j++)
             {
                 //Agrega numeros del 0-10 en el combo box para poder elegir la ponderacion de cada competencia
                 Pond.Items.Add(j);
@@ -225,6 +225,7 @@ namespace TpDiseñoCSharp
             //Se crea la lista y se la inicializa en null
             ArrayList listaDeErrores = new ArrayList();
             listaDeErrores = null;
+            bool nombreOpuestoRepetido = false;
 
             //Se ocultan todos los errores
             errorCodigo.Visible = false;
@@ -280,6 +281,7 @@ namespace TpDiseñoCSharp
                         errorCodigo.Text = "El código ya existe";
                         errorCodigo.Visible = true;
                         System.Media.SystemSounds.Asterisk.Play();
+                        nombreOpuestoRepetido = true;
 
                     }
                     if (objPuesto.Nombre == NombreDePuesto.Text)
@@ -287,10 +289,11 @@ namespace TpDiseñoCSharp
                         errorNombreDePuesto.Text = "El nombre ya existe";
                         errorNombreDePuesto.Visible = true;
                         System.Media.SystemSounds.Asterisk.Play();
+                        nombreOpuestoRepetido = true;
                     }
 
                     //Sino, se verifica que no haya competencias repetidas
-                    else
+                    if(!nombreOpuestoRepetido)
                     {
                         //Comienzo de verificacion de que no existan competencias repetidas
                         ArrayList listaAuxiliarCompetenciaPonderacion = new ArrayList();

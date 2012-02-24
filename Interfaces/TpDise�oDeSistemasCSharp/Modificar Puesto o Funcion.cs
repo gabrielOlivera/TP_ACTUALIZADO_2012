@@ -105,7 +105,7 @@ namespace TpDiseñoCSharp
                     ComboBox Comp = new ComboBox();
                     ComboBox Pond = new ComboBox();
 
-                    for (int n = 0; n <= 10; n++)
+                    for (int n = 1; n <= 10; n++)
                     {
                         Pond.Items.Add(n);
                     }
@@ -176,7 +176,7 @@ namespace TpDiseñoCSharp
             ComboBox Comp = new ComboBox();
             ComboBox Pond = new ComboBox();
 
-            for (int j = 0; j <= 10; j++)
+            for (int j = 1; j <= 10; j++)
             {
                 Pond.Items.Add(j);
             }
@@ -497,77 +497,86 @@ namespace TpDiseñoCSharp
                 //Si todos los campos se encuentran completos, verifica que el puesto y/o nombre existan
                 else if ((listaDeErrores.Count == 0) && (i > 0))
                 {
-                    Puesto objPuesto;
-                    GestorPuesto gestPuesto = new GestorPuesto();
-                    objPuesto = gestPuesto.buscarPuesto(Codigo.Text, NombreDePuesto.Text);
-                    //Si existe el nombre se informa de ello
-                    if (objPuesto.Codigo != Codigo.Text && objPuesto.Nombre == NombreDePuesto.Text)
+                    if ((FuncionesVarias.validarCamposAlfanum(Codigo.Text)) || (FuncionesVarias.validarCamposAlfanum(NombreDePuesto.Text))
+                    || (FuncionesVarias.validarCamposAlfanum(Empresa.Text)))
                     {
-                        errorNombreDePuesto.Text = "El nombre ya existe";
-                        errorNombreDePuesto.Visible = true;
-                        System.Media.SystemSounds.Asterisk.Play();
-                    }
+                        MessageBox.Show("Los campos solo aceptan letras y/o números");
 
-                    //Sino, se verifica que no haya competencias repetidas
+                    }
                     else
                     {
-                        //Comienzo de verificacion de que no existan competencias repetidas
-                        ArrayList listaAuxiliarCompetenciaPonderacion = new ArrayList();
-                        listaAuxiliarCompetenciaPonderacion = llenarListaCompetenciaPonderacion(this);
-
-                        bool error = false;
-
-                        for (int j = 0; j < listaAuxiliarCompetenciaPonderacion.Count && !error; j += 2)
+                        Puesto objPuesto;
+                        GestorPuesto gestPuesto = new GestorPuesto();
+                        objPuesto = gestPuesto.buscarPuesto(Codigo.Text, NombreDePuesto.Text);
+                        //Si existe el nombre se informa de ello
+                        if (objPuesto.Codigo != Codigo.Text && objPuesto.Nombre == NombreDePuesto.Text)
                         {
-                            for (int k = j + 1; k < listaAuxiliarCompetenciaPonderacion.Count && !error; k++)
-                            {
-                                if (listaAuxiliarCompetenciaPonderacion[j].Equals(listaAuxiliarCompetenciaPonderacion[k]))
-                                {
-                                    error = true;
-                                }
-
-                            }
-
-                        }
-
-                        //Si existen competencias repetidas, se informa del error
-                        if (error)
-                        {
-                            errorpanelCaracteristicas.Visible = true;
-                            errorpanelCaracteristicas.Text = "No puede haber competencias repetidas";
+                            errorNombreDePuesto.Text = "El nombre ya existe";
+                            errorNombreDePuesto.Visible = true;
                             System.Media.SystemSounds.Asterisk.Play();
                         }
 
-                        //Si no existen competencias repetidas, se pasa a crear el puesto
+                        //Sino, se verifica que no haya competencias repetidas
                         else
                         {
-                            List<Caracteristica> listaAuxiliarCaracteristicaPuesto = new List<Caracteristica>();
-                            Caracteristica auxiliarCompetencia = new Caracteristica();
-                            for (int n = 0; n < listaAuxiliarCompetenciaPonderacion.Count; n += 2)
-                            {
-                                auxiliarCompetencia.dato1 = listaAuxiliarCompetenciaPonderacion[n];
-                                auxiliarCompetencia.dato2 = listaAuxiliarCompetenciaPonderacion[n + 1];
-                                listaAuxiliarCaracteristicaPuesto.Add(auxiliarCompetencia);
-                            }
-                            //Si se pudo modificar el puesto se informa de ello
-                            if (gestPuesto.modificarPuesto(Codigo.Text, NombreDePuesto.Text, Empresa.Text,
-                                listaAuxiliarCaracteristicaPuesto, Descripcion.Text))
-                            {
+                            //Comienzo de verificacion de que no existan competencias repetidas
+                            ArrayList listaAuxiliarCompetenciaPonderacion = new ArrayList();
+                            listaAuxiliarCompetenciaPonderacion = llenarListaCompetenciaPonderacion(this);
 
-                                if (MessageBox.Show("La operación ha culminado con éxito",
-                                    "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information) == DialogResult.OK)
+                            bool error = false;
+
+                            for (int j = 0; j < listaAuxiliarCompetenciaPonderacion.Count && !error; j += 2)
+                            {
+                                for (int k = j + 1; k < listaAuxiliarCompetenciaPonderacion.Count && !error; k++)
                                 {
-                                    ventanaAnterior.Refresh();
-                                    this.Close();
+                                    if (listaAuxiliarCompetenciaPonderacion[j].Equals(listaAuxiliarCompetenciaPonderacion[k]))
+                                    {
+                                        error = true;
+                                    }
 
                                 }
 
                             }
-                            //Si se produjo un error en la creación del puesto se informa de ello
+
+                            //Si existen competencias repetidas, se informa del error
+                            if (error)
+                            {
+                                errorpanelCaracteristicas.Visible = true;
+                                errorpanelCaracteristicas.Text = "No puede haber competencias repetidas";
+                                System.Media.SystemSounds.Asterisk.Play();
+                            }
+
+                            //Si no existen competencias repetidas, se pasa a crear el puesto
                             else
                             {
-                                MessageBox.Show("Error en la modificación del puesto, intente nuevamente", "ERROR",
-                                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                List<Caracteristica> listaAuxiliarCaracteristicaPuesto = new List<Caracteristica>();
+                                Caracteristica auxiliarCompetencia = new Caracteristica();
+                                for (int n = 0; n < listaAuxiliarCompetenciaPonderacion.Count; n += 2)
+                                {
+                                    auxiliarCompetencia.dato1 = listaAuxiliarCompetenciaPonderacion[n];
+                                    auxiliarCompetencia.dato2 = listaAuxiliarCompetenciaPonderacion[n + 1];
+                                    listaAuxiliarCaracteristicaPuesto.Add(auxiliarCompetencia);
+                                }
+                                //Si se pudo modificar el puesto se informa de ello
+                                if (gestPuesto.modificarPuesto(Codigo.Text, NombreDePuesto.Text, Empresa.Text,
+                                    listaAuxiliarCaracteristicaPuesto, Descripcion.Text))
+                                {
+
+                                    if (MessageBox.Show("La modificación del puesto se ha realizado exitosamente",
+                                        "EXITO", MessageBoxButtons.OK, MessageBoxIcon.Information) == DialogResult.OK)
+                                    {
+                                        ventanaAnterior.Refresh();
+                                        this.Close();
+
+                                    }
+
+                                }
+                                //Si se produjo un error en la creación del puesto se informa de ello
+                                else
+                                {
+                                    MessageBox.Show("Error en la modificación del puesto, intente nuevamente", "ERROR",
+                                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                }
                             }
                         }
                     }

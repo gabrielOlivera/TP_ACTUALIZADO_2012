@@ -139,6 +139,7 @@
             // 
             this.nroCandidato.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.nroCandidato.Location = new System.Drawing.Point(359, 97);
+            this.nroCandidato.MaxLength = 4;
             this.nroCandidato.Name = "nroCandidato";
             this.nroCandidato.Size = new System.Drawing.Size(100, 20);
             this.nroCandidato.TabIndex = 7;
@@ -147,6 +148,7 @@
             // 
             this.nroEmpleado.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.nroEmpleado.Location = new System.Drawing.Point(118, 90);
+            this.nroEmpleado.MaxLength = 4;
             this.nroEmpleado.Name = "nroEmpleado";
             this.nroEmpleado.Size = new System.Drawing.Size(100, 20);
             this.nroEmpleado.TabIndex = 6;
@@ -155,6 +157,7 @@
             // 
             this.nombre.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.nombre.Location = new System.Drawing.Point(359, 44);
+            this.nombre.MaxLength = 20;
             this.nombre.Name = "nombre";
             this.nombre.Size = new System.Drawing.Size(100, 20);
             this.nombre.TabIndex = 5;
@@ -163,6 +166,7 @@
             // 
             this.apellido.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.apellido.Location = new System.Drawing.Point(118, 44);
+            this.apellido.MaxLength = 20;
             this.apellido.Name = "apellido";
             this.apellido.Size = new System.Drawing.Size(100, 20);
             this.apellido.TabIndex = 4;

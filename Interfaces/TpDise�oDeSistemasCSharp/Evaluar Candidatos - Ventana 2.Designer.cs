@@ -66,7 +66,7 @@
             this.SeleccionDeAcceso.TabIndex = 9;
             this.SeleccionDeAcceso.TabStop = false;
             this.SeleccionDeAcceso.Text = "Seleccione el puesto y nombre de la empresa para los que desee evaluar los candid" +
-                "atos";
+    "atos";
             // 
             // Buscar
             // 
@@ -83,6 +83,7 @@
             // 
             this.nombreEmpresa.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.nombreEmpresa.Location = new System.Drawing.Point(138, 92);
+            this.nombreEmpresa.MaxLength = 20;
             this.nombreEmpresa.Name = "nombreEmpresa";
             this.nombreEmpresa.Size = new System.Drawing.Size(143, 20);
             this.nombreEmpresa.TabIndex = 3;
@@ -91,6 +92,7 @@
             // 
             this.nombrePuesto.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.nombrePuesto.Location = new System.Drawing.Point(138, 41);
+            this.nombrePuesto.MaxLength = 20;
             this.nombrePuesto.Name = "nombrePuesto";
             this.nombrePuesto.Size = new System.Drawing.Size(143, 20);
             this.nombrePuesto.TabIndex = 2;

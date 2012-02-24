@@ -16,10 +16,16 @@ namespace TpDiseñoCSharp
     {
         private Form ventanaMenuPrincipal, ventanaEvCandidatos;
         private List<Candidato> listaCandidatos_A_Evaluar;
-        private Puesto puestoSeleccionado;
+        public Puesto puestoSeleccionado;
 
-        private List<Caracteristica> Seleccion_puesto_check;
-        private Form mensajePuesto;
+        //private List<Caracteristica> Seleccion_puesto_check;
+        //private Form mensajePuesto;
+
+        public Puesto PuestoSeleccionado
+        {
+            get { return puestoSeleccionado; }
+            set { puestoSeleccionado = value; }
+        }
 
         public Evaluar_Candidatos___Ventana_2(string user, List<Candidato> listaCandidatos, Form ventanaAnterior, Form pantallaPrincipal_parametro)
         {
@@ -75,7 +81,10 @@ namespace TpDiseñoCSharp
 
                 if (listaPuesto != null)
                 {
-                    Panel paraSeleccion = mostrarPuestos(listaPuesto);
+                    Seleccion_de_Puesto seleccionPuesto = new Seleccion_de_Puesto(listaPuesto, this);
+                    seleccionPuesto.ShowDialog();
+                    
+                    /*Panel paraSeleccion = mostrarPuestos(listaPuesto);
                     paraSeleccion.AutoScroll = true;
                     mensajePuesto = new Form();
                     mensajePuesto.MaximizeBox = false;
@@ -92,7 +101,7 @@ namespace TpDiseñoCSharp
                     mensajePuesto.Text = "Evaluar Candidato";
                     mensajePuesto.AutoSize = true;
 
-                    mensajePuesto.ShowDialog();
+                    mensajePuesto.ShowDialog();*/
                 }
 
                 if (puestoSeleccionado != null)
@@ -147,7 +156,7 @@ namespace TpDiseñoCSharp
 
         }
 
-        public void Aceptar_click(object sender, EventArgs e)
+        /*public void Aceptar_click(object sender, EventArgs e)
         {
             AdministradorBD admBD = new AdministradorBD();
             int contador = 0;
@@ -178,15 +187,16 @@ namespace TpDiseñoCSharp
             }
             else
                 MessageBox.Show("Debe seleccionar un puesto para evaluar los candidatos");
-        }
+        }*/
 
         /*
        * El metodo mostrarPreguntas hace la construccion en pantalla del bloque con las preguntas que se deberan responder
        */
-        public Panel mostrarPuestos(List<Puesto> listPuestos)
+       /* public Panel mostrarPuestos(List<Puesto> listPuestos)
         {
             Seleccion_puesto_check = new List<Caracteristica>();
             Panel espacioDe_Puestos = new Panel();
+            espacioDe_Puestos.AutoScroll = true;
             espacioDe_Puestos.Text = "Elija un puesto para evaluar a los candidatos";
             espacioDe_Puestos.Width = espacioDe_Puestos.Text.Length * 10;
             espacioDe_Puestos.Location = new Point(50, 20);
@@ -219,7 +229,7 @@ namespace TpDiseñoCSharp
          * que agruparan las opciones de respuestas posibles para una pregunta, añadiendoles un checkBox para señalar la respuesta
          * seleccionada por el usuario o candidato
          */
-        private RadioButton ubicarOpcion(Panel espacioPuestos, string opcion, int distanciaMaxima)
+       /* private RadioButton ubicarOpcion(Panel espacioPuestos, string opcion, int distanciaMaxima)
         {
             RadioButton checkPregunta = new RadioButton();
 
@@ -234,7 +244,7 @@ namespace TpDiseñoCSharp
             }
             return checkPregunta;
         }
-
+        */
         private void menuConsultor_Click(object sender, EventArgs e)
         {
             if (ventanaMenuPrincipal.Created)

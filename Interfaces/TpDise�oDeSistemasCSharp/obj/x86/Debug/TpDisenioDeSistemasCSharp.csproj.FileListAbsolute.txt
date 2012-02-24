@@ -267,3 +267,4 @@ C:\Users\usuario\Desktop\TP 2012 Repositorio Online - copia\Interfaces\TpDiseño
 C:\Users\usuario\Desktop\TP 2012 Repositorio Online - copia\Interfaces\TpDiseñoDeSistemasCSharp\obj\x86\Debug\TpDiseñoCSharp.Seleccion_de_evaluaciones.resources
 C:\Users\usuario\Desktop\TP 2012 Repositorio Online - copia\Interfaces\TpDiseñoDeSistemasCSharp\obj\x86\Debug\GenerateResource.read.1.tlog
 C:\Users\usuario\Desktop\TP 2012 Repositorio Online - copia\Interfaces\TpDiseñoDeSistemasCSharp\obj\x86\Debug\GenerateResource.write.1.tlog
+C:\Users\usuario\Desktop\TP 2012 Repositorio Online\Interfaces\TpDiseñoDeSistemasCSharp\obj\x86\Debug\TpDiseñoCSharp.Seleccion_de_Puesto.resources
