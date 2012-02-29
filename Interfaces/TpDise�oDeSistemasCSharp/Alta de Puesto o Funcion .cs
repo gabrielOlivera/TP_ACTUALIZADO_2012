@@ -202,14 +202,10 @@ namespace TpDiseñoCSharp
         */
         private void Cancelar_Click(object sender, EventArgs e)
         {
-            ventanaMenuConsultor.Visible = true;
             /*Segun especificacion al cerrarse la ventana alta puesto, 
              * se tiene que cerrar la ventana de gestion de puesto y
              * volver al menu principal del consultor*/
-            ventanaAnterior.Close();
-            
-            
-            
+            ventanaAnterior.Visible = true;
             //Se encarga de cerrar la ventana actual
             Close();
         }

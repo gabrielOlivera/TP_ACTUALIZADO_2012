@@ -99,13 +99,15 @@ namespace TpDiseñoCSharp
                     ventana_guardar = null;
                     ExcelApp.Quit();
 
+                    MessageBox.Show("Se guardaron los Datos");
+
                     ventanaMenuPrincipal.Visible = true;
                     ventanaAnterior.Close();
                     Close();
                 }
                 else
                 {
-                    MessageBox.Show("No se pudo guardar Datos .. ");
+                    MessageBox.Show("No se pudo guardar Datos");
 
                     ventanaMenuPrincipal.Visible = true;
                     ventanaAnterior.Close();

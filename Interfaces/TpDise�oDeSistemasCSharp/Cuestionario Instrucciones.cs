@@ -54,6 +54,12 @@ namespace TpDiseñoCSharp
                 completarCuestionario.Show();
             }
         }
+
+        private void Cancelar_Click(object sender, EventArgs e)
+        {
+            pantalla_Inicial.Visible = true;
+            Close();
+        }
         
     }
 }

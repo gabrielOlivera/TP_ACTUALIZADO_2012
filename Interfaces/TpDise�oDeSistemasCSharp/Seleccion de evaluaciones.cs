@@ -126,5 +126,10 @@ namespace TpDiseñoCSharp
             Orden_de_merito orden = new Orden_de_merito(info_evaluacion, sinContestar, incompletos, listaCandidatos_No_Alcanzo_Minimos, listaCandidatos_Si_Alcanzo_Minimos);
             orden.ShowDialog();
         }
+
+        private void Seleccion_de_evaluaciones_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

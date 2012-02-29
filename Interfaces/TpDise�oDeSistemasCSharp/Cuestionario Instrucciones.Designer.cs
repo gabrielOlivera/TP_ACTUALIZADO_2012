@@ -158,6 +158,7 @@
             this.Cancelar.TabIndex = 10;
             this.Cancelar.Text = "Cancelar";
             this.Cancelar.UseVisualStyleBackColor = true;
+            this.Cancelar.Click += new System.EventHandler(this.Cancelar_Click);
             // 
             // Cuestionario_Instrucciones
             // 
